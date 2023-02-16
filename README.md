@@ -9,7 +9,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 - Blue / Green Deployment is used to strengthen the existing knowledge gained in earlier project
 - Application from project 3 is used. This is to focus on taught devOps knowledge
 
-## Process Map
+## Pipeline Plan
 
 <img src="https://user-images.githubusercontent.com/6856382/219395545-24d6b0dc-fdd7-4694-8f92-c90ac019b66c.png"/>
 
