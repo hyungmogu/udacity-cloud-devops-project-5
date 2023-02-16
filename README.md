@@ -7,7 +7,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 - For the continuous integration phase, CircleCI is used
 - Blue / Green Deployment is used to strengthen the existing knowledge gained in earlier project
-- NGIX's "Hello World, my name is (student name)" application is used. This is to focus on taught knowledge
+- Application from project 3 is used. This is to focus on taught devOps knowledge
 
 ## Rubric
 
