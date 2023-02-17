@@ -5,9 +5,11 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Scope of the project
 
-- For the continuous integration phase, CircleCI is used
-- Blue / Green Deployment is used to strengthen the existing knowledge gained in earlier project
-- Application from project 3 is used. This is to focus on taught devOps knowledge
+- CircleCI will be used for Continuous Integration phase
+- Blue / Green Deployment will be used
+- Application from project 3 is used
+- Ansible will be used to build infastructure
+- AWS Kubernetes as a Service (EKS) will be used.
 
 ## Pipeline Plan
 
