@@ -11,7 +11,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Pipeline Plan
 
-<img src="https://user-images.githubusercontent.com/6856382/219554234-95516b42-d866-4713-926c-efdc680696c5.png"/>
+<img src="https://user-images.githubusercontent.com/6856382/219556274-b7af7630-d8b7-42e8-804a-8e2a72b71928.png"/>
 
 ## Rubric
 
@@ -45,4 +45,3 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
 
-#
