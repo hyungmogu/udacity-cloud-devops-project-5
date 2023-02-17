@@ -9,7 +9,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 - Blue / Green Deployment will be used
 - Application from project 3 is used
 - Ansible will be used to build infastructure
-- AWS Kubernetes as a Service (EKS) will be used.
+- Kubernetes cluster will be built from scratch on AWS
 
 ## Pipeline Plan
 
