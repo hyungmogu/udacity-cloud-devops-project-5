@@ -18,7 +18,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Kubernetes Cluster Infrastructure Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/219573336-2945e183-d7dd-49c2-9b66-ee3cec3ee388.png"/> 
+<img src="https://user-images.githubusercontent.com/6856382/219685390-dd85095d-ab70-4cb0-bb3b-9bd20ed25f8c.png"/> 
 
 ## Rubric
 
