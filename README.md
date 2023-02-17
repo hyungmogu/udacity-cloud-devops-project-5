@@ -11,7 +11,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Pipeline Plan
 
-<img src="https://user-images.githubusercontent.com/6856382/219395545-24d6b0dc-fdd7-4694-8f92-c90ac019b66c.png"/>
+<img src="https://user-images.githubusercontent.com/6856382/219554234-95516b42-d866-4713-926c-efdc680696c5.png"/>
 
 ## Rubric
 
