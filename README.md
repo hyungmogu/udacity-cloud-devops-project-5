@@ -14,7 +14,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Pipeline Plan
 
-<img src="https://user-images.githubusercontent.com/6856382/219820092-bc3a428c-4d82-4817-aa76-99c7b05f63bb.png"/>
+<img src="https://user-images.githubusercontent.com/6856382/219821091-e647fe37-0c6f-40ec-a483-2ee99b91ae1d.png"/>
 
 ## Kubernetes Cluster Infrastructure Diagram
 
