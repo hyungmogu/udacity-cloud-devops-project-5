@@ -29,8 +29,8 @@ commands:
                 name: Destroy environments
                 when: on_fail
                 command: |
-                    aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation delete-stack --stack-name udapeople-${CIRCLE_WORKFLOW_ID:0:7}-backend
+                    aws cloudformation delete-stack --stack-name udapeople-${CIRCLE_WORKFLOW_ID:0:7}-frontend
     
     revert-migrations:
         description: Revert the last migration if successfully run in the current workflow.
@@ -194,7 +194,7 @@ jobs:
                     aws cloudformation deploy \
                     --template-file .circleci/files/backend.yml \
                     --tags project=udapeople \
-                    --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}-backend" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
             - run:
                 name: Ensure front-end infrastructure exist
@@ -202,7 +202,7 @@ jobs:
                     aws cloudformation deploy \
                     --template-file .circleci/files/frontend.yml \
                     --tags project=udapeople \
-                    --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name "udapeople-${CIRCLE_WORKFLOW_ID:0:7}-frontend" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
             - run:
                 name: Add back-end ip to ansible inventory
@@ -210,6 +210,7 @@ jobs:
                     # Your code here
                     aws ec2 describe-instances \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
+                    --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --output text >> .circleci/ansible/inventory.txt 
             - persist_to_workspace:
                 root: .circleci/ansible/
@@ -321,7 +322,7 @@ jobs:
                 name: Get backend url
                 command: |
                     # your code here
-                    export BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+                    BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text)
                     export API_URL="http://${BACKEND_IP}:3030"
                     echo "${API_URL}"
                     echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
@@ -415,8 +416,8 @@ jobs:
             - run:
                 name: Backend smoke test.
                 command: |
-                    BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters 'Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}' --output text)
-                    echo "Backend-ip: ${BACKEND_IP}:
+                    BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text)
+                    echo "Backend-ip: ${BACKEND_IP}"
                     API_URL="http://${BACKEND_IP}:3030"
                     echo "API URL: ${API_URL}"
 
@@ -447,6 +448,57 @@ jobs:
             - notify_slack_error
             - notify_slack_pass   
 
+    cleanup:
+        docker:
+            # Docker image here
+            - image: node:13.8-buster
+        steps:
+            # Checkout code from git
+            - checkout
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run:
+                name: Remove old stacks and files
+                command: |
+                    # Get current workflow ID
+                    CurrentWorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}"
+
+                    echo "Current Workflow Id: ${CurrentWorkflowID}"
+
+                    # if ${CIRCLE_WORKFLOW_ID:0:7} is empty, then raise error
+                    if [[ -z "${CIRCLE_WORKFLOW_ID:0:7}" ]]
+                    then
+                        echo 'ERROR: CANNOT CLEAN UP.'
+                        exit 1;
+                    fi
+
+                    # Get old workflow ID
+                    OldWorkflowID=$(aws cloudformation \
+                    list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+                    --no-paginate --output text)
+
+                    echo "Old Workflow Id: ${OldWorkflowID}"
+
+                    # If Old Workflow ID is NOT Current Workflow ID, then delete
+                    if [[ "${CurrentWorkflowID}" != "${OldWorkflowID}" ]] 
+                    then
+                        echo 'CLEANING UP OLD STACK'
+                        aws s3 rm "s3://${OldWorkflowID}" --recursive
+                        aws cloudformation delete-stack --stack-name "${OldWorkflowID}-backend"
+                        aws cloudformation delete-stack --stack-name "${OldWorkflowID}-frontend"
+                    fi
+
+            - destroy_environment 
+            - revert-migrations
+            - notify_slack_error
+            - notify_slack_pass
+    
     cloudfront-update:
         docker:
             # Docker image here that supports AWS CLI
@@ -477,51 +529,6 @@ jobs:
             - notify_slack_error
             - notify_slack_pass
     
-    cleanup:
-        docker:
-            # Docker image here
-            - image: node:13.8-buster
-        steps:
-            # Checkout code from git
-            - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
-            - run:
-                name: Remove old stacks and files
-                command: |
-                    # your code here
-                    export OldWorkflowID=$(aws cloudformation \
-                    list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-                    --no-pagina
-                    te --output text)
-                    echo OldWorkflowID: "${OldWorkflowID}"
-                    echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-                    # Fetch the stack names          
-                    export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
-                            --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
-                    echo Stack names: "${STACKS[@]}"
-
-                    if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-                    then
-                        # your code here
-                        echo 'CLEANING UP OLD STACK'
-                        aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                        aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-                        aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
-                    else
-                        echo 'ERROR: CANNOT CLEAN UP'
-                    fi
-            - destroy_environment 
-            - revert-migrations
-            - notify_slack_error
-            - notify_slack_pass
-
 workflows:
     default:
         jobs:
@@ -550,9 +557,8 @@ workflows:
                 requires: [run-migrations]
             - smoke-test:
                 requires: [deploy-backend, deploy-frontend]
-            - cloudfront-update:
-                requires: [smoke-test]
             - cleanup:
-                requires: [cloudfront-update]
+                requires: [smoke-test]
+            - cloudfront-update:
+                requires: [cleanup]
 
-#
