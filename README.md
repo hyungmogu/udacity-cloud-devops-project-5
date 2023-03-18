@@ -6,7 +6,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 - Jenkins will be used for CI and CD
 - Rolling Deployment will be used
-- Ansible and Cloudformation will be used to build infastructure
+- Cloudformation will be used to build infastructure
 - Kubernetes cluster will be built from scratch on AWS
 - Kubernetes cluster will be initialized using Ansible and Cloudformation
 
@@ -20,7 +20,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Infrastructure Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/220001714-5a21d4b1-e8b8-44bb-8f38-e65a1e85d50c.png"/> 
+<img src="https://user-images.githubusercontent.com/6856382/226125809-356c16ca-5f17-4e13-af87-c6cd0084abbd.jpeg"/> 
 
 ## Rubric
 
