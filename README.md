@@ -4,10 +4,8 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Scope of the project
 
-- CircleCI will be used for Continuous Integration phase
-- Blue / Green Deployment will be used
-- Application from project 3 is used
-- Backend Program of the application from project 3 will be dockerized for use in this project
+- Jenkins will be used for CI and CD
+- Rolling Deployment will be used
 - Ansible and Cloudformation will be used to build infastructure
 - Kubernetes cluster will be built from scratch on AWS
 - Kubernetes cluster will be initialized using Ansible and Cloudformation
@@ -15,6 +13,10 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 ## Pipeline Plan
 
 <img src="https://user-images.githubusercontent.com/6856382/219821091-e647fe37-0c6f-40ec-a483-2ee99b91ae1d.png"/>
+
+## Deployment Architecture
+
+<img src="https://user-images.githubusercontent.com/6856382/226086046-10f2ec21-c2fb-418d-aa1b-48557938969d.jpeg">
 
 ## Infrastructure Diagram
 
