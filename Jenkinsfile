@@ -5,7 +5,15 @@ pipeline {
         CANARY_REPLICAS = 0
     }
     stages {
-        stage('Build') {
+        stage('Build Front-end') {
+            steps {
+                echo 'Building Front-end'
+                sh './gradlew build --no-daemon'
+                archiveArtifacts artifacts: 'dist/img-type-converter-frontend.zip'
+                archiveArtifacts artifacts: 'dist/img-type-converter-backend.zip'
+            }
+        }
+        stage('Build Back-end') {
             steps {
                 echo 'Running build automation'
                 sh './gradlew build --no-daemon'
@@ -14,19 +22,21 @@ pipeline {
             }
         }
          stage('Lint') {
-            when {
-                branch 'master'
-            }
             steps {
 
             }
         }
         stage('Test Front-End') {
+            agent {
+                docker {
+                    image: 'node:18-buster'
+                }
+            }
             when {
                 branch 'master'
             }
             steps {
-
+                
             }
         }
         stage('Test Back-End') {
