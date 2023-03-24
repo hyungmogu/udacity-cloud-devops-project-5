@@ -6,24 +6,34 @@ pipeline {
     }
     stages {
         stage('Build Front-end') {
+            agent {
+                docker {
+                    image: 'node:18-buster'
+                }
+            }
             steps {
                 echo 'Building Front-end'
-                sh './gradlew build --no-daemon'
-                archiveArtifacts artifacts: 'dist/img-type-converter-frontend.zip'
-                archiveArtifacts artifacts: 'dist/img-type-converter-backend.zip'
             }
         }
         stage('Build Back-end') {
+            agent {
+                docker {
+                    image: 'php:7.4-fpm'
+                }
+            }
             steps {
-                echo 'Running build automation'
-                sh './gradlew build --no-daemon'
-                archiveArtifacts artifacts: 'dist/img-type-converter-frontend.zip'
-                archiveArtifacts artifacts: 'dist/img-type-converter-backend.zip'
+                echo 'Building Laravel and Back-end'
             }
         }
-         stage('Lint') {
+         stage('Lint Front-end') {
             steps {
-
+                cd 
+                echo 'Linting Front-end'
+            }
+        }
+        stage('Lint Back-end') {
+            steps {
+                echo 'Linting Back-end'
             }
         }
         stage('Test Front-End') {
@@ -36,7 +46,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                
+
             }
         }
         stage('Test Back-End') {
