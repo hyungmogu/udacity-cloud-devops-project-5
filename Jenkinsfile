@@ -5,14 +5,12 @@ pipeline {
         CANARY_REPLICAS = 0
     }
     stages {
-        stage('Build Front-End') {
-            agent {
-                docker {
-                    image: "node:lts-alpine"
-                }
-            }
+        stage('Build') {
             steps {
-               
+                echo 'Running build automation'
+                sh './gradlew build --no-daemon'
+                archiveArtifacts artifacts: 'dist/img-type-converter-frontend.zip'
+                archiveArtifacts artifacts: 'dist/img-type-converter-backend.zip'
             }
         }
          stage('Lint') {
@@ -53,6 +51,47 @@ pipeline {
             }
             steps {
 
+            }
+        }
+        stage('Push Docker Image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
+                }
+            }
+        }
+        stage('CanaryDeploy') {
+            when {
+                branch 'master'
+            }
+            environment { 
+                CANARY_REPLICAS = 1
+            }
+            steps {
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'train-schedule-kube-canary.yml',
+                    enableConfigSubstitution: true
+                )
+            }
+        }
+        stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
+            steps {
+                milestone(1)
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'train-schedule-kube.yml',
+                    enableConfigSubstitution: true
+                )
             }
         }
     }
