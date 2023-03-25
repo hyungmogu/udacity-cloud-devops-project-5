@@ -6,6 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/udacity-cloud-devops-project-5/preview/",
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {

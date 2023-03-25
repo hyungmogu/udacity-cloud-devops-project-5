@@ -1,7 +1,10 @@
 
 <template>
   <div class="itc-advertisement">
-    This is advertisement
+    <small>This is advertisement</small>
+    <div class="itc-advertisement">
+
+    </div>
   </div>
 </template>
 
