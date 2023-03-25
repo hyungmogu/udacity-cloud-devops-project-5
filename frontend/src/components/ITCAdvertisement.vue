@@ -1,7 +1,7 @@
 
 <template>
   <div class="itc-advertisement">
-    <small>This is advertisement</small>
+    <small class="itc-advertisement__title">This is advertisement</small>
     <div class="itc-advertisement">
 
     </div>
@@ -9,5 +9,10 @@
 </template>
 
 <style lang="scss" scoped>
-
+.itc-advertisement {
+  &__title {
+    text-align: center;
+    display: block;
+  }
+}
 </style>
