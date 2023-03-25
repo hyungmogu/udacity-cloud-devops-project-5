@@ -13,12 +13,14 @@
   &__title {
     text-align: center;
     display: block;
+    margin: 0 0 10px 0;
   }
 
   &__banner {
     aspect-ratio: 728 / 90;
     background-color: var(--gray-3);
     width: 100%;
+    max-width: 728px;
   }
 }
 </style>
