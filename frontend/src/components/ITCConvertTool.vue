@@ -1,6 +1,10 @@
 <template>
   <div class="itc-convert-tool">
     <form class="itc-convert-tool__form form">
+      <div class="form__group form__group--file">
+        <label>Add image files here (.jpg, .jpeg, .png, .svg, .webp only):</label>
+        <input type="file" name="file" accept=".jpg, .jpeg, .png, .svg, .webp"/>
+      </div>
       <fieldset>
         <legend>Select format to convert to:</legend>
         <div class="form__group form__group--radio">
