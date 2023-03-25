@@ -5,13 +5,23 @@ import ITCConvertTool from '../components/ITCConvertTool.vue'
 </script>
 
 <template>
-  <aside>
-    <ITCAdvertisement direction="vertical"/>
-  </aside>
   <main>
-    <ITCConvertTool/>
+    <div class="container">
+      <aside class="sidebar-advertisement sidebar-advertisement--left">
+        <ITCAdvertisement direction="vertical"/>
+      </aside>
+      <section>
+        <ITCConvertTool/>
+      </section>
+      <aside class="sidebar-advertisement sidebar-advertisement--right">
+        <ITCAdvertisement direction="vertical"/>
+      </aside>
+    </div>
   </main>
-  <aside>
-    <ITCAdvertisement direction="vertical"/>
-  </aside>
 </template>
+
+<style lang="scss" scoped>
+.sidebar-advertisement {
+
+}
+</style> 
