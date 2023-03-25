@@ -21,6 +21,7 @@ import ITCConvertTool from '../components/ITCConvertTool.vue'
 
 <style lang="scss" scoped>
 .page {
+  padding: 0 0 90px 0;
   &__wrapper {
     position: relative;
   }

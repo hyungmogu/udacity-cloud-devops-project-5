@@ -1,17 +1,23 @@
 <template>
     <div class="itc-page-banner">
         <div class="itc_page-banner__left">
-          <h1 class="itc-page-banner__title">Convert Any Image Format to Your Preferred File Type: .jpg, .png, .webp</h1>
+          <h1 class="itc-page-banner__title">Convert Any Image Format to Your Preferred File Type: <span class="emphasized emphasized--one">.jpg</span>, <span class="emphasized emphasized--one">.png</span>, <span class="emphasized emphasized--one">.webp</span></h1>
         </div>
         <div class="itc_page-banner__right">
-          <svg class="itc-page-banner__image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
+          <svg class="itc-page-banner__image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <linearGradient id="MyGradient">
+              <stop offset="5%" stop-color="#FFD568" />
+              <stop offset="95%" stop-color="#62C9B7" />
+            </linearGradient>
+            <path fill="url(#MyGradient)" d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/>
+          </svg>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .itc-page-banner {
-  height: 500px;
+  height: 575px;
   display: grid;
   grid-template-columns: 5fr 5fr;
   column-gap: 100px;
@@ -20,6 +26,22 @@
   &__title {
     max-width: 700px;
     margin: 0;
+  }
+
+  .emphasized {
+    font-weight: var(--font-weight-bold);
+
+    &--one {
+      color: var(--primary);
+    }
+
+    &--two {
+      color: var(--secondary);
+    }
+
+    &--three {
+      color: var(--third);
+    }
   }
 
   &__image {

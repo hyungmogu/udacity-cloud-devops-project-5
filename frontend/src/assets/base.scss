@@ -38,13 +38,13 @@
   --primary:      var(--primary-4);
 
   // Secondary
-  --secondary-1:  #FDE3DB;
-  --secondary-2:  #FCC8B8;
-  --secondary-3:  #FBAC94;
-  --secondary-4:  #FA9171;
-  --secondary-5:  #BB6C54;
-  --secondary-6:  #7D4838;
-  --secondary-7:  #3E241C;
+  --secondary-1:  #FFFFBA;
+  --secondary-2:  #FFFA98;
+  --secondary-3:  #FFEA7C;
+  --secondary-4:  #FFD568;
+  --secondary-5:  #C8A752;
+  --secondary-6:  #91793B;
+  --secondary-7:  #594B24;
   --secondary:    var(--secondary-4);
 
   // Third
@@ -80,11 +80,12 @@
   --heading-color:          var(--black);
   --heading-font-weight:    var(--font-weight-bold);
   --heading-font-family:    Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-  Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;;
+  Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --logo-font-family:       arial, sans-serif;
   --heading-text-transform: none;
   --heading-line-height:    1.2;
 
-  --h1-font-size:           40px;
+  --h1-font-size:           50px;
   --h1-font-size-mobile:    32px;
   --h1-color:               var(--heading-color);
   --h1-font-weight:         var(--heading-font-weight);

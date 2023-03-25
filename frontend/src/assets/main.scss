@@ -105,12 +105,17 @@
     }
 
     &--file svg {
-      width: 18px;
+      width: 15px;
     }
 
     &--file span {
       white-space: no-wrap;
     }
+  }
+
+  &__annotation {
+    margin: 10px 0 0 0;
+    display: block;
   }
 
   &__group label {
