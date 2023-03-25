@@ -17,10 +17,11 @@
   }
 
   &__banner {
-    aspect-ratio: 728 / 90;
+    aspect-ratio: 970 / 250;
     background-color: var(--gray-3);
     width: 100%;
-    max-width: 728px;
+    max-width: 970px;
+    margin: 0 auto;
   }
 }
 </style>
