@@ -10,7 +10,7 @@
     background-position: 0 0;
   }
   100% {
-    background-position: 50px 50px;
+    background-position: 20px 20px;
   }
 }
 .itc-progress-meter {
@@ -31,7 +31,18 @@
         border-bottom-left-radius: 20px;
         background-color: var(--secondary);
         position: relative;
-        box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);        overflow: hidden;
+        box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);        
+        overflow: hidden;
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: 20px 20px;
+            background-image: linear-gradient( -45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent );
+            animation: move 2s linear infinite;
+        }
     }
 }
 </style>

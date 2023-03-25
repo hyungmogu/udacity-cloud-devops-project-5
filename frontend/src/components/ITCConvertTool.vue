@@ -67,5 +67,19 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
       }
     }
   }
+
+  &__item {
+    margin: 0 0 30px 0;
+  }
+
+  &__item-title {
+    margin: 0;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--h6-font-size-mobile);
+
+    @media screen and (min-width: 992px) {
+      font-size: var(--h6-font-size);
+    }
+  }
 }
 </style>
