@@ -1,6 +1,6 @@
 <script setup>
 import ITCAdvertisement from '../components/ITCAdvertisement.vue'
-import ITCHeader from '../components/ITCHeader.vue'
+import ITCPageBanner from '../components/ITCPageBanner.vue'
 import ITCConvertTool from '../components/ITCConvertTool.vue'
 </script>
 
@@ -8,15 +8,12 @@ import ITCConvertTool from '../components/ITCConvertTool.vue'
   <main class="page">
     <div class="container">
       <div class="page__wrapper">
-        <aside class="sidebar-advertisement sidebar-advertisement--left">
-          <ITCAdvertisement direction="vertical"/>
-        </aside>
         <section>
+          <ITCAdvertisement/>
+          <ITCPageBanner/>
           <ITCConvertTool/>
+          <ITCAdvertisement/>
         </section>
-        <aside class="sidebar-advertisement sidebar-advertisement--right">
-          <ITCAdvertisement direction="vertical"/>
-        </aside>
       </div>
     </div>
   </main>
