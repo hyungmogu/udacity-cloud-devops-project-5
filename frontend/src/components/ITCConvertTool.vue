@@ -24,7 +24,7 @@ import ITCButton from "./ITCButton.vue";
           <label>WEBP</label>
         </div>
       </fieldset>
-      <ITCButton class="form__button">Convert</ITCButton>
+      <ITCButton :className='"form__button"'>Convert</ITCButton>
     </form>
   </div>
 </template>

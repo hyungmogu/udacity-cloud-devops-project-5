@@ -2,6 +2,14 @@
 :root {
   /*
    |--------------------------------
+   | Transition
+   |--------------------------------
+  */
+  --transition-200:        cubic-bezier(.25, .46, .45, .94) 200ms;
+  --transition-360:        cubic-bezier(.25, .46, .45, .94) 360ms;
+
+  /*
+   |--------------------------------
    | Font-weight
    |--------------------------------
   */
@@ -19,7 +27,19 @@
    | Color
    |--------------------------------
   */
+  // Primary
+  --primary-1:    #B6D7FF;
+  --primary-2:    #92C6FF;
+  --primary-3:    #75BAFF;
+  --primary-4:    #60AFFF;
+  --primary-5:    #4B89C8;
+  --primary-6:    #366391;
+  --primary-7:    #223D59;
+  --primary:      var(--primary-4);
+
+  
   --black: #000;
+  --white: #FFF;
   /*
    |--------------------------------
    | Heading
