@@ -24,6 +24,14 @@ import ITCConvertTool from '../components/ITCConvertTool.vue'
   &__wrapper {
     position: relative;
   }
+
+  &__wrapper > section {
+    & > * {
+      &:not(:last-child) {
+        margin: 0 0 60px 0;
+      }
+    }
+  }
 }
 .sidebar-advertisement {
   position: sticky;

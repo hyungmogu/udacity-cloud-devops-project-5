@@ -93,6 +93,13 @@
     display: block;
     font-weight: var(--font-weight-bold);
   }
+
+  &__group {
+    &--radio label,
+    &--checkbox label {
+      margin: 0;
+    }
+  }
 }
 /*!
  |-----------------------------------------------------------------------------------------

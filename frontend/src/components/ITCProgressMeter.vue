@@ -1,9 +1,18 @@
 <template>
-    <div class="itc-progress-meter">
+    <div class="itc-progress-meter" v-bind:class="className">
         <span class="itc-progress-meter__bar"></span>
     </div>
 </template>
-
+<script>
+export default {
+  props:{
+    className:{
+      type:String,
+      default:'',
+     }
+  }
+};
+</script>
 <style lang="scss" scoped>
 @keyframes move {
   0% {
@@ -24,11 +33,8 @@
     &__bar {
         display: block;
         height: 100%;
-        max-width: 20%;
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
+        max-width: 100%;
+        border-radius: 20px;
         background-color: var(--secondary);
         position: relative;
         box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);        
@@ -43,6 +49,14 @@
             background-image: linear-gradient( -45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent );
             animation: move 2s linear infinite;
         }
+    }
+
+    &.complete &__bar {
+      background-color: var(--third);
+      &::after {
+        background-image: none;
+        animation: none;
+      }
     }
 }
 </style>

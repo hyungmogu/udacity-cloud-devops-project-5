@@ -27,38 +27,45 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
       </fieldset>
       <ITCButton :className='"form__button"'>Convert</ITCButton>
     </form>
-  </div>
-  <div class="itc-convert-tool-result">
-    <h2>Result</h2>
-    <article class="itc-convert-tool-result__item" v-for="item in 5" :key="item">
-      <div class="itc-convert-tool-result__item-wrap">
-        <div class="itc-convert-tool-result__item-header">
-          <h3 class="itc-convert-tool-result__item-title">Name goes here</h3>
-        </div>
-        <div class="itc-convert-tool-result__item-body">
-          <div class="itc-convert-tool-result__item-progress">
-            <ITCProgressMeter/> 
+    <div class="itc-convert-tool__result">
+      <h2>Result</h2>
+      <article class="itc-convert-tool__result-item" v-for="item in 5" :key="item">
+        <div class="itc-convert-tool__result-item-wrap">
+          <div class="itc-convert-tool__result-item-header">
+            <h3 class="itc-convert-tool__result-item-title">
+              <span class="itc-convert-tool__result-item-before">
+                <strong>Before:</strong> <span>before.jpg</span>
+              </span>
+              <span class="itc-convert-tool__result-item-after">
+                <strong>After:</strong> <span>after.png</span>
+              </span>
+            </h3>
           </div>
-          <ITCButton :className='"itc-convert-tool-result__item-download"'>Download</ITCButton>
+          <div class="itc-convert-tool__result-item-body">
+            <div class="itc-convert-tool__result-item-progress">
+              <ITCProgressMeter/> 
+            </div>
+            <ITCButton :className='"itc-convert-tool__result-item-download"'>Download</ITCButton>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .itc-convert-tool {
-  margin: 0 0 60px 0;
-}
+  &__form {
+    margin: 0 0 60px 0;
+  }
 
-.itc-convert-tool-result {
-  &__item-wrap {
+  &__result-item-wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  &__item-body {
+  &__result-item-body {
     display: flex;
     align-items: center;
     & > * {
@@ -68,11 +75,11 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
     }
   }
 
-  &__item {
+  &__result-item {
     margin: 0 0 30px 0;
   }
 
-  &__item-title {
+  &__result-item-title {
     margin: 0;
     font-weight: var(--font-weight-normal);
     font-size: var(--h6-font-size-mobile);
@@ -80,6 +87,20 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
     @media screen and (min-width: 992px) {
       font-size: var(--h6-font-size);
     }
+
+    & > * {
+      display: block;
+
+      &:not(:last-child) {
+        margin: 0 0 10px 0;
+      }
+    }
+  }
+
+  &__result-item-before strong,
+  &__result-item-after strong {
+    font-weight: var(--font-weight-bold);
   }
 }
+
 </style>
