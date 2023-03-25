@@ -2,7 +2,7 @@
 <template>
   <div class="itc-advertisement">
     <small class="itc-advertisement__title">This is advertisement</small>
-    <div class="itc-advertisement">
+    <div class="itc-advertisement__banner">
 
     </div>
   </div>
@@ -13,6 +13,11 @@
   &__title {
     text-align: center;
     display: block;
+  }
+
+  &__banner {
+    aspect-ratio: 728 / 90;
+    background-color: var(--gray-3);
   }
 }
 </style>
