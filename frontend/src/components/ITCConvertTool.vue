@@ -7,11 +7,11 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
   <div class="itc-convert-tool">
     <form class="itc-convert-tool__form form">
       <div class="form__group form__group--file">
-        <label>Add image files here (.jpg, .jpeg, .png, .svg, .webp only):</label>
+        <label>&#9312; Add image files here (.jpg, .jpeg, .png, .svg, .webp only):</label>
         <input type="file" name="file" accept=".jpg, .jpeg, .png, .svg, .webp" multiple/>
       </div>
       <fieldset class="form__fieldset">
-        <legend>Select format to convert to:</legend>
+        <legend>&#9313; Select format to convert to:</legend>
         <div class="form__group form__group--radio">
           <input type="radio" name="convert_to" value="JPG"/>
           <label>JPG</label>
@@ -25,7 +25,7 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
           <label>WEBP</label>
         </div>
       </fieldset>
-      <ITCButton :className='"form__button"'>Convert</ITCButton>
+      <ITCButton :className='"form__button"'>&#9314; Convert!</ITCButton>
     </form>
     <div class="itc-convert-tool__result">
       <h2>Result</h2>
