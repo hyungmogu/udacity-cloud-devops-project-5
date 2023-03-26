@@ -63,9 +63,9 @@
 
 - AWS EC2 Pricing information can be found [here](https://aws.amazon.com/ec2/pricing/on-demand/)
 
-- Est_number_of_servers_required = Daily_active_users / Server_daily_request_capacity == 1,000,000 / 5,000 = 200 
+- Est_number_of_servers_required = Daily_active_users / Server_daily_request_capacity == 1,000,000 / 5,000 = 200 servers
 
-- Given `AWS t4g.medium` costs `$0.0336 / hour`, it costs
+- Given `AWS t4g.medium` costs `$0.0336 server / hour`, it costs
     - `$24.192 server / month`
     - `$4838.40 / month` for 200 servers
 

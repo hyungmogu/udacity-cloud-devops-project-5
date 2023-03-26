@@ -20,7 +20,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Infrastructure Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/226125809-356c16ca-5f17-4e13-af87-c6cd0084abbd.jpeg"/> 
+<img src="https://user-images.githubusercontent.com/6856382/227803683-a82f38ef-9086-40aa-9635-82251f4485a6.jpeg"/> 
 
 ## Rubric
 
@@ -54,4 +54,3 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
 
-#
