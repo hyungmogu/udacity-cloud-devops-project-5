@@ -54,3 +54,4 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
 
+$
