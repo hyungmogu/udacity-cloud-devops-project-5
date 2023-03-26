@@ -2,7 +2,7 @@
     <div class="itc-page-banner">
         <div class="itc_page-banner__left">
           <h1 class="itc-page-banner__title">Convert Any Image Format to Your Preferred File Type: <span class="emphasized emphasized--one">.jpg</span>, <span class="emphasized emphasized--one">.png</span>, <span class="emphasized emphasized--one">.webp</span></h1>
-          <p>Image format conversion can be done using front-end only, but I am doing it on back-end to practice and demonstrate my system design skills.</p>
+          <p>Image format conversion can be done using front-end, but it's done on back-end to practice and demonstrate author's system design skills.</p>
         </div>
         <div class="itc_page-banner__right">
           <svg class="itc-page-banner__image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
