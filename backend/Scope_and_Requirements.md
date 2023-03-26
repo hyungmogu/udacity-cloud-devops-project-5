@@ -70,3 +70,6 @@
     - `$4838.40 / month` for 200 servers
 
 
+### Maximum total costs / month
+
+- The maximum total costs would be `$94,838.40 / month`
