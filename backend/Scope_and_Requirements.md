@@ -56,7 +56,7 @@
 
 1. Total_download_bandwidth = Amount_of_converted_images_downloaded_from_s3_per_day * (day / 86400s) == (1,000,000 users * 5 MB / file * 5 file / day) * 2.4 * (day / 86400s) * (1GB / 1000MB) ~=  0.69GB / s 
 
-- per monthly basis, 1800 TB is used. Given S3 transfer out pricing is $0.05 per GB, this translates to $90,000 / month cost
+- per monthly basis, 1800 TB is used. Given S3 transfer out pricing is $0.05 per GB, this translates to `$90,000` / month cost
 
 
 ### Number of servers estimation
