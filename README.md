@@ -59,4 +59,3 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
         - d. Screenshot showing that you can access the application after deployment.
 
 
-#
