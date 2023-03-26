@@ -17,5 +17,11 @@
 
 3. Performance: The conversion should be done as quick as possible, as additional delays will clog the system.
 
-
 ## Resource Estimation
+1. Estimated number of daily active users: 1 million (for demonstration purposes)
+2. Average file size per image: 5MB (1280 x 960, png)
+3. Max number of files submitted per user: 5
+4. Max size of an image after conversion: 12MB (From 5MB, jpg -> png) 
+
+## Storage Estimation
+1. 
