@@ -24,7 +24,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Kubernetes Architecture Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/227808490-c25dad2b-073d-4a26-b44b-92eeb1bd650c.jpeg"/>
+<img src="https://user-images.githubusercontent.com/6856382/227810930-2558a6f7-1abc-44c5-aede-8f45974e7a1d.jpeg"/>
 
 ## Rubric
 
@@ -57,3 +57,6 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
         - b. Screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances running as the EKS cluster nodes.
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
+
+
+#
