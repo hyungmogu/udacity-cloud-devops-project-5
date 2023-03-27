@@ -26,7 +26,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 <img src="https://user-images.githubusercontent.com/6856382/227823674-9c9da05c-e546-444d-bd41-62fa4f62d11f.jpeg"/>
 
-## Requirements
+## Requirements and Resource Estimation
 
 ### Functional Requirements
 1. Uploading images from frontend (user) to client
@@ -43,18 +43,18 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 3. Performance: The conversion should be done as quick as possible, as additional delays will clog the system.
 
-## Resource Estimation
+### Resource Estimation
 1. Estimated number of daily active users: 1 million (for demonstration purposes)
 2. Max file size per image: 5MB (1280 x 960, png)
 3. Max number of files submitted per user: 5
 4. Max number of times a user could use this service a day: 5
 5. Max size of an image after conversion: 12MB (From 5MB, jpg -> png)
 
-## Resource Estimation Constratints
+### Resource Estimation Constratints
 
 1. Max time of withholding image data on storage: 15 minutes
 
-## Storage Estimation
+### Storage Estimation
 1. (1,000,000 users * 5 MB / file * 5 file / day) * (1 + 2.4) = 85 million MB = 85 TB / day
 
 2. 85 TB / day ~= 59.027GB / minutes ~= 885 GB / 15 minutes
@@ -63,11 +63,11 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 - In AWS's S3, this roughly translates to $20 USD / month
 
-## Bandwidth Estimation
+### Bandwidth Estimation
 
 - `upload:download` ratio is assumed to be 1 (meaning, for every upload, there is equivalent number of downloads)
 
-### The bandwidth required for uploading videos
+#### The bandwidth required for uploading videos
 
 1. Total_bandwidth == Amount_of_files_uploaded_to_server_per_day * (day / 86400s) ==  1,000,000 user * 5 MB / file * 5 file / day ~= 0.28GB Gbps
 
@@ -76,7 +76,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 (1,000,000 users / day * 5 MB / file * 5 file / day) * (1GB / 1000MB) * (day / 86400s) ~= 0.28GB / s
 ```
 
-### The bandwidth required for downloading videos
+#### The bandwidth required for downloading videos
 
 - More info: [here](https://aws.amazon.com/s3/pricing/)
 
@@ -85,7 +85,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 - per monthly basis, 1800 TB is used. Given S3 transfer out pricing is $0.05 per GB, this translates to `$90,000` / month cost
 
 
-### Number of servers estimation
+#### Number of servers estimation
 
 - AWS EC2 Pricing information can be found [here](https://aws.amazon.com/ec2/pricing/on-demand/)
 
@@ -96,12 +96,12 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
     - `$4838.40 / month` for 200 servers
 
 
-### Maximum total costs / month
+#### Maximum total costs / month
 
 - The maximum total costs would be `$94,838.40 / month`
 
 
-## API Design
+### API Design
 
 - Post a convert request
 
@@ -158,4 +158,3 @@ postConvertRequest(end_format, image)
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
 
-#
