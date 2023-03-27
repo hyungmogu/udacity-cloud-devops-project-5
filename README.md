@@ -24,7 +24,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Kubernetes Architecture Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/227812057-08f5265e-fac0-4014-ad28-6a5fce14e302.jpeg"/>
+<img src="https://user-images.githubusercontent.com/6856382/227818749-7211d956-03cd-4055-a8fe-749c56d5a5db.jpeg"/>
 
 ## Rubric
 
