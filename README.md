@@ -24,7 +24,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Kubernetes Cluster Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/227823674-9c9da05c-e546-444d-bd41-62fa4f62d11f.jpeg"/>
+<img src="https://user-images.githubusercontent.com/6856382/227958133-3bdd3963-2f28-4058-a739-d1f381c38c28.jpeg"/>
 
 ## Requirements and Resource Estimation
 
