@@ -20,7 +20,12 @@ class ImageConvertController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // convert image to target format
+
+        // upload image to amazon s3
+        // set time for it to be deleted after 15 minutes or 1 day (if this is only thing allowed)
+
+        // return uploaded amazong s3 url back to user
     }
 
     /**
@@ -36,7 +41,7 @@ class ImageConvertController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return;
     }
 
     /**
@@ -44,6 +49,6 @@ class ImageConvertController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return;
     }
 }
