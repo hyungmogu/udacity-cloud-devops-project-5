@@ -103,10 +103,22 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ### API Design
 
-1. Convert Image
+1. Convert To JPEG
 
 ```
-convertImage(id, end_format, image)
+convertToJPEG(id, image)
+```
+
+2. Convert To PNG
+
+```
+convertToPNG(id, image)
+```
+
+3. Convert To WEBP
+
+```
+convertToWEBP(id, image)
 ```
 
 <table>
@@ -158,3 +170,4 @@ convertImage(id, end_format, image)
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
 
+#
