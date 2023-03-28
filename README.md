@@ -24,7 +24,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Kubernetes Cluster Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/228100152-d56261f6-ef66-4d27-b10d-b117942bca0f.jpeg"/>
+<img src="https://user-images.githubusercontent.com/6856382/228103460-aa26c2a0-324a-4515-9112-b2f02f675b24.jpeg"/>
 
 ## Requirements and Resource Estimation
 
@@ -158,4 +158,3 @@ postConvertRequest(end_format, image)
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
 
-#
