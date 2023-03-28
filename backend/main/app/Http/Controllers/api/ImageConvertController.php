@@ -25,7 +25,7 @@ class ImageConvertController extends Controller
         // upload image to amazon s3
         // set time for it to be deleted after 15 minutes or 1 day (if this is only thing allowed)
 
-        // return uploaded amazong s3 url back to user
+        // return uploaded amazon s3 url back to user
     }
 
     /**
