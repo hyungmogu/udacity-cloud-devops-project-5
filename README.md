@@ -103,10 +103,10 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ### API Design
 
-- Post an image convert request
+1. Convert Image
 
 ```
-convertImage(end_format, image)
+convertImage(id, end_format, image)
 ```
 
 <table>
@@ -122,31 +122,6 @@ convertImage(end_format, image)
         <tr>
             <td>image</td>
             <td>Image that's being uploaded to server (in blob)</td>
-        </tr>
-    </tbody>
-</table>
-
-### Database Design
-
-#### 1) Download Counter
-
-<table>
-    <tbody>
-        <tr>
-            <th>Key</th>
-            <th>Type</th>
-        </tr>
-        <tr>
-            <td>ID</td>
-            <td>INT, UNIQUE</td>
-        </tr>
-        <tr>
-            <td>IP</td>
-            <td>VARCHAR(45)</td>
-        </tr>
-        <tr>
-            <td>COUNT</td>
-                <td>INTEGER</td>
         </tr>
     </tbody>
 </table>
