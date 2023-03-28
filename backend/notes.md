@@ -19,3 +19,14 @@ docker exec -it backend-myapp-1 /bin/bash
 php artisan --version
 ```
 
+## 4) Creating Controller using Bitnami Laravel Container
+
+```
+docker-compose exec <service> <command>
+```
+
+**Example**
+
+```
+docker-compose exec myapp php artisan make:controller UserController
+```
