@@ -128,10 +128,6 @@ convertToWEBP(id, image)
             <th>Description</th>
         </tr>
         <tr>
-            <td>end_format</td>
-            <td>The target format of an image. It's one of: png, webp, jpg</td>
-        </tr>
-        <tr>
             <td>image</td>
             <td>Image that's being uploaded to server (in blob)</td>
         </tr>
