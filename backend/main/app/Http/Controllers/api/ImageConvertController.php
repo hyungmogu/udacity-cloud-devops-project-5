@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CountController extends Controller
+class ImageConvertController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return;
     }
 
     /**
@@ -27,7 +28,7 @@ class CountController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return;
     }
 
     /**

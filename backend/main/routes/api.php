@@ -19,5 +19,5 @@ Route::group(['namespace' => 'Api'], function () {
         return $request->user();
     });
 
-    Route::apiResource('image', ImageController::class);
+    Route::apiResource('convert-image', ImageController::class);
 });
