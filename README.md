@@ -126,6 +126,31 @@ postConvertRequest(end_format, image)
     </tbody>
 </table>
 
+### Database Design
+
+#### 1) Download Counter
+
+<table>
+    <tbody>
+        <tr>
+            <th>Key</th>
+            <th>Type</th>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>INT, UNIQUE</td>
+        </tr>
+        <tr>
+            <td>IP</td>
+            <td>VARCHAR(45)</td>
+        </tr>
+        <tr>
+            <td>COUNT</td>
+                <td>INTEGER</td>
+        </tr>
+    </tbody>
+</table>
+
 ## Rubric
 
 ### Setup Pipeline
@@ -158,3 +183,4 @@ postConvertRequest(end_format, image)
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
 
+#
