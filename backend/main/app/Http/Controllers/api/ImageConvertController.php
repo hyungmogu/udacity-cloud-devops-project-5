@@ -26,6 +26,26 @@ class ImageConvertController extends Controller
         // set time for it to be deleted after 15 minutes or 1 day (if this is only thing allowed)
 
         // return uploaded amazon s3 url back to user
+        $post = $request->all();
+        $file = @$post['file'];
+        $code = 200;
+        $extension = $file->getClientOriginalExtension();
+        $imageName = $file->getClientOriginalName();
+        $path = 'your_path';
+
+        // from https://stackoverflow.com/questions/62790089/how-to-encode-jpeg-jpg-to-webp-in-laravel
+        if(in_array($extension,["jpeg","jpg","png"])){
+            //old image
+            $webp = public_path().'/'.$path.'/'.$imageName;
+            $im = imagecreatefromstring(file_get_contents($webp));
+            imagepalettetotruecolor($im);
+            // have exact value with WEBP extension
+            $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp', $webp);
+            //del old image
+            unlink($webp);
+            // set qualityy according to requirement
+            return imagewebp($im, $new_webp, 50); 
+        }
     }
 
     /**
