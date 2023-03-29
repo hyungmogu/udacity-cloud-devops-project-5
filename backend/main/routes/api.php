@@ -18,6 +18,6 @@ use App\Http\Controllers\Api\ImageToWEBPController;
 */
 Route::namespace('')->group(function () {
     Route::apiResource('convert-to-jpg', ImageToJPGController::class);
-    Route::apiResource('convert-to-png', 'ImageToPNGController');
-    Route::apiResource('convert-to-webp', 'ImageToWEBPController');
+    Route::apiResource('convert-to-png', ImageToPNGController::class);
+    Route::apiResource('convert-to-webp', ImageToWEBPController::class);
 });

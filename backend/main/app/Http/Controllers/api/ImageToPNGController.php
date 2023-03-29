@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use GdImage;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use Aws\S3\S3Client;
 
@@ -25,16 +27,23 @@ class ImageToPNGController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:5120',
         ]);
         
-        // get the blob image data from the request    
-        $image_data = $request->input('image'); 
+        // get the blob image data from the request
+        $image_data = $request->file('image');    
         
-        // create an image resource from the blob data
-        $image = imagecreatefromstring($image_data);
+        // create an image resource from the image data
+        $image = $this->createImageResource($image_data);
         
-        // create a JPEG image from the original image
-        $png_data = imagepng($image);
+        // create a JPEG image from the image resource
+        ob_start();
+        imagepng($image);
+        $png_data = ob_get_clean();
 
-        return 'png';
+        // Cleanup
+        imagedestroy($image);
+
+        return response($png_data, 200, [
+            'Content-Type' => 'image/png',
+        ]);
         
         // // upload the JPEG image to S3
         // $s3 = new S3Client([
@@ -78,5 +87,23 @@ class ImageToPNGController extends Controller
     public function destroy(string $id)
     {
         return;
+    }
+
+    private function createImageResource(UploadedFile $uploaded_image): ?GdImage
+    {
+        $image_mime_type = $uploaded_image->getMimeType();
+        $image_path = $uploaded_image->getPathname();
+
+        switch ($image_mime_type) {
+            case 'image/jpeg':
+            case 'image/jpg':
+                return imagecreatefromjpeg($image_path);
+            case 'image/png':
+                return @imagecreatefrompng($image_path);
+            case 'image/webp':
+                return imagecreatefromwebp($image_path);
+            default:
+                return null;
+        }
     }
 }
