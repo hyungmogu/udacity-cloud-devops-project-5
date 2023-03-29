@@ -10,30 +10,34 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 - Kubernetes cluster will be built from scratch on AWS
 - Kubernetes cluster will be initialized using Ansible and Cloudformation
 
-## Pipeline Plan
+## Pre-Requisites
+
+## Installation
+
+## Pipeline, Architecture and System Design
 
 <img src="https://user-images.githubusercontent.com/6856382/219821091-e647fe37-0c6f-40ec-a483-2ee99b91ae1d.png"/>
 
-## Deployment Architecture
+### Deployment Architecture
 
 <img src="https://user-images.githubusercontent.com/6856382/226086046-10f2ec21-c2fb-418d-aa1b-48557938969d.jpeg">
 
-## Infrastructure Diagram
+### Infrastructure Diagram
 
 <img src="https://user-images.githubusercontent.com/6856382/228256905-15daa4fd-9fd8-4d83-9e6a-55415689c22a.jpeg"/> 
 
-## Kubernetes Cluster Diagram
+### Kubernetes Cluster Diagram
 
 <img src="https://user-images.githubusercontent.com/6856382/228103460-aa26c2a0-324a-4515-9112-b2f02f675b24.jpeg"/>
 
-## Requirements and Resource Estimation
+### Requirements and Resource Estimation
 
-### Functional Requirements
+#### Functional Requirements
 1. Uploading images from frontend (user) to client
 2. Converting image from original format to target format
 3. Downloading completed images
 
-### Non-functional Requirements
+#### Non-functional Requirements
 1. High-availability: Target availability of 99% and higher.
 2. Scalability: The following should not be bottleneck when scales
     1. Uploading images
@@ -43,18 +47,18 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 3. Performance: The conversion should be done as quick as possible, as additional delays will clog the system.
 
-### Resource Estimation
+#### Resource Estimation
 1. Estimated number of daily active users: 1 million (for demonstration purposes)
 2. Max file size per image: 5MB (1280 x 960, png)
 3. Max number of files submitted per user: 5
 4. Max number of times a user could use this service a day: 5
 5. Max size of an image after conversion: 12MB (From 5MB, jpg -> png)
 
-### Resource Estimation Constratints
+#### Resource Estimation Constratints
 
 1. Max time of withholding image data on storage: 15 minutes
 
-### Storage Estimation
+#### Storage Estimation
 1. (1,000,000 users * 5 MB / file * 5 file / day) * (1 + 2.4) = 85 million MB = 85 TB / day
 
 2. 85 TB / day ~= 59.027GB / minutes ~= 885 GB / 15 minutes
@@ -63,11 +67,11 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 - In AWS's S3, this roughly translates to $20 USD / month
 
-### Bandwidth Estimation
+#### Bandwidth Estimation
 
 - `upload:download` ratio is assumed to be 1 (meaning, for every upload, there is equivalent number of downloads)
 
-#### The bandwidth required for uploading videos
+##### The bandwidth required for uploading videos
 
 1. Total_bandwidth == Amount_of_files_uploaded_to_server_per_day * (day / 86400s) ==  1,000,000 user * 5 MB / file * 5 file / day ~= 0.28GB Gbps
 
@@ -76,7 +80,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 (1,000,000 users / day * 5 MB / file * 5 file / day) * (1GB / 1000MB) * (day / 86400s) ~= 0.28GB / s
 ```
 
-#### The bandwidth required for downloading videos
+##### The bandwidth required for downloading videos
 
 - More info: [here](https://aws.amazon.com/s3/pricing/)
 
@@ -101,7 +105,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 - The maximum total costs would be `$94,838.40 / month`
 
 
-### API Design
+## API Design
 
 1. Convert To JPG
 
@@ -134,35 +138,6 @@ convertToWEBP(image)
     </tbody>
 </table>
 
-## Rubric
+## Testing
 
-### Setup Pipeline
-
-1. Create Github repository with project code.
-    - All project code is stored in a GitHub repository and a link to the repository has been provided for reviewers.
-
-2. Use image repository to store Docker images
-    - The project uses a centralized image repository to manage images built in the project. After a clean build, images are pushed to the repository.
-
-
-### Build Docker Container
-
-1. Execute linting step in code pipeline
-    - Code is checked against a linter as part of a Continuous Integration step (demonstrated w/ two screenshots)
-
-2. Build a Docker container in a pipeline
-    - The project takes a Dockerfile and creates a Docker container in the pipeline.
-
-### Successful Deployment
-
-1. The Docker container is deployed to a Kubernetes cluster
-    - The cluster is deployed with CloudFormation or Ansible. This should be in the source code of the student’s submission.
-
-2. Use Blue/Green Deployment or a Rolling Deployment successfully
-    - The project performs the correct steps to do a blue/green or rolling deployment into the environment selected. Submit the following screenshots as evidence of the successful completion of chosen deployment methodology:
-
-        - a. Screenshot of the Circle CI or Jenkins pipeline showing all stages passed successfully.
-        - b. Screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances running as the EKS cluster nodes.
-        - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
-        - d. Screenshot showing that you can access the application after deployment.
-
+## Contact Information
