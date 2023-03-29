@@ -142,4 +142,3 @@ convertToWEBP(image)
 
 ## Contact Information
 
-#
