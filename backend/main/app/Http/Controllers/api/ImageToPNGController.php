@@ -21,29 +21,31 @@ class ImageToPNGController extends Controller
      */
     public function store(Request $request)
     {
-        $imageData = $request->input('image'); // get the blob image data from the request    
+        $image_data = $request->input('image'); // get the blob image data from the request    
         // create an image resource from the blob data
-        $image = imagecreatefromstring($imageData);
+        $image = imagecreatefromstring($image_data);
         
         // create a JPEG image from the original image
-        $jpegData = imagepng($image);
+        $png_data = imagepng($image);
         
         // upload the JPEG image to S3
         $s3 = new S3Client([
-            'region' => 'your_s3_region',
+            'region' => env('AWS_S3_REGION', ''),
             'version' => 'latest',
             'credentials' => [
-                'key' => 'your_s3_access_key',
-                'secret' => 'your_s3_secret_key',
+                'key' => env('AWS_S3_ACCESS_KEY', ''),
+                'secret' => env('AWS_S3_SECRET_KEY', ''),
             ],
         ]);
         
-        $s3->putObject([
-            'Bucket' => 'your_s3_bucket',
-            'Key' => 'path/to/image.jpg',
-            'Body' => $jpegData,
-            'ContentType' => 'image/jpeg',
+        $result = $s3->putObject([
+            'Bucket' => env('AWS_S3_BUCKET', ''),
+            'Key' => 'path/to/image.png',
+            'Body' => $png_data,
+            'ContentType' => 'image/png',
         ]);
+
+        return $result['ObjectURL'];
     }
 
     /**

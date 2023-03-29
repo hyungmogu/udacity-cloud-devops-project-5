@@ -21,12 +21,12 @@ class ImageToWEBPController extends Controller
      */
     public function store(Request $request)
     {
-        $imageData = $request->input('image'); // get the blob image data from the request    
+        $image_data = $request->input('image'); // get the blob image data from the request    
         // create an image resource from the blob data
-        $image = imagecreatefromstring($imageData);
+        $image = imagecreatefromstring($image_data);
         
         // create a JPEG image from the original image
-        $jpegData = imagejpeg($image);
+        $webp_data = imagewebp($image);
         
         // upload the JPEG image to S3
         $s3 = new S3Client([
@@ -38,12 +38,14 @@ class ImageToWEBPController extends Controller
             ],
         ]);
         
-        $s3->putObject([
+        $result = $s3->putObject([
             'Bucket' => env('AWS_S3_BUCKET', ''),
-            'Key' => 'path/to/image.jpg',
-            'Body' => $jpegData,
-            'ContentType' => 'image/jpeg',
+            'Key' => 'path/to/image.webp',
+            'Body' => $webp_data,
+            'ContentType' => 'image/webp',
         ]);
+
+        return $result['ObjectURL'];
     }
 
     /**
