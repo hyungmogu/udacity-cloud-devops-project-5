@@ -20,32 +20,40 @@ class ImageToJPGController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $image_data = $request->input('image'); // get the blob image data from the request    
-        // create an image resource from the blob data
+    {   
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:5120',
+        ]);
+        
+        // get the blob image data from the request
+        $image_data = base64_decode($request->input('image'));    
+        
+        // create an image resource from the image data
         $image = imagecreatefromstring($image_data);
         
         // create a JPEG image from the original image
         $jpeg_data = imagejpeg($image);
-        
-        //upload the JPEG image to S3
-        $s3 = new S3Client([
-            'region' => env('AWS_S3_REGION', ''),
-            'version' => 'latest',
-            'credentials' => [
-                'key' => env('AWS_S3_ACCESS_KEY', ''),
-                'secret' => env('AWS_S3_SECRET_KEY', ''),
-            ],
-        ]);
-        
-        $result = $s3->putObject([
-            'Bucket' => 'your_s3_bucket',
-            'Key' => 'path/to/image.jpg',
-            'Body' => $jpeg_data,
-            'ContentType' => 'image/jpg',
-        ]);
 
-        return $result['ObjectURL'];
+        return 'jpeg';
+        
+        // //upload the JPEG image to S3
+        // $s3 = new S3Client([
+        //     'region' => env('AWS_S3_REGION', ''),
+        //     'version' => 'latest',
+        //     'credentials' => [
+        //         'key' => env('AWS_S3_ACCESS_KEY', ''),
+        //         'secret' => env('AWS_S3_SECRET_KEY', ''),
+        //     ],
+        // ]);
+        
+        // $result = $s3->putObject([
+        //     'Bucket' => 'your_s3_bucket',
+        //     'Key' => 'path/to/image.jpg',
+        //     'Body' => $jpeg_data,
+        //     'ContentType' => 'image/jpg',
+        // ]);
+
+        // return $result['ObjectURL'];
     }
 
     /**

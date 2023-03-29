@@ -16,8 +16,8 @@ use App\Http\Controllers\Api\ImageToWEBPController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::group(['namespace' => 'Api'], function () {
+Route::namespace('')->group(function () {
     Route::apiResource('convert-to-jpg', ImageToJPGController::class);
-    Route::apiResource('convert-to-png', ImageToPNGController::class);
-    Route::apiResource('convert-to-webp', ImageToWEBPController::class);
+    Route::apiResource('convert-to-png', 'ImageToPNGController');
+    Route::apiResource('convert-to-webp', 'ImageToWEBPController');
 });
