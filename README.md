@@ -43,8 +43,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
     1. Uploading images
     2. Simulatenous viewing of website
     3. Downloading images
-    4. Image storage for conversion 
-
+    
 3. Performance: The conversion should be done as quick as possible, as additional delays will clog the system.
 
 #### Resource Estimation
@@ -73,12 +72,13 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 12MB / file * 5 files * 1,000,000 = 60,000,000 MB  = 60 TB
 ```
 
-- Since AWS charges
-    1. `$0.09 / GB` for first 10 TB
-    2. `$0.085 / GB` for next 40 TB
-    3. `$0.07 / GB` for next 100 TB
+Since AWS charges
 
-    The total outbound bandwidth cost is
+1. `$0.09 / GB` for first 10 TB
+2. `$0.085 / GB` for next 40 TB
+3. `$0.07 / GB` for next 100 TB
+
+The total outbound bandwidth cost is
 
 ```
 $0.09 / GB * 10,000 GB + $0.085 / GB * 40,000 GB  + $0.07 / GB * 10,000 GB = $5000
@@ -86,13 +86,13 @@ $0.09 / GB * 10,000 GB + $0.085 / GB * 40,000 GB  + $0.07 / GB * 10,000 GB = $50
 
 #### Maximum total costs / month
 
-- The maximum total costs would be 
+The maximum total costs would be 
 
 ```
 $4838.40 / month + $5000 / month = $9838.40 / month
 ```
 
-- Of course, cost can be lowered using cheaper providers like Digital Ocean, but the conclusion here is that a sufficient revenue generating model other than google ad is required to keep this afloat.
+Of course, cost can be lowered using cheaper providers like Digital Ocean, but the conclusion here is that a sufficient revenue generating model other than google ad is required to keep this afloat.
 
 ## API Design
 
