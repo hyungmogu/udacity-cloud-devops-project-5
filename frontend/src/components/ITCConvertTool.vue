@@ -1,6 +1,9 @@
 <script setup>
 import ITCButton from "./ITCButton.vue";
 import ITCProgressMeter from "./ITCProgressMeter.vue";
+import ConcreteImageConversionToJPG from '@/services/imageConversion/concreteImageConversionToJPG.js'; 
+import ConcreteImageConversionToPNG from '@/services/imageConversion/concreteImageConversionToPNG.js'; 
+import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteImageConversionToWEBP.js'; 
 </script>
 
 <template>
@@ -18,15 +21,15 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
       <fieldset class="form__fieldset">
         <legend>&#9313; Select format to convert to:</legend>
         <div class="form__group form__group--radio">
-          <input type="radio" name="convert_to" value="JPG"/>
+          <input type="radio" name="convert_to" value="JPG" v-model="convertTo"/>
           <label>JPG</label>
         </div>
         <div class="form__group form__group--radio">
-          <input type="radio" name="convert_to" value="PNG"/>
+          <input type="radio" name="convert_to" value="PNG" v-model="convertTo"/>
           <label>PNG</label>
         </div>
         <div class="form__group form__group--radio">
-          <input type="radio" name="convert_to" value="WEBP"/>
+          <input type="radio" name="convert_to" value="WEBP" v-model="convertTo"/>
           <label>WEBP</label>
         </div>
       </fieldset>
@@ -61,21 +64,36 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
 export default {
   data() {
     return {
+      convertTo: "JPG",
       tasks: []
     }
   },
   methods: {
     async handleSubmitTasks() {
       for (const taskItem of this.tasks) {
-        this.posts = await axios.post('https://localhost:8000/api/convert-to-jpg')
+        taskItem.convert();
       }
     },
     handleAddTasks() {
       // from factory, generate convert to image task
-
       // add the task to this.tasks
       for (const file of this.$refs.images.files) {
-        console.log(`${file.name}`);
+        let factory;
+        switch (this.convertTo) {
+          case "JPG":
+            factory = new ConcreteImageConversionToJPG();
+            break;
+          case "PNG":
+            factory = new ConcreteImageConversionToPNG();
+            break;
+          case "WEBP":
+            factory = new ConcreteImageConversionToWEBP();
+            break;
+          default:
+            throw new Error("[ITCConvertTool, handleAddTasks]: Image convert to type is invalid. Please check if radio values are correct.");
+        }
+
+        this.tasks.push(factory.createTask(file));
       }
     },
     convertImage() {

@@ -6,9 +6,19 @@ export default class ImageConversionToPNG extends ImageConversionInterface {
         this.fileName = fileName;
         this.file = file;
         this.complete = false;
-        this.link = "";
+        this.result = "";
     }
-    convert() {
-        return 
+    async convert() {
+        const result = await axios.post('https://localhost:8000/api/convert-to-png', {
+            image: this.file
+        }, {
+            'Content-Type': 'multipart/form-data'
+        }); 
+
+        if (result.status !== 200) {
+            throw new Error("[ImageConversionToPNG, convert]: Something happened to server. Please check backend code. Status " + result.status);
+        }
+
+        this.result = result.data;
     }
 }

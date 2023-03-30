@@ -1,7 +1,7 @@
 import axios from 'axios'
-import ImageConversionInterface from './ImageConversionInterface.js';
+import ImageConversionInterface from './imageConversionInterface.js';
 
-export default class ImageConversionToWEBP extends ImageConversionInterface {
+export default class ImageConversionToJPG extends ImageConversionInterface {
     constructor(fileName, file) {
         this.fileName = fileName;
         this.file = file;
@@ -9,14 +9,14 @@ export default class ImageConversionToWEBP extends ImageConversionInterface {
         this.result = "";
     }
     async convert() {
-        const result = await axios.post('https://localhost:8000/api/convert-to-webp', {
+        const result = await axios.post('https://localhost:8000/api/convert-to-jpg', {
             image: this.file
         }, {
             'Content-Type': 'multipart/form-data'
         }); 
 
         if (result.status !== 200) {
-            throw new Error("[ImageConversionToWEBP, convert]: Something happened to server. Please check backend code. Status " + result.status);
+            throw new Error("[ImageConversionToJPG, convert]: Something happened to server. Please check backend code. Status " + result.status);
         }
 
         this.result = result.data;
