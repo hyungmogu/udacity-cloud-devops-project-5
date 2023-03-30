@@ -54,41 +54,6 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 4. Max number of times a user could use this service a day: 5
 5. Max size of an image after conversion: 12MB (From 5MB, jpg -> png)
 
-#### Resource Estimation Constratints
-
-1. Max time of withholding image data on storage: 15 minutes
-
-#### Storage Estimation
-1. (1,000,000 users * 5 MB / file * 5 file / day) * (1 + 2.4) = 85 million MB = 85 TB / day
-
-2. 85 TB / day ~= 59.027GB / minutes ~= 885 GB / 15 minutes
-
-- Given the constraints, the amount of storage required is 885 GB.
-
-- In AWS's S3, this roughly translates to $20 USD / month
-
-#### Bandwidth Estimation
-
-- `upload:download` ratio is assumed to be 1 (meaning, for every upload, there is equivalent number of downloads)
-
-##### The bandwidth required for uploading videos
-
-1. Total_bandwidth == Amount_of_files_uploaded_to_server_per_day * (day / 86400s) ==  1,000,000 user * 5 MB / file * 5 file / day ~= 0.28GB Gbps
-
-
-```
-(1,000,000 users / day * 5 MB / file * 5 file / day) * (1GB / 1000MB) * (day / 86400s) ~= 0.28GB / s
-```
-
-##### The bandwidth required for downloading videos
-
-- More info: [here](https://aws.amazon.com/s3/pricing/)
-
-1. Total_download_bandwidth = Amount_of_converted_images_downloaded_from_s3_per_day * (day / 86400s) == (1,000,000 users * 5 MB / file * 5 file / day) * 2.4 * (day / 86400s) * (1GB / 1000MB) ~=  0.69GB / s 
-
-- per monthly basis, 1800 TB is used. Given S3 transfer out pricing is $0.05 per GB, this translates to `$90,000` / month cost
-
-
 #### Number of servers estimation
 
 - AWS EC2 Pricing information can be found [here](https://aws.amazon.com/ec2/pricing/on-demand/)
@@ -99,11 +64,35 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
     - `$24.192 server / month`
     - `$4838.40 / month` for 200 servers
 
+#### Bandwidth Usage Estimation
+
+- Data transfer in to EC2 is free, so no calculation is required here
+- Data transfer out of EC2, we use
+
+```
+12MB / file * 5 files * 1,000,000 = 60,000,000 MB  = 60 TB
+```
+
+- Since AWS charges
+    1. `$0.09 / GB` for first 10 TB
+    2. `$0.085 / GB` for next 40 TB
+    3. `$0.07 / GB` for next 100 TB
+
+    The total outbound bandwidth cost is
+
+```
+$0.09 / GB * 10,000 GB + $0.085 / GB * 40,000 GB  + $0.07 / GB * 10,000 GB = $5000
+```
 
 #### Maximum total costs / month
 
-- The maximum total costs would be `$94,838.40 / month`
+- The maximum total costs would be 
 
+```
+$4838.40 / month + $5000 / month = $9838.40 / month
+```
+
+- Of course, cost can be lowered using cheaper providers like Digital Ocean, but the conclusion here is that a sufficient revenue generating model other than google ad is required to keep this afloat.
 
 ## API Design
 
