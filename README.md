@@ -24,7 +24,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ### Infrastructure Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/228256905-15daa4fd-9fd8-4d83-9e6a-55415689c22a.jpeg"/> 
+<img src="https://user-images.githubusercontent.com/6856382/228707201-fa74ca03-2113-4bb2-8063-bc7b14a68afe.jpeg"/> 
 
 ### Kubernetes Cluster Diagram
 
@@ -169,4 +169,3 @@ convertToWEBP(image)
         - b. Screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances running as the EKS cluster nodes.
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
-#
