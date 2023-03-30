@@ -2,6 +2,9 @@ import ImageConverterFactory from './imageConverterFactory.js';
 
 export default class ConcreteImageConversionToJPEG extends ImageConverterFactory {
     createTask(file) {
-        return 
+        return ImageConversionToJPEG(
+            file.name,
+            file
+        )
     }
 }
