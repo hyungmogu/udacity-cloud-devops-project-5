@@ -12,7 +12,7 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
           <svg class="form__button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M288 109.3V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3l-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352H192c0 35.3 28.7 64 64 64s64-28.7 64-64H448c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V416c0-35.3 28.7-64 64-64zM432 456a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg>
           <span>Upload Images</span>
         </ITCButton>
-        <input type="file" name="file" accept=".jpg, .jpeg, .png, .svg, .webp" multiple/>
+        <input ref="images" type="file" name="file" accept=".jpg, .jpeg, .png, .svg, .webp" multiple/>
         <small class="form__annotation form__annotation--info">Files Selected:</small>
       </div>
       <fieldset class="form__fieldset">
@@ -58,7 +58,34 @@ import ITCProgressMeter from "./ITCProgressMeter.vue";
   </div>
 </template>
 <script>
+import axios from 'axios'
 
+export default {
+  data() {
+    return {
+      tasks: []
+    }
+  },
+  methods: {
+    async handleSubmitTasks() {
+      for (const taskItem of this.tasks) {
+        this.posts = await axios.post('https://localhost:8000/api/convert-to-jpg')
+      }
+    },
+    handleAddTasks() {
+      // from factory, generate convert to image task
+
+      // add the task to this.tasks
+      for (const file of this.$refs.images.files) {
+        console.log(`${file.name}`);
+      }
+    },
+    convertImage() {
+      this.handleAddTasks();
+      this.handleSubmitTasks();
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .itc-convert-tool {
