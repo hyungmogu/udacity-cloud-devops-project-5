@@ -63,7 +63,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
     - `$24.192 server / month`
     - `$4838.40 / month` for 200 servers
 
-#### Bandwidth Usage Estimation
+#### Bandwidth Usage Estimation (EC2)
 
 - Data transfer in to EC2 is free, so no calculation is required here
 - Data transfer out of EC2, we use
@@ -158,4 +158,3 @@ convertToWEBP(image)
         - b. Screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances running as the EKS cluster nodes.
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
-#
