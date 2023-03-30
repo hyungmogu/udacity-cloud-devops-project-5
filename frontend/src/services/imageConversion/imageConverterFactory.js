@@ -8,3 +8,5 @@ export default class ImageConverterFactory {
         throw new Error("Method 'createTask()' must be implemented.");
     }
 }
+
+#
