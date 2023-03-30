@@ -44,25 +44,6 @@ class ImageToPNGController extends Controller
         return response($png_data, 200, [
             'Content-Type' => 'image/png',
         ]);
-        
-        // // upload the JPEG image to S3
-        // $s3 = new S3Client([
-        //     'region' => env('AWS_S3_REGION', ''),
-        //     'version' => 'latest',
-        //     'credentials' => [
-        //         'key' => env('AWS_S3_ACCESS_KEY', ''),
-        //         'secret' => env('AWS_S3_SECRET_KEY', ''),
-        //     ],
-        // ]);
-        
-        // $result = $s3->putObject([
-        //     'Bucket' => env('AWS_S3_BUCKET', ''),
-        //     'Key' => 'path/to/image.png',
-        //     'Body' => $png_data,
-        //     'ContentType' => 'image/png',
-        // ]);
-
-        // return $result['ObjectURL'];
     }
 
     /**

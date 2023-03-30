@@ -44,25 +44,6 @@ class ImageToJPGController extends Controller
         return response($jpeg_data, 200, [
             'Content-Type' => 'image/jpeg',
         ]);
-        
-        // //upload the JPEG image to S3
-        // $s3 = new S3Client([
-        //     'region' => env('AWS_S3_REGION', ''),
-        //     'version' => 'latest',
-        //     'credentials' => [
-        //         'key' => env('AWS_S3_ACCESS_KEY', ''),
-        //         'secret' => env('AWS_S3_SECRET_KEY', ''),
-        //     ],
-        // ]);
-        
-        // $result = $s3->putObject([
-        //     'Bucket' => 'your_s3_bucket',
-        //     'Key' => 'path/to/image.jpg',
-        //     'Body' => $jpeg_data,
-        //     'ContentType' => 'image/jpg',
-        // ]);
-
-        // return $result['ObjectURL'];
     }
 
     /**
