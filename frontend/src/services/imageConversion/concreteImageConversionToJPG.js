@@ -3,6 +3,6 @@ import ImageConversionToJPG from './ImageConversionToJPG.js';
 
 export default class ConcreteImageConversionToJPG extends ImageConverterFactory {
     createTask(file) {
-        return ImageConversionToJPG(file)
+        return new ImageConversionToJPG(file)
     }
 }

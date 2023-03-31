@@ -1,6 +1,6 @@
 <template>
     <div class="itc-button" v-bind:class="className">
-        <button class="itc-button__button">
+        <button class="itc-button__button" v-bind:disabled="disabled">
             <slot></slot>
         </button>
     </div>
@@ -11,7 +11,11 @@ export default {
     className:{
       type:String,
       default:'',
-     }
+    },
+    disabled: {
+     type: Boolean,
+     default: false
+    }
   }
 };
 </script>
@@ -25,7 +29,12 @@ export default {
         color: var(--white);
         transition: var(--transition-200);
 
-        &:hover {
+        &[disabled] {
+            cursor:not-allowed;
+            background-color: var(--primary-1);
+        }
+
+        &:hover:not([disabled]) {
             background-color: var(--primary-6);
         }
     }

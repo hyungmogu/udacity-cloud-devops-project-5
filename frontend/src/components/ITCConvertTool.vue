@@ -36,16 +36,16 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
       <ITCButton :className='"form__button form__button--submit"' @click="convertImage">&#9314; Convert!</ITCButton>
     </form>
     <div class="itc-convert-tool__result">
-      <h2>Result</h2>
-      <article class="itc-convert-tool__result-item" v-for="item in 5" :key="item">
+      <h2 v-if="this.tasks.length > 0">Result</h2>
+      <article class="itc-convert-tool__result-item" v-for="item in this.tasks">
         <div class="itc-convert-tool__result-item-wrap">
           <div class="itc-convert-tool__result-item-header">
             <h3 class="itc-convert-tool__result-item-title">
               <span class="itc-convert-tool__result-item-before">
-                <strong>Before:</strong> <span>before.jpg</span>
+                <strong>Before:</strong> <span>{{ item.fileNameBefore }}</span>
               </span>
               <span class="itc-convert-tool__result-item-after">
-                <strong>After:</strong> <span>after.png</span>
+                <strong>After:</strong> <span>{{ item.fileNameAfter }}</span>
               </span>
             </h3>
           </div>
@@ -53,7 +53,7 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
             <div class="itc-convert-tool__result-item-progress">
               <ITCProgressMeter/> 
             </div>
-            <ITCButton :className='"itc-convert-tool__result-item-download"'>Download</ITCButton>
+            <ITCButton :className='"itc-convert-tool__result-item-download"' v-bind:disabled="item.result.trim() === ''">Download</ITCButton>
           </div>
         </div>
       </article>
@@ -89,9 +89,10 @@ export default {
     handleAddTasks() {
       // from factory, generate convert to image task
       // add the task to this.tasks
+      console.log(this.form.convert_to);
       for (const file of this.form.images.files) {
         let factory;
-        switch (this.convertTo) {
+        switch (this.form.convert_to) {
           case "JPG":
             factory = new ConcreteImageConversionToJPG();
             break;

@@ -2,8 +2,10 @@ import axios from 'axios'
 import ImageConversionInterface from './imageConversionInterface.js';
 
 export default class ImageConversionToJPG extends ImageConversionInterface {
-    constructor(fileName, file) {
-        this.fileName = fileName;
+    constructor(file) {
+        super();
+        this.fileNameBefore = file.name;
+        this.fileNameAfter = file.name.replace(/\.(jpg|jpeg|png|gif)$/ig, '.jpg');
         this.file = file;
         this.complete = false;
         this.result = "";
