@@ -15,25 +15,25 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
           <svg class="form__button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M288 109.3V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3l-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352H192c0 35.3 28.7 64 64 64s64-28.7 64-64H448c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V416c0-35.3 28.7-64 64-64zM432 456a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg>
           <span>Upload Images</span>
         </ITCButton>
-        <input ref="images" type="file" name="file" accept=".jpg, .jpeg, .png, .svg, .webp" multiple/>
-        <small class="form__annotation form__annotation--info">Files Selected:</small>
+        <input ref="images" type="file" name="file" accept=".jpg, .jpeg, .png, .svg, .webp" multiple @change="updateSelected"/>
+        <small class="form__annotation form__annotation--info">Files Selected: {{ selectedFiles }}</small>
       </div>
       <fieldset class="form__fieldset">
         <legend>&#9313; Select format to convert to:</legend>
         <div class="form__group form__group--radio">
-          <input type="radio" name="convert_to" value="JPG" v-model="convertTo"/>
+          <input type="radio" name="convert_to" value="JPG" v-model="form.convert_to"/>
           <label>JPG</label>
         </div>
         <div class="form__group form__group--radio">
-          <input type="radio" name="convert_to" value="PNG" v-model="convertTo"/>
+          <input type="radio" name="convert_to" value="PNG" v-model="form.convert_to"/>
           <label>PNG</label>
         </div>
         <div class="form__group form__group--radio">
-          <input type="radio" name="convert_to" value="WEBP" v-model="convertTo"/>
+          <input type="radio" name="convert_to" value="WEBP" v-model="form.convert_to"/>
           <label>WEBP</label>
         </div>
       </fieldset>
-      <ITCButton :className='"form__button form__button--submit"'>&#9314; Convert!</ITCButton>
+      <ITCButton :className='"form__button form__button--submit"' @click="convertImage">&#9314; Convert!</ITCButton>
     </form>
     <div class="itc-convert-tool__result">
       <h2>Result</h2>
@@ -61,10 +61,16 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
   </div>
 </template>
 <script>
+const defaultForm = {
+  images: null,
+  convert_to: 'JPG'
+}
+
 export default {
   data() {
     return {
-      convertTo: "JPG",
+      form: {...defaultForm},
+      selectedFiles: "",
       tasks: []
     }
   },
@@ -74,10 +80,16 @@ export default {
         taskItem.convert();
       }
     },
+    handleUpdateListOfImagesAnnotation() {
+      this.selectedFiles = [...this.form.images.files].map((item, index) => (index+1) + '. ' + item.name).join(", ");
+    },
+    handleUpdateImages() {
+      this.form.images = this.$refs.images;
+    },
     handleAddTasks() {
       // from factory, generate convert to image task
       // add the task to this.tasks
-      for (const file of this.$refs.images.files) {
+      for (const file of this.form.images.files) {
         let factory;
         switch (this.convertTo) {
           case "JPG":
@@ -96,9 +108,14 @@ export default {
         this.tasks.push(factory.createTask(file));
       }
     },
-    convertImage() {
+    convertImage(e) {
+      e.preventDefault();
       this.handleAddTasks();
       this.handleSubmitTasks();
+    },
+    updateSelected(e) {
+      this.handleUpdateImages();
+      this.handleUpdateListOfImagesAnnotation();
     },
     selectImages(e) {
       e.preventDefault();
