@@ -36,8 +36,8 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
       <ITCButton :className='"form__button form__button--submit"' @click="convertImage">&#9314; Convert!</ITCButton>
     </form>
     <div class="itc-convert-tool__result">
-      <h2 v-if="this.tasks.length > 0">Result</h2>
-      <article class="itc-convert-tool__result-item" v-for="item in this.tasks">
+      <h2 v-if="tasks.length > 0">Result</h2>
+      <article class="itc-convert-tool__result-item" v-for="item in tasks">
         <div class="itc-convert-tool__result-item-wrap">
           <div class="itc-convert-tool__result-item-header">
             <h3 class="itc-convert-tool__result-item-title">
