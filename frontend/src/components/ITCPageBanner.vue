@@ -2,7 +2,7 @@
     <div class="itc-page-banner">
         <div class="itc_page-banner__left">
           <h1 class="itc-page-banner__title">Convert Any Image Format to Your Preferred File Type: <span class="emphasized emphasized--one">.jpg</span>, <span class="emphasized emphasized--one">.png</span>, <span class="emphasized emphasized--one">.webp</span></h1>
-          <p>Image format conversion can be done using front-end, but it's done on back-end to practice and demonstrate author's system design skills.</p>
+          <p class="itc-page-banner__subtitle">Image format conversion can be done using front-end, but it's done on back-end to practice and demonstrate author's system design skills.</p>
         </div>
         <div class="itc_page-banner__right">
           <svg class="itc-page-banner__image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -18,14 +18,38 @@
 
 <style lang="scss" scoped>
 .itc-page-banner {
-  height: 575px;
   display: grid;
-  grid-template-columns: 5fr 5fr;
+  row-gap: 30px;
   column-gap: 100px;
   align-items: center;
 
+  @media screen and (min-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 575px;
+  }
+
   &__title {
-    max-width: 700px;
+    max-width: 370px;
+    margin: 0 auto 30px auto;
+    text-align: center;
+
+    @media screen and (min-width: 992px) {
+      max-width: 700px;
+      text-align: left;
+      margin: 0 0 30px 0;
+    }
+  }
+
+  &__subtitle {
+    max-width: 370px;
+    margin: 0 auto;
+    text-align: center;
+
+    @media screen and (min-width: 992px) {
+      max-width: 700px;
+      text-align: left;
+      margin: 0;
+    }
   }
 
   .emphasized {
@@ -45,7 +69,15 @@
   }
 
   &__image {
-    transform: rotate(3deg);
+    max-width: 350px;
+    display: block;
+    margin: 0 auto;
+
+    @media screen and (min-width: 992px) {
+      max-width: 100%;
+      margin: 0;
+      transform: rotate(3deg);
+    }
   }
 }
 </style>
