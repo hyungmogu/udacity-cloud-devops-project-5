@@ -29,7 +29,7 @@
   }
 
   &__title {
-    max-width: 370px;
+    max-width: 470px;
     margin: 0 auto 30px auto;
     text-align: center;
 
@@ -41,7 +41,7 @@
   }
 
   &__subtitle {
-    max-width: 370px;
+    max-width: 470px;
     margin: 0 auto;
     text-align: center;
 

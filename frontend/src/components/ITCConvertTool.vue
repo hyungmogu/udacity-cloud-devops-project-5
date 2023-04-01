@@ -128,6 +128,26 @@ export default {
     margin: 0 0 60px 0;
   }
 
+  &__form .form__group--file {
+    text-align: center;
+    max-width: 470px;
+    margin: 0 auto 30px auto;
+
+    @media screen and (min-width: 992px) {
+      text-align: left;
+      max-width: 100%;
+      margin: 0 0 30px 0;
+    }
+  }
+
+  &__form .form__button--submit {
+    text-align: center;
+
+    @media screen and (min-width: 992px) {
+      text-align: left;
+    }
+  }
+
   &__result-item-wrap {
     display: flex;
     justify-content: space-between;

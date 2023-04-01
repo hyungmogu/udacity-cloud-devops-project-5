@@ -94,9 +94,6 @@
 
   &__button {
     &--file button {
-      display: flex;
-      align-items: center;
-
       & > * {
         &:not(:last-child) {
           margin: 0 10px 0 0;
@@ -114,7 +111,7 @@
   }
 
   &__annotation {
-    margin: 10px 0 0 0;
+    margin: 5px 0 0 0;
     display: block;
   }
 
