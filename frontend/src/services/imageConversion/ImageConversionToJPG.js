@@ -23,9 +23,8 @@ export default class ImageConversionToJPG extends ImageConversionInterface {
                 this.error = true;
                 throw new Error("[ImageConversionToJPG, convert]: Something happened to server. Please check backend code. Status " + result.status);
             }
-            // const response = Buffer.from(result.data, 'base64');
-            const response = btoa(unescape(encodeURIComponent(result.data)));
-            this.result = 'data:image/jpg;base64,' + response;
+        
+            this.result = result.data;
             this.complete = true;
         } catch(e) {
             this.error = true;
