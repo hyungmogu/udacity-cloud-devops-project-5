@@ -27,7 +27,7 @@
 <style lang="scss" scoped>
   .itc-page-banner {
     display: grid;
-    row-gap: 30px;
+    row-gap: 60px;
     column-gap: 100px;
     align-items: center;
 
