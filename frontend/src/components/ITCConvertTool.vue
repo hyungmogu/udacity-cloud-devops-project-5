@@ -135,7 +135,7 @@ export default {
 
     @media screen and (min-width: 992px) {
       text-align: left;
-      max-width: 100%;
+      max-width: 50%;
       margin: 0 0 30px 0;
     }
   }
