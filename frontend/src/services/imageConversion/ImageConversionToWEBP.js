@@ -2,9 +2,10 @@ import axios from 'axios'
 import ImageConversionInterface from './ImageConversionInterface.js';
 
 export default class ImageConversionToWEBP extends ImageConversionInterface {
-    constructor(fileName, file) {
+    constructor(file) {
         super();
-        this.fileName = fileName;
+        this.fileNameBefore = file.name;
+        this.fileNameAfter = file.name.replace(/\.(jpg|jpeg|png|gif)$/ig, '.webp');
         this.file = file;
         this.complete = false;
         this.result = "";
