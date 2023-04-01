@@ -1,5 +1,6 @@
 <script setup>
 import ITCButton from "./ITCButton.vue";
+import ITCButtonLink from "./ITCButtonLink.vue";
 import ITCProgressMeter from "./ITCProgressMeter.vue";
 import ConcreteImageConversionToJPG from '@/services/imageConversion/concreteImageConversionToJPG.js'; 
 import ConcreteImageConversionToPNG from '@/services/imageConversion/concreteImageConversionToPNG.js'; 
@@ -53,7 +54,7 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
             <div class="itc-convert-tool__result-item-progress">
               <ITCProgressMeter :class="{complete: item.complete, error: item.error}"/> 
             </div>
-            <ITCButton :className='"itc-convert-tool__result-item-download"' v-bind:disabled="item.result.trim() === ''">Download</ITCButton>
+            <ITCButtonLink :href="item.result" :download="item.fileNameAfter" :class='"itc-convert-tool__result-item-download"' :disabled="item.complete">Download</ITCButtonLink>
           </div>
         </div>
       </article>
