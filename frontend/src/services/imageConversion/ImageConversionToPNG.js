@@ -23,5 +23,6 @@ export default class ImageConversionToPNG extends ImageConversionInterface {
         }
 
         this.result = result.data;
+        this.complete = true;
     }
 }

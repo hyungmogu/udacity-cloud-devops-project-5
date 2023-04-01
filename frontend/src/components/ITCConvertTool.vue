@@ -51,7 +51,7 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
           </div>
           <div class="itc-convert-tool__result-item-body">
             <div class="itc-convert-tool__result-item-progress">
-              <ITCProgressMeter/> 
+              <ITCProgressMeter :class="{complete: item.complete}"/> 
             </div>
             <ITCButton :className='"itc-convert-tool__result-item-download"' v-bind:disabled="item.result.trim() === ''">Download</ITCButton>
           </div>
@@ -88,7 +88,7 @@ export default {
     },
     handleAddTasks() {
       this.tasks = [];
-      
+
       for (const file of this.form.images.files) {
         let factory;
         switch (this.form.convert_to) {

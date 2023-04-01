@@ -22,5 +22,6 @@ export default class ImageConversionToJPG extends ImageConversionInterface {
         }
 
         this.result = result.data;
+        this.complete = true;
     }
 }

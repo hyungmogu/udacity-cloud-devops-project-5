@@ -1,12 +1,12 @@
 <template>
-    <div class="itc-progress-meter" v-bind:class="className">
+    <div class="itc-progress-meter" :class="class" >
         <span class="itc-progress-meter__bar"></span>
     </div>
 </template>
 <script>
 export default {
   props:{
-    className:{
+    class:{
       type:String,
       default:'',
      }
