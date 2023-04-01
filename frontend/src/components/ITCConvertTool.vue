@@ -87,6 +87,8 @@ export default {
       this.form.images = this.$refs.images;
     },
     handleAddTasks() {
+      this.tasks = [];
+      
       for (const file of this.form.images.files) {
         let factory;
         switch (this.form.convert_to) {
