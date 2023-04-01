@@ -58,6 +58,14 @@ export default {
         animation: none;
       }
     }
+
+    &.error &__bar {
+      background-color: var(--fourth);
+      &::after {
+        background-image: none;
+        animation: none;
+      }
+    }
 }
 </style>
 

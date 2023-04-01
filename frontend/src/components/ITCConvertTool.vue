@@ -51,7 +51,7 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
           </div>
           <div class="itc-convert-tool__result-item-body">
             <div class="itc-convert-tool__result-item-progress">
-              <ITCProgressMeter :class="{complete: item.complete}"/> 
+              <ITCProgressMeter :class="{complete: item.complete, error: item.error}"/> 
             </div>
             <ITCButton :className='"itc-convert-tool__result-item-download"' v-bind:disabled="item.result.trim() === ''">Download</ITCButton>
           </div>

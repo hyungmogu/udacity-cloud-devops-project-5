@@ -8,21 +8,29 @@ export default class ImageConversionToPNG extends ImageConversionInterface {
         this.fileNameAfter = file.name.replace(/\.(jpg|jpeg|png|gif)$/ig, '.png');
         this.file = file;
         this.complete = false;
+        this.error = false;
         this.result = "";
     }
 
     async convert() {
         const formData = new FormData();
         formData.append("image", this.file);
-        const result = await axios.post('http://localhost:8000/api/convert-to-png', formData, {
-            'Content-Type': 'multipart/form-data'
-        }); 
 
-        if (result.status !== 200) {
-            throw new Error("[ImageConversionToPNG, convert]: Something happened to server. Please check backend code. Status " + result.status);
+        try {
+            const result = await axios.post('http://localhost:8000/api/convert-to-png', formData, {
+                'Content-Type': 'multipart/form-data'
+            }); 
+
+            if (result.status !== 200) {
+                this.error = true;
+                throw new Error("[ImageConversionToPNG, convert]: Something happened to server. Please check backend code. Status " + result.status);
+            }
+
+            this.result = result.data;
+            this.complete = true;
+        } catch(e) {
+            this.error = true;
+            throw new Error("[ImageConversionToJPG, convert]: Something happened to server. " + e);
         }
-
-        this.result = result.data;
-        this.complete = true;
     }
 }
