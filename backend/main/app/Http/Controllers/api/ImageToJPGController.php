@@ -8,10 +8,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Aws\S3\S3Client;
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 
 class ImageToJPGController extends Controller
 {

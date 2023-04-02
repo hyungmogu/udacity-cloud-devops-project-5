@@ -1,4 +1,9 @@
 <?php
+use Dotenv\Dotenv;
+
+// Load the environment variables
+$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+$dotenv->load();
 
 /*
 |--------------------------------------------------------------------------
