@@ -1,6 +1,6 @@
 <template>
     <div class="itc-button" :class="class">
-        <a :href="href" :download="download" class="itc-button__button" :disabled="disabled">
+        <a :href="href" :download="download" class="itc-button__button" :disabled="disabled ? disabled : null">
             <slot></slot>
         </a>
     </div>
