@@ -176,11 +176,8 @@ export default {
   &__result-item-title {
     margin: 0;
     font-weight: var(--font-weight-normal);
-    font-size: var(--h6-font-size-mobile);
+    font-size: var(--font-size-md);
 
-    @media screen and (min-width: 992px) {
-      font-size: var(--h6-font-size);
-    }
 
     & > * {
       display: block;
