@@ -6,6 +6,10 @@ WORKDIR /var/www/html
 RUN echo "UTC" > /etc/timezone
 RUN apk add --no-cache zip unzip curl nginx supervisor
 
+# Installing bash
+RUN apk add bash
+RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
+
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
@@ -29,6 +33,6 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 # Configure supervisord
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-EXPOSE 80
+EXPOSE 9000
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
