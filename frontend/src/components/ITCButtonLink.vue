@@ -1,6 +1,6 @@
 <template>
     <div class="itc-button" :class="class">
-        <a :href="href" :download="download" class="itc-button__button" :disabled="disabled ? disabled : null">
+        <a :href="href" :download="download" :target="target" class="itc-button__button" :disabled="disabled ? disabled : null">
             <slot></slot>
         </a>
     </div>
@@ -19,6 +19,10 @@ export default {
     class:{
       type:String,
       default:'',
+    },
+    target:{
+      type:String,
+      default:'_self',
     },
     disabled: {
      type: Boolean,
