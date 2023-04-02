@@ -51,7 +51,7 @@ class ImageToJPGController extends Controller
             ],
         ]);
         
-        $s3->putObject([
+        $result = $s3->putObject([
             'Bucket' => env('AWS_S3_BUCKET'),
             'Key' => time() . '-' . Str::orderedUuid() . '.jpg',
             'Body' => $jpeg_data,
