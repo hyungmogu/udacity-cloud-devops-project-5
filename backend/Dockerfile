@@ -31,5 +31,5 @@ COPY ./main .
 RUN composer install --no-dev
 RUN chown -R nobody:nobody /var/www/html/storage
 
-EXPOSE 80
+EXPOSE 8000
 CMD ["sh", "-c", "nginx && php-fpm"]
