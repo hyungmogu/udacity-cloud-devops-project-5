@@ -33,6 +33,6 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 # Configure supervisord
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-EXPOSE 9000
+EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
