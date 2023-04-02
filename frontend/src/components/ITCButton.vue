@@ -28,6 +28,7 @@ export default {
         background-color: var(--primary);
         color: var(--white);
         transition: var(--transition-200);
+        text-decoration: none;
 
         &[disabled] {
             cursor:not-allowed;

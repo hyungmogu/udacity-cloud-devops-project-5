@@ -1,5 +1,5 @@
 <template>
-    <div class="itc-button" :class="class">
+    <div class="itc-button itc-button--link" :class="class">
         <a :href="href" :download="download" :target="target" class="itc-button__button" :disabled="disabled ? disabled : null">
             <slot></slot>
         </a>
@@ -40,6 +40,7 @@ export default {
         background-color: var(--primary);
         color: var(--white);
         transition: var(--transition-200);
+        text-decoration: none;
 
         &[disabled] {
             cursor:not-allowed;
