@@ -1,3 +1,4 @@
+# based on https://dev.to/jackmiras/laravel-with-php7-4-in-an-alpine-container-3jk6
 FROM alpine:3.14
 
 WORKDIR /var/www/html/
@@ -33,7 +34,8 @@ RUN apk add --no-cache php8 \
     php8-pdo_mysql \
     php8-pdo_sqlite \
     php8-tokenizer \
-    php8-pecl-redis
+    php8-pecl-redis \
+    && ln -s /usr/bin/php8 /usr/bin/php
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
