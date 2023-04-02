@@ -6,6 +6,7 @@ use GdImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Aws\S3\S3Client;
 use Dotenv\Dotenv;
 
@@ -56,7 +57,7 @@ class ImageToJPGController extends Controller
         
         $s3->putObject([
             'Bucket' => env('AWS_S3_BUCKET'),
-            'Key' => 'path/to/image.jpg',
+            'Key' => time() . '-' . Str::orderedUuid() . '.jpg',
             'Body' => $jpeg_data,
             'ContentType' => 'image/jpeg',
         ]);
