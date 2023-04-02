@@ -42,6 +42,7 @@ export default {
         transition: var(--transition-200);
         text-decoration: none;
         display: inline-block;
+        font-size: var(--font-size-sm);
 
         &[disabled] {
             cursor:not-allowed;
