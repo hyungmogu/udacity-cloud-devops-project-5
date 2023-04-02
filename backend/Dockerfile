@@ -1,34 +1,70 @@
-# Set the base image
-FROM php:8.1-fpm-alpine
+FROM alpine:latest
 
-# Install system dependencies and PHP extensions
-RUN apk update && apk add --no-cache \
-    build-base \
-    git \
-    curl \
-    libpng-dev \
-    libzip-dev \
-    oniguruma-dev \
-    zlib-dev \
-    && docker-php-ext-install pdo_mysql mbstring zip gd
+WORKDIR /var/www/html/
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Essentials
+RUN echo "UTC" > /etc/timezone
+RUN apk add --no-cache zip unzip curl sqlite nginx supervisor
 
-# Set the working directory
-WORKDIR /var/www
+# Installing bash
+RUN apk add bash
+RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
-# Copy the application files
-COPY ./main /var/www
+# Installing PHP
+RUN apk add --no-cache php8 \
+    php8-common \
+    php8-fpm \
+    php8-pdo \
+    php8-opcache \
+    php8-zip \
+    php8-phar \
+    php8-iconv \
+    php8-cli \
+    php8-curl \
+    php8-openssl \
+    php8-mbstring \
+    php8-tokenizer \
+    php8-fileinfo \
+    php8-json \
+    php8-xml \
+    php8-xmlwriter \
+    php8-simplexml \
+    php8-dom \
+    php8-pdo_mysql \
+    php8-pdo_sqlite \
+    php8-tokenizer \
+    php8-pecl-redis
 
-# Install application dependencies
-RUN composer install --optimize-autoloader --no-dev
+# Installing composer
+RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
+RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+RUN rm -rf composer-setup.php
 
-# Set the correct permissions
-RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www
+# Configure supervisor
+RUN mkdir -p /etc/supervisor.d/
+COPY .docker/supervisord.ini /etc/supervisor.d/supervisord.ini
 
-# Expose the necessary ports
-EXPOSE 8000
+# Configure PHP
+RUN mkdir -p /run/php/
+RUN touch /run/php/php8.0-fpm.pid
 
-# Start the PHP-FPM server
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public/"]
+COPY .docker/php-fpm.conf /etc/php8/php-fpm.conf
+COPY .docker/php.ini-production /etc/php8/php.ini
+
+# Configure nginx
+COPY .docker/nginx.conf /etc/nginx/
+COPY .docker/nginx-laravel.conf /etc/nginx/modules/
+
+RUN mkdir -p /run/nginx/
+RUN touch /run/nginx/nginx.pid
+
+RUN ln -sf /dev/stdout /var/log/nginx/access.log
+RUN ln -sf /dev/stderr /var/log/nginx/error.log
+
+# Building process
+COPY ./main .
+RUN composer install --no-dev
+RUN chown -R nobody:nobody /var/www/html/storage
+
+EXPOSE 80
+CMD ["supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]
