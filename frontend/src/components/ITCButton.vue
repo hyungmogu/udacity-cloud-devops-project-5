@@ -22,7 +22,7 @@ export default {
 <style lang="scss" scoped>
 .itc-button {
     &__button {
-        padding: 10px 25px;
+        padding: 12px 25px;
         cursor: pointer;
         border: none;
         background-color: var(--primary);
@@ -31,6 +31,7 @@ export default {
         text-decoration: none;
         display: inline-block;
         font-size: var(--font-size-sm);
+        line-height: 1;
 
 
         &[disabled] {
@@ -41,6 +42,10 @@ export default {
         &:hover:not([disabled]) {
             background-color: var(--primary-6);
         }
+    }
+
+    &__button > svg {
+        height: 12px
     }
 }
 </style>
