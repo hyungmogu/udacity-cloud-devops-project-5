@@ -2,6 +2,10 @@
 
 ## 1) Installation
 
+```
+docker build -t laravel-alpine:latest . --no-cache
+```
+
 ## 2) Logging into Laravel container
 
 ```
@@ -10,7 +14,7 @@ docker exec -it my-container-name /bin/bash
 
 **Example**
 ```
-docker exec -it backend-myapp-1 /bin/bash
+docker exec -it backend-myapp-1 /bin/bash 
 ```
 
 ## 3) Checking Laravel version
@@ -30,3 +34,8 @@ docker-compose exec <service> <command>
 ```
 docker-compose exec myapp php artisan make:controller UserController
 ```
+
+
+## Notes
+
+- Laravel setup using dockerfile is based on this [site](https://dev.to/jackmiras/laravel-with-php7-4-in-an-alpine-container-3jk6)

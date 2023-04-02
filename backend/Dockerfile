@@ -62,6 +62,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Building process
+COPY ./.docker .
 COPY ./main .
 RUN composer install --no-dev
 RUN chown -R nobody:nobody /var/www/html/storage
