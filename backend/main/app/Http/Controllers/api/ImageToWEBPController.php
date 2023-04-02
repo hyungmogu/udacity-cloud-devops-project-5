@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use Aws\S3\S3Client;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 class ImageToWEBPController extends Controller
 {
@@ -36,25 +40,25 @@ class ImageToWEBPController extends Controller
         // create a JPEG image from the image resource
         ob_start();
         imagewebp($image);
-        $png_data = ob_get_clean();
+        $webp_data = ob_get_clean();
 
         // Cleanup
         imagedestroy($image);
 
         $s3 = new S3Client([
-            'region' => 'your_s3_region',
+            'region' => env('AWS_S3_REGION'),
             'version' => 'latest',
             'credentials' => [
-                'key' => 'your_s3_access_key',
-                'secret' => 'your_s3_secret_key',
+                'key' => env('AWS_S3_KEY'),
+                'secret' => env('AWS_S3_SECRET'),
             ],
         ]);
         
         $s3->putObject([
-            'Bucket' => 'your_s3_bucket',
+            'Bucket' => env('AWS_S3_BUCKET'),
             'Key' => 'path/to/image.jpg',
-            'Body' => $jpegData,
-            'ContentType' => 'image/jpeg',
+            'Body' => $webp_data,
+            'ContentType' => 'image/webp',
         ]);
 
         return response($result['ObjectURL'], 200, [
