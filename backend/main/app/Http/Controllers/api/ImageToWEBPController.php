@@ -41,8 +41,24 @@ class ImageToWEBPController extends Controller
         // Cleanup
         imagedestroy($image);
 
-        return response($png_data, 200, [
-            'Content-Type' => 'image/webp',
+        $s3 = new S3Client([
+            'region' => 'your_s3_region',
+            'version' => 'latest',
+            'credentials' => [
+                'key' => 'your_s3_access_key',
+                'secret' => 'your_s3_secret_key',
+            ],
+        ]);
+        
+        $s3->putObject([
+            'Bucket' => 'your_s3_bucket',
+            'Key' => 'path/to/image.jpg',
+            'Body' => $jpegData,
+            'ContentType' => 'image/jpeg',
+        ]);
+
+        return response($result['ObjectURL'], 200, [
+            'Content-Type' => 'text/plain',
         ]);
     }
 
