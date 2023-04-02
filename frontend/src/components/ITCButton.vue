@@ -29,6 +29,7 @@ export default {
         color: var(--white);
         transition: var(--transition-200);
         text-decoration: none;
+        display: inline-block;
 
         &[disabled] {
             cursor:not-allowed;
