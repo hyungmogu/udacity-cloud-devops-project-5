@@ -17,7 +17,7 @@ AWS_OBJECT_EXPIRES_IN = int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0"))
 
 class ImgToJPGService(ConvertService):
   def convert(self, img):
-    pil_image = Image.open(BytesIO(base64.b64decode(img))).convert("RGB")
+    pil_image = Image.open(img).convert("RGB")
     in_mem_file = BytesIO()
     pil_image.save(in_mem_file, format="jpg")
     in_mem_file.seek(0)
