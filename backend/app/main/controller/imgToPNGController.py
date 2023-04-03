@@ -2,7 +2,7 @@ from flask import request
 from main.service.imgToPNGService import ImgToPNGService
 
 def create_png():
-  if (request.form.get("image") == None or request.form.get("image") == ""):
+  if (request.files["image"] == None or request.files["image"] == ""):
     return "Attached Image Empty", 500
   
   old_img = request.form.get("image")
