@@ -1,3 +1,6 @@
+from PIL import Image
+from io import BytesIO
+import base64
 import os
 import logging
 import boto3
@@ -13,17 +16,22 @@ AWS_OBJECT_EXPIRES_IN = int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0"))
 
 
 class ImgToJPGService(ConvertService):
-  def convert(self, file):
-    pass
+  def convert(self, img):
+    pil_image = Image.open(BytesIO(base64.b64decode(img))).convert("RGB")
+    in_mem_file = BytesIO()
+    pil_image.save(in_mem_file, format="jpg")
+    in_mem_file.seek(0)
 
-  def upload(self, converted_file):
+    return in_mem_file
+
+  def upload(self, new_img):
     s3_client = boto3.client("s3")
 
     object_name = "{}-{}.jpg".format(int(time(), uuid4().hex))
     response = None
 
     try:
-      s3_client.upload_file(converted_file, AWS_S3_BUCKET, object_name)
+      s3_client.upload_file(new_img, AWS_S3_BUCKET, object_name)
 
       response = s3_client.generate_presigned_url(
         "get_object",
