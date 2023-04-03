@@ -7,7 +7,7 @@ def create_jpg():
   if (request.files["image"] == None or request.files["image"] == ""):
     return "Attached Image Empty", 500
 
-  old_img = request.form.get("image")
+  old_img = request.files["image"]
 
   convert_service = ImgToJPGService()
   new_img = convert_service.convert(old_img)
