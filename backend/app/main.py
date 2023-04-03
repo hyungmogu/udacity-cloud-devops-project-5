@@ -1,5 +1,8 @@
 from flask import Flask
+from dotenv import load_dotenv
 from main.routes.api import api
+
+load_dotenv()
 
 app = Flask(__name__)
 app.register_blueprint(api)
