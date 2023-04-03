@@ -2,6 +2,9 @@ from flask import request
 from main.service.imgToWEBPService import ImgToWEBPService
 
 def create_webp():
+  if (request.form.get("image") == None or request.form.get("image") == ""):
+    return "Attached Image Empty", 500
+  
   old_img = request.form.get("image")
 
   convert_service = ImgToWEBPService()

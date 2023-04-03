@@ -1,7 +1,11 @@
+import sys
 from flask import request
 from main.service.imgToJPGService import ImgToJPGService
 
 def create_jpg():
+  if (request.form.get("image") == None or request.form.get("image") == ""):
+    return "Attached Image Empty", 500
+
   old_img = request.form.get("image")
 
   convert_service = ImgToJPGService()
