@@ -1,6 +1,6 @@
 FROM php:8.2-fpm-alpine3.16
 
-WORKDIR /var/www/html
+WORKDIR /app
 
 # Essentials
 RUN echo "UTC" > /etc/timezone
@@ -18,7 +18,7 @@ RUN rm -rf composer-setup.php
 # Install application dependencies
 COPY ./main .
 RUN composer install --no-dev
-RUN chown -R nobody:nobody /var/www/html/storage
+RUN chown -R nobody:nobody /app/storage
 
 # Configure nginx
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
