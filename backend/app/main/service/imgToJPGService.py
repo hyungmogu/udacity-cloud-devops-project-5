@@ -8,7 +8,7 @@ from uuid import uuid4
 from time import time
 from botocore.exceptions import ClientError
 
-from convertService import ConvertService
+from main.service.convertService import ConvertService
 
 
 AWS_S3_BUCKET = os.environ.get("AWS_S3_BUCKET", "")
