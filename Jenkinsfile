@@ -89,6 +89,18 @@ pipeline {
                 }
             }
         }
+        stage('Deploy Back-End Docker Image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                dir("backend") {
+                    sh 'docker build -t guhyungm7/img-converter:latest -f .'
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    sh 'docker push guhyungm7/img-converter:latest'
+                }
+            }
+        }
         stage('CanaryDeploy') {
             when {
                 branch 'master'
