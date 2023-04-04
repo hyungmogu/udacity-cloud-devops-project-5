@@ -45,7 +45,9 @@ pipeline {
             }
         }
         stage('Test Back-End') {
-            agent { dockerfile true }
+            agent {
+                docker { image 'guhyungm7/img-converter:canary' }
+            }
             when {
                 branch 'master'
             }
@@ -54,7 +56,9 @@ pipeline {
             }
         }
         stage('Scan Front-End') {
-            agent { dockerfile true }
+             agent {
+                docker { image 'guhyungm7/img-converter-frontend:canary' }
+            }
             when {
                 branch 'master'
             }
@@ -63,7 +67,9 @@ pipeline {
             }
         }
         stage('Scan Back-End') {
-            agent { dockerfile true }
+            agent {
+                docker { image 'guhyungm7/img-converter:canary' }
+            }
             when {
                 branch 'master'
             }
@@ -71,16 +77,15 @@ pipeline {
                 sh 'python -m pip_audit'
             }
         }
-        stage('Push Docker Image') {
+        stage('Deploy Front-End Docker Image') {
             when {
                 branch 'master'
             }
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
-                        app.push("${env.BUILD_NUMBER}")
-                        app.push("latest")
-                    }
+                dir("frontend") {
+                    sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    sh 'docker push guhyungm7/img-converter-frontend:latest'
                 }
             }
         }
