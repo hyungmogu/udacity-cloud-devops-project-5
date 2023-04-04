@@ -33,8 +33,8 @@ pipeline {
             }
         }
         stage('Test Front-End') {
-            when {
-                branch 'master'
+            agent {
+                docker { image 'guhyungm7/img-converter-frontend:canary' }
             }
             steps {
                 sh 'npm run test:unit'
