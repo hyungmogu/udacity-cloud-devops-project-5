@@ -27,15 +27,15 @@ class ImgToWEBPService(ConvertService):
   def upload(self, new_img):
     s3_client = boto3.client("s3")
 
-    object_name = "{}-{}.webp".format(time(), uuid4().hex)
+    file_name = "{}-{}.webp".format(time(), uuid4().hex)
     response = None
 
     try:
-      s3_client.upload_file(new_img, AWS_S3_BUCKET, object_name)
+      s3_client.upload_fileobj(new_img, AWS_S3_BUCKET, file_name)
 
       response = s3_client.generate_presigned_url(
         "get_object",
-        Params={"Bucket": AWS_S3_BUCKET, "Key": object_name},
+        Params={"Bucket": AWS_S3_BUCKET, "Key": file_name},
         ExpiresIn=AWS_OBJECT_EXPIRES_IN,
       )
 
