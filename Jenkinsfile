@@ -67,11 +67,18 @@ pipeline {
             }
         }
         stage('Scan Front-End') {
+            agent {
+                docker {
+                    image: 'guhyungm7/img-converter-frontend:canary'
+                }
+            }
             when {
                 branch 'master'
             }
             steps {
-
+                docker.image('guhyungm7/img-converter-frontend:canary').inside {
+                    sh 'npm audit'
+                }
             }
         }
         stage('Scan Back-End') {
