@@ -27,7 +27,7 @@ class ImgToPNGService(ConvertService):
   def upload(self, new_img):
     s3_client = boto3.client("s3")
 
-    object_name = "{}-{}.png".format(int(time(), uuid4().hex))
+    object_name = "{}-{}.png".format(time(), uuid4().hex)
     response = None
 
     try:

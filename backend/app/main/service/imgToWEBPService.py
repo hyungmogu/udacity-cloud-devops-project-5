@@ -27,7 +27,7 @@ class ImgToWEBPService(ConvertService):
   def upload(self, new_img):
     s3_client = boto3.client("s3")
 
-    object_name = "{}-{}.webp".format(int(time(), uuid4().hex))
+    object_name = "{}-{}.webp".format(time(), uuid4().hex)
     response = None
 
     try:
