@@ -68,7 +68,7 @@ pipeline {
                 sh 'python -m pip_audit'
             }
         }
-        stage('Deploy Front-End Docker Image') {
+        stage('Deploy Production-Grade Front-End Docker Image') {
             when {
                 branch 'master'
             }
@@ -80,7 +80,10 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Back-End Docker Image') {
+        stage('Deploy Production-Grade Back-End Docker Image') {
+            agent {
+                docker { image 'guhyungm7/img-converter:canary' }
+            }
             when {
                 branch 'master'
             }
