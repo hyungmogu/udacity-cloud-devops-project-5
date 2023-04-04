@@ -19,7 +19,7 @@ class ImgToJPGService(ConvertService):
   def convert(self, img):
     pil_image = Image.open(img).convert("RGB")
     in_mem_file = BytesIO()
-    pil_image.save(in_mem_file, format="jpg")
+    pil_image.save(in_mem_file, format="JPEG")
     in_mem_file.seek(0)
 
     return in_mem_file
@@ -27,7 +27,7 @@ class ImgToJPGService(ConvertService):
   def upload(self, new_img):
     s3_client = boto3.client("s3")
 
-    object_name = "{}-{}.jpg".format(int(time(), uuid4().hex))
+    object_name = "{}-{}.jpeg".format(int(time(), uuid4().hex))
     response = None
 
     try:
