@@ -102,6 +102,11 @@ pipeline {
                        sh "apt update"
                    }
                }
+               stage("Install tar and gzip") {
+                   steps {
+                       sh "apt-get -y install tar gzip"
+                   }
+               }
             }
         }
         stage('Ensure back-end infrastructure exists') {
