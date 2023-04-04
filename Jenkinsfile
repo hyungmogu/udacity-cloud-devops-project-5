@@ -82,11 +82,18 @@ pipeline {
             }
         }
         stage('Scan Back-End') {
+            agent {
+                docker {
+                    image: 'guhyungm7/img-converter:canary'
+                }
+            }
             when {
                 branch 'master'
             }
             steps {
-
+                docker.image('guhyungm7/img-converter:canary').inside {
+                    sh 'python -m pip_audit'
+                }
             }
         }
         stage('Push Docker Image') {
