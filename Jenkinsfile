@@ -107,6 +107,11 @@ pipeline {
                        sh "apt-get -y install tar gzip"
                    }
                }
+               stage("Install AWS-CLI") {
+                   steps {
+                       sh "apt-get -y install awscli"
+                   }
+               }
             }
         }
         stage('Ensure back-end infrastructure exists') {
