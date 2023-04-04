@@ -25,6 +25,13 @@ pipeline {
                 sh 'docker push guhyungm7/img-converter-frontend:canary'
             }
         }
+        stage('Build Back-end') {
+            steps {
+                sh 'docker build . -t guhyungm7/img-converter:canary -f backend/Dockerfile'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push guhyungm7/img-converter:canary'
+            }
+        }
         stage('Test Front-End') {
             when {
                 branch 'master'
