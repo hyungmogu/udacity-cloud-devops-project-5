@@ -97,6 +97,11 @@ pipeline {
                 docker { image 'docker:3.11-buster' }
             }
             stages {
+                stage("Checkout") {
+                   steps {
+                       checkout scm
+                   }
+               }
                 stage("Update Packages") {
                    steps {
                        sh "apt update"
