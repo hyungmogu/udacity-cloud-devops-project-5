@@ -8,8 +8,8 @@ pipeline {
     stages {
          stage('Lint Front-end') {
             steps {
-                cd 
-                echo 'Linting Front-end'
+                sh 'docker pull hadolint/hadolint'
+                sh 'docker run --rm -i hadolint/hadolint < frontend/Dockerfile'
             }
         }
         stage('Lint Back-end') {
