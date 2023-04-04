@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE_NAME = "guhyungm7/img-type-converter"
+        DOCKER_IMAGE_NAME = "guhyungm7/img-converter:latest"
         CANARY_REPLICAS = 0
     }
     stages {
@@ -39,22 +39,31 @@ pipeline {
         stage('Test Front-End') {
             agent {
                 docker {
-                    image: 'node:18-buster'
+                    image: 'guhyungm7/img-converter-frontend:canary'
                 }
             }
             when {
                 branch 'master'
             }
             steps {
-
+                docker.image('guhyungm7/img-converter-frontend:canary').inside {
+                    sh 'npm run test:unit'
+                }
             }
         }
         stage('Test Back-End') {
+            agent {
+                docker {
+                    image: 'guhyungm7/img-converter:canary'
+                }
+            }
             when {
                 branch 'master'
             }
             steps {
-
+                docker.image('guhyungm7/img-converter:canary').inside {
+                    sh 'python -m unittest discover tests'
+                }
             }
         }
         stage('Scan Front-End') {
