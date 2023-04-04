@@ -14,7 +14,8 @@ pipeline {
         }
         stage('Lint Back-end') {
             steps {
-                echo 'Linting Back-end'
+                sh 'docker pull hadolint/hadolint'
+                sh 'docker run --rm -i hadolint/hadolint < backend/Dockerfile'
             }
         }
         stage('Test Front-End') {
