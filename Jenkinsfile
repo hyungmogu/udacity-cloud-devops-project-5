@@ -81,9 +81,6 @@ pipeline {
             }
         }
         stage('Deploy Production-Grade Back-End Docker Image') {
-            agent {
-                docker { image 'guhyungm7/img-converter:canary' }
-            }
             when {
                 branch 'master'
             }
