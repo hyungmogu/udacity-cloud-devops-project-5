@@ -18,8 +18,14 @@ pipeline {
                 sh 'docker run --rm -i hadolint/hadolint < backend/Dockerfile'
             }
         }
+        stage('Build Front-end') {
+            steps {
+                sh 'docker build . -t guhyungm7/img-converter-frontend:canary -f frontend/Dockerfile'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push guhyungm7/img-converter-frontend:canary'
+            }
+        }
         stage('Test Front-End') {
-            agent { dockerfile true }
             when {
                 branch 'master'
             }
