@@ -94,7 +94,7 @@ pipeline {
         }
         stage('Deploy Infrastructure') {
             agent {
-                docker { image 'docker:3.11-buster' }
+                docker { image 'python:3.11-buster' }
             }
             stages {
                 stage("Checkout") {
