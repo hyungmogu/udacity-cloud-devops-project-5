@@ -48,9 +48,6 @@ pipeline {
             agent {
                 docker { image 'guhyungm7/img-converter:canary' }
             }
-            when {
-                branch 'master'
-            }
             steps {
                 sh 'python -m unittest discover tests'
             }
@@ -59,9 +56,6 @@ pipeline {
              agent {
                 docker { image 'guhyungm7/img-converter-frontend:canary' }
             }
-            when {
-                branch 'master'
-            }
             steps {
                 sh 'npm audit'
             }
@@ -69,9 +63,6 @@ pipeline {
         stage('Scan Back-End') {
             agent {
                 docker { image 'guhyungm7/img-converter:canary' }
-            }
-            when {
-                branch 'master'
             }
             steps {
                 sh 'python -m pip_audit'
