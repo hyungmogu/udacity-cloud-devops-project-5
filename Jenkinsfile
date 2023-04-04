@@ -128,6 +128,17 @@ pipeline {
                        '''
                    }
                }
+               stage("Ensure front-end infrastructure exist") {
+                   steps {
+                       sh '''
+                       aws cloudformation deploy \
+                        --template-file .circleci/files/frontend.yml \
+                        --tags project=udapeople \
+                        --stack-name "udapeople-${env.BUILD_ID:0:7}-frontend" \
+                        --parameter-overrides ID="${env.BUILD_ID:0:7}"
+                       '''
+                   }
+               }
             }
         }
         stage('CanaryDeploy') {
