@@ -1,30 +1,11 @@
 pipeline {
     agent any
     environment {
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
         DOCKER_IMAGE_NAME = "guhyungm7/img-converter:latest"
         CANARY_REPLICAS = 0
     }
     stages {
-        stage('Build Front-end') {
-            agent {
-                docker {
-                    image: 'node:18-buster'
-                }
-            }
-            steps {
-                echo 'Building Front-end'
-            }
-        }
-        stage('Build Back-end') {
-            agent {
-                docker {
-                    image: 'php:7.4-fpm'
-                }
-            }
-            steps {
-                echo 'Building Laravel and Back-end'
-            }
-        }
          stage('Lint Front-end') {
             steps {
                 cd 
@@ -37,63 +18,39 @@ pipeline {
             }
         }
         stage('Test Front-End') {
-            agent {
-                docker {
-                    image: 'guhyungm7/img-converter-frontend:canary'
-                }
-            }
+            agent { dockerfile true }
             when {
                 branch 'master'
             }
             steps {
-                docker.image('guhyungm7/img-converter-frontend:canary').inside {
-                    sh 'npm run test:unit'
-                }
+                sh 'npm run test:unit'
             }
         }
         stage('Test Back-End') {
-            agent {
-                docker {
-                    image: 'guhyungm7/img-converter:canary'
-                }
-            }
+            agent { dockerfile true }
             when {
                 branch 'master'
             }
             steps {
-                docker.image('guhyungm7/img-converter:canary').inside {
-                    sh 'python -m unittest discover tests'
-                }
+                sh 'python -m unittest discover tests'
             }
         }
         stage('Scan Front-End') {
-            agent {
-                docker {
-                    image: 'guhyungm7/img-converter-frontend:canary'
-                }
-            }
+            agent { dockerfile true }
             when {
                 branch 'master'
             }
             steps {
-                docker.image('guhyungm7/img-converter-frontend:canary').inside {
-                    sh 'npm audit'
-                }
+                sh 'npm audit'
             }
         }
         stage('Scan Back-End') {
-            agent {
-                docker {
-                    image: 'guhyungm7/img-converter:canary'
-                }
-            }
+            agent { dockerfile true }
             when {
                 branch 'master'
             }
             steps {
-                docker.image('guhyungm7/img-converter:canary').inside {
-                    sh 'python -m pip_audit'
-                }
+                sh 'python -m pip_audit'
             }
         }
         stage('Push Docker Image') {
