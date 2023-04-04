@@ -117,18 +117,17 @@ pipeline {
                        sh "apt-get -y install awscli"
                    }
                }
-            }
-        }
-        stage('Ensure back-end infrastructure exists') {
-            when {
-                branch 'master'
-            }
-            steps {
-                dir("frontend") {
-                    sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push guhyungm7/img-converter-frontend:latest'
-                }
+               stage("Ensure back-end infrastructure exists") {
+                   steps {
+                       sh '''
+                       aws cloudformation deploy \
+                        --template-file .circleci/files/backend.yml \
+                        --tags project=udapeople \
+                        --stack-name "udapeople-${env.BUILD_ID:0:7}-backend" \
+                        --parameter-overrides ID="${env.BUILD_ID:0:7}"
+                       '''
+                   }
+               }
             }
         }
         stage('CanaryDeploy') {
