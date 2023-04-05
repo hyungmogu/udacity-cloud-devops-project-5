@@ -259,6 +259,21 @@ pipeline {
                                 --stack - name "udapeople-${env.BUILD_ID:0:7}-backend"\
                                 --parameter - overrides ID = "${env.BUILD_ID:0:7}"
                             '''
+
+                            instance_id = sh(
+                                script: 'aws cloudformation describe-stacks --stack-name "udapeople-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`InstanceId`].OutputValue" --output text',
+                                returnStdout: true
+                            ).trim()
+                            
+                            os_user = sh(
+                                script: 'aws cloudformation describe-stacks --stack-name "udapeople-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`DefaultOsUser`].OutputValue" --output text',
+                                returnStdout: true
+                            ).trim()
+
+                            withEnv(["AWS_BACKEND_STACK_INSTANCE_ID=${instance_id}", "AWS_BACKEND_STACK_OS_USER=${os_user}"]) {
+                                echo "AWS_BACKEND_STACK_INSTANCE_ID = ${env.AWS_BACKEND_STACK_INSTANCE_ID}"
+                                echo "AWS_BACKEND_STACK_OS_USER = ${env.AWS_BACKEND_STACK_OS_USER}"
+                            }
                         }
                         
                     }
