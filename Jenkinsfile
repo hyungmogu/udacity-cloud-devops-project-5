@@ -6,65 +6,69 @@ pipeline {
         CANARY_REPLICAS = 0
     }
     stages {
-         stage('Lint Front-end') {
-            stages {
-                stage("Checkout") {
-                   steps {
-                       checkout scm
+        stage('Lint') {
+            parallel {
+                stage('Lint Front-end') {
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                checkout scm
+                            }
+                        }
+                        stage("Pull Hadolint Docker Image") {
+                            steps {
+                                sh 'docker pull hadolint/hadolint'
+                            }
+                        }
+                        stage("Check Lint") {
+                            steps {
+                                dir('frontend') {
+                                    sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
+                                }
+                            }
+                        }
                     }
-               }
-               stage("Pull Hadolint Docker Image") {
-                   steps {
-                       sh 'docker pull hadolint/hadolint'
-                   }
-               }
-               stage("Check Lint") {
-                   steps {
-                       dir('frontend') {
-                            sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
-                       }
-                   }
-               }
-            }
-        }
-        stage('Lint Back-end') {
-            stages {
-                stage("Checkout") {
-                   steps {
-                       checkout scm
+                }
+                stage('Lint Back-end') {
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                checkout scm
+                            }
+                        }
+                        stage("Pull Hadolint Docker Image") {
+                            steps {
+                                sh 'docker pull hadolint/hadolint'
+                            }
+                        }
+                        stage("Check Lint") {
+                            steps {
+                                dir('backend') {
+                                    sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
+                                }
+                            }
+                        }
                     }
-               }
-               stage("Pull Hadolint Docker Image") {
-                   steps {
-                       sh 'docker pull hadolint/hadolint'
-                   }
-               }
-               stage("Check Lint") {
-                   steps {
-                       dir('backend') {
-                            sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
-                       }
-                   }
-               }
+                }
             }
         }
         stage('Build Front-end') {
             stages {
                 stage("Checkout") {
-                   steps {
-                       checkout scm
-                   }
-               }
-               stage("Build Docker Image") {
-                   steps {
-                       dir("frontend") {
-                            sh 'docker build -t guhyungm7/img-converter-frontend:canary -f .'
-                       }
-                   }
-               }
-               stage("Docker Login") {
                     steps {
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                        
+                        checkout scm
+                    }
+                }
+                stage("Build Docker Image") {
+                    steps {
+                        dir("frontend") {
+                            sh 'docker build -t guhyungm7/img-converter-frontend:canary -f .'
+                        }
+                    }
+                }
+                stage("Docker Login") {
+                    steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     }
                 }
                 stage("Push to Docker Hub") {
@@ -78,19 +82,19 @@ pipeline {
             stages {
                 stage('Checkout') {
                     steps {
-                       checkout scm
+                        checkout scm
                     }
                 }
                 stage("Build Docker Image") {
-                   steps {
-                       dir("backend") {
-                            sh 'docker build -t guhyungm7/img-converter:canary -f .'
-                       }
-                   }
-               }
-               stage("Docker Login") {
                     steps {
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                        
+                        dir("backend") {
+                            sh 'docker build -t guhyungm7/img-converter:canary -f .'
+                        }
+                    }
+                }
+                stage("Docker Login") {
+                    steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     }
                 }
                 stage("Push to Docker Hub") {
@@ -102,7 +106,9 @@ pipeline {
         }
         stage('Test Front-End') {
             agent {
-                docker { image 'guhyungm7/img-converter-frontend:canary' }
+                docker {
+                    image 'guhyungm7/img-converter-frontend:canary'
+                }
             }
             steps {
                 sh 'npm run test:unit'
@@ -110,15 +116,19 @@ pipeline {
         }
         stage('Test Back-End') {
             agent {
-                docker { image 'guhyungm7/img-converter:canary' }
+                docker {
+                    image 'guhyungm7/img-converter:canary'
+                }
             }
             steps {
                 sh 'python -m unittest discover tests'
             }
         }
         stage('Scan Front-End') {
-             agent {
-                docker { image 'guhyungm7/img-converter-frontend:canary' }
+            agent {
+                docker {
+                    image 'guhyungm7/img-converter-frontend:canary'
+                }
             }
             steps {
                 sh 'npm audit'
@@ -126,7 +136,9 @@ pipeline {
         }
         stage('Scan Back-End') {
             agent {
-                docker { image 'guhyungm7/img-converter:canary' }
+                docker {
+                    image 'guhyungm7/img-converter:canary'
+                }
             }
             steps {
                 sh 'python -m pip_audit'
@@ -138,20 +150,20 @@ pipeline {
             }
             stages {
                 stage("Checkout") {
-                   steps {
-                       checkout scm
-                   }
-               }
-               stage("Build Docker Image") {
-                   steps {
-                       dir("frontend") {
-                            sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
-                       }
-                   }
-               }
-               stage("Docker Login") {
                     steps {
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                        
+                        checkout scm
+                    }
+                }
+                stage("Build Docker Image") {
+                    steps {
+                        dir("frontend") {
+                            sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
+                        }
+                    }
+                }
+                stage("Docker Login") {
+                    steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     }
                 }
                 stage("Push to Docker Hub") {
@@ -167,20 +179,20 @@ pipeline {
             }
             stages {
                 stage("Checkout") {
-                   steps {
-                       checkout scm
-                   }
-               }
-               stage("Build Docker Image") {
-                   steps {
-                       dir("backend") {
-                            sh 'docker build -t guhyungm7/img-converter:latest -f .'
-                       }
-                   }
-               }
-               stage("Docker Login") {
                     steps {
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                        
+                        checkout scm
+                    }
+                }
+                stage("Build Docker Image") {
+                    steps {
+                        dir("backend") {
+                            sh 'docker build -t guhyungm7/img-converter:latest -f .'
+                        }
+                    }
+                }
+                stage("Docker Login") {
+                    steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     }
                 }
                 stage("Push to Docker Hub") {
@@ -192,58 +204,64 @@ pipeline {
         }
         stage('Deploy Infrastructure') {
             agent {
-                docker { image 'python:3.11-buster' }
+                docker {
+                    image 'python:3.11-buster'
+                }
             }
             stages {
                 stage("Checkout") {
-                   steps {
-                       checkout scm
-                   }
-               }
+                    steps {
+                        checkout scm
+                    }
+                }
                 stage("Update Packages") {
-                   steps {
-                       sh "apt update"
-                   }
-               }
-               stage("Install tar and gzip") {
-                   steps {
-                       sh "apt-get -y install tar gzip"
-                   }
-               }
-               stage("Install AWS-CLI") {
-                   steps {
-                       sh "apt-get -y install awscli"
-                   }
-               }
-               stage("Ensure back-end infrastructure exists") {
-                   steps {
-                       sh '''
-                       aws cloudformation deploy \
-                        --template-file .circleci/files/backend.yml \
-                        --tags project=udapeople \
-                        --stack-name "udapeople-${env.BUILD_ID:0:7}-backend" \
-                        --parameter-overrides ID="${env.BUILD_ID:0:7}"
-                       '''
-                   }
-               }
-               stage("Ensure front-end infrastructure exist") {
-                   steps {
-                       sh '''
-                       aws cloudformation deploy \
-                        --template-file .circleci/files/frontend.yml \
-                        --tags project=udapeople \
-                        --stack-name "udapeople-${env.BUILD_ID:0:7}-frontend" \
-                        --parameter-overrides ID="${env.BUILD_ID:0:7}"
-                       '''
-                   }
-               }
+                    steps {
+                        sh "apt update"
+                    }
+                }
+                stage("Install tar and gzip") {
+                    steps {
+                        sh "apt-get -y install tar gzip"
+                    }
+                }
+                stage("Install AWS-CLI") {
+                    steps {
+                        sh "apt-get -y install awscli"
+                    }
+                }
+                stage("Ensure back-end infrastructure exists") {
+                    steps {
+                        sh ''
+                        '
+                        aws cloudformation deploy\
+                        --template - file.circleci / files / backend.yml\
+                            --tags project = udapeople\
+                            --stack - name "udapeople-${env.BUILD_ID:0:7}-backend"\
+                            --parameter - overrides ID = "${env.BUILD_ID:0:7}"
+                        ''
+                        '
+                    }
+                }
+                stage("Ensure front-end infrastructure exist") {
+                    steps {
+                        sh ''
+                        '
+                        aws cloudformation deploy\
+                        --template - file.circleci / files / frontend.yml\
+                            --tags project = udapeople\
+                            --stack - name "udapeople-${env.BUILD_ID:0:7}-frontend"\
+                            --parameter - overrides ID = "${env.BUILD_ID:0:7}"
+                        ''
+                        '
+                    }
+                }
             }
         }
         stage('CanaryDeploy') {
             when {
                 branch 'master'
             }
-            environment { 
+            environment {
                 CANARY_REPLICAS = 1
             }
             steps {
