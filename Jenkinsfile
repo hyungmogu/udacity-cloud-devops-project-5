@@ -316,7 +316,7 @@ pipeline {
                 }
             }
         }
-        stage('Configure Infrastructure') {
+        stage('Configure & Install Infrastructure') {
             agent {
                 docker {
                     image 'python:3.11-buster'
@@ -360,6 +360,60 @@ pipeline {
                                 --instance-os-user ${env.AWS_BACKEND_STACK_OS_USER} \
                                 --ssh-public-key ${env.AWS_BACKEND_PUBLIC_KEY_PATH}
                             """
+                        }
+                    }
+                }
+                stage("Run Playbook and Configure server") {
+                    steps {
+                        dir('.jenkins/ansible') {
+                            sh 'ansible-playbook -i inventory.txt configure-server.yml'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Deploy Front-End') {
+            agent {
+                docker {
+                    image 'python:3.11-buster'
+                }
+            }
+            when {
+                branch 'master'
+            }
+            stages {
+                stage("Checkout") {
+                    steps {
+                        checkout scm
+                    }
+                }
+                stage("Update Packages") {
+                    steps {
+                        sh "apt update"
+                    }
+                }
+                stage("Install tar") {
+                    steps {
+                        sh "apt-get -y install tar"
+                    }
+                }
+                stage("Install AWS-CLI") {
+                    steps {
+                        sh "apt-get -y install awscli"
+                    }
+                }
+                stage("Get Backend URL") {
+                    steps {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            backend_ip = sh(
+                                script: 'aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" --output text',
+                                returnStdout: true
+                            ).trim()
                         }
                     }
                 }
