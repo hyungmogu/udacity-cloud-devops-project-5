@@ -263,6 +263,16 @@ pipeline {
                         '''
                     }
                 }
+                stage("Add back-end ip to ansible inventory") {
+                    steps {
+                        sh '''
+                        aws ec2 describe-instances \
+                        --query 'Reservations[*].Instances[*].PublicIpAddress' \
+                        --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" \
+                        --output text >> .jenkins/ansible/inventory.txt
+                        '''
+                    }
+                }
             }
         }
         stage('CanaryDeploy') {
