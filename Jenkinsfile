@@ -300,6 +300,45 @@ pipeline {
                 }
             }
         }
+        stage('Configure Infrastructure') {
+            agent {
+                docker {
+                    image 'python:3.11-buster'
+                }
+            }
+            when {
+                branch 'master'
+            }
+            stages {
+                stage("Checkout") {
+                    steps {
+                        checkout scm
+                    }
+                }
+                stage("Update Packages") {
+                    steps {
+                        sh "apt update"
+                    }
+                }
+                stage("Install Ansible") {
+                    steps {
+                        sh "apt-get -y install ansible"
+                    }
+                }
+                stage("Install AWS-CLI") {
+                    steps {
+                        sh "apt-get -y install awscli"
+                    }
+                }
+                stage("Run Playbook and Configure server") {
+                    steps {
+                        dir('.jenkins/ansible') {
+                            sh 'ansible-playbook -i inventory.txt configure-server.yml'
+                        }
+                    }
+                }
+            }
+        }
         stage('CanaryDeploy') {
             when {
                 branch 'master'
