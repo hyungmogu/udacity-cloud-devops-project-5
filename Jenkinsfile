@@ -28,9 +28,24 @@ pipeline {
             }
         }
         stage('Lint Back-end') {
-            steps {
-                sh 'docker pull hadolint/hadolint'
-                sh 'docker run --rm -i hadolint/hadolint < backend/Dockerfile'
+            stages {
+                stage("Checkout") {
+                   steps {
+                       checkout scm
+                    }
+               }
+               stage("Pull Hadolint Docker Image") {
+                   steps {
+                       sh 'docker pull hadolint/hadolint'
+                   }
+               }
+               stage("Check Lint") {
+                   steps {
+                       dir('backend') {
+                            sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
+                       }
+                   }
+               }
             }
         }
         stage('Build Front-end') {
