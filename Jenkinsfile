@@ -52,54 +52,58 @@ pipeline {
                 }
             }
         }
-        stage('Build Front-end') {
-            stages {
-                stage("Checkout") {
-                    steps {
-                        checkout scm
-                    }
-                }
-                stage("Build Docker Image") {
-                    steps {
-                        dir("frontend") {
-                            sh 'docker build -t guhyungm7/img-converter-frontend:canary -f .'
+        stage('Build') {
+            parallel {
+                stage('Build Front-end') {
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                checkout scm
+                            }
+                        }
+                        stage("Build Docker Image") {
+                            steps {
+                                dir("frontend") {
+                                    sh 'docker build -t guhyungm7/img-converter-frontend:canary -f .'
+                                }
+                            }
+                        }
+                        stage("Docker Login") {
+                            steps {
+                                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                            }
+                        }
+                        stage("Push to Docker Hub") {
+                            steps {
+                                sh 'docker push guhyungm7/img-converter-frontend:canary'
+                            }
                         }
                     }
                 }
-                stage("Docker Login") {
-                    steps {
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    }
-                }
-                stage("Push to Docker Hub") {
-                    steps {
-                        sh 'docker push guhyungm7/img-converter-frontend:canary'
-                    }
-                }
-            }
-        }
-        stage('Build Back-end') {
-            stages {
-                stage('Checkout') {
-                    steps {
-                        checkout scm
-                    }
-                }
-                stage("Build Docker Image") {
-                    steps {
-                        dir("backend") {
-                            sh 'docker build -t guhyungm7/img-converter:canary -f .'
+                stage('Build Back-end') {
+                    stages {
+                        stage('Checkout') {
+                            steps {
+                                checkout scm
+                            }
                         }
-                    }
-                }
-                stage("Docker Login") {
-                    steps {
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    }
-                }
-                stage("Push to Docker Hub") {
-                    steps {
-                        sh 'docker push guhyungm7/img-converter:canary'
+                        stage("Build Docker Image") {
+                            steps {
+                                dir("backend") {
+                                    sh 'docker build -t guhyungm7/img-converter:canary -f .'
+                                }
+                            }
+                        }
+                        stage("Docker Login") {
+                            steps {
+                                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                            }
+                        }
+                        stage("Push to Docker Hub") {
+                            steps {
+                                sh 'docker push guhyungm7/img-converter:canary'
+                            }
+                        }
                     }
                 }
             }
