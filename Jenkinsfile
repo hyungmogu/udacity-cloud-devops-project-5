@@ -246,24 +246,39 @@ pipeline {
                 }
                 stage("Ensure back-end infrastructure exists") {
                     steps {
-                        sh '''
-                        aws cloudformation deploy\
-                        --template - file.circleci / files / backend.yml\
-                            --tags project = udapeople\
-                            --stack - name "udapeople-${env.BUILD_ID:0:7}-backend"\
-                            --parameter - overrides ID = "${env.BUILD_ID:0:7}"
-                        '''
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'us-east-1'
+                        ]]) {
+                            sh '''
+                            aws cloudformation deploy\
+                            --template - file.circleci / files / backend.yml\
+                                --tags project = udapeople\
+                                --stack - name "udapeople-${env.BUILD_ID:0:7}-backend"\
+                                --parameter - overrides ID = "${env.BUILD_ID:0:7}"
+                            '''
+                        }
+                        
                     }
                 }
                 stage("Ensure front-end infrastructure exist") {
                     steps {
-                        sh '''
-                        aws cloudformation deploy\
-                        --template - file.circleci / files / frontend.yml\
-                            --tags project = udapeople\
-                            --stack - name "udapeople-${env.BUILD_ID:0:7}-frontend"\
-                            --parameter - overrides ID = "${env.BUILD_ID:0:7}"
-                        '''
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'us-east-1'
+                        ]]) {
+                            sh '''
+                            aws cloudformation deploy\
+                            --template - file.circleci / files / frontend.yml\
+                                --tags project = udapeople\
+                                --stack - name "udapeople-${env.BUILD_ID:0:7}-frontend"\
+                                --parameter - overrides ID = "${env.BUILD_ID:0:7}"
+                            '''
+                        }
                     }
                 }
                 stage("Add back-end ip to ansible inventory") {
