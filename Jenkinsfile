@@ -156,65 +156,6 @@ pipeline {
                 }
             }
         }
-        stage('Build - Production') {
-            when {
-                branch 'master'
-            }
-            parallel {
-                stage('Build Front-End') {
-                    stages {
-                        stage("Checkout") {
-                            steps {
-                                checkout scm
-                            }
-                        }
-                        stage("Build Docker Image") {
-                            steps {
-                                dir("frontend") {
-                                    sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
-                                }
-                            }
-                        }
-                        stage("Docker Login") {
-                            steps {
-                                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                            }
-                        }
-                        stage("Push to Docker Hub") {
-                            steps {
-                                sh 'docker push guhyungm7/img-converter-frontend:latest'
-                            }
-                        }
-                    }
-                }
-                stage('Build Back-End') {
-                    stages {
-                        stage("Checkout") {
-                            steps {
-                                checkout scm
-                            }
-                        }
-                        stage("Build Docker Image") {
-                            steps {
-                                dir("backend") {
-                                    sh 'docker build -t guhyungm7/img-converter:latest -f .'
-                                }
-                            }
-                        }
-                        stage("Docker Login") {
-                            steps {
-                                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                            }
-                        }
-                        stage("Push to Docker Hub") {
-                            steps {
-                                sh 'docker push guhyungm7/img-converter:latest'
-                            }
-                        }
-                    }
-                }
-            }
-        }
         stage('Deploy Infrastructure') {
             agent {
                 docker {
