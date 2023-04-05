@@ -4,6 +4,7 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
         AWS_DEFAULT_REGION = "us-east-1"
+        AWS_BACKEND_PUBLIC_KEY_PATH= ""
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
         DOCKER_IMAGE_NAME = "guhyungm7/img-converter"
         CANARY_REPLICAS = 0
@@ -264,7 +265,7 @@ pipeline {
                                 script: 'aws cloudformation describe-stacks --stack-name "udapeople-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`InstanceId`].OutputValue" --output text',
                                 returnStdout: true
                             ).trim()
-                            
+
                             os_user = sh(
                                 script: 'aws cloudformation describe-stacks --stack-name "udapeople-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`DefaultOsUser`].OutputValue" --output text',
                                 returnStdout: true
@@ -343,6 +344,23 @@ pipeline {
                 stage("Install AWS-CLI") {
                     steps {
                         sh "apt-get -y install awscli"
+                    }
+                }
+                stage("Add SSH Key to EC2 Instance") {
+                    steps {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            sh """
+                            aws ec2-instance-connect send-ssh-public-key \
+                                --instance-id ${env.AWS_BACKEND_STACK_INSTANCE_ID} \
+                                --instance-os-user ${env.AWS_BACKEND_STACK_OS_USER} \
+                                --ssh-public-key ${env.AWS_BACKEND_PUBLIC_KEY_PATH}
+                            """
+                        }
                     }
                 }
                 stage("Run Playbook and Configure server") {
