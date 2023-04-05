@@ -1,8 +1,11 @@
 pipeline {
     agent any
     environment {
+        AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+        AWS_DEFAULT_REGION = ${AWS_DEFAULT_REGION}
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
-        DOCKER_IMAGE_NAME = "guhyungm7/img-converter:latest"
+        DOCKER_IMAGE_NAME = "guhyungm7/img-converter"
         CANARY_REPLICAS = 0
     }
     stages {
