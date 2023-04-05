@@ -3,7 +3,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-        AWS_DEFAULT_REGION = ${AWS_DEFAULT_REGION}
+        AWS_DEFAULT_REGION = "us-east-1"
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
         DOCKER_IMAGE_NAME = "guhyungm7/img-converter"
         CANARY_REPLICAS = 0
@@ -250,7 +250,7 @@ pipeline {
                             $class: 'AmazonWebServicesCredentialsBinding',
                             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                            region: 'us-east-1'
+                            region: 'AWS_DEFAULT_REGION'
                         ]]) {
                             sh '''
                             aws cloudformation deploy\
@@ -269,7 +269,7 @@ pipeline {
                             $class: 'AmazonWebServicesCredentialsBinding',
                             accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                            region: 'us-east-1'
+                            region: 'AWS_DEFAULT_REGION'
                         ]]) {
                             sh '''
                             aws cloudformation deploy\
