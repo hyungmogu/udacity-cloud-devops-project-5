@@ -108,44 +108,48 @@ pipeline {
                 }
             }
         }
-        stage('Test Front-End') {
-            agent {
-                docker {
-                    image 'guhyungm7/img-converter-frontend:canary'
+        stage('Test & Scan') {
+            parallel {
+                stage('Test Front-End') {
+                    agent {
+                        docker {
+                            image 'guhyungm7/img-converter-frontend:canary'
+                        }
+                    }
+                    steps {
+                        sh 'npm run test:unit'
+                    }
                 }
-            }
-            steps {
-                sh 'npm run test:unit'
-            }
-        }
-        stage('Test Back-End') {
-            agent {
-                docker {
-                    image 'guhyungm7/img-converter:canary'
+                stage('Test Back-End') {
+                    agent {
+                        docker {
+                            image 'guhyungm7/img-converter:canary'
+                        }
+                    }
+                    steps {
+                        sh 'python -m unittest discover tests'
+                    }
                 }
-            }
-            steps {
-                sh 'python -m unittest discover tests'
-            }
-        }
-        stage('Scan Front-End') {
-            agent {
-                docker {
-                    image 'guhyungm7/img-converter-frontend:canary'
+                stage('Scan Front-End') {
+                    agent {
+                        docker {
+                            image 'guhyungm7/img-converter-frontend:canary'
+                        }
+                    }
+                    steps {
+                        sh 'npm audit'
+                    }
                 }
-            }
-            steps {
-                sh 'npm audit'
-            }
-        }
-        stage('Scan Back-End') {
-            agent {
-                docker {
-                    image 'guhyungm7/img-converter:canary'
+                stage('Scan Back-End') {
+                    agent {
+                        docker {
+                            image 'guhyungm7/img-converter:canary'
+                        }
+                    }
+                    steps {
+                        sh 'python -m pip_audit'
+                    }
                 }
-            }
-            steps {
-                sh 'python -m pip_audit'
             }
         }
         stage('Deploy Production-Grade Front-End Docker Image') {
