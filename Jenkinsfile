@@ -414,6 +414,10 @@ pipeline {
                                 script: 'aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" --output text',
                                 returnStdout: true
                             ).trim()
+
+                            withEnv(["AWS_BACKEND_IP=${backend_ip}"]) {
+                                echo "AWS_BACKEND_IP = ${env.AWS_BACKEND_IP}"
+                            }
                         }
                     }
                 }
