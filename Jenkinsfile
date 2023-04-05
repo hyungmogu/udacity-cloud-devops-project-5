@@ -72,11 +72,28 @@ pipeline {
             when {
                 branch 'master'
             }
-            steps {
-                dir("frontend") {
-                    sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push guhyungm7/img-converter-frontend:latest'
+            stages {
+                stage("Checkout") {
+                   steps {
+                       checkout scm
+                   }
+               }
+               stage("Build Docker Image") {
+                   steps {
+                       dir("backend") {
+                            sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
+                       }
+                   }
+               }
+               stage("Docker Login") {
+                    steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                        
+                    }
+                }
+                stage("Push to Docker Hub") {
+                    steps {
+                        sh 'docker push guhyungm7/img-converter-frontend:latest'
+                    }
                 }
             }
         }
