@@ -28,11 +28,28 @@ pipeline {
             }
         }
         stage('Build Back-end') {
-            steps {
-                dir("backend") {
-                    sh 'docker build -t guhyungm7/img-converter:canary -f .'
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push guhyungm7/img-converter:canary'
+            stages {
+                stage('Checkout') {
+                    steps {
+                       checkout scm
+                    }
+                }
+                stage("Build Docker Image") {
+                   steps {
+                       dir("backend") {
+                            sh 'docker build -t guhyungm7/img-converter:canary -f .'
+                       }
+                   }
+               }
+               stage("Docker Login") {
+                    steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                        
+                    }
+                }
+                stage("Push to Docker Hub") {
+                    steps {
+                        sh 'docker push guhyungm7/img-converter:canary'
+                    }
                 }
             }
         }
