@@ -421,6 +421,20 @@ pipeline {
                         }
                     }
                 }
+                stage("Build Docker Image") {
+                    steps {
+                        dir("frontend") {
+                            sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
+                        }
+                    }
+                }
+                stage("Run Build") {
+                    steps {
+                        dir("frontend") {
+                            sh "docker run -e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist guhyungm7/img-converter-frontend:latest"
+                        }
+                    }
+                }
                 stage("Run Playbook and Configure server") {
                     steps {
                         dir('.jenkins/ansible') {
