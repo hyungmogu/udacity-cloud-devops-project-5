@@ -19,11 +19,28 @@ pipeline {
             }
         }
         stage('Build Front-end') {
-            steps {
-                dir("frontend") {
-                    sh 'docker build -t guhyungm7/img-converter-frontend:canary -f .'
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push guhyungm7/img-converter-frontend:canary'
+            stages {
+                stage("Checkout") {
+                   steps {
+                       checkout scm
+                   }
+               }
+               stage("Build Docker Image") {
+                   steps {
+                       dir("frontend") {
+                            sh 'docker build -t guhyungm7/img-converter-frontend:canary -f .'
+                       }
+                   }
+               }
+               stage("Docker Login") {
+                    steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                        
+                    }
+                }
+                stage("Push to Docker Hub") {
+                    steps {
+                        sh 'docker push guhyungm7/img-converter-frontend:canary'
+                    }
                 }
             }
         }
@@ -97,7 +114,7 @@ pipeline {
                }
                stage("Build Docker Image") {
                    steps {
-                       dir("backend") {
+                       dir("frontend") {
                             sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
                        }
                    }
