@@ -444,6 +444,62 @@ pipeline {
                 }
             }
         }
+        stage('Deploy Back-End') {
+            agent {
+                docker {
+                    image 'python:3.11-buster'
+                }
+            }
+            when {
+                branch 'master'
+            }
+            stages {
+                stage("Checkout") {
+                    steps {
+                        checkout scm
+                    }
+                }
+                stage("Update Packages") {
+                    steps {
+                        sh "apt update"
+                    }
+                }
+                stage("Install tar") {
+                    steps {
+                        sh "apt-get -y install tar"
+                    }
+                }
+                stage("Install Ansible") {
+                    steps {
+                        sh "apt-get -y install ansible"
+                    }
+                }
+                stage("Build Docker Image") {
+                    steps {
+                        dir("backend") {
+                            sh 'docker build -t guhyungm7/img-converter:latest -f .'
+                        }
+                    }
+                }
+                stage("Docker Login") {
+                    steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    }
+                }
+                stage("Push to Docker Hub") {
+                    steps {
+                        sh 'docker push guhyungm7/img-converter:latest'
+                    }
+                }
+                stage("Run Playbook and Apply New Image to Server") {
+                    steps {
+                        dir('.jenkins/ansible') {
+                            sh 'ansible-playbook -i inventory.txt deploy-backend.yml'
+                        }
+                    }
+                }
+            }
+        }
         stage('CanaryDeploy') {
             when {
                 branch 'master'
