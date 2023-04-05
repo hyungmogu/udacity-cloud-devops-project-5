@@ -283,12 +283,19 @@ pipeline {
                 }
                 stage("Add back-end ip to ansible inventory") {
                     steps {
-                        sh '''
-                        aws ec2 describe-instances \
-                        --query 'Reservations[*].Instances[*].PublicIpAddress' \
-                        --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" \
-                        --output text >> .jenkins/ansible/inventory.txt
-                        '''
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            sh '''
+                            aws ec2 describe-instances \
+                            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+                            --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" \
+                            --output text >> .jenkins/ansible/inventory.txt
+                            '''
+                        }
                     }
                 }
             }
