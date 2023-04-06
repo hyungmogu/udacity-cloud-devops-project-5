@@ -62,37 +62,32 @@ pipeline {
             parallel {
                 stage('Build Front-end') {
                     stages {
-                        stage("Checkout") {
-                            steps {
-                                checkout scm
-                            }
-                        }
+                        checkoutCode()
                         stage("Build Docker Image") {
                             steps {
-                                dir("frontend") {
-                                    sh 'docker build -t USER_ID/img-converter-frontend:canary -f .'
+                                script {
+                                    def dockerImage = docker.build("USER_ID/img-converter-frontend:${env.BUILD_NUMBER}", "frontend")
                                 }
-                            }
-                        }
-                        stage("Docker Login") {
-                            steps {
-                                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                             }
                         }
                         stage("Push to Docker Hub") {
                             steps {
-                                sh 'docker push USER_ID/img-converter-frontend:canary'
+                                script {
+                                    withCredentials([
+                                        usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
+                                    ]) {
+                                        docker.withRegistry('', 'docker-hub-key') {
+                                            dockerImage.push("canary")
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
                 stage('Build Back-end') {
                     stages {
-                        stage('Checkout') {
-                            steps {
-                                checkout scm
-                            }
-                        }
+                        checkoutCode()
                         stage("Build Docker Image") {
                             steps {
                                 dir("backend") {
