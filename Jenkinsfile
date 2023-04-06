@@ -415,26 +415,10 @@ pipeline {
                 branch 'master'
             }
             stages {
-                stage("Checkout") {
-                    steps {
-                        checkout scm
-                    }
-                }
-                stage("Update Packages") {
-                    steps {
-                        sh "apt update"
-                    }
-                }
-                stage("Install Curl") {
-                    steps {
-                        sh "apt-get -y install curl"
-                    }
-                }
-                stage("Install AWS-CLI") {
-                    steps {
-                        sh "apt-get -y install awscli"
-                    }
-                }
+                checkoutCode()
+                updatePackages()
+                installPackage("curl")
+                installPackage("awscli")
                 stage("Get Backend URL") {
                     steps {
                         withCredentials([[
