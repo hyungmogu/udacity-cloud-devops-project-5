@@ -370,33 +370,18 @@ pipeline {
                         branch 'master'
                     }
                     stages {
-                        stage("Checkout") {
-                            steps {
-                                checkout scm
-                            }
-                        }
-                        stage("Update Packages") {
-                            steps {
-                                sh "apt update"
-                            }
-                        }
-                        stage("Install tar") {
-                            steps {
-                                sh "apt-get -y install tar"
-                            }
-                        }
-                        stage("Install Ansible") {
-                            steps {
-                                sh "apt-get -y install ansible"
-                            }
-                        }
+                        checkoutCode()
+                        updatePackages()
+                        installPackage("tar")
+                        installPackage("ansible")
                         stage("Build Docker Image") {
                             steps {
-                                dir("backend") {
-                                    sh "docker build -t ${env.DOCKER_IMAGE}:latest -f ."
+                                script {
+                                    dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}", "backend")
                                 }
                             }
                         }
+
                         stage("Docker Login") {
                             steps {
                                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -404,7 +389,15 @@ pipeline {
                         }
                         stage("Push to Docker Hub") {
                             steps {
-                                sh "docker push ${env.DOCKER_IMAGE}:latest"
+                                script {
+                                    withCredentials([
+                                        usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
+                                    ]) {
+                                        docker.withRegistry('', 'docker-hub-key') {
+                                            dockerImageBackEnd.push("${env.BUILD_NUMBER}-latest")
+                                        }
+                                    }
+                                }
                             }
                         }
                         stage("Run Playbook and Apply New Image to Server") {
