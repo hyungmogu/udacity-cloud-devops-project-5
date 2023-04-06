@@ -17,13 +17,9 @@ def updatePackages() {
 pipeline {
     agent any
     environment {
-        AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-        AWS_DEFAULT_REGION = "us-east-1"
-        AWS_BACKEND_PUBLIC_KEY_PATH= ""
+        PUBLIC_KEY_PATH= "${env.PUBLIC_KEY_PATH}"
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
         DOCKER_IMAGE = "${env.DOCKER_USER_ID}/img-converter"
-        CANARY_REPLICAS = 0
     }
     stages {
         stage('Lint') {
@@ -199,18 +195,18 @@ pipeline {
                             sh '''
                             aws cloudformation deploy\
                             --template - file.circleci / files / backend.yml\
-                                --tags project = udapeople\
-                                --stack - name "udapeople-${env.BUILD_ID:0:7}-backend"\
+                                --tags project = img-converter\
+                                --stack - name "img-converter-${env.BUILD_ID:0:7}-backend"\
                                 --parameter - overrides ID = "${env.BUILD_ID:0:7}"
                             '''
 
                             instance_id = sh(
-                                script: 'aws cloudformation describe-stacks --stack-name "udapeople-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`InstanceId`].OutputValue" --output text',
+                                script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`InstanceId`].OutputValue" --output text',
                                 returnStdout: true
                             ).trim()
 
                             os_user = sh(
-                                script: 'aws cloudformation describe-stacks --stack-name "udapeople-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`DefaultOsUser`].OutputValue" --output text',
+                                script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`DefaultOsUser`].OutputValue" --output text',
                                 returnStdout: true
                             ).trim()
 
@@ -233,8 +229,8 @@ pipeline {
                             sh '''
                             aws cloudformation deploy\
                             --template - file.circleci / files / frontend.yml\
-                                --tags project = udapeople\
-                                --stack - name "udapeople-${env.BUILD_ID:0:7}-frontend"\
+                                --tags project = img-converter\
+                                --stack - name "img-converter-${env.BUILD_ID:0:7}-frontend"\
                                 --parameter - overrides ID = "${env.BUILD_ID:0:7}"
                             '''
                         }
@@ -301,7 +297,7 @@ pipeline {
                             aws ec2-instance-connect send-ssh-public-key \
                                 --instance-id ${env.AWS_BACKEND_STACK_INSTANCE_ID} \
                                 --instance-os-user ${env.AWS_BACKEND_STACK_OS_USER} \
-                                --ssh-public-key ${env.AWS_BACKEND_PUBLIC_KEY_PATH}
+                                --ssh-public-key ${env.PUBLIC_KEY_PATH}
                             """
                         }
                     }
