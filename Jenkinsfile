@@ -296,117 +296,123 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Front-End') {
-            def dockerImageFrontEnd
-            agent {
-                docker {
-                    image 'python:3.11-buster'
-                }
-            }
-            when {
-                branch 'master'
-            }
-            stages {
-                checkoutCode()
-                updatePackages()
-                installPackage("tar")
-                installPackage("awscli")
-                stage("Get Backend URL") {
-                    steps {
-                        withCredentials([[
-                            $class: 'AmazonWebServicesCredentialsBinding',
-                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                            region: 'AWS_DEFAULT_REGION'
-                        ]]) {
-                            backend_ip = sh(
-                                script: 'aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" --output text',
-                                returnStdout: true
-                            ).trim()
+        stage('Deploy') {
+            parallel {
+                stage('Deploy Front-End') {
+                    def dockerImageFrontEnd
+                    agent {
+                        docker {
+                            image 'python:3.11-buster'
+                        }
+                    }
+                    when {
+                        branch 'master'
+                    }
+                    stages {
+                        checkoutCode()
+                        updatePackages()
+                        installPackage("tar")
+                        installPackage("awscli")
+                        stage("Get Backend URL") {
+                            steps {
+                                withCredentials([[
+                                    $class: 'AmazonWebServicesCredentialsBinding',
+                                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                                    region: 'AWS_DEFAULT_REGION'
+                                ]]) {
+                                    backend_ip = sh(
+                                        script: 'aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" --output text',
+                                        returnStdout: true
+                                    ).trim()
 
-                            withEnv(["AWS_BACKEND_IP=${backend_ip}"]) {
-                                echo "AWS_BACKEND_IP = ${env.AWS_BACKEND_IP}"
+                                    withEnv(["AWS_BACKEND_IP=${backend_ip}"]) {
+                                        echo "AWS_BACKEND_IP = ${env.AWS_BACKEND_IP}"
+                                    }
+                                }
+                            }
+                        }
+                        stage("Build Docker Image") {
+                            steps {
+                                script {
+                                    dockerImageFrontEnd = docker.build("${env.DOCKER_IMAGE}-frontend", "frontend")
+                                }
+                            }
+                        }
+                        stage("Run Build") {
+                            steps {
+                                script {
+                                    dockerImageFrontEnd.withRun('-e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist') {
+                                        echo "========== BUILD RESULTS ==========="
+                                        dir("frontend") {
+                                            sh 'ls dist'
+                                        }        
+                                    }
+                                }
+                            }
+                        }
+                        stage("Run Playbook and Configure server") {
+                            steps {
+                                dir('.jenkins/ansible') {
+                                    sh 'ansible-playbook -i inventory.txt configure-server.yml'
+                                }
                             }
                         }
                     }
                 }
-                stage("Build Docker Image") {
-                    steps {
-                        script {
-                            dockerImageFrontEnd = docker.build("${env.DOCKER_IMAGE}-frontend", "frontend")
+                stage('Deploy Back-End') {
+                    agent {
+                        docker {
+                            image 'python:3.11-buster'
                         }
                     }
-                }
-                stage("Run Build") {
-                    steps {
-                        script {
-                            dockerImageFrontEnd.withRun('-e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist') {
-                                echo "========== BUILD RESULTS ==========="
-                                sh 'ls dist'        
+                    when {
+                        branch 'master'
+                    }
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                checkout scm
                             }
                         }
-                    }
-                }
-                stage("Run Playbook and Configure server") {
-                    steps {
-                        dir('.jenkins/ansible') {
-                            sh 'ansible-playbook -i inventory.txt configure-server.yml'
+                        stage("Update Packages") {
+                            steps {
+                                sh "apt update"
+                            }
                         }
-                    }
-                }
-            }
-        }
-        stage('Deploy Back-End') {
-            agent {
-                docker {
-                    image 'python:3.11-buster'
-                }
-            }
-            when {
-                branch 'master'
-            }
-            stages {
-                stage("Checkout") {
-                    steps {
-                        checkout scm
-                    }
-                }
-                stage("Update Packages") {
-                    steps {
-                        sh "apt update"
-                    }
-                }
-                stage("Install tar") {
-                    steps {
-                        sh "apt-get -y install tar"
-                    }
-                }
-                stage("Install Ansible") {
-                    steps {
-                        sh "apt-get -y install ansible"
-                    }
-                }
-                stage("Build Docker Image") {
-                    steps {
-                        dir("backend") {
-                            sh "docker build -t ${env.DOCKER_IMAGE}:latest -f ."
+                        stage("Install tar") {
+                            steps {
+                                sh "apt-get -y install tar"
+                            }
                         }
-                    }
-                }
-                stage("Docker Login") {
-                    steps {
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    }
-                }
-                stage("Push to Docker Hub") {
-                    steps {
-                        sh "docker push ${env.DOCKER_IMAGE}:latest"
-                    }
-                }
-                stage("Run Playbook and Apply New Image to Server") {
-                    steps {
-                        dir('.jenkins/ansible') {
-                            sh 'ansible-playbook -i inventory.txt deploy-backend.yml'
+                        stage("Install Ansible") {
+                            steps {
+                                sh "apt-get -y install ansible"
+                            }
+                        }
+                        stage("Build Docker Image") {
+                            steps {
+                                dir("backend") {
+                                    sh "docker build -t ${env.DOCKER_IMAGE}:latest -f ."
+                                }
+                            }
+                        }
+                        stage("Docker Login") {
+                            steps {
+                                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                            }
+                        }
+                        stage("Push to Docker Hub") {
+                            steps {
+                                sh "docker push ${env.DOCKER_IMAGE}:latest"
+                            }
+                        }
+                        stage("Run Playbook and Apply New Image to Server") {
+                            steps {
+                                dir('.jenkins/ansible') {
+                                    sh 'ansible-playbook -i inventory.txt deploy-backend.yml'
+                                }
+                            }
                         }
                     }
                 }
