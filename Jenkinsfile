@@ -266,26 +266,10 @@ pipeline {
                 branch 'master'
             }
             stages {
-                stage("Checkout") {
-                    steps {
-                        checkout scm
-                    }
-                }
-                stage("Update Packages") {
-                    steps {
-                        sh "apt update"
-                    }
-                }
-                stage("Install Ansible") {
-                    steps {
-                        sh "apt-get -y install ansible"
-                    }
-                }
-                stage("Install AWS-CLI") {
-                    steps {
-                        sh "apt-get -y install awscli"
-                    }
-                }
+                checkoutCode()
+                updatePackages()
+                installPackage("ansible")
+                installPackage("awscli")
                 stage("Add SSH Key to EC2 Instance") {
                     steps {
                         withCredentials([[
