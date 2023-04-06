@@ -14,8 +14,7 @@ pipeline {
         AWS_DEFAULT_REGION = "us-east-1"
         AWS_BACKEND_PUBLIC_KEY_PATH= ""
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
-        DOCKER_IMAGE_NAME = "USER_ID/img-converter"
-        CANARY_REPLICAS = 0
+        DOCKER_IMAGE_NAME = "${env.DOCKER_USER_ID}/img-converter"
     }
     stages {
         stage('Lint') {
@@ -521,34 +520,6 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
-        stage('CanaryDeploy') {
-            when {
-                branch 'master'
-            }
-            environment {
-                CANARY_REPLICAS = 1
-            }
-            steps {
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube-canary.yml',
-                    enableConfigSubstitution: true
-                )
-            }
-        }
-        stage('DeployToProduction') {
-            when {
-                branch 'master'
-            }
-            steps {
-                milestone(1)
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube.yml',
-                    enableConfigSubstitution: true
-                )
             }
         }
     }
