@@ -59,6 +59,8 @@ pipeline {
             }
         }
         stage('Build') {
+            def dockerImageFrontEnd
+            def dockerImageBackEnd
             parallel {
                 stage('Build Front-end') {
                     stages {
@@ -66,7 +68,7 @@ pipeline {
                         stage("Build Docker Image") {
                             steps {
                                 script {
-                                    def dockerImage = docker.build("USER_ID/img-converter-frontend:${env.BUILD_NUMBER}", "frontend")
+                                    dockerImageFrontEnd = docker.build("USER_ID/img-converter-frontend:${env.BUILD_NUMBER}", "frontend")
                                 }
                             }
                         }
@@ -77,7 +79,7 @@ pipeline {
                                         usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
                                     ]) {
                                         docker.withRegistry('', 'docker-hub-key') {
-                                            dockerImage.push("canary")
+                                            dockerImageFrontEnd.push("canary")
                                         }
                                     }
                                 }
@@ -91,7 +93,7 @@ pipeline {
                         stage("Build Docker Image") {
                             steps {
                                 script {
-                                    def dockerImageBackend = docker.build("USER_ID/img-converter:${env.BUILD_NUMBER}", "backend")
+                                    dockerImageBackEnd = docker.build("USER_ID/img-converter:${env.BUILD_NUMBER}", "backend")
                                 }
                             }
                         }
@@ -102,7 +104,7 @@ pipeline {
                                         usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
                                     ]) {
                                         docker.withRegistry('', 'docker-hub-key') {
-                                            dockerImageBackend.push("canary")
+                                            dockerImageBackEnd.push("canary")
                                         }
                                     }
                                 }
