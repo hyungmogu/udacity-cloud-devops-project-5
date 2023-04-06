@@ -14,6 +14,14 @@ def updatePackages() {
     }
 }
 
+def installPackage(packageName) {
+    stage("Install ${packageName}") {
+        steps {
+            sh "apt-get -y install ${packageName}"
+        }
+    }
+}
+
 pipeline {
     agent any
     environment {
@@ -174,16 +182,9 @@ pipeline {
             stages {
                 checkoutCode()
                 updatePackages()
-                stage("Install tar and gzip") {
-                    steps {
-                        sh "apt-get -y install tar gzip"
-                    }
-                }
-                stage("Install AWS-CLI") {
-                    steps {
-                        sh "apt-get -y install awscli"
-                    }
-                }
+                installPackage("tar")
+                installPackage("gzip")
+                installPackage("awscli")
                 stage("Ensure back-end infrastructure exists") {
                     steps {
                         withCredentials([[
