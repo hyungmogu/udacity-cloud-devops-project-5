@@ -15,6 +15,7 @@ pipeline {
         AWS_BACKEND_PUBLIC_KEY_PATH= ""
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
         DOCKER_IMAGE_NAME = "${env.DOCKER_USER_ID}/img-converter"
+        CANARY_REPLICAS = 0
     }
     stages {
         stage('Lint') {
