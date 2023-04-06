@@ -6,6 +6,14 @@ def checkoutCode() {
   }
 }
 
+def updatePackages() {
+    stage("Update Packages") {
+        steps {
+            sh "apt update"
+        }
+    }
+}
+
 pipeline {
     agent any
     environment {
@@ -168,16 +176,8 @@ pipeline {
                 branch 'master'
             }
             stages {
-                stage("Checkout") {
-                    steps {
-                        checkout scm
-                    }
-                }
-                stage("Update Packages") {
-                    steps {
-                        sh "apt update"
-                    }
-                }
+                checkoutCode()
+                updatePackages()
                 stage("Install tar and gzip") {
                     steps {
                         sh "apt-get -y install tar gzip"
