@@ -90,19 +90,22 @@ pipeline {
                         checkoutCode()
                         stage("Build Docker Image") {
                             steps {
-                                dir("backend") {
-                                    sh 'docker build -t USER_ID/img-converter:canary -f .'
+                                script {
+                                    def dockerImageBackend = docker.build("USER_ID/img-converter:${env.BUILD_NUMBER}", "backend")
                                 }
-                            }
-                        }
-                        stage("Docker Login") {
-                            steps {
-                                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                             }
                         }
                         stage("Push to Docker Hub") {
                             steps {
-                                sh 'docker push USER_ID/img-converter:canary'
+                                script {
+                                    withCredentials([
+                                        usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
+                                    ]) {
+                                        docker.withRegistry('', 'docker-hub-key') {
+                                            dockerImageBackend.push("canary")
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
