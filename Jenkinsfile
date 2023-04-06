@@ -443,6 +443,86 @@ pipeline {
                 }
             }
         }
+        stage('Smoke Test') {
+            agent {
+                docker {
+                    image 'python:3.11-buster'
+                }
+            }
+            when {
+                branch 'master'
+            }
+            stages {
+                stage("Checkout") {
+                    steps {
+                        checkout scm
+                    }
+                }
+                stage("Update Packages") {
+                    steps {
+                        sh "apt update"
+                    }
+                }
+                stage("Install Curl") {
+                    steps {
+                        sh "apt-get -y install curl"
+                    }
+                }
+                stage("Install AWS-CLI") {
+                    steps {
+                        sh "apt-get -y install awscli"
+                    }
+                }
+                stage("Get Backend URL") {
+                    steps {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            backend_ip = sh(
+                                script: 'aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" --output text',
+                                returnStdout: true
+                            ).trim()
+
+                            withEnv(["AWS_BACKEND_IP=${backend_ip}"]) {
+                                echo "AWS_BACKEND_IP = ${env.AWS_BACKEND_IP}"
+                            }
+                        }
+                    }
+                }
+                parallel {
+                    stage("Backend smoke test") {
+                        steps {
+                            sh '''
+                            if curl "${env.AWS_BACKEND_IP}/api/status" | grep "ok"
+                            then
+                                exit 0
+                            else
+                                exit 1
+                            fi
+                            '''
+                        }
+                    }
+                    stage("Frontend smoke test") {
+                        steps {
+                            sh '''
+                            URL="http://img-converter-${env.BUILD_ID:0:7}.s3-website-us-east-1.amazonaws.com/"            
+                            echo ${URL} 
+                            if curl -s ${URL} | grep "Convert"
+                            then
+                                exit 0
+                            else
+                                exit 1
+                            fi
+
+                            '''
+                        }
+                    }
+                }
+            }
+        }
         stage('CanaryDeploy') {
             when {
                 branch 'master'
