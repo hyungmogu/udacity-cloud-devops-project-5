@@ -14,7 +14,7 @@ pipeline {
         AWS_DEFAULT_REGION = "us-east-1"
         AWS_BACKEND_PUBLIC_KEY_PATH= ""
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
-        DOCKER_IMAGE_NAME = "${env.DOCKER_USER_ID}/img-converter"
+        DOCKER_IMAGE = "${env.DOCKER_USER_ID}/img-converter"
         CANARY_REPLICAS = 0
     }
     stages {
@@ -68,7 +68,7 @@ pipeline {
                         stage("Build Docker Image") {
                             steps {
                                 script {
-                                    dockerImageFrontEnd = docker.build("USER_ID/img-converter-frontend:${env.BUILD_NUMBER}", "frontend")
+                                    dockerImageFrontEnd = docker.build("${env.DOCKER_IMAGE}-frontend:${env.BUILD_NUMBER}", "frontend")
                                 }
                             }
                         }
@@ -93,7 +93,7 @@ pipeline {
                         stage("Build Docker Image") {
                             steps {
                                 script {
-                                    dockerImageBackEnd = docker.build("USER_ID/img-converter:${env.BUILD_NUMBER}", "backend")
+                                    dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}", "backend")
                                 }
                             }
                         }
@@ -119,7 +119,7 @@ pipeline {
                 stage('Test Front-End') {
                     agent {
                         docker {
-                            image 'USER_ID/img-converter-frontend:canary'
+                            image "${env.DOCKER_IMAGE}-frontend:canary"
                         }
                     }
                     steps {
@@ -129,7 +129,7 @@ pipeline {
                 stage('Test Back-End') {
                     agent {
                         docker {
-                            image 'USER_ID/img-converter:canary'
+                            image "${env.DOCKER_IMAGE}:canary"
                         }
                     }
                     steps {
@@ -139,7 +139,7 @@ pipeline {
                 stage('Scan Front-End') {
                     agent {
                         docker {
-                            image 'USER_ID/img-converter-frontend:canary'
+                            image "${env.DOCKER_IMAGE}-frontend:canary"
                         }
                     }
                     steps {
@@ -149,7 +149,7 @@ pipeline {
                 stage('Scan Back-End') {
                     agent {
                         docker {
-                            image 'USER_ID/img-converter:canary'
+                            image "${env.DOCKER_IMAGE}:canary"
                         }
                     }
                     steps {
@@ -367,14 +367,14 @@ pipeline {
                 stage("Build Docker Image") {
                     steps {
                         dir("frontend") {
-                            sh 'docker build -t USER_ID/img-converter-frontend:latest -f .'
+                            sh "docker build -t ${env.DOCKER_IMAGE}-frontend:latest -f ."
                         }
                     }
                 }
                 stage("Run Build") {
                     steps {
                         dir("frontend") {
-                            sh "docker run -e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist USER_ID/img-converter-frontend:latest"
+                            sh "docker run -e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist ${env.DOCKER_IMAGE}-frontend:latest"
                         }
                     }
                 }
@@ -420,7 +420,7 @@ pipeline {
                 stage("Build Docker Image") {
                     steps {
                         dir("backend") {
-                            sh 'docker build -t USER_ID/img-converter:latest -f .'
+                            sh "docker build -t ${env.DOCKER_IMAGE}:latest -f ."
                         }
                     }
                 }
@@ -431,7 +431,7 @@ pipeline {
                 }
                 stage("Push to Docker Hub") {
                     steps {
-                        sh 'docker push USER_ID/img-converter:latest'
+                        sh "docker push ${env.DOCKER_IMAGE}:latest"
                     }
                 }
                 stage("Run Playbook and Apply New Image to Server") {
