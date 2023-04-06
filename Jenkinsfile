@@ -297,6 +297,7 @@ pipeline {
             }
         }
         stage('Deploy Front-End') {
+            def dockerImageFrontEnd
             agent {
                 docker {
                     image 'python:3.11-buster'
@@ -306,26 +307,10 @@ pipeline {
                 branch 'master'
             }
             stages {
-                stage("Checkout") {
-                    steps {
-                        checkout scm
-                    }
-                }
-                stage("Update Packages") {
-                    steps {
-                        sh "apt update"
-                    }
-                }
-                stage("Install tar") {
-                    steps {
-                        sh "apt-get -y install tar"
-                    }
-                }
-                stage("Install AWS-CLI") {
-                    steps {
-                        sh "apt-get -y install awscli"
-                    }
-                }
+                checkoutCode()
+                updatePackages()
+                installPackage("tar")
+                installPackage("awscli")
                 stage("Get Backend URL") {
                     steps {
                         withCredentials([[
@@ -347,15 +332,18 @@ pipeline {
                 }
                 stage("Build Docker Image") {
                     steps {
-                        dir("frontend") {
-                            sh "docker build -t ${env.DOCKER_IMAGE}-frontend:latest -f ."
+                        script {
+                            dockerImageFrontEnd = docker.build("${env.DOCKER_IMAGE}-frontend", "frontend")
                         }
                     }
                 }
                 stage("Run Build") {
                     steps {
-                        dir("frontend") {
-                            sh "docker run -e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist ${env.DOCKER_IMAGE}-frontend:latest"
+                        script {
+                            dockerImageFrontEnd.withRun('-e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist') {
+                                echo "========== BUILD RESULTS ==========="
+                                sh 'ls dist'        
+                            }
                         }
                     }
                 }
