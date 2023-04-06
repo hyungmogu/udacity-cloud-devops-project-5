@@ -68,7 +68,7 @@ pipeline {
                         stage("Build Docker Image") {
                             steps {
                                 script {
-                                    dockerImageFrontEnd = docker.build("${env.DOCKER_IMAGE}-frontend:${env.BUILD_NUMBER}", "frontend")
+                                    dockerImageFrontEnd = docker.build("${env.DOCKER_IMAGE}-frontend", "frontend")
                                 }
                             }
                         }
@@ -79,7 +79,7 @@ pipeline {
                                         usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
                                     ]) {
                                         docker.withRegistry('', 'docker-hub-key') {
-                                            dockerImageFrontEnd.push("canary")
+                                            dockerImageFrontEnd.push("${env.BUILD_NUMBER}-canary")
                                         }
                                     }
                                 }
@@ -93,7 +93,7 @@ pipeline {
                         stage("Build Docker Image") {
                             steps {
                                 script {
-                                    dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}", "backend")
+                                    dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}", "backend")
                                 }
                             }
                         }
@@ -104,7 +104,7 @@ pipeline {
                                         usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
                                     ]) {
                                         docker.withRegistry('', 'docker-hub-key') {
-                                            dockerImageBackEnd.push("canary")
+                                            dockerImageBackEnd.push("${env.BUILD_NUMBER}-canary")
                                         }
                                     }
                                 }
@@ -119,7 +119,7 @@ pipeline {
                 stage('Test Front-End') {
                     agent {
                         docker {
-                            image "${env.DOCKER_IMAGE}-frontend:canary"
+                            image "${env.DOCKER_IMAGE}-frontend:${env.BUILD_NUMBER}-canary"
                         }
                     }
                     steps {
@@ -129,7 +129,7 @@ pipeline {
                 stage('Test Back-End') {
                     agent {
                         docker {
-                            image "${env.DOCKER_IMAGE}:canary"
+                            image "${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}-canary"
                         }
                     }
                     steps {
@@ -139,7 +139,7 @@ pipeline {
                 stage('Scan Front-End') {
                     agent {
                         docker {
-                            image "${env.DOCKER_IMAGE}-frontend:canary"
+                            image "${env.DOCKER_IMAGE}-frontend:${env.BUILD_NUMBER}-canary"
                         }
                     }
                     steps {
@@ -149,7 +149,7 @@ pipeline {
                 stage('Scan Back-End') {
                     agent {
                         docker {
-                            image "${env.DOCKER_IMAGE}:canary"
+                            image "${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}-canary"
                         }
                     }
                     steps {
