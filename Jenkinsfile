@@ -1,3 +1,11 @@
+def checkoutCode() {
+  stage("Checkout") {
+    steps {
+      checkout scm
+    }
+  }
+}
+
 pipeline {
     agent any
     environment {
@@ -6,52 +14,46 @@ pipeline {
         AWS_DEFAULT_REGION = "us-east-1"
         AWS_BACKEND_PUBLIC_KEY_PATH= ""
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
-        DOCKER_IMAGE_NAME = "guhyungm7/img-converter"
+        DOCKER_IMAGE_NAME = "USER_ID/img-converter"
         CANARY_REPLICAS = 0
     }
     stages {
         stage('Lint') {
-            parallel {
-                stage('Lint Front-end') {
-                    stages {
-                        stage("Checkout") {
-                            steps {
-                                checkout scm
-                            }
+            def pullHadolintImage() {
+                stage("Pull Hadolint Docker Image") {
+                    steps {
+                        script {
+                            docker.image('hadolint/hadolint').pull()
                         }
-                        stage("Pull Hadolint Docker Image") {
-                            steps {
-                                sh 'docker pull hadolint/hadolint'
-                            }
-                        }
-                        stage("Check Lint") {
-                            steps {
-                                dir('frontend') {
-                                    sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
+                    }
+                }
+            }
+            def lintDockerfile(dirName) {
+                stage("Lint ${dirName}") {
+                    steps {
+                        script {
+                            docker.withTool('hadolint') {
+                                dir(dirName) {
+                                    sh 'hadolint < Dockerfile'
                                 }
                             }
                         }
                     }
                 }
+            }
+            parallel {
+                stage('Lint Front-end') {
+                    stages {
+                        checkoutCode()
+                        pullHadolintImage()
+                        lintDockerfile('frontend')
+                    }
+                }
                 stage('Lint Back-end') {
                     stages {
-                        stage("Checkout") {
-                            steps {
-                                checkout scm
-                            }
-                        }
-                        stage("Pull Hadolint Docker Image") {
-                            steps {
-                                sh 'docker pull hadolint/hadolint'
-                            }
-                        }
-                        stage("Check Lint") {
-                            steps {
-                                dir('backend') {
-                                    sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
-                                }
-                            }
-                        }
+                        checkoutCode()
+                        pullHadolintImage()
+                        lintDockerfile('backend')
                     }
                 }
             }
@@ -68,7 +70,7 @@ pipeline {
                         stage("Build Docker Image") {
                             steps {
                                 dir("frontend") {
-                                    sh 'docker build -t guhyungm7/img-converter-frontend:canary -f .'
+                                    sh 'docker build -t USER_ID/img-converter-frontend:canary -f .'
                                 }
                             }
                         }
@@ -79,7 +81,7 @@ pipeline {
                         }
                         stage("Push to Docker Hub") {
                             steps {
-                                sh 'docker push guhyungm7/img-converter-frontend:canary'
+                                sh 'docker push USER_ID/img-converter-frontend:canary'
                             }
                         }
                     }
@@ -94,7 +96,7 @@ pipeline {
                         stage("Build Docker Image") {
                             steps {
                                 dir("backend") {
-                                    sh 'docker build -t guhyungm7/img-converter:canary -f .'
+                                    sh 'docker build -t USER_ID/img-converter:canary -f .'
                                 }
                             }
                         }
@@ -105,7 +107,7 @@ pipeline {
                         }
                         stage("Push to Docker Hub") {
                             steps {
-                                sh 'docker push guhyungm7/img-converter:canary'
+                                sh 'docker push USER_ID/img-converter:canary'
                             }
                         }
                     }
@@ -117,7 +119,7 @@ pipeline {
                 stage('Test Front-End') {
                     agent {
                         docker {
-                            image 'guhyungm7/img-converter-frontend:canary'
+                            image 'USER_ID/img-converter-frontend:canary'
                         }
                     }
                     steps {
@@ -127,7 +129,7 @@ pipeline {
                 stage('Test Back-End') {
                     agent {
                         docker {
-                            image 'guhyungm7/img-converter:canary'
+                            image 'USER_ID/img-converter:canary'
                         }
                     }
                     steps {
@@ -137,7 +139,7 @@ pipeline {
                 stage('Scan Front-End') {
                     agent {
                         docker {
-                            image 'guhyungm7/img-converter-frontend:canary'
+                            image 'USER_ID/img-converter-frontend:canary'
                         }
                     }
                     steps {
@@ -147,7 +149,7 @@ pipeline {
                 stage('Scan Back-End') {
                     agent {
                         docker {
-                            image 'guhyungm7/img-converter:canary'
+                            image 'USER_ID/img-converter:canary'
                         }
                     }
                     steps {
@@ -365,14 +367,14 @@ pipeline {
                 stage("Build Docker Image") {
                     steps {
                         dir("frontend") {
-                            sh 'docker build -t guhyungm7/img-converter-frontend:latest -f .'
+                            sh 'docker build -t USER_ID/img-converter-frontend:latest -f .'
                         }
                     }
                 }
                 stage("Run Build") {
                     steps {
                         dir("frontend") {
-                            sh "docker run -e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist guhyungm7/img-converter-frontend:latest"
+                            sh "docker run -e BACKEND_IP=${env.AWS_BACKEND_IP} -v $(pwd)/dist:/app/dist USER_ID/img-converter-frontend:latest"
                         }
                     }
                 }
@@ -418,7 +420,7 @@ pipeline {
                 stage("Build Docker Image") {
                     steps {
                         dir("backend") {
-                            sh 'docker build -t guhyungm7/img-converter:latest -f .'
+                            sh 'docker build -t USER_ID/img-converter:latest -f .'
                         }
                     }
                 }
@@ -429,7 +431,7 @@ pipeline {
                 }
                 stage("Push to Docker Hub") {
                     steps {
-                        sh 'docker push guhyungm7/img-converter:latest'
+                        sh 'docker push USER_ID/img-converter:latest'
                     }
                 }
                 stage("Run Playbook and Apply New Image to Server") {
