@@ -1,5 +1,5 @@
 Description: >
-  UdaPeople backend stack.
+  Image Converter backend stack.
 
 Parameters:
   ID:
@@ -10,7 +10,7 @@ Resources:
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: !Sub UdaPeople-${ID}
+      GroupName: !Sub ImageConverter-${ID}
       GroupDescription: Allow port 22 and port 3030.
       SecurityGroupIngress:
         - IpProtocol: tcp
@@ -25,7 +25,7 @@ Resources:
   PrometheusSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: !Sub UdaPeople-Prometheus-${ID}
+      GroupName: !Sub ImageConverter-Prometheus-${ID}
       GroupDescription: Allow port 22, port 9090, 9093, 9100.
       SecurityGroupIngress:
         - IpProtocol: tcp
