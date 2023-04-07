@@ -193,27 +193,40 @@ pipeline {
                             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
                             region: 'AWS_DEFAULT_REGION'
                         ]]) {
-                            sh '''
-                            aws cloudformation deploy\
-                            --template - file.circleci / files / backend.yml\
-                                --tags project = img-converter\
-                                --stack - name "img-converter-${env.BUILD_ID:0:7}-backend"\
-                                --parameter - overrides ID = "${env.BUILD_ID:0:7}"
-                            '''
+                            def tagName = 'project'
+                            def tagValue = 'img-converter-backend'
 
-                            instance_id = sh(
-                                script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`InstanceId`].OutputValue" --output text',
-                                returnStdout: true
-                            ).trim()
+                            // Execute the AWS CLI command and parse the output
+                            def awsResponse = sh(returnStdout: true, script: "aws cloudformation list-stacks --query 'StackSummaries[?contains(Tags[?Key==\`$tagName\`].Value, \`$tagValue\`)].StackName' --output json").trim()
+                            def stackList = readJSON text: awsResponse
 
-                            os_user = sh(
-                                script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`DefaultOsUser`].OutputValue" --output text',
-                                returnStdout: true
-                            ).trim()
+                            if (stackList.size() > 0) {
+                                echo "Stack with tag $tagName = $tagValue already exists. Skipping backend stack creation."
+                            } else {
+                                echo "Stack with tag $tagName = $tagValue doesn't exists. Continuing stack creation."
+                                
+                                sh '''
+                                aws cloudformation deploy\
+                                --template - file.circleci / files / backend.yml\
+                                    --tags project = img-converter-backend\
+                                    --stack - name "img-converter-${env.BUILD_ID:0:7}-backend"\
+                                    --parameter - overrides ID = "${env.BUILD_ID:0:7}"
+                                '''
 
-                            withEnv(["AWS_BACKEND_STACK_INSTANCE_ID=${instance_id}", "AWS_BACKEND_STACK_OS_USER=${os_user}"]) {
-                                echo "AWS_BACKEND_STACK_INSTANCE_ID = ${env.AWS_BACKEND_STACK_INSTANCE_ID}"
-                                echo "AWS_BACKEND_STACK_OS_USER = ${env.AWS_BACKEND_STACK_OS_USER}"
+                                instance_id = sh(
+                                    script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`InstanceId`].OutputValue" --output text',
+                                    returnStdout: true
+                                ).trim()
+
+                                os_user = sh(
+                                    script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`DefaultOsUser`].OutputValue" --output text',
+                                    returnStdout: true
+                                ).trim()
+
+                                withEnv(["AWS_BACKEND_STACK_INSTANCE_ID=${instance_id}", "AWS_BACKEND_STACK_OS_USER=${os_user}"]) {
+                                    echo "AWS_BACKEND_STACK_INSTANCE_ID = ${env.AWS_BACKEND_STACK_INSTANCE_ID}"
+                                    echo "AWS_BACKEND_STACK_OS_USER = ${env.AWS_BACKEND_STACK_OS_USER}"
+                                }
                             }
                         }
                         
@@ -230,7 +243,7 @@ pipeline {
                             sh '''
                             aws cloudformation deploy\
                             --template - file.circleci / files / frontend.yml\
-                                --tags project = img-converter\
+                                --tags project = img-converter-backend\
                                 --stack - name "img-converter-${env.BUILD_ID:0:7}-frontend"\
                                 --parameter - overrides ID = "${env.BUILD_ID:0:7}"
                             '''
