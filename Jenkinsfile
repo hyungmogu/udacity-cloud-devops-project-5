@@ -6,7 +6,9 @@ pipeline {
     }
     stages {
         stage('Lint') {
-            echo "Hello World"
+            steps {
+                echo "Hello World"
+            }
         }
     }
 }
