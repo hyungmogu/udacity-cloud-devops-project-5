@@ -20,7 +20,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ### Deployment Architecture
 
-<img src="https://user-images.githubusercontent.com/6856382/226086046-10f2ec21-c2fb-418d-aa1b-48557938969d.jpeg">
+<img src="https://user-images.githubusercontent.com/6856382/230620785-fbebabb7-1caa-4615-a858-519f72f9b021.jpeg">
 
 ### Infrastructure Diagram
 
