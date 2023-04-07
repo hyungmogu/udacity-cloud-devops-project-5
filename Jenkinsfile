@@ -1,7 +1,8 @@
 def checkoutCode() {
   stage("Checkout") {
     steps {
-      checkout scm
+      def commit = checkout scm
+      echo "Latest commit ID: ${commit.GIT_COMMIT}"
     }
   }
 }
