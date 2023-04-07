@@ -184,6 +184,7 @@ pipeline {
                 updatePackages()
                 installPackage("tar")
                 installPackage("gzip")
+                installPackage("ansible")
                 installPackage("awscli")
                 stage("Ensure back-end infrastructure exists") {
                     steps {
@@ -263,39 +264,6 @@ pipeline {
                         }
                     }
                 }
-                stage("Add back-end ip to ansible inventory") {
-                    steps {
-                        withCredentials([[
-                            $class: 'AmazonWebServicesCredentialsBinding',
-                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                            region: 'AWS_DEFAULT_REGION'
-                        ]]) {
-                            sh '''
-                            aws ec2 describe-instances \
-                            --query 'Reservations[*].Instances[*].PublicIpAddress' \
-                            --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" \
-                            --output text >> .jenkins/ansible/inventory.txt
-                            '''
-                        }
-                    }
-                }
-            }
-        }
-        stage('Configure & Install Infrastructure') {
-            agent {
-                docker {
-                    image 'python:3.11-buster'
-                }
-            }
-            when {
-                branch 'master'
-            }
-            stages {
-                checkoutCode()
-                updatePackages()
-                installPackage("ansible")
-                installPackage("awscli")
                 stage("Add SSH Key to EC2 Instance") {
                     steps {
                         withCredentials([[
@@ -310,6 +278,23 @@ pipeline {
                                 --instance-os-user ${env.AWS_BACKEND_STACK_OS_USER} \
                                 --ssh-public-key ${env.PUBLIC_KEY_PATH}
                             """
+                        }
+                    }
+                }
+                stage("Add back-end ip to ansible inventory") {
+                    steps {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            sh '''
+                            aws ec2 describe-instances \
+                            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+                            --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" \
+                            --output text >> .jenkins/ansible/inventory.txt
+                            '''
                         }
                     }
                 }
