@@ -32,13 +32,13 @@ pipeline {
     }
     stages {
         stage('Lint') {
-            agent {
-                node { 
-                    label 'Jenkins-Slave'
-                }
-            }
             parallel {
                 stage('Lint Front-end') {
+                    agent {
+                        node { 
+                            label 'Jenkins-Slave'
+                        }
+                    }
                     stages {
                         stage("Checkout") {
                             steps {
@@ -58,6 +58,11 @@ pipeline {
                     }
                 }
                 stage('Lint Back-end') {
+                    agent {
+                        node { 
+                            label 'Jenkins-Slave'
+                        }
+                    }
                     stages {
                         stage("Checkout") {
                             steps {
