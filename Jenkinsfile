@@ -25,7 +25,7 @@ def lintDockerfile(dirName) {
 }
 
 pipeline {
-    agent any
+    agent "Jenkins-Slave"
     environment {
         PUBLIC_KEY_PATH= "${env.PUBLIC_KEY_PATH}"
         DOCKER_IMAGE = "${env.DOCKER_USER_ID}/img-converter"
