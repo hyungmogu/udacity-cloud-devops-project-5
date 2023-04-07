@@ -25,12 +25,12 @@ def lintDockerfile(dirName) {
 }
 
 pipeline {
-    agent "Jenkins-Slave"
+    agent any
     environment {
         PUBLIC_KEY_PATH= "${env.PUBLIC_KEY_PATH}"
         DOCKER_IMAGE = "${env.DOCKER_USER_ID}/img-converter"
     }
-    stages {
+    node('Jenkins-Slave') {
         stage('Lint') {
             parallel {
                 stage('Lint Front-end') {
