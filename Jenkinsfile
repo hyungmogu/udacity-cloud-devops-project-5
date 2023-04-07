@@ -240,13 +240,26 @@ pipeline {
                             secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
                             region: 'AWS_DEFAULT_REGION'
                         ]]) {
-                            sh '''
-                            aws cloudformation deploy\
-                            --template - file.circleci / files / frontend.yml\
-                                --tags project = img-converter-backend\
-                                --stack - name "img-converter-${env.BUILD_ID:0:7}-frontend"\
-                                --parameter - overrides ID = "${env.BUILD_ID:0:7}"
-                            '''
+                            def tagName = 'project'
+                            def tagValue = 'img-converter-frontend'
+
+                            // Execute the AWS CLI command and parse the output
+                            def awsResponse = sh(returnStdout: true, script: "aws cloudformation list-stacks --query 'StackSummaries[?contains(Tags[?Key==\`$tagName\`].Value, \`$tagValue\`)].StackName' --output json").trim()
+                            def stackList = readJSON text: awsResponse
+
+                            if (stackList.size() > 0) {
+                                echo "Stack with tag $tagName = $tagValue already exists. Skipping backend stack creation."
+                            } else {
+                                echo "Stack with tag $tagName = $tagValue doesn't exists. Continuing stack creation."
+
+                                sh '''
+                                aws cloudformation deploy\
+                                --template - file.circleci / files / frontend.yml\
+                                    --tags project = img-converter-frontend\
+                                    --stack - name "img-converter-${env.BUILD_ID:0:7}-frontend"\
+                                    --parameter - overrides ID = "${env.BUILD_ID:0:7}"
+                                '''
+                            }
                         }
                     }
                 }
