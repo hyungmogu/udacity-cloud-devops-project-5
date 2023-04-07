@@ -1,49 +1,25 @@
 def checkoutCode() {
-  stage("Checkout") {
-    steps {
-      def commit = checkout scm
-      echo "Latest commit ID: ${commit.GIT_COMMIT}"
-    }
-  }
+    def commit = checkout scm
+    echo "Latest commit ID: ${commit.GIT_COMMIT}"
 }
 
 def updatePackages() {
-    stage("Update Packages") {
-        steps {
-            sh "apt update"
-        }
-    }
+    sh "apt update"
 }
 
 def installPackage(packageName) {
-    stage("Install ${packageName}") {
-        steps {
-            sh "apt-get -y install ${packageName}"
-        }
-    }
+    sh "apt-get -y install ${packageName}"
 }
 
 // ===== Linting =======
 
 def pullHadolintImage() {
-    stage("Pull Hadolint Docker Image") {
-        steps {
-            script {
-                docker.image('hadolint/hadolint').pull()
-            }
-        }
-    }
+    docker.image('hadolint/hadolint').pull()
 }
 def lintDockerfile(dirName) {
-    stage("Lint ${dirName}") {
-        steps {
-            script {
-                docker.withTool('hadolint') {
-                    dir(dirName) {
-                        sh 'hadolint < Dockerfile'
-                    }
-                }
-            }
+    docker.withTool('hadolint') {
+        dir(dirName) {
+            sh 'hadolint < Dockerfile'
         }
     }
 }
@@ -59,18 +35,30 @@ pipeline {
             parallel {
                 stage('Lint Front-end') {
                     stages {
-                        checkoutCode()
-                        pullHadolintImage()
-                        lintDockerfile('frontend')
+                        stage("Checkout") {
+                            steps {
+                                checkoutCode()
+                            }
+                        }
+                        stage("Pull Hadolint Docker Image") {
+                            steps {
+                                pullHadolintImage()
+                            }
+                        }
+                        stage("Lint Front-End") {
+                            steps {
+                                lintDockerfile('frontend')
+                            }
+                        }
                     }
                 }
-                stage('Lint Back-end') {
-                    stages {
-                        checkoutCode()
-                        pullHadolintImage()
-                        lintDockerfile('backend')
-                    }
-                }
+                // stage('Lint Back-end') {
+                //     stages {
+                //         checkoutCode()
+                //         pullHadolintImage()
+                //         lintDockerfile('backend')
+                //     }
+                // }
             }
         }
         // stage('Build') {
