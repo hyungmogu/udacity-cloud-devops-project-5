@@ -23,6 +23,31 @@ def installPackage(packageName) {
     }
 }
 
+// ===== Linting =======
+
+def pullHadolintImage() {
+    stage("Pull Hadolint Docker Image") {
+        steps {
+            script {
+                docker.image('hadolint/hadolint').pull()
+            }
+        }
+    }
+}
+def lintDockerfile(dirName) {
+    stage("Lint ${dirName}") {
+        steps {
+            script {
+                docker.withTool('hadolint') {
+                    dir(dirName) {
+                        sh 'hadolint < Dockerfile'
+                    }
+                }
+            }
+        }
+    }
+}
+
 pipeline {
     agent any
     environment {
@@ -32,28 +57,6 @@ pipeline {
     }
     stages {
         stage('Lint') {
-            def pullHadolintImage() {
-                stage("Pull Hadolint Docker Image") {
-                    steps {
-                        script {
-                            docker.image('hadolint/hadolint').pull()
-                        }
-                    }
-                }
-            }
-            def lintDockerfile(dirName) {
-                stage("Lint ${dirName}") {
-                    steps {
-                        script {
-                            docker.withTool('hadolint') {
-                                dir(dirName) {
-                                    sh 'hadolint < Dockerfile'
-                                }
-                            }
-                        }
-                    }
-                }
-            }
             parallel {
                 stage('Lint Front-end') {
                     stages {
