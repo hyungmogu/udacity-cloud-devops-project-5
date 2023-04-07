@@ -312,18 +312,19 @@ pipeline {
             }
         }
         stage('Deploy') {
-            parallel {
-                stage('Deploy Front-End') {
-                    def dockerImageFrontEnd
-                    agent {
-                        docker {
-                            image 'python:3.11-buster'
-                        }
-                    }
-                    when {
-                        branch 'master'
-                    }
-                    stages {
+            def dockerImageFrontEnd
+            def dockerImageBackEnd
+            agent {
+                docker {
+                    image 'python:3.11-buster'
+                }
+            }
+            when {
+                branch 'master'
+            }
+            stages {
+                parallel {
+                    stage('Deploy Front-End') {                 
                         checkoutCode()
                         updatePackages()
                         installPackage("tar")
@@ -373,46 +374,47 @@ pipeline {
                                 }
                             }
                         }
+       
                     }
-                }
-                stage('Deploy Back-End') {
-                    agent {
-                        docker {
-                            image 'python:3.11-buster'
-                        }
-                    }
-                    when {
-                        branch 'master'
-                    }
-                    stages {
-                        checkoutCode()
-                        updatePackages()
-                        installPackage("tar")
-                        installPackage("ansible")
-                        stage("Build Docker Image") {
-                            steps {
-                                script {
-                                    dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}", "backend")
-                                }
+                    stage('Deploy Back-End') {
+                        agent {
+                            docker {
+                                image 'python:3.11-buster'
                             }
                         }
-                        stage("Push to Docker Hub") {
-                            steps {
-                                script {
-                                    withCredentials([
-                                        usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
-                                    ]) {
-                                        docker.withRegistry('', 'docker-hub-key') {
-                                            dockerImageBackEnd.push("${env.BUILD_NUMBER}-latest")
+                        when {
+                            branch 'master'
+                        }
+                        stages {
+                            checkoutCode()
+                            updatePackages()
+                            installPackage("tar")
+                            installPackage("ansible")
+                            stage("Build Docker Image") {
+                                steps {
+                                    script {
+                                        dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}", "backend")
+                                    }
+                                }
+                            }
+                            stage("Push to Docker Hub") {
+                                steps {
+                                    script {
+                                        withCredentials([
+                                            usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
+                                        ]) {
+                                            docker.withRegistry('', 'docker-hub-key') {
+                                                dockerImageBackEnd.push("${env.BUILD_NUMBER}-latest")
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        stage("Run Playbook and Apply New Image to Server") {
-                            steps {
-                                dir('.jenkins/ansible') {
-                                    sh 'ansible-playbook -i inventory.txt deploy-backend.yml'
+                            stage("Run Playbook and Apply New Image to Server") {
+                                steps {
+                                    dir('.jenkins/ansible') {
+                                        sh 'ansible-playbook -i inventory.txt deploy-backend.yml'
+                                    }
                                 }
                             }
                         }
