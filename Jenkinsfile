@@ -52,13 +52,25 @@ pipeline {
                         }
                     }
                 }
-                // stage('Lint Back-end') {
-                //     stages {
-                //         checkoutCode()
-                //         pullHadolintImage()
-                //         lintDockerfile('backend')
-                //     }
-                // }
+                stage('Lint Back-end') {
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                checkoutCode()
+                            }
+                        }
+                        stage("Pull Hadolint Docker Image") {
+                            steps {
+                                pullHadolintImage()
+                            }
+                        }
+                        stage("Lint Back-End") {
+                            steps {
+                                lintDockerfile('backend')
+                            }
+                        }
+                    }
+                }
             }
         }
         // stage('Build') {
