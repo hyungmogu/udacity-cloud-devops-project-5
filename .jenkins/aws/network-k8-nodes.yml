@@ -255,7 +255,7 @@ Resources:
           FromPort: 8000
           ToPort: 8000
           CidrIp: 0.0.0.0/0
-          
+
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
@@ -268,7 +268,7 @@ Resources:
       ImageId: ami-007855ac798b5175e 
       Tags:
         - Key: Name
-          Value: !Sub ImageConverter-backend-${ID}
+          Value: !Sub ImageConverter-EC2-${ID}
 
 Outputs: 
   # This is also optional.
