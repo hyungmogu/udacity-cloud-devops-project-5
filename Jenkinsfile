@@ -11,6 +11,12 @@ def installPackage(packageName) {
     sh "apt-get -y install ${packageName}"
 }
 
+def buildImage(dirName, tag) {
+    dir(dirName) {
+        sh "sudo docker build -t ${tag} ."
+    }
+}
+
 // ===== Linting =======
 
 def pullHadolintImage() {
@@ -83,62 +89,60 @@ pipeline {
                 }
             }
         }
-        // stage('Build') {
-        //     def dockerImageFrontEnd
-        //     def dockerImageBackEnd
-        //     parallel {
-        //         stage('Build Front-end') {
-        //             stages {
-        //                 checkoutCode()
-        //                 stage("Build Docker Image") {
-        //                     steps {
-        //                         script {
-        //                             dockerImageFrontEnd = docker.build("${env.DOCKER_IMAGE}-frontend", "frontend")
-        //                         }
-        //                     }
-        //                 }
-        //                 stage("Push to Docker Hub") {
-        //                     steps {
-        //                         script {
-        //                             withCredentials([
-        //                                 usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
-        //                             ]) {
-        //                                 docker.withRegistry('', 'docker-hub-key') {
-        //                                     dockerImageFrontEnd.push("${env.BUILD_NUMBER}-canary")
-        //                                 }
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         stage('Build Back-end') {
-        //             stages {
-        //                 checkoutCode()
-        //                 stage("Build Docker Image") {
-        //                     steps {
-        //                         script {
-        //                             dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}", "backend")
-        //                         }
-        //                     }
-        //                 }
-        //                 stage("Push to Docker Hub") {
-        //                     steps {
-        //                         script {
-        //                             withCredentials([
-        //                                 usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
-        //                             ]) {
-        //                                 docker.withRegistry('', 'docker-hub-key') {
-        //                                     dockerImageBackEnd.push("${env.BUILD_NUMBER}-canary")
-        //                                 }
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Build') {
+            parallel {
+                stage('Build Front-end') {
+                    stages {
+                        checkoutCode()
+                        stage("Build Docker Image") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerBuildImage("frontend", "${env.DOCKER_IMAGE}-frontend")
+                                }
+                            }
+                        }
+                        stage("Push to Docker Hub") {
+                            steps {
+                                script {
+                                    withCredentials([
+                                        usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
+                                    ]) {
+                                        docker.withRegistry('', 'docker-hub-key') {
+                                            dockerImageFrontEnd.push("${env.BUILD_NUMBER}-canary")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('Build Back-end') {
+                    stages {
+                        checkoutCode()
+                        stage("Build Docker Image") {
+                            steps {
+                                script {
+                                    dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}", "backend")
+                                }
+                            }
+                        }
+                        stage("Push to Docker Hub") {
+                            steps {
+                                script {
+                                    withCredentials([
+                                        usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
+                                    ]) {
+                                        docker.withRegistry('', 'docker-hub-key') {
+                                            dockerImageBackEnd.push("${env.BUILD_NUMBER}-canary")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         // stage('Test & Scan') {
         //     parallel {
         //         stage('Test Front-End') {
