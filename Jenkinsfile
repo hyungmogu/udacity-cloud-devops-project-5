@@ -35,23 +35,17 @@ pipeline {
                     stages {           
                         stage("Checkout") {
                             node('Jenkins-Slave') {
-                                steps {
-                                    checkoutCode()
-                                }
+                                checkoutCode()
                             }
                         }
                         stage("Pull Hadolint Docker Image") {
                             node('Jenkins-Slave') {
-                                steps {
-                                    pullHadolintImage()
-                                }
+                                pullHadolintImage()
                             }
                         }
                         stage("Lint Front-End") {
-                                node('Jenkins-Slave') {
-                                steps {
-                                    lintDockerfile('frontend')
-                                }
+                            node('Jenkins-Slave') {
+                                lintDockerfile('frontend')
                             }
                         }
                     }
@@ -60,23 +54,17 @@ pipeline {
                     stages {                        
                         stage("Checkout") {
                             node('Jenkins-Slave') {
-                                steps {
-                                    checkoutCode()
-                                }
+                                checkoutCode()
                             }
                         }
                         stage("Pull Hadolint Docker Image") {
                             node('Jenkins-Slave') {
-                                steps {
-                                    pullHadolintImage()
-                                }
+                                pullHadolintImage()
                             }
                         }
                         stage("Lint Back-End") {
-                            node('Jenkins-Slave') {
-                                steps {
-                                    lintDockerfile('backend')
-                                }
+                            node('Jenkins-Slave') {     
+                                lintDockerfile('backend')
                             }
                         }
                     }
