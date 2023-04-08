@@ -11,9 +11,19 @@ def installPackage(packageName) {
     sh "apt-get -y install ${packageName}"
 }
 
-def buildImage(dirName, tag) {
+def dockerBuildImage(dirName, tag) {
     dir(dirName) {
         sh "sudo docker build -t ${tag} ."
+    }
+}
+
+def dockerPushImage(dockerHubKeyName, imageTag) {
+    withCredentials([
+        usernamePassword(credentialsId: dockerHubKeyName, passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
+    ]) {
+        echo "Pushing Docker Image ($imageTag)..."
+        sh "echo $DOCKERHUB_PW | docker login -u $DOCKERHUB_USERNAME --password-stdin"
+        sh "docker push $imageTag"
     }
 }
 
@@ -93,24 +103,24 @@ pipeline {
             parallel {
                 stage('Build Front-end') {
                     stages {
-                        checkoutCode()
+                        stage("Checkout") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
+                                }
+                            }
+                        }
                         stage("Build Docker Image") {
                             steps {
                                 node('Jenkins-Slave') {
-                                    dockerBuildImage("frontend", "${env.DOCKER_IMAGE}-frontend")
+                                    dockerBuildImage("frontend", "${env.DOCKER_IMAGE}-frontend:canary")
                                 }
                             }
                         }
                         stage("Push to Docker Hub") {
                             steps {
-                                script {
-                                    withCredentials([
-                                        usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
-                                    ]) {
-                                        docker.withRegistry('', 'docker-hub-key') {
-                                            dockerImageFrontEnd.push("${env.BUILD_NUMBER}-canary")
-                                        }
-                                    }
+                                node('Jenkins-Slave') {
+                                    dockerPushImage("docker-hub-key", "${env.DOCKER_IMAGE}-frontend:canary")
                                 }
                             }
                         }
@@ -118,24 +128,24 @@ pipeline {
                 }
                 stage('Build Back-end') {
                     stages {
-                        checkoutCode()
+                        stage("Checkout") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
+                                }
+                            }
+                        }
                         stage("Build Docker Image") {
                             steps {
-                                script {
-                                    dockerImageBackEnd = docker.build("${env.DOCKER_IMAGE}", "backend")
+                                node('Jenkins-Slave') {
+                                    dockerBuildImage("backend", "${env.DOCKER_IMAGE}-backend:canary")
                                 }
                             }
                         }
                         stage("Push to Docker Hub") {
                             steps {
-                                script {
-                                    withCredentials([
-                                        usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
-                                    ]) {
-                                        docker.withRegistry('', 'docker-hub-key') {
-                                            dockerImageBackEnd.push("${env.BUILD_NUMBER}-canary")
-                                        }
-                                    }
+                                node('Jenkins-Slave') {
+                                    dockerPushImage("docker-hub-key", "${env.DOCKER_IMAGE}-backend:canary")
                                 }
                             }
                         }
