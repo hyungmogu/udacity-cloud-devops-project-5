@@ -64,7 +64,7 @@ pipeline {
                                 }
                             }
                         }
-                        stage("Lint Front-End") {
+                        stage("Check Dockerfile") {
                             steps {
                                 node('Jenkins-Slave') {
                                     lintDockerfile('frontend')
@@ -89,7 +89,7 @@ pipeline {
                                 }
                             }
                         }
-                        stage("Lint Back-End") {
+                        stage("Check Dockerfile") {
                             steps {
                                 node('Jenkins-Slave') {     
                                     lintDockerfile('backend')
