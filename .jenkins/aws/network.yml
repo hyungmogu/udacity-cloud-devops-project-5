@@ -56,7 +56,7 @@ Resources:
   IAMS3ReadOnlyRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: UdacityS3ReadOnlyEC2
+      RoleName: ImageConverterS3ReadOnlyEC2
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -74,7 +74,7 @@ Resources:
     DependsOn: IAMS3ReadOnlyRole
     Properties: 
       Roles:
-        - UdacityS3ReadOnlyEC2
+        - ImageConverterS3ReadOnlyEC2
 
   VPC: 
     Type: AWS::EC2::VPC
