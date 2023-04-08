@@ -18,7 +18,7 @@ def pullHadolintImage() {
 }
 def lintDockerfile(dirName) {
     dir(dirName) {
-        sh 'hadolint < Dockerfile'
+        sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
     }
 }
 
@@ -34,18 +34,24 @@ pipeline {
                 stage('Lint Front-end') {
                     stages {           
                         stage("Checkout") {
-                            node('Jenkins-Slave') {
-                                checkoutCode()
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
+                                }
                             }
                         }
                         stage("Pull Hadolint Docker Image") {
-                            node('Jenkins-Slave') {
-                                pullHadolintImage()
+                            steps {
+                                node('Jenkins-Slave') {
+                                    pullHadolintImage()
+                                }
                             }
                         }
                         stage("Lint Front-End") {
-                            node('Jenkins-Slave') {
-                                lintDockerfile('frontend')
+                            steps {
+                                node('Jenkins-Slave') {
+                                    lintDockerfile('frontend')
+                                }
                             }
                         }
                     }
@@ -53,18 +59,24 @@ pipeline {
                 stage('Lint Back-end') {
                     stages {                        
                         stage("Checkout") {
-                            node('Jenkins-Slave') {
-                                checkoutCode()
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
+                                }
                             }
                         }
                         stage("Pull Hadolint Docker Image") {
-                            node('Jenkins-Slave') {
-                                pullHadolintImage()
+                            steps {
+                                node('Jenkins-Slave') {
+                                    pullHadolintImage()
+                                }
                             }
                         }
                         stage("Lint Back-End") {
-                            node('Jenkins-Slave') {     
-                                lintDockerfile('backend')
+                            steps {
+                                node('Jenkins-Slave') {     
+                                    lintDockerfile('backend')
+                                }
                             }
                         }
                     }
