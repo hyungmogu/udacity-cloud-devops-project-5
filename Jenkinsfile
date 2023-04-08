@@ -32,22 +32,20 @@ pipeline {
         stage('Lint') {
             parallel {
                 stage('Lint Front-end') {
-                    stages {
-                        node('Jenkins-Slave') {
-                            stage("Checkout") {
-                                steps {
-                                    checkoutCode()
-                                }
+                    node('Jenkins-Slave') {
+                        stage("Checkout") {
+                            steps {
+                                checkoutCode()
                             }
-                            stage("Pull Hadolint Docker Image") {
-                                steps {
-                                    pullHadolintImage()
-                                }
+                        }
+                        stage("Pull Hadolint Docker Image") {
+                            steps {
+                                pullHadolintImage()
                             }
-                            stage("Lint Front-End") {
-                                steps {
-                                    lintDockerfile('frontend')
-                                }
+                        }
+                        stage("Lint Front-End") {
+                            steps {
+                                lintDockerfile('frontend')
                             }
                         }
                     }
