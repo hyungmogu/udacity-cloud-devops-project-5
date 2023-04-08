@@ -4,8 +4,12 @@ Parameters:
   # use them for things that may change over time, such as instance type,
   # VPCs and so on.
 
-  EnvironmentName:
-    Description: An environment name that will be prefixed to resource names
+  EnvironmentName1:
+    Description: First environment name that will be prefixed to resource names
+    Type: String
+
+  EnvironmentName2:
+    Description: Second environment name that will be prefixed to resource names
     Type: String
 
   VpcCIDR: 
@@ -76,14 +80,23 @@ Resources:
       Roles:
         - ImageConverterS3ReadOnlyEC2
 
-  VPC: 
+  VPCK8ControlPlane: 
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: !Ref VpcCIDR
       EnableDnsHostnames: true
       Tags: 
       - Key: Name 
-        Value: !Ref EnvironmentName
+        Value: !Ref EnvironmentName1
+
+  VPCK8Nodes: 
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsHostnames: true
+      Tags: 
+      - Key: Name 
+        Value: !Ref EnvironmentName2
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
