@@ -66,3 +66,39 @@ Ability to launch Jenkin jobs in AWS EC2 instances, and scale when in need.
 11. hit `Create`.
 
 <img src="https://user-images.githubusercontent.com/6856382/230739958-8424e669-308b-48b5-b377-9a5a0ce12f9b.png"/>
+
+## Generating SSH Key Pairs for Jenkins
+
+## Configuring Amazon EC2 Plugin
+
+1. On Jenkins page, click `Manage Jenkins > Manage Nodes and Clouds`
+
+<img src="https://user-images.githubusercontent.com/6856382/230740569-2498c2a1-eadd-4a4a-95d9-617ed575733a.png"/>
+
+2.  Click `Configure Clouds`
+
+<img src="https://user-images.githubusercontent.com/6856382/230740611-e6646c3d-352c-40b4-8527-0ffbe71e8732.png"/>
+
+3. Fill in as follows. The following is what author used to configure EC2 plugin[1]. Sensitive information is omitted.
+
+<img src="https://user-images.githubusercontent.com/6856382/230740665-19959686-89b7-4c32-bc4e-29051df281fd.png"/>
+
+
+**Full Init Script code**
+
+```
+# Install Java
+sudo apt-get update
+sudo apt install -y default-jdk
+sudo apt install -y default-jre
+# Install Docker
+sudo apt-get install -y ca-certificates curl gnupg
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# Manage docker as non-root user
+# https://www.digitalocean.com/community/questions/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket
+sudo usermod -aG docker ${USER}
+```
