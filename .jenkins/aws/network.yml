@@ -111,7 +111,7 @@ Resources:
       InternetGatewayId: !Ref InternetGateway
       VpcId: !Ref VPC
     
-  PublicSubnet1: 
+  K8NodesPublicSubnet1: 
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
@@ -120,9 +120,9 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName} Public Subnet (AZ1)
+          Value: !Sub ${EnvironmentName2} Public Subnet (AZ1)
 
-  PublicSubnet2: 
+  K8NodesPublicSubnet2: 
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
@@ -131,9 +131,9 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName} Public Subnet (AZ2)
+          Value: !Sub ${EnvironmentName2} Public Subnet (AZ2)
 
-  PrivateSubnet1: 
+  K8NodesPrivateSubnet1: 
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
@@ -142,9 +142,9 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName} Private Subnet (AZ1)
+          Value: !Sub ${EnvironmentName2} Private Subnet (AZ1)
 
-  PrivateSubnet2: 
+  K8NodesPrivateSubnet2: 
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
@@ -153,7 +153,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName} Private Subnet (AZ2)
+          Value: !Sub ${EnvironmentName2} Private Subnet (AZ2)
 
   NatGateway1EIP:
     Type: AWS::EC2::EIP
