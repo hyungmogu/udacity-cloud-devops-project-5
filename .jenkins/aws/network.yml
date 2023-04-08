@@ -80,7 +80,7 @@ Resources:
       Roles:
         - ImageConverterS3ReadOnlyEC2
 
-  VPCK8ControlPlane: 
+  K8ControlPlaneVPC: 
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: !Ref VpcCIDR
@@ -89,7 +89,7 @@ Resources:
       - Key: Name 
         Value: !Ref EnvironmentName1
 
-  VPCK8Nodes: 
+  K8NodesVPC: 
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: !Ref VpcCIDR
