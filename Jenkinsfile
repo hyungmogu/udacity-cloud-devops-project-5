@@ -42,7 +42,7 @@ pipeline {
     agent any
     environment {
         PUBLIC_KEY_PATH = "${env.PUBLIC_KEY_PATH}"
-        DOCKER_HUB_CREDS = credentials('docker-hub-key')
+        DOCKER_HUB_CREDS = credentials('docker_hub_key')
         DOCKER_IMAGE = "$DOCKER_HUB_CREDS_USR/img-converter"
     }
     stages {
@@ -121,7 +121,7 @@ pipeline {
                         stage("Push to Docker Hub") {
                             steps {
                                 node('Jenkins-Slave') {
-                                    dockerPushImage("docker-hub-key", "${env.DOCKER_IMAGE}-frontend:canary")
+                                    dockerPushImage("docker_hub_key", "${env.DOCKER_IMAGE}-frontend:canary")
                                 }
                             }
                         }
@@ -146,7 +146,7 @@ pipeline {
                         stage("Push to Docker Hub") {
                             steps {
                                 node('Jenkins-Slave') {
-                                    dockerPushImage("docker-hub-key", "${env.DOCKER_IMAGE}-backend:canary")
+                                    dockerPushImage("docker_hub_key", "${env.DOCKER_IMAGE}-backend:canary")
                                 }
                             }
                         }
@@ -425,9 +425,9 @@ pipeline {
         //                         steps {
         //                             script {
         //                                 withCredentials([
-        //                                     usernamePassword(credentialsId: 'docker-hub-key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
+        //                                     usernamePassword(credentialsId: 'docker_hub_key', passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
         //                                 ]) {
-        //                                     docker.withRegistry('', 'docker-hub-key') {
+        //                                     docker.withRegistry('', 'docker_hub_key') {
         //                                         dockerImageBackEnd.push("${env.BUILD_NUMBER}-latest")
         //                                     }
         //                                 }
