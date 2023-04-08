@@ -1,11 +1,7 @@
 [
 	{
-		"ParameterKey": "EnvironmentName1",
+		"ParameterKey": "EnvironmentName",
 		"ParameterValue": "ImageConverterK8ControlPlane"
-	},
-    {
-		"ParameterKey": "EnvironmentName2",
-		"ParameterValue": "ImageConverterK8Nodes"
 	},
 	{
 		"ParameterKey": "VpcCIDR",

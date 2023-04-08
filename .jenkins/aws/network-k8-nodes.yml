@@ -4,11 +4,7 @@ Parameters:
   # use them for things that may change over time, such as instance type,
   # VPCs and so on.
 
-  EnvironmentName1:
-    Description: First environment name that will be prefixed to resource names
-    Type: String
-
-  EnvironmentName2:
+  EnvironmentName:
     Description: Second environment name that will be prefixed to resource names
     Type: String
 
@@ -80,51 +76,29 @@ Resources:
       Roles:
         - ImageConverterS3ReadOnlyEC2
 
-  K8ControlPlaneVPC: 
+  VPC: 
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: !Ref VpcCIDR
       EnableDnsHostnames: true
       Tags: 
       - Key: Name 
-        Value: !Ref EnvironmentName1
+        Value: !Ref EnvironmentName
 
-  K8NodesVPC: 
-    Type: AWS::EC2::VPC
-    Properties:
-      CidrBlock: !Ref VpcCIDR
-      EnableDnsHostnames: true
-      Tags: 
-      - Key: Name 
-        Value: !Ref EnvironmentName2
-
-  K8ControlPlaneInternetGateway:
+  InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
       - Key: Name
-        Value: !Ref EnvironmentName1
+        Value: !Ref EnvironmentName
               
-  K8ControlPlaneInternetGatewayAttachment:
+  InternetGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      InternetGatewayId: !Ref K8ControlPlaneInternetGateway
-      VpcId: !Ref K8ControlPlaneVPC
-
-  K8NodesInternetGateway:
-    Type: AWS::EC2::InternetGateway
-    Properties:
-      Tags:
-      - Key: Name
-        Value: !Ref EnvironmentName2
-              
-  K8NodesInternetGatewayAttachment:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      InternetGatewayId: !Ref K8NodesInternetGateway
+      InternetGatewayId: !Ref InternetGateway
       VpcId: !Ref VPC
     
-  K8NodesPublicSubnet1: 
+  PublicSubnet1: 
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
@@ -133,9 +107,9 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName2} Public Subnet (AZ1)
+          Value: !Sub ${EnvironmentName} Public Subnet (AZ1)
 
-  K8NodesPublicSubnet2: 
+  PublicSubnet2: 
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
@@ -144,9 +118,9 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName2} Public Subnet (AZ2)
+          Value: !Sub ${EnvironmentName} Public Subnet (AZ2)
 
-  K8NodesPrivateSubnet1: 
+  PrivateSubnet1: 
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
@@ -155,9 +129,9 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName2} Private Subnet (AZ1)
+          Value: !Sub ${EnvironmentName} Private Subnet (AZ1)
 
-  K8NodesPrivateSubnet2: 
+  PrivateSubnet2: 
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
@@ -166,7 +140,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName2} Private Subnet (AZ2)
+          Value: !Sub ${EnvironmentName} Private Subnet (AZ2)
 
   NatGateway1EIP:
     Type: AWS::EC2::EIP
