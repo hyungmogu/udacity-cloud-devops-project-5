@@ -98,17 +98,30 @@ Resources:
       - Key: Name 
         Value: !Ref EnvironmentName2
 
-  InternetGateway:
+  K8ControlPlaneInternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
       - Key: Name
-        Value: !Ref EnvironmentName
+        Value: !Ref EnvironmentName1
               
-  InternetGatewayAttachment:
+  K8ControlPlaneInternetGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      InternetGatewayId: !Ref InternetGateway
+      InternetGatewayId: !Ref K8ControlPlaneInternetGateway
+      VpcId: !Ref K8ControlPlaneVPC
+
+  K8NodesInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: !Ref EnvironmentName2
+              
+  K8NodesInternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref K8NodesInternetGateway
       VpcId: !Ref VPC
     
   K8NodesPublicSubnet1: 
