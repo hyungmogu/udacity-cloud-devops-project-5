@@ -20,9 +20,8 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 ## Installation
 
 1. Jenkins installation instruction can be found [here](./docs/Installing_Jenkins.md)
-2. Docker installation instruction can be found [here](#)
-3. Jenkin's AWS-EC2 Plugin instruction can be found [here](./docs/Installing_Jenkins_AWS_EC2_Plugin.md)
-4. Setting up AWS-EC2 Plugin can be found [here](./docs/Installing_Jenkins_AWS_EC2_Plugin.md)
+2. Jenkin's AWS-EC2 Plugin instruction can be found [here](./docs/Installing_Jenkins_AWS_EC2_Plugin.md)
+3. Setting up AWS-EC2 Plugin (for master node) and Docker (for slave node) can be found [here](./docs/Installing_Jenkins_AWS_EC2_Plugin.md)
 
 ## Pipeline, Architecture and System Design
 
