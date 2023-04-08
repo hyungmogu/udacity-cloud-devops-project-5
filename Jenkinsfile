@@ -22,7 +22,7 @@ def dockerPushImage(dockerHubKeyName, imageTag) {
         usernamePassword(credentialsId: dockerHubKeyName, passwordVariable: 'DOCKERHUB_PW', usernameVariable: 'DOCKERHUB_USERNAME')
     ]) {
         echo "Pushing Docker Image ($imageTag)..."
-        sh "echo $DOCKERHUB_PW | docker login -u $DOCKERHUB_USERNAME --password-stdin"
+        sh 'echo $DOCKERHUB_PW | docker login -u $DOCKERHUB_USERNAME --password-stdin'
         sh "docker push $imageTag"
     }
 }
@@ -43,7 +43,7 @@ pipeline {
     environment {
         PUBLIC_KEY_PATH = "${env.PUBLIC_KEY_PATH}"
         DOCKER_HUB_CREDS = credentials('docker_hub_key')
-        DOCKER_IMAGE = "$DOCKER_HUB_CREDS_USR/img-converter"
+        DOCKER_IMAGE = '$DOCKER_HUB_CREDS_USR/img-converter'
     }
     stages {
         stage('Lint') {
