@@ -14,13 +14,11 @@ def installPackage(packageName) {
 // ===== Linting =======
 
 def pullHadolintImage() {
-    docker.image('hadolint/hadolint').pull()
+    sh 'docker pull hadolint/hadolint'
 }
 def lintDockerfile(dirName) {
-    docker.withTool('hadolint') {
-        dir(dirName) {
-            sh 'hadolint < Dockerfile'
-        }
+    dir(dirName) {
+        sh 'hadolint < Dockerfile'
     }
 }
 
@@ -34,49 +32,43 @@ pipeline {
         stage('Lint') {
             parallel {
                 stage('Lint Front-end') {
-                    agent {
-                        node { 
-                            label 'Jenkins-Slave'
-                        }
-                    }
                     stages {
-                        stage("Checkout") {
-                            steps {
-                                checkoutCode()
+                        node('Jenkins-Slave') {
+                            stage("Checkout") {
+                                steps {
+                                    checkoutCode()
+                                }
                             }
-                        }
-                        stage("Pull Hadolint Docker Image") {
-                            steps {
-                                pullHadolintImage()
+                            stage("Pull Hadolint Docker Image") {
+                                steps {
+                                    pullHadolintImage()
+                                }
                             }
-                        }
-                        stage("Lint Front-End") {
-                            steps {
-                                lintDockerfile('frontend')
+                            stage("Lint Front-End") {
+                                steps {
+                                    lintDockerfile('frontend')
+                                }
                             }
                         }
                     }
                 }
                 stage('Lint Back-end') {
-                    agent {
-                        node { 
-                            label 'Jenkins-Slave'
-                        }
-                    }
                     stages {
-                        stage("Checkout") {
-                            steps {
-                                checkoutCode()
+                        node('Jenkins-Slave') {
+                            stage("Checkout") {
+                                steps {
+                                    checkoutCode()
+                                }
                             }
-                        }
-                        stage("Pull Hadolint Docker Image") {
-                            steps {
-                                pullHadolintImage()
+                            stage("Pull Hadolint Docker Image") {
+                                steps {
+                                    pullHadolintImage()
+                                }
                             }
-                        }
-                        stage("Lint Back-End") {
-                            steps {
-                                lintDockerfile('backend')
+                            stage("Lint Back-End") {
+                                steps {
+                                    lintDockerfile('backend')
+                                }
                             }
                         }
                     }
