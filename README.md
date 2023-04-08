@@ -11,6 +11,11 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 - Kubernetes cluster will be initialized using Ansible and Cloudformation
 
 ## Pre-Requisites
+1. Jenkins
+2. Docker
+3. Jenkin's AWS-EC2 Plugin
+4. AWS Credentials storing `Access Key ID` and `Secret Access Key` of AWS IAM User with `AmazonEC2FullAccess`
+5. RSA SSH Username and Private Key from `EC2 Key Pairs`
 
 ## Installation
 
