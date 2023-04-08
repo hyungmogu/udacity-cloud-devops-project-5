@@ -19,6 +19,12 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Installation
 
+1. Jenkins installation instruction can be found [here](#)
+2. Docker installation instruction can be found [here](#)
+3. Jenkin's AWS-EC2 Plugin instruction can be found [here](#)
+4. AWS Credentials storing `Access Key ID` and `Secret Access Key` of AWS IAM User with `AmazonEC2FullAccess` can be found [here](#)
+5. RSA SSH Username and Private Key from `EC2 Key Pairs` instruction can be found [here](#)
+
 ## Pipeline, Architecture and System Design
 
 <img src="https://user-images.githubusercontent.com/6856382/219821091-e647fe37-0c6f-40ec-a483-2ee99b91ae1d.png"/>
