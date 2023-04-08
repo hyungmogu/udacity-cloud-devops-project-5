@@ -32,38 +32,48 @@ pipeline {
         stage('Lint') {
             parallel {
                 stage('Lint Front-end') {
-                    node('Jenkins-Slave') {
+                    stages {           
                         stage("Checkout") {
-                            steps {
-                                checkoutCode()
+                            node('Jenkins-Slave') {
+                                steps {
+                                    checkoutCode()
+                                }
                             }
                         }
                         stage("Pull Hadolint Docker Image") {
-                            steps {
-                                pullHadolintImage()
+                            node('Jenkins-Slave') {
+                                steps {
+                                    pullHadolintImage()
+                                }
                             }
                         }
                         stage("Lint Front-End") {
-                            steps {
-                                lintDockerfile('frontend')
+                                node('Jenkins-Slave') {
+                                steps {
+                                    lintDockerfile('frontend')
+                                }
                             }
                         }
                     }
                 }
                 stage('Lint Back-end') {
-                    stages {
-                        node('Jenkins-Slave') {
-                            stage("Checkout") {
+                    stages {                        
+                        stage("Checkout") {
+                            node('Jenkins-Slave') {
                                 steps {
                                     checkoutCode()
                                 }
                             }
-                            stage("Pull Hadolint Docker Image") {
+                        }
+                        stage("Pull Hadolint Docker Image") {
+                            node('Jenkins-Slave') {
                                 steps {
                                     pullHadolintImage()
                                 }
                             }
-                            stage("Lint Back-End") {
+                        }
+                        stage("Lint Back-End") {
+                            node('Jenkins-Slave') {
                                 steps {
                                     lintDockerfile('backend')
                                 }
