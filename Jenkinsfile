@@ -14,11 +14,11 @@ def installPackage(packageName) {
 // ===== Linting =======
 
 def pullHadolintImage() {
-    sh 'docker pull hadolint/hadolint'
+    sh 'sudo docker pull hadolint/hadolint'
 }
 def lintDockerfile(dirName) {
     dir(dirName) {
-        sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
+        sh 'sudo docker run --rm -i hadolint/hadolint < Dockerfile'
     }
 }
 
