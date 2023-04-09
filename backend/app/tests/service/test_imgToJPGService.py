@@ -21,5 +21,11 @@ class ImgToJPGServiceSimpleNegativeTest(unittest.TestCase):
 
     def test_upload_method_raises_exceptions_when_trying_to_upload_invalid_file_to_s3(self):
         pass 
-    
+
+class ImgToJOGServiceInputPositiveTest(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def test_convert_method_converts_various_image_formats_to_jpg(self):
+        pass
     
