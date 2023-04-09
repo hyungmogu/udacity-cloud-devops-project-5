@@ -61,56 +61,64 @@ pipeline {
     }
     stages {
         stage('Lint') {
-            parallel {
-                stage('Lint Front-end') {
-                    stages {           
-                        stage("Checkout") {
-                            steps {
-                                node('Jenkins-Slave') {
-                                    checkoutCode()
+            stages{
+                parallel {
+                    stage('Lint Front-end') {
+                        stages {           
+                            stage("Checkout") {
+                                steps {
+                                    node('Jenkins-Slave') {
+                                        checkoutCode()
+                                    }
+                                }
+                            }
+                            stage("Pull Hadolint Docker Image") {
+                                steps {
+                                    node('Jenkins-Slave') {
+                                        dockerPullImage("hadolint/hadolint")
+                                    }
+                                }
+                            }
+                            stage("Check Dockerfile") {
+                                steps {
+                                    node('Jenkins-Slave') {
+                                        lintDockerfile('frontend')
+                                    }
                                 }
                             }
                         }
-                        stage("Pull Hadolint Docker Image") {
-                            steps {
-                                node('Jenkins-Slave') {
-                                    dockerPullImage("hadolint/hadolint")
+                    }
+                    stage('Lint Back-end') {
+                        stages {                        
+                            stage("Checkout") {
+                                steps {
+                                    node('Jenkins-Slave') {
+                                        checkoutCode()
+                                    }
                                 }
                             }
-                        }
-                        stage("Check Dockerfile") {
-                            steps {
-                                node('Jenkins-Slave') {
-                                    lintDockerfile('frontend')
+                            stage("Pull Hadolint Docker Image") {
+                                steps {
+                                    node('Jenkins-Slave') {
+                                        dockerPullImage("hadolint/hadolint")
+                                    }
+                                }
+                            }
+                            stage("Check Dockerfile") {
+                                steps {
+                                    node('Jenkins-Slave') {     
+                                        lintDockerfile('backend')
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                stage('Lint Back-end') {
-                    stages {                        
-                        stage("Checkout") {
-                            steps {
-                                node('Jenkins-Slave') {
-                                    checkoutCode()
-                                }
-                            }
-                        }
-                        stage("Pull Hadolint Docker Image") {
-                            steps {
-                                node('Jenkins-Slave') {
-                                    dockerPullImage("hadolint/hadolint")
-                                }
-                            }
-                        }
-                        stage("Check Dockerfile") {
-                            steps {
-                                node('Jenkins-Slave') {     
-                                    lintDockerfile('backend')
-                                }
-                            }
-                        }
-                    }
+            }
+            post {
+                always {
+                    echo '====== Cleaning docker images and containers ======'
+                    clearDocker()
                 }
             }
         }
