@@ -1,7 +1,7 @@
 import unittest
 from main.service.imgToJPGService import ImgToJPGService
 
-class ImgToJPGServiceTest(unittest.TestCase):
+class ImgToJPGServiceSimplePositiveTest(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -9,4 +9,17 @@ class ImgToJPGServiceTest(unittest.TestCase):
         pass
 
     def test_upload_method_uploads_converted_image_to_s3_bucket_and_returns_url(self):
+        pass
+
+
+class ImgToJPGServiceSimpleNegativeTest(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
+        pass
+
+    def test_upload_method_raises_exceptions_when_trying_to_upload_invalid_file_to_s3(self):
         pass 
+    
+    
