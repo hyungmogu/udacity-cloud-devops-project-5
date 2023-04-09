@@ -9,10 +9,13 @@ from PIL import Image
 
 AWS_S3_BUCKET = "image-converter-test"
 os.environ["AWS_S3_BUCKET"] = AWS_S3_BUCKET
+os.environ["AWS_ACCESS_KEY_ID"] = "test"
+os.environ["AWS_SECRET_ACCESS_KEY"] = "test"
 
 from main import app
 from src.service.imgToJPGService import ImgToJPGService
 
+@mock_s3
 class TestSimplePositiveImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
@@ -20,7 +23,6 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
-    @mock_s3
     def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
         with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
             img = Image.new("RGB", (50, 50), color="red")
@@ -33,6 +35,7 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertIn("url", response.json)
 
+@mock_s3
 class TestSimpleNegativeImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
@@ -40,19 +43,18 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
-    @mock_s3
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
         response = self.app.post("/api/convert-to-jpg",
                                  content_type="multipart/form-data",
                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
         self.assertEqual(response.status_code, 500)
 
-    @mock_s3
     def test_upload_method_raises_exceptions_if_given_empty_data(self):
         response = self.app.post("/api/convert-to-jpg",
                                  content_type="multipart/form-data")
         self.assertEqual(response.status_code, 400) 
 
+@mock_s3
 class TestInputImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
@@ -60,7 +62,6 @@ class TestInputImgToJPGService(unittest.TestCase):
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
-    @mock_s3
     def test_convert_method_converts_various_image_formats_to_jpg(self):
         for img_format in [".webp", ".png", ".jpg", ".jpeg", ".svg"]:
             with tempfile.NamedTemporaryFile(suffix=img_format) as img_file:
@@ -74,7 +75,6 @@ class TestInputImgToJPGService(unittest.TestCase):
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
 
-    @mock_s3
     def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
         for image_size in [(50,200), (100,100), (250, 30)]:
             with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
@@ -92,6 +92,7 @@ class TestInputImgToJPGService(unittest.TestCase):
                     img = Image.open(BytesIO(req.content))
                     self.assertEqual(image_size, img.size)
 
+@mock_s3
 class TestEdgeCaseImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
