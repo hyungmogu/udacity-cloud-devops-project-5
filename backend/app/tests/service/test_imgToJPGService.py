@@ -22,10 +22,30 @@ class ImgToJPGServiceSimpleNegativeTest(unittest.TestCase):
     def test_upload_method_raises_exceptions_when_trying_to_upload_invalid_file_to_s3(self):
         pass 
 
-class ImgToJOGServiceInputPositiveTest(unittest.TestCase):
+class ImgToJPGServiceInputPositiveTest(unittest.TestCase):
     def setUp(self):
         pass
 
     def test_convert_method_converts_various_image_formats_to_jpg(self):
+        pass
+
+class ImgToJPGServiceDimensionAndSizesTest(unittest.TextCase):
+    def setUp(self):
+        pass
+
+    def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
+        pass
+
+class ImgToJPGServiceEdgeCaseNegativeTest(unittest.TextCase):
+    def setUp(self):
+        pass
+    
+    def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
+        pass
+
+    def test_upload_method_raises_error_when_s3_bucket_exceeds_maximum_number_of_storage_limit(self):
+        pass
+
+    def test_upload_method_when_aws_object_expires_in_value_is_negative_or_invalid(self):
         pass
     
