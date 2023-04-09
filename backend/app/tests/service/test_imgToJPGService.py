@@ -1,4 +1,9 @@
+import os
 import unittest
+import tempfile
+from io import BytesIO
+from PIL import Image
+
 from app.main import app
 from src.service.imgToJPGService import ImgToJPGService
 
@@ -8,7 +13,16 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
         self.img_to_jpg_service = ImgToJPGService()
 
     def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
-        pass
+        with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
+            img = Image.new("RGB", (50, 50), color="red")
+            img.save(img_file.name)
+
+            with open(img_file.name, "rb") as img_data:
+                response = self.app.post("/convert-to-jpg",
+                                         content_type="multipart/form-data",
+                                         data={"image": (BytesIO(img_data.read()), "test.png")})
+                self.assertEqual(response.status_code, 200)
+                self.assertIn("url", response.json)
 
     def test_upload_method_uploads_converted_image_to_s3_bucket_and_returns_url(self):
         pass
