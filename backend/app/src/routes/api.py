@@ -1,7 +1,7 @@
 from flask import Blueprint
-import main.controller.imgToJPGController as jpg
-import main.controller.imgToPNGController as png
-import main.controller.imgToWEBPController as webp
+import src.controller.imgToJPGController as jpg
+import src.controller.imgToPNGController as png
+import src.controller.imgToWEBPController as webp
 
 api = Blueprint('api', __name__, url_prefix='/api/')
 

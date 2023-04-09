@@ -1,5 +1,6 @@
 import unittest
-from main.service.imgToJPGService import ImgToJPGService
+from app.main import app
+from src.service.imgToJPGService import ImgToJPGService
 
 class ImgToJPGServiceSimplePositiveTest(unittest.TestCase):
     def setUp(self):

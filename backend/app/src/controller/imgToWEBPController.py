@@ -1,13 +1,13 @@
 from flask import request
-from main.service.imgToPNGService import ImgToPNGService
+from src.service.imgToWEBPService import ImgToWEBPService
 
-def create_png():
+def create_webp():
   if (request.files["image"] == None or request.files["image"] == ""):
     return "Attached Image Empty", 500
   
   old_img = request.files["image"]
 
-  convert_service = ImgToPNGService()
+  convert_service = ImgToWEBPService()
   new_img = convert_service.convert(old_img)
   url = convert_service.upload(new_img)
 

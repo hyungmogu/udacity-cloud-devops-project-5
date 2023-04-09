@@ -7,26 +7,26 @@ from uuid import uuid4
 from time import time
 from botocore.exceptions import ClientError
 
-from main.service.convertService import ConvertService
+from src.service.convertService import ConvertService
 
 
 AWS_S3_BUCKET = os.environ.get("AWS_S3_BUCKET", "")
 AWS_OBJECT_EXPIRES_IN = int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0"))
 
 
-class ImgToPNGService(ConvertService):
+class ImgToWEBPService(ConvertService):
   def convert(self, img):
     pil_image = Image.open(img).convert("RGB")
     in_mem_file = BytesIO()
-    pil_image.save(in_mem_file, format="png")
+    pil_image.save(in_mem_file, format="webp")
     in_mem_file.seek(0)
 
     return in_mem_file
-
+  
   def upload(self, new_img):
     s3_client = boto3.client("s3")
 
-    file_name = "{}-{}.png".format(time(), uuid4().hex)
+    file_name = "{}-{}.webp".format(time(), uuid4().hex)
     response = None
 
     try:
@@ -42,3 +42,4 @@ class ImgToPNGService(ConvertService):
       logging.error(e)
 
     return response
+  

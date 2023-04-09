@@ -1,15 +1,13 @@
-import sys
 from flask import request
-from main.service.imgToJPGService import ImgToJPGService
+from src.service.imgToPNGService import ImgToPNGService
 
-def create_jpg():
-
+def create_png():
   if (request.files["image"] == None or request.files["image"] == ""):
     return "Attached Image Empty", 500
-
+  
   old_img = request.files["image"]
 
-  convert_service = ImgToJPGService()
+  convert_service = ImgToPNGService()
   new_img = convert_service.convert(old_img)
   url = convert_service.upload(new_img)
 
