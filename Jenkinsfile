@@ -46,9 +46,6 @@ def dockerPushImage(dockerHubKeyName, imageTag) {
 
 // ===== Linting =======
 
-def pullHadolintImage() {
-    sh 'sudo docker pull hadolint/hadolint'
-}
 def lintDockerfile(dirName) {
     dir(dirName) {
         sh 'sudo docker run --rm -i hadolint/hadolint < Dockerfile'
@@ -77,7 +74,7 @@ pipeline {
                         stage("Pull Hadolint Docker Image") {
                             steps {
                                 node('Jenkins-Slave') {
-                                    pullHadolintImage()
+                                    dockerPullImage("hadolint/hadolint")
                                 }
                             }
                         }
@@ -102,7 +99,7 @@ pipeline {
                         stage("Pull Hadolint Docker Image") {
                             steps {
                                 node('Jenkins-Slave') {
-                                    pullHadolintImage()
+                                    dockerPullImage("hadolint/hadolint")
                                 }
                             }
                         }
