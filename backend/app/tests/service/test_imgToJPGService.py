@@ -82,7 +82,7 @@ class TestInputImgToJPGService(unittest.TestCase):
                     img = Image.open(BytesIO(req.content))
                     self.assertEqual(image_size, img.size)
 
-class TestEdgeCaseImgToJPGService(unittest.TextCase):
+class TestEdgeCaseImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
