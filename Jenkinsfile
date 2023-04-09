@@ -11,6 +11,13 @@ def installPackage(packageName) {
     sh "apt-get -y install ${packageName}"
 }
 
+def clearDocker() {
+    // Removes all containers and volumes 
+    sh 'sudo docker rm -vf $(sudo docker ps -aq)'
+    // Removes all images
+    sh 'sudo docker rmi -f $(sudo docker images -aq)'
+}
+
 def dockerBuildImage(dirName, tag) {
     dir(dirName) {
         sh "sudo docker build -t ${tag} ."
@@ -111,6 +118,13 @@ pipeline {
                                 }
                             }
                         }
+                        stage("Clear Docker Container and Images") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    clearDocker()
+                                }
+                            }
+                        }
                         stage("Build Docker Image") {
                             steps {
                                 node('Jenkins-Slave') {
@@ -133,6 +147,13 @@ pipeline {
                             steps {
                                 node('Jenkins-Slave') {
                                     checkoutCode()
+                                }
+                            }
+                        }
+                        stage("Clear Docker Container and Images") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    clearDocker()
                                 }
                             }
                         }
