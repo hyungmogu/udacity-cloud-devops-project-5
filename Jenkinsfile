@@ -13,10 +13,11 @@ def installPackage(packageName) {
 
 // =========== DOCKER =============
 
-def clearDocker() {
-    // Removes all containers and volumes 
+def clearDockerContainers() {
     sh 'sudo docker rm -vf $(sudo docker ps -aq)'
-    // Removes all images
+}
+
+def clearDockerImages() {
     sh 'sudo docker rmi -f $(sudo docker images -aq)'
 }
 
@@ -115,7 +116,8 @@ pipeline {
             }
             post {
                 always {
-                    clearDocker()
+                    clearDockerContainers()
+                    clearDockerImages()
                 }
             }
         }
