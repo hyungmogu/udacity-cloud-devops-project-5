@@ -31,7 +31,7 @@ def dockerBuildImage(dirName, tag) {
 }
 
 def dockerRunImage(tag, command) {
-    sh "docker run -it --rm ${tag} ${command}"
+    sh "docker run --rm ${tag} ${command}"
 }
 
 def dockerPushImage(dockerHubKeyName, imageTag) {
