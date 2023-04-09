@@ -1,6 +1,7 @@
 import os
 import unittest
 import tempfile
+from moto import mock_s3
 from io import BytesIO
 from PIL import Image
 
@@ -12,6 +13,7 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
 
+    @mock_s3
     def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
         with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
             img = Image.new("RGB", (50, 50), color="red")
@@ -24,16 +26,17 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertIn("url", response.json)
 
-    def test_upload_method_uploads_converted_image_to_s3_bucket_and_returns_url(self):
-        pass
-
 class TestSimpleNegativeImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
 
+    @mock_s3
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
-        pass
+        response = self.app.post("/convert-to-jpg",
+                                 content_type="multipart/form-data",
+                                 data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
+        self.assertEqual(response.status_code, 500)
 
     def test_upload_method_raises_exceptions_when_trying_to_upload_invalid_file_to_s3(self):
         pass 
