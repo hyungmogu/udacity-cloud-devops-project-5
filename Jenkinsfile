@@ -248,7 +248,7 @@ pipeline {
             }
         }
         stage('Scan') {
-            parallel{
+            stages {
                 stage('Scan Front-End') {
                     stages {
                         stage("Checkout") {
@@ -298,6 +298,12 @@ pipeline {
                             }
                         }
                     }
+                }
+            }
+            post {
+                always {
+                    clearDockerContainers()
+                    clearDockerImages()
                 }
             }
         }
