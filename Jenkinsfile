@@ -11,6 +11,8 @@ def installPackage(packageName) {
     sh "apt-get -y install ${packageName}"
 }
 
+// =========== DOCKER =============
+
 def clearDocker() {
     // Removes all containers and volumes 
     sh 'sudo docker rm -vf $(sudo docker ps -aq)'
@@ -18,10 +20,18 @@ def clearDocker() {
     sh 'sudo docker rmi -f $(sudo docker images -aq)'
 }
 
+def dockerPullImage(tag) {
+    sh "sudo docker pull ${tag}"
+}
+
 def dockerBuildImage(dirName, tag) {
     dir(dirName) {
         sh "sudo docker build -t ${tag} ."
     }
+}
+
+def dockerRunImage(tag, command) {
+    sh "docker run -it-rm ${tag} ${command}"
 }
 
 def dockerPushImage(dockerHubKeyName, imageTag) {
@@ -161,50 +171,80 @@ pipeline {
                 }
             }
         }
-        // stage('Test & Scan') {
-        //     parallel {
-        //         stage('Test Front-End') {
-        //             agent {
-        //                 docker {
-        //                     image "${env.DOCKER_IMAGE}-frontend:${env.BUILD_NUMBER}-canary"
-        //                 }
-        //             }
-        //             steps {
-        //                 sh 'npm run test:unit'
-        //             }
-        //         }
-        //         stage('Test Back-End') {
-        //             agent {
-        //                 docker {
-        //                     image "${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}-canary"
-        //                 }
-        //             }
-        //             steps {
-        //                 sh 'python -m unittest discover tests'
-        //             }
-        //         }
-        //         stage('Scan Front-End') {
-        //             agent {
-        //                 docker {
-        //                     image "${env.DOCKER_IMAGE}-frontend:${env.BUILD_NUMBER}-canary"
-        //                 }
-        //             }
-        //             steps {
-        //                 sh 'npm audit'
-        //             }
-        //         }
-        //         stage('Scan Back-End') {
-        //             agent {
-        //                 docker {
-        //                     image "${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}-canary"
-        //                 }
-        //             }
-        //             steps {
-        //                 sh 'python -m pip_audit'
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Test & Scan') {
+            parallel {
+                stage('Test Front-End') {
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
+                                }
+                            }
+                        }
+                        stage("Build Docker Image") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerPullImage("${env.DOCKER_IMAGE}-frontend:canary")
+                                }
+                            }
+                        }
+                        stage("Run Test") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerRunImage("${env.DOCKER_IMAGE}-frontend:canary", "npm run test:unit")
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('Test Back-End') {
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
+                                }
+                            }
+                        }
+                        stage("Build Docker Image") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerPullImage("${env.DOCKER_IMAGE}-backend:canary")
+                                }
+                            }
+                        }
+                        stage("Run Test") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerRunImage("${env.DOCKER_IMAGE}-backend:canary", "python -m unittest discover tests")
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('Scan Front-End') {
+                    agent {
+                        docker {
+                            image "${env.DOCKER_IMAGE}-frontend:${env.BUILD_NUMBER}-canary"
+                        }
+                    }
+                    steps {
+                        sh 'npm audit'
+                    }
+                }
+                stage('Scan Back-End') {
+                    agent {
+                        docker {
+                            image "${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}-canary"
+                        }
+                    }
+                    steps {
+                        sh 'python -m pip_audit'
+                    }
+                }
+            }
+        }
         // stage('Deploy Infrastructure') {
         //     agent {
         //         docker {
