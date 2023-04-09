@@ -29,10 +29,6 @@ class ImgToJPGServiceInputTest(unittest.TestCase):
     def test_convert_method_converts_various_image_formats_to_jpg(self):
         pass
 
-class ImgToJPGServiceDimensionAndSizesTest(unittest.TextCase):
-    def setUp(self):
-        pass
-
     def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
         pass
 
