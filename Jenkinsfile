@@ -168,7 +168,7 @@ pipeline {
                 }
             }
         }
-        stage('Test & Scan') {
+        stage('Test') {
             parallel {
                 stage('Test Front-End') {
                     stages {
@@ -220,24 +220,58 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage('Scan') {
+            parallel{
                 stage('Scan Front-End') {
-                    agent {
-                        docker {
-                            image "${env.DOCKER_IMAGE}-frontend:${env.BUILD_NUMBER}-canary"
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
+                                }
+                            }
                         }
-                    }
-                    steps {
-                        sh 'npm audit'
+                        stage("Build Docker Image") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerPullImage("${env.DOCKER_IMAGE}-frontend:canary")
+                                }
+                            }
+                        }
+                        stage("Run Audit") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerRunImage("${env.DOCKER_IMAGE}-frontend:canary", "npm audit")
+                                }
+                            }
+                        }
                     }
                 }
                 stage('Scan Back-End') {
-                    agent {
-                        docker {
-                            image "${env.DOCKER_IMAGE}:${env.BUILD_NUMBER}-canary"
+                    stages {
+                        stage("Checkout") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
+                                }
+                            }
                         }
-                    }
-                    steps {
-                        sh 'python -m pip_audit'
+                        stage("Build Docker Image") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerPullImage("${env.DOCKER_IMAGE}-backend:canary")
+                                }
+                            }
+                        }
+                        stage("Run Audi") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerRunImage("${env.DOCKER_IMAGE}-backend:canary", "python -m pip_audit")
+                                }
+                            }
+                        }
                     }
                 }
             }
