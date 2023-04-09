@@ -32,6 +32,7 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
                 response = self.app.post("/api/convert-to-jpg",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.png")})
+                print(response)
                 self.assertEqual(response.status_code, 200)
                 self.assertIn("url", response.json)
 
