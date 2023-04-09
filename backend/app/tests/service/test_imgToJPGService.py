@@ -21,7 +21,7 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/convert-to-jpg",
+                response = self.app.post("/api/convert-to-jpg",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.png")})
                 self.assertEqual(response.status_code, 200)
@@ -34,14 +34,14 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
 
     @mock_s3
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
-        response = self.app.post("/convert-to-jpg",
+        response = self.app.post("/api/convert-to-jpg",
                                  content_type="multipart/form-data",
                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
         self.assertEqual(response.status_code, 500)
 
     @mock_s3
     def test_upload_method_raises_exceptions_if_given_empty_data(self):
-        response = self.app.post("/convert-to-jpg",
+        response = self.app.post("/api/convert-to-jpg",
                                  content_type="multipart/form-data")
         self.assertEqual(response.status_code, 400) 
 
@@ -58,7 +58,7 @@ class TestInputImgToJPGService(unittest.TestCase):
                 img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
-                    response = self.app.post("/convert-to-jpg",
+                    response = self.app.post("/api/convert-to-jpg",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
                     self.assertEqual(response.status_code, 200)
@@ -72,7 +72,7 @@ class TestInputImgToJPGService(unittest.TestCase):
                 tmp_img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
-                    response = self.app.post("/convert-to-jpg",
+                    response = self.app.post("/api/convert-to-jpg",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test.png")})
                     self.assertEqual(response.status_code, 200)
