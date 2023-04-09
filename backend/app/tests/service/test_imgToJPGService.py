@@ -4,7 +4,8 @@ from src.service.imgToJPGService import ImgToJPGService
 
 class TestSimplePositiveImgToJPGService(unittest.TestCase):
     def setUp(self):
-        pass
+        self.app = app.test_client()
+        self.img_to_jpg_service = ImgToJPGService()
 
     def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
         pass
@@ -12,10 +13,10 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
     def test_upload_method_uploads_converted_image_to_s3_bucket_and_returns_url(self):
         pass
 
-
 class TestSimpleNegativeImgToJPGService(unittest.TestCase):
     def setUp(self):
-        pass
+        self.app = app.test_client()
+        self.img_to_jpg_service = ImgToJPGService()
 
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
         pass
@@ -25,7 +26,8 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
 
 class TestInputImgToJPGService(unittest.TestCase):
     def setUp(self):
-        pass
+        self.app = app.test_client()
+        self.img_to_jpg_service = ImgToJPGService()
 
     def test_convert_method_converts_various_image_formats_to_jpg(self):
         pass
@@ -35,7 +37,8 @@ class TestInputImgToJPGService(unittest.TestCase):
 
 class TestEdgeCaseImgToJPGService(unittest.TextCase):
     def setUp(self):
-        pass
+        self.app = app.test_client()
+        self.img_to_jpg_service = ImgToJPGService()
     
     def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
         pass
