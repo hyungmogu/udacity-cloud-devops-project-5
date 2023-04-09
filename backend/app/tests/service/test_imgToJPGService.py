@@ -49,8 +49,19 @@ class TestInputImgToJPGService(unittest.TestCase):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
 
+    @mock_s3
     def test_convert_method_converts_various_image_formats_to_jpg(self):
-        pass
+        for img_format in [".webp", ".png", ".jpg", ".jpeg", ".svg"]:
+            with tempfile.NamedTemporaryFile(suffix=img_format) as img_file:
+                img = Image.new("RGB", (50, 50), color="red")
+                img.save(img_file.name)
+
+                with open(img_file.name, "rb") as img_data:
+                    response = self.app.post("/convert-to-jpg",
+                                            content_type="multipart/form-data",
+                                            data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
+                    self.assertEqual(response.status_code, 200)
+                    self.assertIn("url", response.json)
 
     def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
         pass
