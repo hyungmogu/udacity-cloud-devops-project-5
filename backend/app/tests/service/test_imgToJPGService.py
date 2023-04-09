@@ -1,4 +1,5 @@
 import os
+import requests
 import unittest
 import tempfile
 from moto import mock_s3
@@ -63,8 +64,23 @@ class TestInputImgToJPGService(unittest.TestCase):
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
 
+    @mock_s3
     def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
-        pass
+        for image_size in [(50,200), (100,100), (250, 30)]:
+            with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
+                tmp_img = Image.new("RGB", image_size, color="red")
+                tmp_img.save(img_file.name)
+
+                with open(img_file.name, "rb") as img_data:
+                    response = self.app.post("/convert-to-jpg",
+                                            content_type="multipart/form-data",
+                                            data={"image": (BytesIO(img_data.read()), "test.png")})
+                    self.assertEqual(response.status_code, 200)
+                    self.assertIn("url", response.json)
+                    
+                    req = requests.get(response.json['url'])
+                    img = Image.open(BytesIO(req.content))
+                    self.assertEqual(image_size, img.size)
 
 class TestEdgeCaseImgToJPGService(unittest.TextCase):
     def setUp(self):
