@@ -188,7 +188,7 @@ pipeline {
             }
         }
         stage('Test') {
-            parallel {
+            stages {
                 stage('Test Front-End') {
                     stages {
                         stage("Checkout") {
@@ -238,6 +238,12 @@ pipeline {
                             }
                         }
                     }
+                }
+            }
+            post {
+                always {
+                    clearDockerContainers()
+                    clearDockerImages()
                 }
             }
         }
