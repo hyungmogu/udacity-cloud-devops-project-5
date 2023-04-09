@@ -3,7 +3,6 @@ from io import BytesIO
 import os
 import logging
 import boto3
-import re
 from uuid import uuid4
 from time import time
 from botocore.exceptions import ClientError

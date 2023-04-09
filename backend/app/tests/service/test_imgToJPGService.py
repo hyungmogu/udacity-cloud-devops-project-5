@@ -2,11 +2,13 @@ import os
 import requests
 import unittest
 import tempfile
+import boto3
 from moto import mock_s3
 from io import BytesIO
 from PIL import Image
 
-os.environ["AWS_S3_BUCKET"] = "image-converter-test"
+AWS_S3_BUCKET = "image-converter-test"
+os.environ["AWS_S3_BUCKET"] = AWS_S3_BUCKET
 
 from main import app
 from src.service.imgToJPGService import ImgToJPGService
@@ -15,6 +17,8 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
+        s3_resource = boto3.resource('s3')
+        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
     @mock_s3
     def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
@@ -33,6 +37,8 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
+        s3_resource = boto3.resource('s3')
+        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
     @mock_s3
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
@@ -51,6 +57,8 @@ class TestInputImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
+        s3_resource = boto3.resource('s3')
+        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
     @mock_s3
     def test_convert_method_converts_various_image_formats_to_jpg(self):
@@ -88,6 +96,8 @@ class TestEdgeCaseImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
+        s3_resource = boto3.resource('s3')
+        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
     
     def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
         pass
