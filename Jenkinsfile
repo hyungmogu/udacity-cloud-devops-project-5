@@ -118,13 +118,6 @@ pipeline {
                                 }
                             }
                         }
-                        stage("Clear Docker Container and Images") {
-                            steps {
-                                node('Jenkins-Slave') {
-                                    clearDocker()
-                                }
-                            }
-                        }
                         stage("Build Docker Image") {
                             steps {
                                 node('Jenkins-Slave') {
@@ -147,13 +140,6 @@ pipeline {
                             steps {
                                 node('Jenkins-Slave') {
                                     checkoutCode()
-                                }
-                            }
-                        }
-                        stage("Clear Docker Container and Images") {
-                            steps {
-                                node('Jenkins-Slave') {
-                                    clearDocker()
                                 }
                             }
                         }
