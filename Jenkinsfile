@@ -62,53 +62,51 @@ pipeline {
     stages {
         stage('Lint') {
             stages{
-                parallel {
-                    stage('Lint Front-end') {
-                        stages {           
-                            stage("Checkout") {
-                                steps {
-                                    node('Jenkins-Slave') {
-                                        checkoutCode()
-                                    }
+                stage('Lint Front-end') {
+                    stages {           
+                        stage("Checkout") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
                                 }
                             }
-                            stage("Pull Hadolint Docker Image") {
-                                steps {
-                                    node('Jenkins-Slave') {
-                                        dockerPullImage("hadolint/hadolint")
-                                    }
+                        }
+                        stage("Pull Hadolint Docker Image") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerPullImage("hadolint/hadolint")
                                 }
                             }
-                            stage("Check Dockerfile") {
-                                steps {
-                                    node('Jenkins-Slave') {
-                                        lintDockerfile('frontend')
-                                    }
+                        }
+                        stage("Check Dockerfile") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    lintDockerfile('frontend')
                                 }
                             }
                         }
                     }
-                    stage('Lint Back-end') {
-                        stages {                        
-                            stage("Checkout") {
-                                steps {
-                                    node('Jenkins-Slave') {
-                                        checkoutCode()
-                                    }
+                }
+                stage('Lint Back-end') {
+                    stages {                        
+                        stage("Checkout") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    checkoutCode()
                                 }
                             }
-                            stage("Pull Hadolint Docker Image") {
-                                steps {
-                                    node('Jenkins-Slave') {
-                                        dockerPullImage("hadolint/hadolint")
-                                    }
+                        }
+                        stage("Pull Hadolint Docker Image") {
+                            steps {
+                                node('Jenkins-Slave') {
+                                    dockerPullImage("hadolint/hadolint")
                                 }
                             }
-                            stage("Check Dockerfile") {
-                                steps {
-                                    node('Jenkins-Slave') {     
-                                        lintDockerfile('backend')
-                                    }
+                        }
+                        stage("Check Dockerfile") {
+                            steps {
+                                node('Jenkins-Slave') {     
+                                    lintDockerfile('backend')
                                 }
                             }
                         }
@@ -117,7 +115,6 @@ pipeline {
             }
             post {
                 always {
-                    echo '====== Cleaning docker images and containers ======'
                     clearDocker()
                 }
             }
