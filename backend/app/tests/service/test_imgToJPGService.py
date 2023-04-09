@@ -6,6 +6,8 @@ from moto import mock_s3
 from io import BytesIO
 from PIL import Image
 
+os.environ["AWS_S3_BUCKET"] = "image-converter-test"
+
 from main import app
 from src.service.imgToJPGService import ImgToJPGService
 
