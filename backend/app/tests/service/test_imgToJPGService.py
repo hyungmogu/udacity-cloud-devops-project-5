@@ -2,7 +2,7 @@ import unittest
 from app.main import app
 from src.service.imgToJPGService import ImgToJPGService
 
-class ImgToJPGServiceSimplePositiveTest(unittest.TestCase):
+class TestSimplePositiveImgToJPGService(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -13,7 +13,7 @@ class ImgToJPGServiceSimplePositiveTest(unittest.TestCase):
         pass
 
 
-class ImgToJPGServiceSimpleNegativeTest(unittest.TestCase):
+class TestSimpleNegativeImgToJPGService(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -23,7 +23,7 @@ class ImgToJPGServiceSimpleNegativeTest(unittest.TestCase):
     def test_upload_method_raises_exceptions_when_trying_to_upload_invalid_file_to_s3(self):
         pass 
 
-class ImgToJPGServiceInputTest(unittest.TestCase):
+class TestInputImgToJPGService(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -33,7 +33,7 @@ class ImgToJPGServiceInputTest(unittest.TestCase):
     def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
         pass
 
-class ImgToJPGServiceEdgeCaseTest(unittest.TextCase):
+class TestEdgeCaseImgToJPGService(unittest.TextCase):
     def setUp(self):
         pass
     
