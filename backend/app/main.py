@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
-from main.routes.api import api
+from src.routes.api import api
 
 if os.environ.get('DOCKER_RUNNING', 'false') != 'true':
     path = os.getcwd()

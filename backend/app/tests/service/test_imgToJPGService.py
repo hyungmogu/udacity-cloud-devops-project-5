@@ -6,7 +6,7 @@ from moto import mock_s3
 from io import BytesIO
 from PIL import Image
 
-from app.main import app
+from main import app
 from src.service.imgToJPGService import ImgToJPGService
 
 class TestSimplePositiveImgToJPGService(unittest.TestCase):
@@ -95,4 +95,5 @@ class TestEdgeCaseImgToJPGService(unittest.TextCase):
 
     def test_upload_method_when_aws_object_expires_in_value_is_negative_or_invalid(self):
         pass
+    
     
