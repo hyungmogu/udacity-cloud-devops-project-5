@@ -4,3 +4,4 @@
 - boto3
 - dotenv
 - pip-audit
+- moto
