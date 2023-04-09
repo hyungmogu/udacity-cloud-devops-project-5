@@ -14,11 +14,17 @@ def installPackage(packageName) {
 // =========== DOCKER =============
 
 def clearDockerContainers() {
-    sh 'sudo docker rm -vf $(sudo docker ps -aq)'
+    def containersList = sh(script: 'sudo docker ps -aq', returnStdout: true)
+    if (!containersList.isEmpty()) {
+        sh "sudo docker rm -vf $containersList"
+    }
 }
 
 def clearDockerImages() {
-    sh 'sudo docker rmi -f $(sudo docker images -aq)'
+    def imagesList = sh(script: 'sudo docker images -aq', returnStdout: true)
+    if (!imagesList.isEmpty()) {
+        sh "sudo docker rmi -f $imagesList"
+    }
 }
 
 def dockerPullImage(tag) {
