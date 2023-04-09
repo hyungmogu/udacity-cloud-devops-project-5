@@ -1,2 +1,3 @@
 test_local:
-	python -m unittest discover app/tests/service
+	cd app &&\
+	python -m unittest discover tests/service
