@@ -2,7 +2,6 @@ from flask import request
 from src.service.imgToJPGService import ImgToJPGService
 
 def create_jpg():
-
   if (request.files["image"] == None or request.files["image"] == ""):
     return "Attached Image Empty", 500
   
