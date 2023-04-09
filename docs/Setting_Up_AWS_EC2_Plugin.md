@@ -69,6 +69,45 @@ Ability to launch Jenkin jobs in AWS EC2 instances, and scale when in need.
 
 ## Generating SSH Key Pairs for Jenkins
 
+1. From AWS main page, go to `EC2 > Key Pairs`
+
+<img src="https://user-images.githubusercontent.com/6856382/230755241-51bb740f-36c0-49e1-a78a-3d3e3e8b1221.png"/>
+
+2. Click `Create Key Pair`
+
+<img src="https://user-images.githubusercontent.com/6856382/230755302-d6e95174-d483-45d4-8aff-ccab79f7aee2.png"/>
+
+3. Enter the following information, and then click `Create Key Pair`
+    - Name: Jenkins (Or any relevant name related to Jenkins)
+    - Key Pair Type: RSA (A must. Otherwise Amazon EC2 Plugin doesn't work)
+    - Private Key File Format: .pem (A must.)
+
+<img src="https://user-images.githubusercontent.com/6856382/230755389-65a3c03f-81e7-4ba8-a0c4-0ffe4cd0bbca.png"/> 
+
+4. On Jenkins home page, select `Manage Jenkins > Manage Credentials`
+
+<img src="https://user-images.githubusercontent.com/6856382/230755452-02a5974b-6046-4176-9564-98e30b5677dd.png"/>
+
+5. On Manage Credentials page, click `(global) > Add Credentials`
+
+<img src="https://user-images.githubusercontent.com/6856382/230755466-cc2e9f93-975d-499a-b446-ff5df623af81.png"/>
+
+<img src="https://user-images.githubusercontent.com/6856382/230755516-275bbee2-33e5-4097-874d-eecfeea48168.png"/>
+
+6. Using `.pem` file provided by AWS, fill in the following. Select `Create` once done.
+- Kind: SSH Username with private key
+- Scope: Global
+- ID: aws.jenkins (or any other id of choice)
+- Description: AWS Jenkins (or any other description of choice)
+- Username: ubuntu (since we are using ubuntu as OS. This is AWS default. Notice lowercase 'u' in ubuntu)
+- Private Key: Enter Directly
+
+<img src="https://user-images.githubusercontent.com/6856382/230755613-e6fd058a-6f2c-4d42-bc1f-acfdb57d154a.png"/>
+
+
+**Note**
+- Make sure the .pem file starts with `-----BEGIN RSA PRIVATE KEY-----` and ends with `-----END RSA PRIVATE KEY----`. Formats like `-----BEGIN OPEN SSH KEY-----` won't work.
+
 ## Configuring Amazon EC2 Plugin
 
 1. On Jenkins page, click `Manage Jenkins > Manage Nodes and Clouds`
@@ -98,7 +137,5 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-# Manage docker as non-root user
-# https://www.digitalocean.com/community/questions/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket
 sudo usermod -aG docker ${USER}
 ```
