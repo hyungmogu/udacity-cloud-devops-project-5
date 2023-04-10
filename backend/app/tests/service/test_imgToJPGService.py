@@ -111,11 +111,5 @@ class TestEdgeCaseImgToJPGService(unittest.TestCase):
                 print(response)
                 self.assertEqual(response.status_code, 500)
                 self.assertIn("error", response.json)
-
-    def test_upload_method_raises_error_when_s3_bucket_exceeds_maximum_number_of_storage_limit(self):
-        pass
-
-    def test_upload_method_when_aws_object_expires_in_value_is_negative_or_invalid(self):
-        pass
     
     
