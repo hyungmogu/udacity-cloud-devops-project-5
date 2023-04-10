@@ -85,7 +85,7 @@ class TestInputImgToPNGService(unittest.TestCase):
                 with open(img_file.name, "rb") as img_data:
                     response = self.app.post("/api/convert-to-png",
                                             content_type="multipart/form-data",
-                                            data={"image": (BytesIO(img_data.read()), "test.png")})
+                                            data={"image": (BytesIO(img_data.read()), "test.jpg")})
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
                     
@@ -107,7 +107,7 @@ class TestEdgeCaseImgToPNGService(unittest.TestCase):
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/api/convert-to-png",
                                          content_type="multipart/form-data",
-                                         data={"image": (BytesIO(img_data.read()), "test.png")})
+                                         data={"image": (BytesIO(img_data.read()), "test.jpg")})
                 print(response)
                 self.assertEqual(response.status_code, 500)
                 self.assertIn("error", response.json)
