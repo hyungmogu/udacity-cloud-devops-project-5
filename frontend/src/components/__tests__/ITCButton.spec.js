@@ -16,6 +16,6 @@ describe('ITCButton', () => {
 
   it('render properly with props disabled', () => {
     const wrapper = mount(ITCButton, { props: { disabled: true } });
-    expect(wrapper.find('button').attributes('disabled')).toContain('disabled');
+    expect(wrapper.find('button').attributes().disabled).not.toBeUndefined();
   });
 })
