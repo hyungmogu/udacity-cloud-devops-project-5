@@ -64,7 +64,7 @@ class TestInputImgToJPGService(unittest.TestCase):
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
     def test_convert_method_converts_various_image_formats_to_jpg(self):
-        for img_format in [".webp", ".png", ".jpg", ".jpeg", ".svg"]:
+        for img_format in [".webp", ".png", ".jpg", ".jpeg"]:
             with tempfile.NamedTemporaryFile(suffix=img_format) as img_file:
                 img = Image.new("RGB", (50, 50), color="red")
                 img.save(img_file.name)

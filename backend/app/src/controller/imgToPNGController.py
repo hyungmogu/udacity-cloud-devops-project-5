@@ -5,7 +5,7 @@ def create_png():
   if (request.files["image"] == None or request.files["image"] == ""):
     return jsonify({"error": "Attached Image Empty"}), 500
 
-  if not (request.files["image"].filename.endswith(".png") or request.files["image"].filename.endswith(".jpg") or request.files["image"].filename.endswith(".jpeg") or request.files["image"].filename.endswith(".png") or request.files["image"].filename.endswith(".webp") or request.files["image"].filename.endswith(".svg")):
+  if not (request.files["image"].filename.endswith(".png") or request.files["image"].filename.endswith(".jpg") or request.files["image"].filename.endswith(".jpeg") or request.files["image"].filename.endswith(".png") or request.files["image"].filename.endswith(".webp")):
     return jsonify({"error": "Incorrect File Format"}), 500
   
   old_img = request.files["image"]
