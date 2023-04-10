@@ -4,8 +4,18 @@ import { mount } from '@vue/test-utils'
 import ITCButton from '../ITCButton.vue'
 
 describe('ITCButton', () => {
-  it('renders properly', () => {
-    const wrapper = mount(ITCButton, { props: { msg: 'Hello Vitest' } })
-    expect(wrapper.text()).toContain('Hello Vitest')
-  })
+  it('render properly with prop class', () => {
+    const wrapper = mount(ITCButton, { props: { class: 'form__button form__button--file' } });
+    expect(wrapper.text()).toContain('form__button form__button--file');
+  });
+
+  it('render properly with slot', () => {
+    const wrapper = mount(ITCButton, { slots: { default: 'test' } });
+    expect(wrapper.text()).toContain('test');
+  });
+
+  it('render properly with props disabled', () => {
+    const wrapper = mount(ITCButton, { props: { disabled: true } });
+    expect(wrapper.find('button').attributes('disabled')).toContain('disabled');
+  });
 })
