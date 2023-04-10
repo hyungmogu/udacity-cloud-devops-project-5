@@ -13,7 +13,7 @@ os.environ["AWS_ACCESS_KEY_ID"] = "test"
 os.environ["AWS_SECRET_ACCESS_KEY"] = "test"
 
 from main import app
-from src.service.ImgToWEBPService import ImgToWEBPService
+from src.service.imgToWEBPService import ImgToWEBPService
 
 @mock_s3
 class TestSimplePositiveImgToWEBPService(unittest.TestCase):

@@ -13,7 +13,7 @@ os.environ["AWS_ACCESS_KEY_ID"] = "test"
 os.environ["AWS_SECRET_ACCESS_KEY"] = "test"
 
 from main import app
-from src.service.ImgToPNGService import ImgToPNGService
+from src.service.imgToPNGService import ImgToPNGService
 
 @mock_s3
 class TestSimplePositiveImgToPNGService(unittest.TestCase):
