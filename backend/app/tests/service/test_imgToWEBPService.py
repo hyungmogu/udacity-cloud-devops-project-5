@@ -32,7 +32,7 @@ class TestSimplePositiveImgToWEBPService(unittest.TestCase):
                 response = self.app.post("/api/convert-to-webp",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
-                print(response)
+
                 self.assertEqual(response.status_code, 200)
                 self.assertIn("url", response.json)
 
@@ -73,6 +73,7 @@ class TestInputImgToWEBPService(unittest.TestCase):
                     response = self.app.post("/api/convert-to-webp",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
+                    
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
 
@@ -108,7 +109,7 @@ class TestEdgeCaseImgToWEBPService(unittest.TestCase):
                 response = self.app.post("/api/convert-to-webp",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
-                print(response)
+
                 self.assertEqual(response.status_code, 500)
                 self.assertIn("error", response.json)
     
