@@ -24,12 +24,11 @@ class ImgToJPGService(ConvertService):
     return in_mem_file
 
   def upload(self, new_img):
-    s3_client = boto3.client("s3")
-
     file_name = "{}-{}.jpeg".format(time(), uuid4().hex)
     response = None
 
     try:
+      s3_client = boto3.client("s3")
       s3_client.upload_fileobj(new_img, AWS_S3_BUCKET, file_name)
 
       response = s3_client.generate_presigned_url(
