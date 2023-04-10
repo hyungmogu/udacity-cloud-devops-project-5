@@ -93,16 +93,24 @@ class TestInputImgToJPGService(unittest.TestCase):
                     img = Image.open(BytesIO(req.content))
                     self.assertEqual(image_size, img.size)
 
-@mock_s3
+
 class TestEdgeCaseImgToJPGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.img_to_jpg_service = ImgToJPGService()
-        s3_resource = boto3.resource('s3')
-        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
     
     def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
-        pass
+        with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
+            img = Image.new("RGB", (50, 50), color="red")
+            img.save(img_file.name)
+
+            with open(img_file.name, "rb") as img_data:
+                response = self.app.post("/api/convert-to-jpg",
+                                         content_type="multipart/form-data",
+                                         data={"image": (BytesIO(img_data.read()), "test.png")})
+                print(response)
+                self.assertEqual(response.status_code, 500)
+                self.assertIn("error", response.json)
 
     def test_upload_method_raises_error_when_s3_bucket_exceeds_maximum_number_of_storage_limit(self):
         pass
