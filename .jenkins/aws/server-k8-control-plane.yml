@@ -116,8 +116,8 @@ Resources:
           apt-get install apache2 -y
           systemctl start apache2.service
           cd /var/www/html
-          echo "Udacity Demo Web Server Up and Running!" > index.html          
-      ImageId: ami-08fdec01f5df9998f
+          echo "Server is Up and Running!" > index.html          
+      ImageId: ami-007855ac798b5175e
       SecurityGroups:
       - Ref: WebServerSecGroup
       InstanceType: t3.medium
