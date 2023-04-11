@@ -6,7 +6,7 @@ import ITCButtonLink from '../ITCButtonLink.vue'
 describe('ITCButton', () => {
   it('render properly with prop class', () => {
     const wrapper = mount(ITCButtonLink, { props: { class: 'form__button form__button--file' } });
-    expect(wrapper.find("itc-button--link").attributes('class')).toContain('form__button form__button--file');
+    expect(wrapper.find(".itc-button").attributes('class')).toContain('form__button form__button--file');
   });
 
   it('render properly with slot', () => {
