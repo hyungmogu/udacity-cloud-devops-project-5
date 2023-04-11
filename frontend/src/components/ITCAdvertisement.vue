@@ -6,6 +6,8 @@
       <!-- Homepage Leaderboard -->
       <ins class="adsbygoogle" v-bind:class="className"
       v-bind:data-ad-client="dataAdClient"
+      v-bind:data-ad-format="dataAdFormat"
+      v-bind:data-full-width-response="dataFullWidthResponse"
       v-bind:data-ad-slot="dataAdSlot"></ins>
     </div>
   </div>
