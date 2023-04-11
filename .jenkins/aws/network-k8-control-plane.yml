@@ -13,12 +13,12 @@ Parameters:
     Type: String
     Default: 10.0.0.0/16
 
-  PublicSubnet1CIDR:
+  PublicSubnetCIDR:
     Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
     Type: String
     Default: 10.0.0.0/24
     
-  PrivateSubnet1CIDR:
+  PrivateSubnetCIDR:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
     Type: String
     Default: 10.0.2.0/24
@@ -60,7 +60,7 @@ Resources:
     Type: AWS::EC2::NatGateway
     Properties: 
       AllocationId: !GetAtt NatGateway1EIP.AllocationId
-      SubnetId: !Ref PublicSubnet1
+      SubnetId: !Ref PublicSubnet
 
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -82,28 +82,28 @@ Resources:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId: !Ref PublicRouteTable
-      SubnetId: !Ref PublicSubnet1
+      SubnetId: !Ref PublicSubnet
 
-  PrivateRouteTable1:
+  PrivateRouteTable:
     Type: AWS::EC2::RouteTable
     Properties: 
       VpcId: !Ref VPC
       Tags: 
         - Key: Name 
-          Value: !Sub ${EnvironmentName} Private Routes (AZ1)
+          Value: !Sub ${EnvironmentName} Private Routes (AZ)
 
-  DefaultPrivateRoute1:
+  DefaultPrivateRoute:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref PrivateRouteTable1
+      RouteTableId: !Ref PrivateRouteTable
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway1
+      NatGatewayId: !Ref NatGateway
 
-  PrivateSubnet1RouteTableAssociation:
+  PrivateSubnetRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      RouteTableId: !Ref PrivateRouteTable1
-      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref PrivateRouteTable
+      SubnetId: !Ref PrivateSubnet
 
 Outputs: 
   # This is also optional.
@@ -122,32 +122,32 @@ Outputs:
     Export:
       Name: !Sub ${EnvironmentName}-PUB-RT
 
-  VPCPrivateRouteTable1:
-    Description: Private Routing AZ1
-    Value: !Ref PrivateRouteTable1
+  VPCPrivateRouteTable:
+    Description: Private Routing AZ
+    Value: !Ref PrivateRouteTable
     Export:
-      Name: !Sub ${EnvironmentName}-PRI1-RT
+      Name: !Sub ${EnvironmentName}-PRI-RT
 
   PublicSubnets:
     Description: A list of the public subnets
-    Value: !Join [ ",", [ !Ref PublicSubnet1]]
+    Value: !Join [ ",", [ !Ref PublicSubnet]]
     Export:
       Name: !Sub ${EnvironmentName}-PUB-NETS
 
   PrivateSubnets:
     Description: A list of the private subnets
-    Value: !Join [ ",", [ !Ref PrivateSubnet1]]
+    Value: !Join [ ",", [ !Ref PrivateSubnet]]
     Export:
       Name: !Sub ${EnvironmentName}-PRIV-NETS
 
-  PublicSubnet1:
+  PublicSubnet:
     Description: A reference to the public subnet in the 1st Availability Zone
-    Value: !Ref PublicSubnet1
+    Value: !Ref PublicSubnet
     Export:
-      Name: !Sub ${EnvironmentName}-PUB1-SN
+      Name: !Sub ${EnvironmentName}-PUB-SN
 
-  PrivateSubnet1:
+  PrivateSubnet:
     Description: A reference to the private subnet in the 1st Availability Zone
-    Value: !Ref PrivateSubnet1
+    Value: !Ref PrivateSubnet
     Export:
-      Name: !Sub ${EnvironmentName}-PRI1-SN
+      Name: !Sub ${EnvironmentName}-PRI-SN
