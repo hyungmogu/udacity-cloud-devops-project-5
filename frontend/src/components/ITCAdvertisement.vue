@@ -41,6 +41,7 @@ export default {
   methods: {
     handleLoadScriptTag() {
       const script = document.createElement('script');
+      script.classList.add(`adsbygoogle-${this.dataAdClient}`)
       script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${this.dataAdClient}`;
       script.async = true;
       script.crossOrigin = 'anonymous';
