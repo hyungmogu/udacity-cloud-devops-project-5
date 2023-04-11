@@ -307,143 +307,143 @@ pipeline {
                 }
             }
         }
-        // stage('Deploy Infrastructure') {
-        //     agent {
-        //         docker {
-        //             image 'python:3.11-buster'
-        //         }
-        //     }
-        //     when {
-        //         branch 'master'
-        //     }
-        //     stages {
-        //         checkoutCode()
-        //         updatePackages()
-        //         installPackage("tar")
-        //         installPackage("gzip")
-        //         installPackage("ansible")
-        //         installPackage("awscli")
-        //         stage("Ensure back-end infrastructure exists") {
-        //             steps {
-        //                 withCredentials([[
-        //                     $class: 'AmazonWebServicesCredentialsBinding',
-        //                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-        //                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-        //                     region: 'AWS_DEFAULT_REGION'
-        //                 ]]) {
-        //                     def tagName = 'project'
-        //                     def tagValue = 'img-converter-backend'
+        stage('Deploy Infrastructure') {
+            agent {
+                docker {
+                    image 'python:3.11-buster'
+                }
+            }
+            when {
+                branch 'master'
+            }
+            stages {
+                checkoutCode()
+                updatePackages()
+                installPackage("tar")
+                installPackage("gzip")
+                installPackage("ansible")
+                installPackage("awscli")
+                stage("Ensure back-end infrastructure exists") {
+                    steps {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            def tagName = 'project'
+                            def tagValue = 'img-converter-backend'
 
-        //                     // Execute the AWS CLI command and parse the output
-        //                     def awsResponse = sh(returnStdout: true, script: "aws cloudformation list-stacks --query 'StackSummaries[?contains(Tags[?Key==\`$tagName\`].Value, \`$tagValue\`)].StackName' --output json").trim()
-        //                     def stackList = readJSON text: awsResponse
+                            // Execute the AWS CLI command and parse the output
+                            def awsResponse = sh(returnStdout: true, script: "aws cloudformation list-stacks --query 'StackSummaries[?contains(Tags[?Key==\`$tagName\`].Value, \`$tagValue\`)].StackName' --output json").trim()
+                            def stackList = readJSON text: awsResponse
 
-        //                     if (stackList.size() > 0) {
-        //                         echo "Stack with tag $tagName = $tagValue already exists. Skipping backend stack creation."
-        //                     } else {
-        //                         echo "Stack with tag $tagName = $tagValue doesn't exists. Continuing stack creation."
+                            if (stackList.size() > 0) {
+                                echo "Stack with tag $tagName = $tagValue already exists. Skipping backend stack creation."
+                            } else {
+                                echo "Stack with tag $tagName = $tagValue doesn't exists. Continuing stack creation."
                                 
-        //                         sh '''
-        //                         aws cloudformation deploy\
-        //                         --template - file.circleci / files / backend.yml\
-        //                             --tags project = img-converter-backend\
-        //                             --stack - name "img-converter-${env.BUILD_ID:0:7}-backend"\
-        //                             --parameter - overrides ID = "${env.BUILD_ID:0:7}"
-        //                         '''
+                                sh '''
+                                aws cloudformation deploy\
+                                --template - file.circleci / files / backend.yml\
+                                    --tags project = img-converter-backend\
+                                    --stack - name "img-converter-${env.BUILD_ID:0:7}-backend"\
+                                    --parameter - overrides ID = "${env.BUILD_ID:0:7}"
+                                '''
 
-        //                         instance_id = sh(
-        //                             script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`InstanceId`].OutputValue" --output text',
-        //                             returnStdout: true
-        //                         ).trim()
+                                instance_id = sh(
+                                    script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`InstanceId`].OutputValue" --output text',
+                                    returnStdout: true
+                                ).trim()
 
-        //                         os_user = sh(
-        //                             script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`DefaultOsUser`].OutputValue" --output text',
-        //                             returnStdout: true
-        //                         ).trim()
+                                os_user = sh(
+                                    script: 'aws cloudformation describe-stacks --stack-name "img-converter-${env.BUILD_ID:0:7}-ec2" --query "Stacks[0].Outputs[?OutputKey==`DefaultOsUser`].OutputValue" --output text',
+                                    returnStdout: true
+                                ).trim()
 
-        //                         withEnv(["AWS_BACKEND_STACK_INSTANCE_ID=${instance_id}", "AWS_BACKEND_STACK_OS_USER=${os_user}"]) {
-        //                             echo "AWS_BACKEND_STACK_INSTANCE_ID = ${env.AWS_BACKEND_STACK_INSTANCE_ID}"
-        //                             echo "AWS_BACKEND_STACK_OS_USER = ${env.AWS_BACKEND_STACK_OS_USER}"
-        //                         }
-        //                     }
-        //                 }
+                                withEnv(["AWS_BACKEND_STACK_INSTANCE_ID=${instance_id}", "AWS_BACKEND_STACK_OS_USER=${os_user}"]) {
+                                    echo "AWS_BACKEND_STACK_INSTANCE_ID = ${env.AWS_BACKEND_STACK_INSTANCE_ID}"
+                                    echo "AWS_BACKEND_STACK_OS_USER = ${env.AWS_BACKEND_STACK_OS_USER}"
+                                }
+                            }
+                        }
                         
-        //             }
-        //         }
-        //         stage("Ensure front-end infrastructure exist") {
-        //             steps {
-        //                 withCredentials([[
-        //                     $class: 'AmazonWebServicesCredentialsBinding',
-        //                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-        //                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-        //                     region: 'AWS_DEFAULT_REGION'
-        //                 ]]) {
-        //                     def tagName = 'project'
-        //                     def tagValue = 'img-converter-frontend'
+                    }
+                }
+                stage("Ensure front-end infrastructure exist") {
+                    steps {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            def tagName = 'project'
+                            def tagValue = 'img-converter-frontend'
 
-        //                     // Execute the AWS CLI command and parse the output
-        //                     def awsResponse = sh(returnStdout: true, script: "aws cloudformation list-stacks --query 'StackSummaries[?contains(Tags[?Key==\`$tagName\`].Value, \`$tagValue\`)].StackName' --output json").trim()
-        //                     def stackList = readJSON text: awsResponse
+                            // Execute the AWS CLI command and parse the output
+                            def awsResponse = sh(returnStdout: true, script: "aws cloudformation list-stacks --query 'StackSummaries[?contains(Tags[?Key==\`$tagName\`].Value, \`$tagValue\`)].StackName' --output json").trim()
+                            def stackList = readJSON text: awsResponse
 
-        //                     if (stackList.size() > 0) {
-        //                         echo "Stack with tag $tagName = $tagValue already exists. Skipping backend stack creation."
-        //                     } else {
-        //                         echo "Stack with tag $tagName = $tagValue doesn't exists. Continuing stack creation."
+                            if (stackList.size() > 0) {
+                                echo "Stack with tag $tagName = $tagValue already exists. Skipping backend stack creation."
+                            } else {
+                                echo "Stack with tag $tagName = $tagValue doesn't exists. Continuing stack creation."
 
-        //                         sh '''
-        //                         aws cloudformation deploy\
-        //                         --template - file.circleci / files / frontend.yml\
-        //                             --tags project = img-converter-frontend\
-        //                             --stack - name "img-converter-${env.BUILD_ID:0:7}-frontend"\
-        //                             --parameter - overrides ID = "${env.BUILD_ID:0:7}"
-        //                         '''
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         stage("Add SSH Key to EC2 Instance") {
-        //             steps {
-        //                 withCredentials([[
-        //                     $class: 'AmazonWebServicesCredentialsBinding',
-        //                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-        //                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-        //                     region: 'AWS_DEFAULT_REGION'
-        //                 ]]) {
-        //                     sh """
-        //                     aws ec2-instance-connect send-ssh-public-key \
-        //                         --instance-id ${env.AWS_BACKEND_STACK_INSTANCE_ID} \
-        //                         --instance-os-user ${env.AWS_BACKEND_STACK_OS_USER} \
-        //                         --ssh-public-key ${env.PUBLIC_KEY_PATH}
-        //                     """
-        //                 }
-        //             }
-        //         }
-        //         stage("Add back-end ip to ansible inventory") {
-        //             steps {
-        //                 withCredentials([[
-        //                     $class: 'AmazonWebServicesCredentialsBinding',
-        //                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-        //                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-        //                     region: 'AWS_DEFAULT_REGION'
-        //                 ]]) {
-        //                     sh '''
-        //                     aws ec2 describe-instances \
-        //                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
-        //                     --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" \
-        //                     --output text >> .jenkins/ansible/inventory.txt
-        //                     '''
-        //                 }
-        //             }
-        //         }
-        //         stage("Run Playbook and Configure server") {
-        //             steps {
-        //                 dir('.jenkins/ansible') {
-        //                     sh 'ansible-playbook -i inventory.txt configure-server.yml'
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+                                sh '''
+                                aws cloudformation deploy\
+                                --template - file.circleci / files / frontend.yml\
+                                    --tags project = img-converter-frontend\
+                                    --stack - name "img-converter-${env.BUILD_ID:0:7}-frontend"\
+                                    --parameter - overrides ID = "${env.BUILD_ID:0:7}"
+                                '''
+                            }
+                        }
+                    }
+                }
+                stage("Add SSH Key to EC2 Instance") {
+                    steps {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            sh """
+                            aws ec2-instance-connect send-ssh-public-key \
+                                --instance-id ${env.AWS_BACKEND_STACK_INSTANCE_ID} \
+                                --instance-os-user ${env.AWS_BACKEND_STACK_OS_USER} \
+                                --ssh-public-key ${env.PUBLIC_KEY_PATH}
+                            """
+                        }
+                    }
+                }
+                stage("Add back-end ip to ansible inventory") {
+                    steps {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                            region: 'AWS_DEFAULT_REGION'
+                        ]]) {
+                            sh '''
+                            aws ec2 describe-instances \
+                            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+                            --filters "Name=tag:Name,Values=backend-${env.BUILD_ID:0:7}" \
+                            --output text >> .jenkins/ansible/inventory.txt
+                            '''
+                        }
+                    }
+                }
+                stage("Run Playbook and Configure server") {
+                    steps {
+                        dir('.jenkins/ansible') {
+                            sh 'ansible-playbook -i inventory.txt configure-server.yml'
+                        }
+                    }
+                }
+            }
+        }
         // stage('Deploy') {
         //     def dockerImageFrontEnd
         //     def dockerImageBackEnd
