@@ -62,8 +62,8 @@ Resources:
           !Sub "${EnvironmentName}-PRIV-NETS"
       LaunchConfigurationName:
         Ref: WebAppLaunchConfig
-      MinSize: '4'
-      MaxSize: '4'
+      MinSize: '1'
+      MaxSize: '1'
       TargetGroupARNs:
       - Ref: WebAppTargetGroup
       HealthCheckGracePeriod: 60
