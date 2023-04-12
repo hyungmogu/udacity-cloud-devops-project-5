@@ -23,10 +23,10 @@ Resources:
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
 
-  LBSecGroup:
+  k8NodesSecGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Allow http to our load balancer
+      GroupDescription: Allow http and ssh to our hosts
       VpcId:
         Fn::ImportValue:
           !Sub "${EnvironmentName}-VPCID"
@@ -35,10 +35,14 @@ Resources:
         FromPort: 80
         ToPort: 80
         CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
       SecurityGroupEgress:
       - IpProtocol: tcp
-        FromPort: 80
-        ToPort: 80
+        FromPort: 0
+        ToPort: 65535
         CidrIp: 0.0.0.0/0
 
   k8NodesLB:
@@ -48,7 +52,7 @@ Resources:
       - Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN"
       - Fn::ImportValue: !Sub "${EnvironmentName}-PUB2-SN"
       SecurityGroups:
-      - Ref: LBSecGroup
+      - Ref: k8NodesSecGroup
       
   Listener:
     Type: AWS::ElasticLoadBalancingV2::Listener
@@ -88,28 +92,6 @@ Resources:
       - Ref: k8NodesTargetGroup
       HealthCheckGracePeriod: 60
       HealthCheckType: ELB
-
-  k8NodesSecGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Allow http and ssh to our hosts
-      VpcId:
-        Fn::ImportValue:
-          !Sub "${EnvironmentName}-VPCID"
-      SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: 80
-        ToPort: 80
-        CidrIp: 0.0.0.0/0
-      - IpProtocol: tcp
-        FromPort: 22
-        ToPort: 22
-        CidrIp: 0.0.0.0/0
-      SecurityGroupEgress:
-      - IpProtocol: tcp
-        FromPort: 0
-        ToPort: 65535
-        CidrIp: 0.0.0.0/0
 
   k8NodesLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
