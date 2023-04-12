@@ -125,8 +125,7 @@ Resources:
           # install ansible
           python3 -m pip install --user ansible
           python3 -m pip install --user ansible-core==2.12.3         
-      # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
-      ImageId: ami-08fdec01f5df9998f
+      ImageId: ami-007855ac798b5175e
       SecurityGroups:
       - Ref: WebServerSecGroup
       KeyName: Image_Converter_k8_Nodes
