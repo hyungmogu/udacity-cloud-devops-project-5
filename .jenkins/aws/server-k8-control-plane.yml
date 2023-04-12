@@ -22,7 +22,7 @@ Resources:
         ToPort: 80
         CidrIp: 0.0.0.0/0
 
-  WebAppLB:
+  k8ControlPlaneLB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets:
@@ -36,9 +36,9 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn:
-            Ref: WebAppTargetGroup
+            Ref: k8ControlPlaneTargetGroup
       LoadBalancerArn:
-        Ref: WebAppLB
+        Ref: k8ControlPlaneLB
       Port: '80'
       Protocol: HTTP
 
@@ -47,29 +47,29 @@ Resources:
     Properties:
       Actions:
       - Type: forward
-        TargetGroupArn: !Ref 'WebAppTargetGroup'
+        TargetGroupArn: !Ref 'k8ControlPlaneTargetGroup'
       Conditions:
       - Field: path-pattern
         Values: [/]
       ListenerArn: !Ref 'Listener'
       Priority: 1
       
-  WebAppGroup:
+  k8ControlPlaneGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
       - Fn::ImportValue: 
           !Sub "${EnvironmentName}-PRIV-NETS"
       LaunchConfigurationName:
-        Ref: WebAppLaunchConfig
+        Ref: k8ControlPlaneLaunchConfig
       MinSize: '1'
       MaxSize: '1'
       TargetGroupARNs:
-      - Ref: WebAppTargetGroup
+      - Ref: k8ControlPlaneTargetGroup
       HealthCheckGracePeriod: 60
       HealthCheckType: ELB
 
-  WebServerSecGroup:
+  k8ControlPlaneSecGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Allow SSH to our hosts
@@ -87,7 +87,7 @@ Resources:
         ToPort: 65535
         CidrIp: 0.0.0.0/0
 
-  WebAppTargetGroup:
+  k8ControlPlaneTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 10
@@ -102,7 +102,7 @@ Resources:
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
 
-  WebAppLaunchConfig:
+  k8ControlPlaneLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       UserData:
@@ -118,7 +118,7 @@ Resources:
           python3 -m pip install --user ansible-core==2.12.3
       ImageId: ami-007855ac798b5175e
       SecurityGroups:
-      - Ref: WebServerSecGroup
+      - Ref: k8ControlPlaneSecGroup
       KeyName: Image_Converter_k8_Control_Plane
       InstanceType: t3.medium
       BlockDeviceMappings:
@@ -126,8 +126,8 @@ Resources:
         Ebs:
           VolumeSize: '10'
 Outputs:
-  WebAppLoadBalancerDNSName:
-    Description: The URL of the created web app load balancer
-    Value: !Join ["", [ "http://", !GetAtt WebAppLB.DNSName]]
+  k8ControlPlaneLoadBalancerDNSName:
+    Description: The URL of the created Kubernetes Control Plane load balancer
+    Value: !Join ["", [ "http://", !GetAtt k8ControlPlaneLB.DNSName]]
     Export:
         Name: !Sub ${EnvironmentName}-LB-DNS
