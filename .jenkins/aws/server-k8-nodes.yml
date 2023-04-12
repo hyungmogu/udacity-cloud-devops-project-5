@@ -8,7 +8,7 @@ Parameters:
     Type: String
 
 Resources:
-  WebAppLB:
+  k8NodesLB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets:
@@ -23,9 +23,9 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn:
-            Ref: WebAppTargetGroup
+            Ref: k8NodesTargetGroup
       LoadBalancerArn:
-        Ref: WebAppLB
+        Ref: k8NodesLB
       Port: '80'
       Protocol: HTTP
 
@@ -34,25 +34,25 @@ Resources:
     Properties:
       Actions:
       - Type: forward
-        TargetGroupArn: !Ref 'WebAppTargetGroup'
+        TargetGroupArn: !Ref 'k8NodesTargetGroup'
       Conditions:
       - Field: path-pattern
         Values: [/]
       ListenerArn: !Ref 'Listener'
       Priority: 1
       
-  WebAppGroup:
+  k8NodesGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
       - Fn::ImportValue: 
           !Sub "${EnvironmentName}-PRIV-NETS"
       LaunchConfigurationName:
-        Ref: WebAppLaunchConfig
+        Ref: k8NodesLaunchConfig
       MinSize: '1'
       MaxSize: '200'
       TargetGroupARNs:
-      - Ref: WebAppTargetGroup
+      - Ref: k8NodesTargetGroup
       HealthCheckGracePeriod: 60
       HealthCheckType: ELB
 
@@ -74,7 +74,7 @@ Resources:
         ToPort: 80
         CidrIp: 0.0.0.0/0
 
-  WebServerSecGroup:
+  k8NodesSecGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Allow http to our hosts
@@ -96,7 +96,7 @@ Resources:
         ToPort: 65535
         CidrIp: 0.0.0.0/0
 
-  WebAppTargetGroup:
+  k8NodesTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 10
@@ -111,7 +111,7 @@ Resources:
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
 
-  WebAppLaunchConfig:
+  k8NodesLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       UserData:
@@ -127,7 +127,7 @@ Resources:
           python3 -m pip install --user ansible-core==2.12.3         
       ImageId: ami-007855ac798b5175e
       SecurityGroups:
-      - Ref: WebServerSecGroup
+      - Ref: k8NodesSecGroup
       KeyName: Image_Converter_k8_Nodes
       InstanceType: t3.medium
       BlockDeviceMappings:
@@ -135,8 +135,8 @@ Resources:
         Ebs:
           VolumeSize: '10'
 Outputs:
-  WebAppLoadBalancerDNSName:
+  k8NodesLoadBalancerDNSName:
     Description: The URL of the created web app load balancer
-    Value: !Join ["", [ "http://", !GetAtt WebAppLB.DNSName]]
+    Value: !Join ["", [ "http://", !GetAtt k8NodesLB.DNSName]]
     Export:
         Name: !Sub ${EnvironmentName}-LB-DNS
