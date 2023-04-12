@@ -1,8 +1,4 @@
 Parameters:
-  # Paramenters are entirely optional.
-  # but using them will make your cloudformation templates more reusable
-  # use them for things that may change over time, such as instance type,
-  # VPCs and so on.
   EnvironmentName:
     Description: An environment name that will be prefixed to resource names
     Type: String
