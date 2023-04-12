@@ -123,7 +123,7 @@ Resources:
       ImageId: ami-007855ac798b5175e
       SecurityGroups:
       - Ref: WebServerSecGroup
-      KeyName: Image_Converter
+      KeyName: Image_Converter_k8_Control_Plane
       InstanceType: t3.medium
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
