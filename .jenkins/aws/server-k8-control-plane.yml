@@ -8,7 +8,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub ${EnvironmentName}-EC2-SG
-      GroupDescription: Allow port 22 and port 3030.
+      GroupDescription: Allow port 22
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -26,7 +26,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-EC2
-          
+
 Outputs:
   k8ControlPlaneLoadBalancerDNSName:
     Description: The URL of the created Kubernetes Control Plane load balancer
