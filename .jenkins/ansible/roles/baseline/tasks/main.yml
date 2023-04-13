@@ -1,11 +1,12 @@
 ---
 - name: Update packages
   import_tasks: _update_packages.yml
-  include_vars: _install_kubernetes.yml
   become: true
 - name: Install docker
   import_tasks: _install_docker.yml
 - name: Install kubernetes
   import_tasks: _install_kubernetes.yml
+  include_vars: _install_kubernetes.yml
+  become: true
 - name: Install kubernetes flannel
   import_tasks: _install_kubernetes_flannel.yml
