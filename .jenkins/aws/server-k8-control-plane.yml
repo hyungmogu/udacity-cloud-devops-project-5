@@ -22,7 +22,8 @@ Resources:
       SecurityGroups:
         - Ref: k8ControlPlaneInstanceSecurityGroup
       KeyName: Image_Converter_k8_Control_Plane
-      ImageId: ami-007855ac798b5175e 
+      ImageId: ami-007855ac798b5175e
+      SubnetId: !Sub ${EnvironmentName}-PRI-SN
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName}-EC2
