@@ -1,6 +1,7 @@
 ---
 - name: Update packages
   import_tasks: _update_packages.yml
+  include_vars: _install_kubernetes.yml
   become: true
 - name: Install docker
   import_tasks: _install_docker.yml
