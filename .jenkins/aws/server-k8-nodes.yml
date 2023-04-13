@@ -4,7 +4,7 @@ Parameters:
     Type: String
 
 Resources:
-  k8NodesTargetGroup:
+  TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 10
@@ -37,7 +37,7 @@ Resources:
         ToPort: 8000
         CidrIp: 0.0.0.0/0
 
-  k8NodesSecGroup:
+  EC2SecGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Allow http and ssh to our hosts
@@ -59,7 +59,7 @@ Resources:
         ToPort: 65535
         CidrIp: 0.0.0.0/0
 
-  k8NodesLB:
+  LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets:
@@ -74,9 +74,9 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn:
-            Ref: k8NodesTargetGroup
+            Ref: TargetGroup
       LoadBalancerArn:
-        Ref: k8NodesLB
+        Ref: LoadBalancer
       Port: '80'
       Protocol: HTTP
 
@@ -85,29 +85,29 @@ Resources:
     Properties:
       Actions:
       - Type: forward
-        TargetGroupArn: !Ref 'k8NodesTargetGroup'
+        TargetGroupArn: !Ref 'TargetGroup'
       Conditions:
       - Field: path-pattern
         Values: [/]
       ListenerArn: !Ref 'Listener'
       Priority: 1
       
-  k8NodesGroup:
+  AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       VPCZoneIdentifier:
       - Fn::ImportValue: 
           !Sub "${EnvironmentName}-PRIV-NETS"
       LaunchConfigurationName:
-        Ref: k8NodesLaunchConfig
+        Ref: LaunchConfig
       MinSize: '1'
       MaxSize: '200'
       TargetGroupARNs:
-      - Ref: k8NodesTargetGroup
+      - Ref: TargetGroup
       HealthCheckGracePeriod: 60
       HealthCheckType: ELB
 
-  k8NodesLaunchConfig:
+  LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
       UserData:
@@ -123,7 +123,7 @@ Resources:
           python3 -m pip install --user ansible-core==2.12.3         
       ImageId: ami-007855ac798b5175e
       SecurityGroups:
-      - Ref: k8NodesSecGroup
+      - Ref: EC2SecGroup
       KeyName: Image_Converter_k8_Nodes
       InstanceType: t3.medium
       BlockDeviceMappings:
@@ -131,8 +131,8 @@ Resources:
         Ebs:
           VolumeSize: '10'
 Outputs:
-  k8NodesLoadBalancerDNSName:
+  LoadBalancerDNSName:
     Description: The URL of the created web app load balancer
-    Value: !Join ["", [ "http://", !GetAtt k8NodesLB.DNSName]]
+    Value: !Join ["", [ "http://", !GetAtt LoadBalancer.DNSName]]
     Export:
         Name: !Sub ${EnvironmentName}-LB-DNS
