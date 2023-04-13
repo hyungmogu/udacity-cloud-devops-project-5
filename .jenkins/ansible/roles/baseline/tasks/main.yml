@@ -1,9 +1,10 @@
 ---
 - name: Update packages
-  import_tasks: update_packages.yml
+  import_tasks: _update_packages.yml
+  become: true
 - name: Install docker
-  import_tasks: install_docker.yml
+  import_tasks: _install_docker.yml
 - name: Install kubernetes
-  import_tasks: install_kubernetes.yml
+  import_tasks: _install_kubernetes.yml
 - name: Install kubernetes flannel
-  import_tasks: install_kubernetes_flannel.yml
+  import_tasks: _install_kubernetes_flannel.yml
