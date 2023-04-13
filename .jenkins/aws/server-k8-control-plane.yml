@@ -4,7 +4,7 @@ Parameters:
     Type: String
 
 Resources:
-  k8ControlPlaneInstanceSecurityGroup:
+  EC2SecGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub ${EnvironmentName}-EC2-SG
@@ -15,12 +15,12 @@ Resources:
           ToPort: 22
           CidrIp: 0.0.0.0/0
   
-  k8ControlPlaneEC2Instance:
+  EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: t2.micro
       SecurityGroups:
-        - Ref: k8ControlPlaneInstanceSecurityGroup
+        - Ref: EC2SecGroup
       KeyName: Image_Converter_k8_Control_Plane
       ImageId: ami-007855ac798b5175e
       SubnetId: !Sub ${EnvironmentName}-PRI-SN
@@ -29,8 +29,8 @@ Resources:
           Value: !Sub ${EnvironmentName}-EC2
 
 Outputs:
-  k8ControlPlaneEC2InstancePublicIP:
+  EC2InstancePublicIP:
     Description: 'Public IP address of the deployed EC2 instance'
-    Value: !GetAtt k8ControlPlaneEC2Instance.PublicIp
+    Value: !GetAtt EC2Instance.PublicIp
     Export:
-      Name: k8ControlPlaneEC2InstancePublicIP
+      Name: EC2InstancePublicIP
