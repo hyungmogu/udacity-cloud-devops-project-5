@@ -4,7 +4,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Scope of the project
 
-- Jenkins will be used for CI and CD
+- CircleCI will be used for CI and CD
 - Rolling Deployment will be used
 - Cloudformation will be used to build infastructure
 - Kubernetes cluster will be built from scratch on AWS
