@@ -1,6 +1,6 @@
 ## Libraries Installed
 
-- Flask 
+- FastAPI 
 - boto3
 - dotenv
 - pip-audit
