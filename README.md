@@ -2,17 +2,6 @@
 
 This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. 
 
-## Scope of the project
-
-- CircleCI will be used for CI and CD
-- Rolling Deployment will be used
-- Kubernetes cluster will be installed and initialized using Ansible
-
-## Pre-Requisites
-1. Docker
-2. AWS Credentials storing `Access Key ID` and `Secret Access Key` of AWS IAM User with `AmazonEC2FullAccess`
-3. RSA SSH Username and Private Key from `EC2 Key Pairs`
-
 ## Installation
 
 1. Jenkins installation instruction can be found [here](./docs/Installing_Jenkins.md)
