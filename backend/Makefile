@@ -1,3 +1,3 @@
-test_local:
-	cd app &&\
-	python -m unittest discover tests/service
+start:
+	docker-compose build server &&\
+	docker-compose up server 
