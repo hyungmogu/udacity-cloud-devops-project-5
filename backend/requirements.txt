@@ -1,3 +1,4 @@
 fastapi==0.96.0
 boto3==1.26.148
 python-dotenv==1.0.0
+pip-audit==2.5.6
