@@ -10,9 +10,8 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Pre-Requisites
 1. Docker
-2. Jenkin's AWS-EC2 Plugin
-3. AWS Credentials storing `Access Key ID` and `Secret Access Key` of AWS IAM User with `AmazonEC2FullAccess`
-4. RSA SSH Username and Private Key from `EC2 Key Pairs`
+2. AWS Credentials storing `Access Key ID` and `Secret Access Key` of AWS IAM User with `AmazonEC2FullAccess`
+3. RSA SSH Username and Private Key from `EC2 Key Pairs`
 
 ## Installation
 
