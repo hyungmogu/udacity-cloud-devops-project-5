@@ -1,4 +1,0 @@
----
-- apt:
-  force_apt_get: yes
-  update_cache : true

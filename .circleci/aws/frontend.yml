@@ -1,5 +1,5 @@
 Description: >
-  Image Converter frontend stack.
+  UdaPeople frontend stack.
 
 Parameters:
   ID:
@@ -10,7 +10,7 @@ Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "ImageConverter-${ID}"
+      BucketName: !Sub "udapeople-${ID}"
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
