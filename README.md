@@ -6,16 +6,13 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 - CircleCI will be used for CI and CD
 - Rolling Deployment will be used
-- Cloudformation will be used to build infastructure
-- Kubernetes cluster will be built from scratch on AWS
 - Kubernetes cluster will be installed and initialized using Ansible
 
 ## Pre-Requisites
-1. Jenkins
-2. Docker
-3. Jenkin's AWS-EC2 Plugin
-4. AWS Credentials storing `Access Key ID` and `Secret Access Key` of AWS IAM User with `AmazonEC2FullAccess`
-5. RSA SSH Username and Private Key from `EC2 Key Pairs`
+1. Docker
+2. Jenkin's AWS-EC2 Plugin
+3. AWS Credentials storing `Access Key ID` and `Secret Access Key` of AWS IAM User with `AmazonEC2FullAccess`
+4. RSA SSH Username and Private Key from `EC2 Key Pairs`
 
 ## Installation
 
