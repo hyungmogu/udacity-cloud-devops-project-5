@@ -1,10 +1,10 @@
-from flask import Blueprint
-import src.controller.imgToJPGController as jpg
-import src.controller.imgToPNGController as png
-import src.controller.imgToWEBPController as webp
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, status
 
-api = Blueprint('api', __name__, url_prefix='/api/')
+from src.database.connections import get_session
+from src.services.convert import ConvertServices
 
-api.route('/convert-to-jpg', methods=['POST'])(jpg.create_jpg)
-api.route('/convert-to-png', methods=['POST'])(png.create_png)
-api.route('/convert-to-webp', methods=['POST'])(webp.create_webp)
+
+convert_router = APIRouter(
+    tags=["Convert"]
+)
