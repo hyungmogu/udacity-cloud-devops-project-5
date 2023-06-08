@@ -5,6 +5,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 ## Current Plan
 
 - Replace flask with FastAPI
+  - applying knowledge from previous project
 - Make it work 100% locally
 
 ## Pipeline, Architecture and System Design
