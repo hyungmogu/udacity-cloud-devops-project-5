@@ -8,3 +8,10 @@ from src.services.convert import ConvertServices
 convert_router = APIRouter(
     tags=["Convert"]
 )
+
+
+@convert_router.post('/jpg', response_model=ConvertedImage, status_code=201)
+async def convert_to_jpg(file: UploadFile) -> ConvertedImage:
+    service:ConvertServices = ConvertServices()
+    result:ConvertedImage = service.convert_to_jpg(file)
+    return result
