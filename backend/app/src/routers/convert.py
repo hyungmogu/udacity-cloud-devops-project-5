@@ -21,3 +21,9 @@ async def convert_to_png(file: UploadFile) -> ConvertedImage:
     service:ConvertServices = ConvertServices()
     result:ConvertedImage = service.convert_to_png(file)
     return result
+
+@convert_router.post('/webp', response_model=ConvertedImage, status_code=201)
+async def convert_to_webp(file: UploadFile) -> ConvertedImage:
+    service:ConvertServices = ConvertServices()
+    result:ConvertedImage = service.convert_to_webp(file)
+    return result
