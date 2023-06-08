@@ -3,10 +3,12 @@ from fastapi import FastAPI
 
 from src.database.connections import Database
 from src.routers.users import  convert_router
+from src.routers.health import  health_router
 
 app = FastAPI()
 
 app.include_router(convert_router, prefix="/convert", tags=["Convert"])
+app.include_router(health_router, prefix="/health", tags=["Health"])
 
 @app.on_event("startup")
 async def on_startup():
