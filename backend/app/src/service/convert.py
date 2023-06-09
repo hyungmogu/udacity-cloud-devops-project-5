@@ -41,3 +41,20 @@ class ImgToJPGService(Convert):
 
     return in_mem_file
   
+class ImgToPNGService(Convert):
+  def convert(self, img):
+    pil_image = Image.open(img).convert("RGB")
+    in_mem_file = BytesIO()
+    pil_image.save(in_mem_file, format="png")
+    in_mem_file.seek(0)
+
+    return in_mem_file
+  
+class ImgToWEBPService(Convert):
+  def convert(self, img):
+    pil_image = Image.open(img).convert("RGB")
+    in_mem_file = BytesIO()
+    pil_image.save(in_mem_file, format="webp")
+    in_mem_file.seek(0)
+
+    return in_mem_file
