@@ -31,3 +31,13 @@ class Convert(ABC):
       logging.error(e)
 
     return response
+  
+class ImgToJPGService(Convert):
+  def convert(self, img):
+    pil_image = Image.open(img).convert("RGB")
+    in_mem_file = BytesIO()
+    pil_image.save(in_mem_file, format="JPEG")
+    in_mem_file.seek(0)
+
+    return in_mem_file
+  
