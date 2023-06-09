@@ -2,8 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 
 from src.database.connections import Database
-from src.routers.users import  convert_router
-from src.routers.health import  health_router
+from src.routers.convert import convert_router
+from src.routers.health import health_router
 
 app = FastAPI()
 
