@@ -13,8 +13,8 @@ AWS_S3_BUCKET = os.environ.get("AWS_S3_BUCKET", "")
 AWS_OBJECT_EXPIRES_IN = int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0"))
 
 class Convert(ABC):
-  def upload(self, new_img) -> dict:
-    file_name = "{}-{}.jpeg".format(time(), uuid4().hex)
+  def upload(self, new_img, file_extension) -> dict:
+    file_name = "{}-{}.{}".format(time(), uuid4().hex, file_extension)
     response = None
 
     try:
