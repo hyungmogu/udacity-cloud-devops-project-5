@@ -3,7 +3,7 @@ from io import BytesIO
 import os
 import logging
 import boto3
-from abc import ABC, abstractmethod
+from abc import ABC
 from uuid import uuid4
 from time import time
 from botocore.exceptions import ClientError
@@ -12,7 +12,7 @@ from botocore.exceptions import ClientError
 AWS_S3_BUCKET = os.environ.get("AWS_S3_BUCKET", "")
 AWS_OBJECT_EXPIRES_IN = int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0"))
 
-class Convert(ABC):
+class ConvertService(ABC):
   def upload(self, new_img, file_extension) -> dict:
     file_name = "{}-{}.{}".format(time(), uuid4().hex, file_extension)
     response = None
@@ -32,7 +32,7 @@ class Convert(ABC):
 
     return response
   
-class ImgToJPGService(Convert):
+class ImgToJPGService(ConvertService):
   def convert(self, img):
     pil_image = Image.open(img).convert("RGB")
     in_mem_file = BytesIO()
@@ -41,7 +41,7 @@ class ImgToJPGService(Convert):
 
     return in_mem_file
   
-class ImgToPNGService(Convert):
+class ImgToPNGService(ConvertService):
   def convert(self, img):
     pil_image = Image.open(img).convert("RGB")
     in_mem_file = BytesIO()
@@ -50,7 +50,7 @@ class ImgToPNGService(Convert):
 
     return in_mem_file
   
-class ImgToWEBPService(Convert):
+class ImgToWEBPService(ConvertService):
   def convert(self, img):
     pil_image = Image.open(img).convert("RGB")
     in_mem_file = BytesIO()
