@@ -36,7 +36,7 @@ class ImgToJPGService(ConvertService):
   def convert(self, img):
     pil_image = Image.open(img).convert("RGB")
     in_mem_file = BytesIO()
-    pil_image.save(in_mem_file, format="JPEG")
+    pil_image.save(in_mem_file, format="jpeg")
     in_mem_file.seek(0)
 
     return in_mem_file
