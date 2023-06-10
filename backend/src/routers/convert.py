@@ -1,3 +1,4 @@
+from io import BytesIO
 import logging
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
@@ -11,11 +12,20 @@ convert_router = APIRouter(
 
 @convert_router.post('/to-jpg', response_model=ConvertedImage, status_code=201)
 async def convert_to_jpg(image: UploadFile):
-    logging.debug(f"file: {image}")
+    logging.debug(f"file: {image.__dir__()}")
     
+    try:
+        image_binary = await image.read()
+        buffer = BytesIO(image_binary)
+    except Exception as e:
+        logging.error(f"Error: {e}")
+        raise HTTPException(status_code=status.HTTP_420_ENHANCE_YOUR_CALM, detail="Error converting image.")
+
+
     service = ImgToJPGService()
-    in_mem_file = service.convert(image)
+    in_mem_file = service.convert(image_binary)
     result = service.upload_file(in_mem_file, 'jpg')
+    
     return result
 
 @convert_router.post('/to-png', response_model=ConvertedImage, status_code=201)
