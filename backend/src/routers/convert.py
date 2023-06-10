@@ -1,7 +1,6 @@
 from io import BytesIO
 import logging
-from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
+from fastapi import APIRouter, HTTPException, status, UploadFile
 
 from src.models.convert import ConvertedImage
 from src.services.convert import ImgToJPGService, ImgToPNGService, ImgToWEBPService
