@@ -1,7 +1,6 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
 
-from src.database.connections import get_session
 from src.models.convert import ConvertedImage
 from src.services.convert import ImgToJPGService, ImgToPNGService, ImgToWEBPService
 
