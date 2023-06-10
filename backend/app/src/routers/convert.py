@@ -1,3 +1,4 @@
+import logging
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
 
@@ -10,6 +11,8 @@ convert_router = APIRouter(
 
 @convert_router.post('/to-jpg', response_model=ConvertedImage, status_code=201)
 async def convert_to_jpg(file: UploadFile):
+    print(f"file: {file}")
+    logging.debug(f"file: {file}")
     service = ImgToJPGService()
     in_mem_file = service.convert_to_jpg(file)
     result = service.upload_file(in_mem_file, 'jpg')
