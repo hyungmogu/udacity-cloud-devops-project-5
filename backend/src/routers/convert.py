@@ -11,8 +11,6 @@ convert_router = APIRouter(
 
 @convert_router.post('/to-jpg', response_model=ConvertedImage, status_code=201)
 async def convert_to_jpg(image: UploadFile):
-    logging.debug(f"file: {image.__dir__()}")
-    
     try:
         image_binary = await image.read()
         buffer = BytesIO(image_binary)
