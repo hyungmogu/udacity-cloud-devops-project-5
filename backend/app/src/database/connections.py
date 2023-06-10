@@ -1,7 +1,6 @@
 from config import DB, USERNAME, PASSWORD, HOST, PORT
 from sqlmodel import SQLModel, Session, create_engine
 
-
 database_connection_url = f"postgresql://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB}"
 engine_url = create_engine(database_connection_url, echo=True)
 
