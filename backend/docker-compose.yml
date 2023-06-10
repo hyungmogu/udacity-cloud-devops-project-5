@@ -6,7 +6,7 @@ services:
     container_name: server
     ports:
     - "8004:8004"
-    command: [ "python", "main.py"]
+    command: [ "python", "app.py"]
     healthcheck:
       test: curl --fail http://localhost:8004/health/ || exit 1
       interval: 10s
