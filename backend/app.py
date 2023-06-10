@@ -1,9 +1,12 @@
 import uvicorn
+import logging
 from fastapi import FastAPI
 
 from src.database.connections import conn
 from src.routers.convert import convert_router
 from src.routers.health import health_router
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = FastAPI()
 
