@@ -6,3 +6,4 @@ moto==4.1.11
 uvicorn==0.22.0
 sqlmodel==0.0.8
 Pillow==9.5.0
+python-multipart==0.0.6
