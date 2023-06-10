@@ -1,7 +1,9 @@
+from config import DB, USERNAME, PASSWORD, HOST, PORT
 from sqlmodel import SQLModel, Session, create_engine
 
-database_connection_url = f"sqlite:////data/db/database.db"
-engine_url = create_engine(database_connection_url, echo=True, connect_args={"check_same_thread": False})
+
+database_connection_url = f"postgresql://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB}"
+engine_url = create_engine(database_connection_url, echo=True)
 
 def conn():
     SQLModel.metadata.create_all(engine_url)
