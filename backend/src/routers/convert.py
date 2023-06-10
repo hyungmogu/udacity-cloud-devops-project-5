@@ -10,11 +10,11 @@ convert_router = APIRouter(
 )
 
 @convert_router.post('/to-jpg', response_model=ConvertedImage, status_code=201)
-async def convert_to_jpg(file: UploadFile):
-    logging.debug(f"file: {file}")
+async def convert_to_jpg(image: UploadFile):
+    logging.debug(f"file: {image}")
     
     service = ImgToJPGService()
-    in_mem_file = service.convert_to_jpg(file)
+    in_mem_file = service.convert_to_jpg(image)
     result = service.upload_file(in_mem_file, 'jpg')
     return result
 
