@@ -2,7 +2,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from src.database.connections import get_session
-from src.services.convert import ImgToJPGService
+from src.services.convert import ImgToJPGService, ImgToPNGService
 
 
 convert_router = APIRouter(
@@ -19,8 +19,9 @@ async def convert_to_jpg(file: UploadFile):
 
 @convert_router.post('/png', response_model=ConvertedImage, status_code=201)
 async def convert_to_png(file: UploadFile) -> ConvertedImage:
-    service:ConvertServices = ConvertServices()
-    result:ConvertedImage = service.convert_to_png(file)
+    service = ImgToPNGService()
+    in_mem_file = service.convert_to_png(file)
+    result = service.upload_file(in_mem_file, 'jpg')
     return result
 
 @convert_router.post('/webp', response_model=ConvertedImage, status_code=201)
