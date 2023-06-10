@@ -14,20 +14,20 @@ async def convert_to_jpg(image: UploadFile):
     logging.debug(f"file: {image}")
     
     service = ImgToJPGService()
-    in_mem_file = service.convert_to_jpg(image)
+    in_mem_file = service.convert(image)
     result = service.upload_file(in_mem_file, 'jpg')
     return result
 
 @convert_router.post('/to-png', response_model=ConvertedImage, status_code=201)
 async def convert_to_png(file: UploadFile):
     service = ImgToPNGService()
-    in_mem_file = service.convert_to_png(file)
+    in_mem_file = service.convert(file)
     result = service.upload_file(in_mem_file, 'png')
     return result
 
 @convert_router.post('/to-webp', response_model=ConvertedImage, status_code=201)
 async def convert_to_webp(file: UploadFile):
     service = ImgToWEBPService()
-    in_mem_file = service.convert_to_webp(file)
+    in_mem_file = service.convert(file)
     result = service.upload_file(in_mem_file, 'webp')
     return result
