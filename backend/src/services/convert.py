@@ -33,8 +33,8 @@ class ConvertService(ABC):
     return response
   
 class ImgToJPGService(ConvertService):
-  def convert(self, img):
-    pil_image = Image.open(img).convert("RGB")
+  def convert(self, buffer):
+    pil_image = Image.open(buffer).convert("RGB")
     in_mem_file = BytesIO()
     pil_image.save(in_mem_file, format="jpeg")
     in_mem_file.seek(0)

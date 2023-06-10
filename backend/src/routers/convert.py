@@ -21,10 +21,9 @@ async def convert_to_jpg(image: UploadFile):
         logging.error(f"Error: {e}")
         raise HTTPException(status_code=status.HTTP_420_ENHANCE_YOUR_CALM, detail="Error converting image.")
 
-
     service = ImgToJPGService()
-    in_mem_file = service.convert(image_binary)
-    result = service.upload_file(in_mem_file, 'jpg')
+    in_mem_file = service.convert(buffer)
+    result = service.upload(in_mem_file, 'jpg')
     
     return result
 
@@ -32,12 +31,12 @@ async def convert_to_jpg(image: UploadFile):
 async def convert_to_png(file: UploadFile):
     service = ImgToPNGService()
     in_mem_file = service.convert(file)
-    result = service.upload_file(in_mem_file, 'png')
+    result = service.upload(in_mem_file, 'png')
     return result
 
 @convert_router.post('/to-webp', response_model=ConvertedImage, status_code=201)
 async def convert_to_webp(file: UploadFile):
     service = ImgToWEBPService()
     in_mem_file = service.convert(file)
-    result = service.upload_file(in_mem_file, 'webp')
+    result = service.upload(in_mem_file, 'webp')
     return result
