@@ -14,9 +14,10 @@ async def convert_to_jpg(image: UploadFile):
     if image is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No image provided.")
 
-    if (image.content_type != 'image/jpeg' or 
-        image.content_type != 'image/jpg' or 
-        image.content_type != 'image/png' or 
+    print(f"IMAGE CONTENT TYPE: {image.content_type}")
+    if (image.content_type != 'image/jpeg' and
+        image.content_type != 'image/jpg' and
+        image.content_type != 'image/png' and 
         image.content_type != 'image/webp'):
         raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only png, jpg, jpeg, webp images are supported.")
 
@@ -42,9 +43,9 @@ async def convert_to_png(image: UploadFile):
     if image is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No image provided.")
 
-    if (image.content_type != 'image/jpeg' or 
-        image.content_type != 'image/jpg' or 
-        image.content_type != 'image/png' or 
+    if (image.content_type != 'image/jpeg' and 
+        image.content_type != 'image/jpg' and
+        image.content_type != 'image/png' and 
         image.content_type != 'image/webp'):
         raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only png, jpg, jpeg, webp images are supported.")
     
@@ -70,9 +71,9 @@ async def convert_to_webp(image: UploadFile):
     if image is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No image provided.")
 
-    if (image.content_type != 'image/jpeg' or 
-        image.content_type != 'image/jpg' or 
-        image.content_type != 'image/png' or 
+    if (image.content_type != 'image/jpeg' and 
+        image.content_type != 'image/jpg' and 
+        image.content_type != 'image/png' and 
         image.content_type != 'image/webp'):
         raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only png, jpg, jpeg, webp images are supported.")
     
