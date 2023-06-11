@@ -31,7 +31,7 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/api/convert-to-jpg",
+                response = self.app.post("/convert/to-jpg",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.png")})
 
@@ -48,13 +48,13 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
-        response = self.app.post("/api/convert-to-jpg",
+        response = self.app.post("/convert/to-jpg",
                                  content_type="multipart/form-data",
                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
         self.assertEqual(response.status_code, 500)
 
     def test_upload_method_raises_exceptions_if_given_empty_data(self):
-        response = self.app.post("/api/convert-to-jpg",
+        response = self.app.post("/convert/to-jpg",
                                  content_type="multipart/form-data")
         self.assertEqual(response.status_code, 400) 
 
@@ -73,7 +73,7 @@ class TestInputImgToJPGService(unittest.TestCase):
                 img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
-                    response = self.app.post("/api/convert-to-jpg",
+                    response = self.app.post("/convert/to-jpg",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
                     self.assertEqual(response.status_code, 200)
@@ -86,7 +86,7 @@ class TestInputImgToJPGService(unittest.TestCase):
                 tmp_img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
-                    response = self.app.post("/api/convert-to-jpg",
+                    response = self.app.post("/convert/to-jpg",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test.png")})
                     self.assertEqual(response.status_code, 200)
@@ -108,7 +108,7 @@ class TestEdgeCaseImgToJPGService(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/api/convert-to-jpg",
+                response = self.app.post("/convert/to-jpg",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.png")})
 
@@ -131,7 +131,7 @@ class TestSimplePositiveImgToPNGService(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/api/convert-to-png",
+                response = self.app.post("/convert/to-png",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
  
@@ -148,13 +148,13 @@ class TestSimpleNegativeImgToPNGService(unittest.TestCase):
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
-        response = self.app.post("/api/convert-to-png",
+        response = self.app.post("/convert/to-png",
                                  content_type="multipart/form-data",
                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
         self.assertEqual(response.status_code, 500)
 
     def test_upload_method_raises_exceptions_if_given_empty_data(self):
-        response = self.app.post("/api/convert-to-png",
+        response = self.app.post("/convert/to-png",
                                  content_type="multipart/form-data")
         self.assertEqual(response.status_code, 400) 
 
@@ -173,7 +173,7 @@ class TestInputImgToPNGService(unittest.TestCase):
                 img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
-                    response = self.app.post("/api/convert-to-png",
+                    response = self.app.post("/convert/to-png",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
                     self.assertEqual(response.status_code, 200)
@@ -186,7 +186,7 @@ class TestInputImgToPNGService(unittest.TestCase):
                 tmp_img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
-                    response = self.app.post("/api/convert-to-png",
+                    response = self.app.post("/convert/to-png",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test.jpg")})
                     self.assertEqual(response.status_code, 200)
@@ -208,7 +208,7 @@ class TestEdgeCaseImgToPNGService(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/api/convert-to-png",
+                response = self.app.post("/convert/to-png",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
 
@@ -232,7 +232,7 @@ class TestSimplePositiveImgToWEBPService(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/api/convert-to-webp",
+                response = self.app.post("/convert/to-webp",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
 
@@ -248,13 +248,13 @@ class TestSimpleNegativeImgToWEBPService(unittest.TestCase):
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
-        response = self.app.post("/api/convert-to-webp",
+        response = self.app.post("/convert/to-webp",
                                  content_type="multipart/form-data",
                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
         self.assertEqual(response.status_code, 500)
 
     def test_upload_method_raises_exceptions_if_given_empty_data(self):
-        response = self.app.post("/api/convert-to-webp",
+        response = self.app.post("/convert/to-webp",
                                  content_type="multipart/form-data")
         self.assertEqual(response.status_code, 400) 
 
@@ -273,7 +273,7 @@ class TestInputImgToWEBPService(unittest.TestCase):
                 img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
-                    response = self.app.post("/api/convert-to-webp",
+                    response = self.app.post("/convert/to-webp",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
                     
@@ -287,7 +287,7 @@ class TestInputImgToWEBPService(unittest.TestCase):
                 tmp_img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
-                    response = self.app.post("/api/convert-to-webp",
+                    response = self.app.post("/convert/to-webp",
                                             content_type="multipart/form-data",
                                             data={"image": (BytesIO(img_data.read()), "test.jpg")})
                     self.assertEqual(response.status_code, 200)
@@ -309,7 +309,7 @@ class TestEdgeCaseImgToWEBPService(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/api/convert-to-webp",
+                response = self.app.post("/convert/to-webp",
                                          content_type="multipart/form-data",
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
 
