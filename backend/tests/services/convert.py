@@ -317,3 +317,5 @@ class TestEdgeCaseImgToWEBPService(unittest.TestCase):
                 self.assertIn("error", response.json)
     
     
+if __name__ == "__main__":
+    unittest.main()
