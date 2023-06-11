@@ -14,7 +14,6 @@ async def convert_to_jpg(image: UploadFile):
     if image is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No image provided.")
 
-    print(f"IMAGE CONTENT TYPE: {image.content_type}")
     if (image.content_type != 'image/jpeg' and
         image.content_type != 'image/jpg' and
         image.content_type != 'image/png' and 

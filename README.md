@@ -9,6 +9,18 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 - Make it work 100% locally
   - will use kompose to convert docker-compose.yml to kubernetes
 
+## Setup Installation
+
+### Installing Docker
+
+1. Please follow instruction from [here](https://docs.docker.com/get-docker/)
+
+### Running Program (backend)
+
+1. Go to `backend` folder
+
+2. Type `make start` in `backend` folder
+
 ## Pipeline, Architecture and System Design
 
 <img src="https://user-images.githubusercontent.com/6856382/219821091-e647fe37-0c6f-40ec-a483-2ee99b91ae1d.png"/>
