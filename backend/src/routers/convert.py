@@ -9,7 +9,7 @@ convert_router = APIRouter(
     tags=["Convert"]
 )
 
-@convert_router.post('/to-jpg', response_model=ConvertedImage, status_code=201)
+@convert_router.post('/to-jpg', response_model=str, status_code=201)
 async def convert_to_jpg(image: UploadFile):
     try:
         image_binary = await image.read()
@@ -21,10 +21,9 @@ async def convert_to_jpg(image: UploadFile):
     service = ImgToJPGService()
     in_mem_file = service.convert(buffer)
     result = service.upload(in_mem_file, 'jpg')
-    
     return result
 
-@convert_router.post('/to-png', response_model=ConvertedImage, status_code=201)
+@convert_router.post('/to-png', response_model=str, status_code=201)
 async def convert_to_png(image: UploadFile):
     try:
         image_binary = await image.read()
@@ -38,7 +37,7 @@ async def convert_to_png(image: UploadFile):
     result = service.upload(in_mem_file, 'png')
     return result
 
-@convert_router.post('/to-webp', response_model=ConvertedImage, status_code=201)
+@convert_router.post('/to-webp', response_model=str, status_code=201)
 async def convert_to_webp(image: UploadFile):
     try:
         image_binary = await image.read()
