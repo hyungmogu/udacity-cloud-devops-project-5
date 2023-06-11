@@ -53,7 +53,7 @@ commands:
 jobs:
     build-frontend:
         docker:
-            - image: node:13.8-buster
+            - image: node:18.14-buster
         steps:
             - checkout
             - run:
