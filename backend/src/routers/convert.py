@@ -35,6 +35,13 @@ async def convert_to_jpg(image: UploadFile):
 
 @convert_router.post('/to-png', response_model=str, status_code=201)
 async def convert_to_png(image: UploadFile):
+
+    if image is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No image provided.")
+
+    if image.content_type != 'image/png':
+        raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only PNG images are supported.")
+    
     try:
         image_binary = await image.read()
         buffer = BytesIO(image_binary)
@@ -45,6 +52,10 @@ async def convert_to_png(image: UploadFile):
     service = ImgToPNGService()
     in_mem_file = service.convert(buffer)
     result = service.upload(in_mem_file, 'png')
+
+    if result is None:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Error uploading image.")
+    
     return result
 
 @convert_router.post('/to-webp', response_model=str, status_code=201)
