@@ -1,3 +1,7 @@
+audit_local:
+	npm install
+    npm audit --audit-level=critical
+
 build_local:
 	echo "Building locally" &&\
 	npm install &&\
