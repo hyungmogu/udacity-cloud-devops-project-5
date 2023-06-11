@@ -140,27 +140,6 @@ class TestSimplePositiveImgToPNGService(unittest.TestCase):
 
 
 @mock_s3
-class TestSimplePositiveImgToPNGService(unittest.TestCase):
-    def setUp(self):
-        self.app = app.test_client()
-        self.img_to_png_service = ImgToPNGService()
-        s3_resource = boto3.resource('s3')
-        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
-
-    def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
-        with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
-            img = Image.new("RGB", (50, 50), color="red")
-            img.save(img_file.name)
-
-            with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/api/convert-to-png",
-                                         content_type="multipart/form-data",
-                                         data={"image": (BytesIO(img_data.read()), "test.jpg")})
- 
-                self.assertEqual(response.status_code, 200)
-                self.assertIn("url", response.json)
-
-@mock_s3
 class TestSimpleNegativeImgToPNGService(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
