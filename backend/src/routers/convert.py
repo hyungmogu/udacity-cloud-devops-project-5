@@ -25,9 +25,16 @@ async def convert_to_jpg(image: UploadFile):
     return result
 
 @convert_router.post('/to-png', response_model=ConvertedImage, status_code=201)
-async def convert_to_png(file: UploadFile):
+async def convert_to_png(image: UploadFile):
+    try:
+        image_binary = await image.read()
+        buffer = BytesIO(image_binary)
+    except Exception as e:
+        logging.error(f"Error: {e}")
+        raise HTTPException(status_code=status.HTTP_420_ENHANCE_YOUR_CALM, detail="Error converting image.")
+
     service = ImgToPNGService()
-    in_mem_file = service.convert(file)
+    in_mem_file = service.convert(buffer)
     result = service.upload(in_mem_file, 'png')
     return result
 
