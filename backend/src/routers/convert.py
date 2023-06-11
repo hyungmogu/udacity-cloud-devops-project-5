@@ -14,8 +14,11 @@ async def convert_to_jpg(image: UploadFile):
     if image is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No image provided.")
 
-    if image.content_type != 'image/jpeg':
-        raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only JPEG/JPG images are supported.")
+    if (image.content_type != 'image/jpeg' or 
+        image.content_type != 'image/jpg' or 
+        image.content_type != 'image/png' or 
+        image.content_type != 'image/webp'):
+        raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only png, jpg, jpeg, webp images are supported.")
 
     try:
         image_binary = await image.read()
@@ -39,8 +42,11 @@ async def convert_to_png(image: UploadFile):
     if image is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No image provided.")
 
-    if image.content_type != 'image/png':
-        raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only PNG images are supported.")
+    if (image.content_type != 'image/jpeg' or 
+        image.content_type != 'image/jpg' or 
+        image.content_type != 'image/png' or 
+        image.content_type != 'image/webp'):
+        raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only png, jpg, jpeg, webp images are supported.")
     
     try:
         image_binary = await image.read()
@@ -64,8 +70,11 @@ async def convert_to_webp(image: UploadFile):
     if image is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No image provided.")
 
-    if image.content_type != 'image/webp':
-        raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only WEBP images are supported.")
+    if (image.content_type != 'image/jpeg' or 
+        image.content_type != 'image/jpg' or 
+        image.content_type != 'image/png' or 
+        image.content_type != 'image/webp'):
+        raise HTTPException(status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, detail="Only png, jpg, jpeg, webp images are supported.")
     
     try:
         image_binary = await image.read()
