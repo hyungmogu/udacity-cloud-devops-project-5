@@ -114,8 +114,7 @@ jobs:
                 command: |
                     # Your code here
                     cd backend
-                    npm install
-                    npm run test
+                    make test_local
             - notify_slack_error
             - notify_slack_pass
 
