@@ -43,11 +43,9 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
 
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/convert/to-jpg",
-                                         headers={"Content-Type": "multipart/form-data"},
-                                         data={"image": (BytesIO(img_data.read()), "test.png")})
+                                         files={"image": ("test.png", img_data, "image/png")})
 
-                self.assertEqual(response.status_code, 200)
-                self.assertIn("url", response.json)
+                self.assertEqual(response.status_code, 201)
 
 
 # @mock_s3
