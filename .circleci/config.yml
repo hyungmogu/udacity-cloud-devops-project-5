@@ -39,14 +39,12 @@ commands:
                 name: Revert migrations
                 when: on_fail
                 command: |
-                    # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
                     SUCCESS=$(curl --insecure https://kvdb.io/ShY8QxnYQUEWMjENPC2DHt/migration_${CIRCLE_WORKFLOW_ID:0:7});
                     echo $SUCCESS;
                     if(( $SUCCESS==1 )); 
                     then
                         cd ~/project/backend;
                         npm install;
-                        #  Add revert code here. You can find this in the Getting Started section.
                         npm run migrations:revert
                     fi
 
@@ -72,7 +70,7 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - restore_cache: # **restores saved dependency cache if the Branch key template or requirements.txt files have not changed since the previous run**
+            - restore_cache: 
                 key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
                 name: Back-end build
@@ -96,7 +94,6 @@ jobs:
             - run:
                 name: Run frontend test
                 command: |
-                    # Your code here
                     cd frontend
                     make test_local
             - notify_slack_error
@@ -112,7 +109,6 @@ jobs:
             - run:
                 name: Run backend test
                 command: |
-                    # Your code here
                     cd backend
                     make test_local
             - notify_slack_error
@@ -128,7 +124,6 @@ jobs:
             - run:
                 name: Run frontend scan
                 command: |
-                    # Your job code here
                     cd frontend
                     make audit_local
             - notify_slack_error
@@ -144,7 +139,6 @@ jobs:
             - run:
                 name: Run backend scan
                 command: |
-                    # Your job code here
                     cd backend
                     make audit_local
             - notify_slack_error
@@ -152,10 +146,8 @@ jobs:
     
     deploy-infrastructure:
         docker:
-            # Docker image here that supports AWS CLI
             - image: node:13.8-buster
         steps:
-            # Checkout code from git
             - checkout
             - run:
                 name: Update packages
@@ -188,7 +180,6 @@ jobs:
             - run:
                 name: Add back-end ip to ansible inventory
                 command: |
-                    # Your code here
                     aws ec2 describe-instances \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory.txt 
@@ -196,7 +187,6 @@ jobs:
                 root: .circleci/ansible/
                 paths:
                     - inventory.txt
-            # Here's where you will add some code to rollback on failure
             - destroy_environment
             - notify_slack_error
             - notify_slack_pass
@@ -207,7 +197,6 @@ jobs:
         steps:
             - checkout
             - add_ssh_keys:
-                # You can get this ID in the section where you registered the SSH Key
                 fingerprints: ["07:1b:74:a1:a7:95:0f:c3:a1:17:b2:ed:d8:79:9c:a0"] 
             - attach_workspace:
                 at: .circleci/ansible/
@@ -218,7 +207,6 @@ jobs:
             - run:
                 name: Install Ansible
                 command: |
-                    # Install Ansible
                     apt-get -y install ansible
             - run:
                 name: Install dependencies (AWS-Cli)
@@ -228,10 +216,8 @@ jobs:
                 name: Run Playbook and Configure server
                 no_output_timeout: 30m
                 command: |
-                    # Your command
                     cd .circleci/ansible
                     ansible-playbook -i inventory.txt configure-server.yml
-            # Here's where you will add some code to rollback on failure
             - destroy_environment 
             - notify_slack_error
             - notify_slack_pass
@@ -258,14 +244,12 @@ jobs:
             - run:
                 name: Run migrations
                 command: |
-                    # Your code here
                     cd backend
                     npm install
                     npm run migrations > migrations_dump.txt
             - run:
                 name: Send migration results to kvdb.io
                 command: |
-                    # Your code here
                     if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
                     then
                         # If you are using memstash.io, generate the token "7933fe63-4687-4fa1-8426-aa25aa1730ec" on the website
@@ -273,7 +257,6 @@ jobs:
                         # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
                         curl https://kvdb.io/ShY8QxnYQUEWMjENPC2DHt/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
                     fi
-            # Here's where you will add some code to rollback on failure
             - destroy_environment 
             - revert-migrations
             - notify_slack_error
@@ -281,10 +264,8 @@ jobs:
 
     deploy-frontend:
         docker:
-            # Docker image here that supports AWS CLI
             - image: node:13.8-buster
         steps:
-            # Checkout code from git
             - checkout
             - run:
                 name: Update packages
@@ -301,7 +282,6 @@ jobs:
             - run:
                 name: Get backend url
                 command: |
-                    # your code here
                     export BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
                     export API_URL="http://${BACKEND_IP}:3030"
                     echo "${API_URL}"
@@ -311,14 +291,12 @@ jobs:
             - run:
                 name: Deploy frontend objects
                 command: |
-                    # your code here
                     cd frontend
                     npm install
 
                     npm run build
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
                     aws s3 cp dist s3://img-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-            # Here's where you will add some code to rollback on failure
             - destroy_environment 
             - revert-migrations
             - notify_slack_error
@@ -326,16 +304,11 @@ jobs:
     
     deploy-backend:
         docker:
-            # Docker image here that supports Ansible
             - image: node:13.8-buster
         steps:
-            # Checkout code from git
             - checkout
-            # Add ssh keys with fingerprint
             - add_ssh_keys:
-                # You can get this ID in the section where you registered the SSH Key
                 fingerprints: ["07:1b:74:a1:a7:95:0f:c3:a1:17:b2:ed:d8:79:9c:a0"]
-            # attach workspace
             - attach_workspace:
                 at: .circleci/ansible/
             - run:
@@ -357,18 +330,15 @@ jobs:
             - run:
                 name: Deploy backend
                 command: |
-                    # your code here
                     cd backend
                     npm i
                     npm run build
                     cd ..
-                    # Zip the directory
                     tar -C backend -czvf artifact.tar.gz .
                     echo "Contents  of the inventory.txt file is -------"
                     cd .circleci/ansible
                     cat inventory.txt
                     ansible-playbook -i inventory.txt deploy-backend.yml
-            # Here's where you will add some code to rollback on failure
             - destroy_environment 
             - revert-migrations 
             - notify_slack_error
@@ -376,10 +346,8 @@ jobs:
 
     smoke-test:
         docker:
-            # Lightweight Docker image 
             - image: node:13.8-buster
         steps:
-            # Checkout code from git
             - checkout
             - run:
                 name: Update packages
@@ -400,8 +368,6 @@ jobs:
                     API_URL="http://${BACKEND_IP}:3030"
                     echo "API URL: ${API_URL}"
 
-                    # your code here
-                    # Fetch and prepare the BACKEND_IP env var
                     if curl "${API_URL}/api/status" | grep "ok"
                     then
                         exit 0
@@ -411,17 +377,14 @@ jobs:
             - run:
                 name: Frontend smoke test.
                 command: |
-                    # your code here
                     URL="http://img-converter-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
                     echo ${URL} 
                     if curl -s ${URL} | grep "Welcome"
                     then
-                        # Change this to 0 after the job fails
                         exit 0
                     else
                         exit 1
                     fi
-            # Here's where you will add some code to rollback on failure
             - destroy_environment 
             - revert-migrations
             - notify_slack_error
@@ -429,10 +392,8 @@ jobs:
 
     cloudfront-update:
         docker:
-            # Docker image here that supports AWS CLI
             - image: node:13.8-buster
         steps:
-            # Checkout code from git
             - checkout
             - run:
                 name: Update packages
@@ -445,13 +406,11 @@ jobs:
             - run:
                 name: Update cloudfront distribution
                 command: |
-                    # your code here
                     aws cloudformation deploy \
                     --template-file .circleci/files/cloudfront.yml \
                     --stack-name InitialStack \
                     --parameter-overrides WorkflowID="img-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter
-            # Here's where you will add some code to rollback on failure
             - destroy_environment 
             - revert-migrations
             - notify_slack_error
@@ -459,15 +418,12 @@ jobs:
     
     cleanup:
         docker:
-            # Docker image here
             - image: node:13.8-buster
         steps:
-            # Checkout code from git
             - checkout
             - run:
                 name: Get old stack workflow id
                 command: |
-                    # your code here
                     export OldWorkflowID=$(aws cloudformation \
                     list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
                     --no-paginate --output text)
@@ -482,7 +438,6 @@ jobs:
                 command: |
                     if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
                     then
-                        # your code here
                         aws s3 rm "s3://img-converter-${OldWorkflowID}" --recursive
                         aws cloudformation delete-stack --stack-name "img-converter-backend-${OldWorkflowID}"
                         aws cloudformation delete-stack --stack-name "img-converter-frontend-${OldWorkflowID}"
