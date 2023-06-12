@@ -6,6 +6,7 @@ import boto3
 from moto import mock_s3
 from io import BytesIO
 from PIL import Image
+from fastapi.testclient import TestClient
 
 AWS_S3_BUCKET = "image-converter-test"
 os.environ["AWS_S3_BUCKET"] = AWS_S3_BUCKET
@@ -20,7 +21,7 @@ from src.services.convert import ImgToJPGService, ImgToPNGService, ImgToWEBPServ
 @mock_s3
 class TestSimplePositiveImgToJPGService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_jpg_service = ImgToJPGService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -42,7 +43,7 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
 @mock_s3
 class TestSimpleNegativeImgToJPGService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_jpg_service = ImgToJPGService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -61,7 +62,7 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
 @mock_s3
 class TestInputImgToJPGService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_jpg_service = ImgToJPGService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -99,7 +100,7 @@ class TestInputImgToJPGService(unittest.TestCase):
 
 class TestEdgeCaseImgToJPGService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_jpg_service = ImgToJPGService()
     
     def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
@@ -120,7 +121,7 @@ class TestEdgeCaseImgToJPGService(unittest.TestCase):
 @mock_s3
 class TestSimplePositiveImgToPNGService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_png_service = ImgToPNGService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -142,7 +143,7 @@ class TestSimplePositiveImgToPNGService(unittest.TestCase):
 @mock_s3
 class TestSimpleNegativeImgToPNGService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_png_service = ImgToPNGService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -161,7 +162,7 @@ class TestSimpleNegativeImgToPNGService(unittest.TestCase):
 @mock_s3
 class TestInputImgToPNGService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_png_service = ImgToPNGService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -199,7 +200,7 @@ class TestInputImgToPNGService(unittest.TestCase):
 
 class TestEdgeCaseImgToPNGService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_png_service = ImgToPNGService()
     
     def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
@@ -221,7 +222,7 @@ class TestEdgeCaseImgToPNGService(unittest.TestCase):
 @mock_s3
 class TestSimplePositiveImgToWEBPService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_webp_service = ImgToWEBPService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -242,7 +243,7 @@ class TestSimplePositiveImgToWEBPService(unittest.TestCase):
 @mock_s3
 class TestSimpleNegativeImgToWEBPService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_webp_service = ImgToWEBPService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -261,7 +262,7 @@ class TestSimpleNegativeImgToWEBPService(unittest.TestCase):
 @mock_s3
 class TestInputImgToWEBPService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_webp_service = ImgToWEBPService()
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
@@ -300,7 +301,7 @@ class TestInputImgToWEBPService(unittest.TestCase):
 
 class TestEdgeCaseImgToWEBPService(unittest.TestCase):
     def setUp(self):
-        self.app = app.test_client()
+        self.app = TestClient(app)
         self.img_to_webp_service = ImgToWEBPService()
     
     def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
