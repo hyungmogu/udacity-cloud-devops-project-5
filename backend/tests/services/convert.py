@@ -156,7 +156,7 @@ class TestSimpleNegativeImgToPNGService(unittest.TestCase):
 
     def test_upload_method_raises_exceptions_if_given_empty_data(self):
         response = self.app.post("/convert/to-png",
-                                 content_type="multipart/form-data")
+                                 headers={"Content-Type": "multipart/form-data"})
         self.assertEqual(response.status_code, 400) 
 
 @mock_s3
@@ -256,7 +256,7 @@ class TestSimpleNegativeImgToWEBPService(unittest.TestCase):
 
     def test_upload_method_raises_exceptions_if_given_empty_data(self):
         response = self.app.post("/convert/to-webp",
-                                 content_type="multipart/form-data")
+                                 headers={"Content-Type": "multipart/form-data"})
         self.assertEqual(response.status_code, 400) 
 
 @mock_s3
