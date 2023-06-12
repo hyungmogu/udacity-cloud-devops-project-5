@@ -4,7 +4,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 ## Current Plan
 
-- Replace flask with FastAPI
+- Replace flask with FastAPI (Done)
   - applying knowledge from previous project
 - Make it work 100% locally
   - will use kompose to convert docker-compose.yml to kubernetes
