@@ -33,7 +33,7 @@ class TestSimplePositiveImgToJPGService(unittest.TestCase):
 
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/convert/to-jpg",
-                                         content_type="multipart/form-data",
+                                         headers={"Content-Type": "multipart/form-data"},
                                          data={"image": (BytesIO(img_data.read()), "test.png")})
 
                 self.assertEqual(response.status_code, 200)
@@ -50,7 +50,7 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
 
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
         response = self.app.post("/convert/to-jpg",
-                                 content_type="multipart/form-data",
+                                 headers={"Content-Type": "multipart/form-data"},
                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
         self.assertEqual(response.status_code, 500)
 
@@ -75,7 +75,7 @@ class TestInputImgToJPGService(unittest.TestCase):
 
                 with open(img_file.name, "rb") as img_data:
                     response = self.app.post("/convert/to-jpg",
-                                            content_type="multipart/form-data",
+                                            headers={"Content-Type": "multipart/form-data"},
                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
@@ -88,7 +88,7 @@ class TestInputImgToJPGService(unittest.TestCase):
 
                 with open(img_file.name, "rb") as img_data:
                     response = self.app.post("/convert/to-jpg",
-                                            content_type="multipart/form-data",
+                                            headers={"Content-Type": "multipart/form-data"},
                                             data={"image": (BytesIO(img_data.read()), "test.png")})
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
@@ -110,7 +110,7 @@ class TestEdgeCaseImgToJPGService(unittest.TestCase):
 
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/convert/to-jpg",
-                                         content_type="multipart/form-data",
+                                         headers={"Content-Type": "multipart/form-data"},
                                          data={"image": (BytesIO(img_data.read()), "test.png")})
 
                 self.assertEqual(response.status_code, 500)
@@ -133,7 +133,7 @@ class TestSimplePositiveImgToPNGService(unittest.TestCase):
 
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/convert/to-png",
-                                         content_type="multipart/form-data",
+                                         headers={"Content-Type": "multipart/form-data"},
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
  
                 self.assertEqual(response.status_code, 200)
@@ -150,7 +150,7 @@ class TestSimpleNegativeImgToPNGService(unittest.TestCase):
 
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
         response = self.app.post("/convert/to-png",
-                                 content_type="multipart/form-data",
+                                 headers={"Content-Type": "multipart/form-data"},
                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
         self.assertEqual(response.status_code, 500)
 
@@ -175,7 +175,7 @@ class TestInputImgToPNGService(unittest.TestCase):
 
                 with open(img_file.name, "rb") as img_data:
                     response = self.app.post("/convert/to-png",
-                                            content_type="multipart/form-data",
+                                            headers={"Content-Type": "multipart/form-data"},
                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
@@ -188,7 +188,7 @@ class TestInputImgToPNGService(unittest.TestCase):
 
                 with open(img_file.name, "rb") as img_data:
                     response = self.app.post("/convert/to-png",
-                                            content_type="multipart/form-data",
+                                            headers={"Content-Type": "multipart/form-data"},
                                             data={"image": (BytesIO(img_data.read()), "test.jpg")})
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
@@ -210,7 +210,7 @@ class TestEdgeCaseImgToPNGService(unittest.TestCase):
 
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/convert/to-png",
-                                         content_type="multipart/form-data",
+                                         headers={"Content-Type": "multipart/form-data"},
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
 
                 self.assertEqual(response.status_code, 500)
@@ -234,7 +234,7 @@ class TestSimplePositiveImgToWEBPService(unittest.TestCase):
 
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/convert/to-webp",
-                                         content_type="multipart/form-data",
+                                         headers={"Content-Type": "multipart/form-data"},
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
 
                 self.assertEqual(response.status_code, 200)
@@ -250,7 +250,7 @@ class TestSimpleNegativeImgToWEBPService(unittest.TestCase):
 
     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
         response = self.app.post("/convert/to-webp",
-                                 content_type="multipart/form-data",
+                                 headers={"Content-Type": "multipart/form-data"},
                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
         self.assertEqual(response.status_code, 500)
 
@@ -275,7 +275,7 @@ class TestInputImgToWEBPService(unittest.TestCase):
 
                 with open(img_file.name, "rb") as img_data:
                     response = self.app.post("/convert/to-webp",
-                                            content_type="multipart/form-data",
+                                            headers={"Content-Type": "multipart/form-data"},
                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
                     
                     self.assertEqual(response.status_code, 200)
@@ -289,7 +289,7 @@ class TestInputImgToWEBPService(unittest.TestCase):
 
                 with open(img_file.name, "rb") as img_data:
                     response = self.app.post("/convert/to-webp",
-                                            content_type="multipart/form-data",
+                                            headers={"Content-Type": "multipart/form-data"},
                                             data={"image": (BytesIO(img_data.read()), "test.jpg")})
                     self.assertEqual(response.status_code, 200)
                     self.assertIn("url", response.json)
@@ -311,7 +311,7 @@ class TestEdgeCaseImgToWEBPService(unittest.TestCase):
 
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/convert/to-webp",
-                                         content_type="multipart/form-data",
+                                         headers={"Content-Type": "multipart/form-data"},
                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
 
                 self.assertEqual(response.status_code, 500)
