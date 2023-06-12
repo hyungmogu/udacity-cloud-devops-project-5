@@ -12,7 +12,7 @@ os.environ["AWS_S3_BUCKET"] = AWS_S3_BUCKET
 os.environ["AWS_ACCESS_KEY_ID"] = "test"
 os.environ["AWS_SECRET_ACCESS_KEY"] = "test"
 
-from main import app
+from app import app
 from src.services.convert import ImgToJPGService, ImgToPNGService, ImgToWEBPService
 
 # TESTING IMG TO JPG SERVICE
