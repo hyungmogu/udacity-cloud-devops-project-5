@@ -10,6 +10,8 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
   - will use kompose to convert docker-compose.yml to kubernetes
 - Apply unit testing (In Progress)
 - Apply CI/CD using circleci
+- Making sure this application work in minikube
+- Deploying this app to aws EKS
 
 ## Setup Instruction
 
