@@ -15,7 +15,8 @@ This app is meant to demonstrate author's devops skills.
 - Apply unit testing (In Progress)
 - Apply CI/CD using circleci
 - Making sure this application work in minikube
-- Deploying this app to aws EKS
+- Deploying this app to AWS EKS
+- Provide an easier way to deploy to AWS EKS via circleci
 
 ## Setup Instruction (Local)
 
@@ -34,6 +35,8 @@ This app is meant to demonstrate author's devops skills.
 1. Go to `frontend` folder
 
 2. Type `make start` to run frontend program
+
+## Setup Instruction (AWS)
 
 ## Pipeline, Architecture and System Design
 
