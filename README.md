@@ -2,6 +2,8 @@
 
 This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. 
 
+This app is about converting an image to another format.
+
 ## Current Plan and Progress
 
 - Replace flask with FastAPI (Done)
