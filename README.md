@@ -2,7 +2,9 @@
 
 This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. 
 
-This app is about converting an image from a format to another.
+This app is about converting an image from a format to another. 
+
+This app utilizes AWS and circleci to demonstrate author's devops skills.
 
 ## Current Plan and Progress
 
