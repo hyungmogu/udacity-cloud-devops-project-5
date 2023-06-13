@@ -8,7 +8,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
   - applying knowledge from previous project
 - Make it work 100% locally (Done)
   - will use kompose to convert docker-compose.yml to kubernetes
-- Apply unit testing
+- Apply unit testing (In Progress)
 - Apply CI/CD using circleci
 
 ## Running Installation
