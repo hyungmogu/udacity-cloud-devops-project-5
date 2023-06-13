@@ -2,7 +2,7 @@
 
 This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. 
 
-## Current Plan
+## Current Plan and Progress
 
 - Replace flask with FastAPI (Done)
   - applying knowledge from previous project

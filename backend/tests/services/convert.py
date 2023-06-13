@@ -88,22 +88,21 @@ class TestInputImgToJPGService(unittest.TestCase):
                                     files={"image": ("test{}".format(img_format), img_data, content_type)})
                     self.assertEqual(response.status_code, 201)
 
-    # def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
-    #     for image_size in [(50,200), (100,100), (250, 30)]:
-    #         with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
-    #             tmp_img = Image.new("RGB", image_size, color="red")
-    #             tmp_img.save(img_file.name)
+    def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
+        for image_size in [(50,200), (100,100), (250, 30)]:
+            with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
+                tmp_img = Image.new("RGB", image_size, color="red")
+                tmp_img.save(img_file.name)
 
-    #             with open(img_file.name, "rb") as img_data:
-    #                 response = self.app.post("/convert/to-jpg",
-    #                                         headers={"Content-Type": "multipart/form-data"},
-    #                                         data={"image": (BytesIO(img_data.read()), "test.png")})
-    #                 self.assertEqual(response.status_code, 200)
-    #                 self.assertIn("url", response.json)
+                with open(img_file.name, "rb") as img_data:
+                    response = self.app.post("/convert/to-jpg",
+                                            files={"image": ("test.png", img_data, "image/png")})
+                    self.assertEqual(response.status_code, 201)
+                    self.assertIn("url", response.content)
                     
-    #                 req = requests.get(response.json['url'])
-    #                 img = Image.open(BytesIO(req.content))
-    #                 self.assertEqual(image_size, img.size)
+                    req = requests.get(response.json['url'])
+                    img = Image.open(BytesIO(req.content))
+                    self.assertEqual(image_size, img.size)
 
 
 # class TestEdgeCaseImgToJPGService(unittest.TestCase):
