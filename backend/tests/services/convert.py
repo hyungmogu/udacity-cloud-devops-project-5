@@ -68,43 +68,42 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
         response = self.app.post("/convert/to-jpg")
         self.assertEqual(response.status_code, 422) 
 
-# @mock_s3
-# class TestInputImgToJPGService(unittest.TestCase):
-#     def setUp(self):
-#         self.app = TestClient(app)
-#         self.img_to_jpg_service = ImgToJPGService()
-#         s3_resource = boto3.resource('s3')
-#         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
+@mock_s3
+class TestInputImgToJPGService(unittest.TestCase):
+    def setUp(self):
+        self.app = TestClient(app)
+        self.img_to_jpg_service = ImgToJPGService()
+        s3_resource = boto3.resource('s3')
+        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
-#     def test_convert_method_converts_various_image_formats_to_jpg(self):
-#         for img_format in [".webp", ".png", ".jpg", ".jpeg"]:
-#             with tempfile.NamedTemporaryFile(suffix=img_format) as img_file:
-#                 img = Image.new("RGB", (50, 50), color="red")
-#                 img.save(img_file.name)
+    def test_convert_method_converts_various_image_formats_to_jpg(self):
+        for img_format in [".webp", ".png", ".jpg", ".jpeg"]:
+            content_type = "image/{}".format(img_format[1:])
+            with tempfile.NamedTemporaryFile(suffix=img_format) as img_file:
+                img = Image.new("RGB", (50, 50), color="red")
+                img.save(img_file.name)
 
-#                 with open(img_file.name, "rb") as img_data:
-#                     response = self.app.post("/convert/to-jpg",
-#                                             headers={"Content-Type": "multipart/form-data"},
-#                                             data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
-#                     self.assertEqual(response.status_code, 200)
-#                     self.assertIn("url", response.json)
+                with open(img_file.name, "rb") as img_data:
+                    response = self.app.post("/convert/to-jpg",
+                                    files={"image": ("test{}".format(img_format), img_data, content_type)})
+                    self.assertEqual(response.status_code, 201)
 
-#     def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
-#         for image_size in [(50,200), (100,100), (250, 30)]:
-#             with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
-#                 tmp_img = Image.new("RGB", image_size, color="red")
-#                 tmp_img.save(img_file.name)
+    # def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
+    #     for image_size in [(50,200), (100,100), (250, 30)]:
+    #         with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
+    #             tmp_img = Image.new("RGB", image_size, color="red")
+    #             tmp_img.save(img_file.name)
 
-#                 with open(img_file.name, "rb") as img_data:
-#                     response = self.app.post("/convert/to-jpg",
-#                                             headers={"Content-Type": "multipart/form-data"},
-#                                             data={"image": (BytesIO(img_data.read()), "test.png")})
-#                     self.assertEqual(response.status_code, 200)
-#                     self.assertIn("url", response.json)
+    #             with open(img_file.name, "rb") as img_data:
+    #                 response = self.app.post("/convert/to-jpg",
+    #                                         headers={"Content-Type": "multipart/form-data"},
+    #                                         data={"image": (BytesIO(img_data.read()), "test.png")})
+    #                 self.assertEqual(response.status_code, 200)
+    #                 self.assertIn("url", response.json)
                     
-#                     req = requests.get(response.json['url'])
-#                     img = Image.open(BytesIO(req.content))
-#                     self.assertEqual(image_size, img.size)
+    #                 req = requests.get(response.json['url'])
+    #                 img = Image.open(BytesIO(req.content))
+    #                 self.assertEqual(image_size, img.size)
 
 
 # class TestEdgeCaseImgToJPGService(unittest.TestCase):
