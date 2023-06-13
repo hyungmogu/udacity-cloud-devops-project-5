@@ -105,23 +105,21 @@ class TestInputImgToJPGService(unittest.TestCase):
                     # self.assertEqual(image_size, img.size)
 
 
-# class TestEdgeCaseImgToJPGService(unittest.TestCase):
-#     def setUp(self):
-#         self.app = TestClient(app)
-#         self.img_to_jpg_service = ImgToJPGService()
+class TestEdgeCaseImgToJPGService(unittest.TestCase):
+    def setUp(self):
+        self.app = TestClient(app)
+        self.img_to_jpg_service = ImgToJPGService()
     
-#     def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
-#         with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
-#             img = Image.new("RGB", (50, 50), color="red")
-#             img.save(img_file.name)
+    def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
+        with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
+            img = Image.new("RGB", (50, 50), color="red")
+            img.save(img_file.name)
 
-#             with open(img_file.name, "rb") as img_data:
-#                 response = self.app.post("/convert/to-jpg",
-#                                          headers={"Content-Type": "multipart/form-data"},
-#                                          data={"image": (BytesIO(img_data.read()), "test.png")})
+            with open(img_file.name, "rb") as img_data:
+                response = self.app.post("/convert/to-jpg",
+                                            files={"image": ("test.png", img_data, "image/png")})
 
-#                 self.assertEqual(response.status_code, 500)
-#                 self.assertIn("error", response.json)
+                self.assertEqual(response.status_code, 500)
     
 # # TESTING IMG TO PNG SERVICE
 
