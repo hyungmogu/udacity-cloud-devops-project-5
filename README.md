@@ -17,7 +17,7 @@ This app is meant to demonstrate author's devops skills.
 - Making sure this application work in minikube
 - Deploying this app to aws EKS
 
-## Setup Instruction
+## Setup Instruction (Local)
 
 ### Install Docker
 
