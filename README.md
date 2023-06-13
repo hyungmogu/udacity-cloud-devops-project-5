@@ -11,7 +11,7 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 - Apply unit testing (In Progress)
 - Apply CI/CD using circleci
 
-## Running Installation
+## Setup Instruction
 
 ### Install Docker
 
