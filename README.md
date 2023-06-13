@@ -2,7 +2,7 @@
 
 This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. 
 
-This app is about converting an image to another format.
+This app is about converting an image from a format to another.
 
 ## Current Plan and Progress
 
