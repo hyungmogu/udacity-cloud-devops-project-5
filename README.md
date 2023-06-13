@@ -21,7 +21,13 @@ This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree.
 
 1. Go to `backend` folder
 
-2. Type `make start` in `backend` folder
+2. Type `make start` to run server
+
+### Run Program (frontend)
+
+1. Go to `frontend` folder
+
+2. Type `make start` to run frontend program
 
 ## Pipeline, Architecture and System Design
 
