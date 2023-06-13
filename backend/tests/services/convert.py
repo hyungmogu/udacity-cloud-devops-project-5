@@ -64,10 +64,9 @@ class TestSimpleNegativeImgToJPGService(unittest.TestCase):
                                     files={"image": ("test.txt", txt_file, "text/plain")})
             self.assertEqual(response.status_code, 415)
 
-    # def test_upload_method_raises_exceptions_if_given_empty_data(self):
-    #     response = self.app.post("/convert/to-jpg",
-    #                              headers={"Content-Type": "multipart/form-data"})
-    #     self.assertEqual(response.status_code, 400) 
+    def test_upload_method_raises_exceptions_if_given_empty_data(self):
+        response = self.app.post("/convert/to-jpg")
+        self.assertEqual(response.status_code, 422) 
 
 # @mock_s3
 # class TestInputImgToJPGService(unittest.TestCase):
