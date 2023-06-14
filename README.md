@@ -178,3 +178,7 @@ convertToWEBP(image)
         - b. Screenshot of your AWS EC2 page showing the newly created (for blue/green) or modified (for rolling) instances running as the EKS cluster nodes.
         - c. Screenshot of the kubectl command output showing that the deployment is successful, pods are running, and the service can be accessed via an external IP or port forwarding.
         - d. Screenshot showing that you can access the application after deployment.
+
+## References
+
+1. The Kompose Authors. (2022). Go from docker compose to kubernetes. https://kompose.io/
