@@ -182,3 +182,4 @@ convertToWEBP(image)
 ## References
 
 1. The Kompose Authors. (2022). Go from docker compose to kubernetes. https://kompose.io/
+2. Udacity. Udacity DevOps Nanodegree
