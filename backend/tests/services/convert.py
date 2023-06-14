@@ -217,26 +217,24 @@ class TestEdgeCaseImgToPNGService(unittest.TestCase):
     
 # # TESTING IMG TO WEBP SERVICE
 
-# @mock_s3
-# class TestSimplePositiveImgToWEBPService(unittest.TestCase):
-#     def setUp(self):
-#         self.app = TestClient(app)
-#         self.img_to_webp_service = ImgToWEBPService()
-#         s3_resource = boto3.resource('s3')
-#         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
+@mock_s3
+class TestSimplePositiveImgToWEBPService(unittest.TestCase):
+    def setUp(self):
+        self.app = TestClient(app)
+        self.img_to_webp_service = ImgToWEBPService()
+        s3_resource = boto3.resource('s3')
+        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
-#     def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
-#         with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
-#             img = Image.new("RGB", (50, 50), color="red")
-#             img.save(img_file.name)
+    def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
+        with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
+            img = Image.new("RGB", (50, 50), color="red")
+            img.save(img_file.name)
 
-#             with open(img_file.name, "rb") as img_data:
-#                 response = self.app.post("/convert/to-webp",
-#                                          headers={"Content-Type": "multipart/form-data"},
-#                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
+            with open(img_file.name, "rb") as img_data:
+                response = self.app.post("/convert/to-webp",
+                                         files={"image": ("test.jpg", img_data, "image/jpg")})
 
-#                 self.assertEqual(response.status_code, 200)
-#                 self.assertIn("url", response.json)
+                self.assertEqual(response.status_code, 201)
 
 # @mock_s3
 # class TestSimpleNegativeImgToWEBPService(unittest.TestCase):
