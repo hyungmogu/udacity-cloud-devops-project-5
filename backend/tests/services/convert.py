@@ -266,17 +266,15 @@ class TestInputImgToWEBPService(unittest.TestCase):
 
     def test_convert_method_converts_various_image_formats_to_webp(self):
         for img_format in [".webp", ".png", ".jpg", ".jpeg"]:
+            content_type = "image/{}".format(img_format[1:])
             with tempfile.NamedTemporaryFile(suffix=img_format) as img_file:
                 img = Image.new("RGB", (50, 50), color="red")
                 img.save(img_file.name)
 
                 with open(img_file.name, "rb") as img_data:
                     response = self.app.post("/convert/to-webp",
-                                            headers={"Content-Type": "multipart/form-data"},
-                                            data={"image": (BytesIO(img_data.read()), "test{}".format(img_format))})
-                    
-                    self.assertEqual(response.status_code, 200)
-                    self.assertIn("url", response.json)
+                                            files={"image": ("test{}".format(img_format), img_data, content_type)})
+                    self.assertEqual(response.status_code, 201)
 
 #     def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
 #         for image_size in [(50,200), (100,100), (250, 30)]:
