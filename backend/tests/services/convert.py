@@ -236,24 +236,26 @@ class TestSimplePositiveImgToWEBPService(unittest.TestCase):
 
                 self.assertEqual(response.status_code, 201)
 
-# @mock_s3
-# class TestSimpleNegativeImgToWEBPService(unittest.TestCase):
-#     def setUp(self):
-#         self.app = TestClient(app)
-#         self.img_to_webp_service = ImgToWEBPService()
-#         s3_resource = boto3.resource('s3')
-#         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
+@mock_s3
+class TestSimpleNegativeImgToWEBPService(unittest.TestCase):
+    def setUp(self):
+        self.app = TestClient(app)
+        self.img_to_webp_service = ImgToWEBPService()
+        s3_resource = boto3.resource('s3')
+        s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
-#     def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
-#         response = self.app.post("/convert/to-webp",
-#                                  headers={"Content-Type": "multipart/form-data"},
-#                                  data={"image": (BytesIO(b"invalid_image_data"), "test.txt")})
-#         self.assertEqual(response.status_code, 500)
+    def test_if_convert_method_raises_exception_given_invalid_image_file_or_non_image(self):
+        with tempfile.NamedTemporaryFile(suffix=".txt") as txt_file:
+            txt_file.write(b'INVALID_IMAGE_DATA')
 
-#     def test_upload_method_raises_exceptions_if_given_empty_data(self):
-#         response = self.app.post("/convert/to-webp",
-#                                  headers={"Content-Type": "multipart/form-data"})
-#         self.assertEqual(response.status_code, 400) 
+            response = self.app.post("/convert/to-webp",
+                                    files={"image": ("test.txt", txt_file, "text/plain")})
+            self.assertEqual(response.status_code, 415)
+
+    # def test_upload_method_raises_exceptions_if_given_empty_data(self):
+    #     response = self.app.post("/convert/to-webp",
+    #                              headers={"Content-Type": "multipart/form-data"})
+    #     self.assertEqual(response.status_code, 400) 
 
 # @mock_s3
 # class TestInputImgToWEBPService(unittest.TestCase):
