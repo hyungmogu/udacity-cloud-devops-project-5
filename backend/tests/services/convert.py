@@ -276,23 +276,21 @@ class TestInputImgToWEBPService(unittest.TestCase):
                                             files={"image": ("test{}".format(img_format), img_data, content_type)})
                     self.assertEqual(response.status_code, 201)
 
-#     def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
-#         for image_size in [(50,200), (100,100), (250, 30)]:
-#             with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
-#                 tmp_img = Image.new("RGB", image_size, color="red")
-#                 tmp_img.save(img_file.name)
+    def test_convert_method_handles_images_of_various_dimension_and_sizes(self):
+        for image_size in [(50,200), (100,100), (250, 30)]:
+            with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
+                tmp_img = Image.new("RGB", image_size, color="red")
+                tmp_img.save(img_file.name)
 
-#                 with open(img_file.name, "rb") as img_data:
-#                     response = self.app.post("/convert/to-webp",
-#                                             headers={"Content-Type": "multipart/form-data"},
-#                                             data={"image": (BytesIO(img_data.read()), "test.jpg")})
-#                     self.assertEqual(response.status_code, 200)
-#                     self.assertIn("url", response.json)
+                with open(img_file.name, "rb") as img_data:
+                    response = self.app.post("/convert/to-webp",
+                                            files={"image": ("test.jpg", img_data, "image/jpg")})
+                    self.assertEqual(response.status_code, 201)
+                    self.assertTrue(len(response.content) > 0)
                     
-#                     req = requests.get(response.json['url'])
-#                     img = Image.open(BytesIO(req.content))
-#                     self.assertEqual(image_size, img.size)
-
+                    # req = requests.get(response.json['url'])
+                    # img = Image.open(BytesIO(req.content))
+                    # self.assertEqual(image_size, img.size)
 
 # class TestEdgeCaseImgToWEBPService(unittest.TestCase):
 #     def setUp(self):
