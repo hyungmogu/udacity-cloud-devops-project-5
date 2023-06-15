@@ -170,7 +170,7 @@ class TestInputImgToPNGService(unittest.TestCase):
         s3_resource = boto3.resource('s3')
         s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
 
-    def test_convert_method_converts_various_image_formats_to_jpg(self):
+    def test_convert_method_converts_various_image_formats_to_png(self):
         for img_format in [".webp", ".png", ".jpg", ".jpeg"]:
             content_type = "image/{}".format(img_format[1:])
             with tempfile.NamedTemporaryFile(suffix=img_format) as img_file:
