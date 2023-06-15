@@ -17,6 +17,7 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 - Making sure this application work in minikube
 - Deploying this app to AWS EKS
 - Provide an easier way to deploy to AWS EKS via circleci
+- Convert server app to microservice
 
 ## Setup Instruction (Local)
 
