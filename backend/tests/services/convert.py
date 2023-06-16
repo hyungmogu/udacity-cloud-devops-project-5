@@ -292,23 +292,21 @@ class TestInputImgToWEBPService(unittest.TestCase):
                     # img = Image.open(BytesIO(req.content))
                     # self.assertEqual(image_size, img.size)
 
-# class TestEdgeCaseImgToWEBPService(unittest.TestCase):
-#     def setUp(self):
-#         self.app = TestClient(app)
-#         self.img_to_webp_service = ImgToWEBPService()
+class TestEdgeCaseImgToWEBPService(unittest.TestCase):
+    def setUp(self):
+        self.app = TestClient(app)
+        self.img_to_webp_service = ImgToWEBPService()
     
-#     def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
-#         with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
-#             img = Image.new("RGB", (50, 50), color="red")
-#             img.save(img_file.name)
+    def test_upload_method_raises_error_when_s3_bucket_is_not_available_or_accessible(self):
+        with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
+            img = Image.new("RGB", (50, 50), color="red")
+            img.save(img_file.name)
 
-#             with open(img_file.name, "rb") as img_data:
-#                 response = self.app.post("/convert/to-webp",
-#                                          headers={"Content-Type": "multipart/form-data"},
-#                                          data={"image": (BytesIO(img_data.read()), "test.jpg")})
+            with open(img_file.name, "rb") as img_data:
+                response = self.app.post("/convert/to-webp",
+                                         files={"image": ("test.jpg", img_data, "image/jpg")})
 
-#                 self.assertEqual(response.status_code, 500)
-#                 self.assertIn("error", response.json)
+                self.assertEqual(response.status_code, 500)
     
     
 if __name__ == "__main__":
