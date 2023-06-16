@@ -13,7 +13,8 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 - Make it work 100% locally (Done)
   - will use kompose to convert docker-compose.yml to kubernetes
 - Apply unit testing (In Progress)
-- Making sure this application works using minikube
+- Apply testing using locust swarm
+- Make sure this application works using minikube
 - Apply CI/CD using circleci
 - Convert server app to microservice
 - Deploying this app to AWS EKS
@@ -184,3 +185,4 @@ convertToWEBP(image)
 
 1. The Kompose Authors. (2022). Go from docker compose to kubernetes. https://kompose.io/
 2. Udacity. (2023). Cloud DevOps Engineer Nanodegree. https://www.udacity.com/course/cloud-dev-ops-nanodegree--nd9991
+3. Jonatan Heyman, Carl Byström, Joakim Hamrén, Hugo Heyman. (2023). Locust - An open source load testing tool. https://locust.io
