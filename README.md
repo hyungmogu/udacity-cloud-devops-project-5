@@ -13,8 +13,8 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 - Make it work 100% locally (Done)
   - will use kompose to convert docker-compose.yml to kubernetes
 - Apply unit testing (In Progress)
+- Making sure this application works using minikube
 - Apply CI/CD using circleci
-- Making sure this application work in minikube
 - Convert server app to microservice
 - Deploying this app to AWS EKS
 - Provide an easier way to deploy to AWS EKS via circleci
