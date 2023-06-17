@@ -15,8 +15,8 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 - Apply unit testing (Done)
 - Apply testing using locust swarm (In Progress)
 - Make sure this application works using minikube
-- Apply CI/CD using circleci
 - Convert server app to microservice
+- Apply CI/CD using circleci
 - Deploy this app to AWS EKS via circleci
 - Provide an easier way to setup and run locally
 
