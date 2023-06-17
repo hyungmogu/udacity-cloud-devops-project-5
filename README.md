@@ -42,6 +42,10 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 ## Setup Instruction (AWS)
 
 ## Test Instruction (Local)
+### Unit Test
+1. go to `backend` folder
+2. type `make start_unit_test`
+
 ### Load Test
 1. go to `backend` folder
 2. type `make start`
