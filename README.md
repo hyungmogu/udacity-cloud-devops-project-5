@@ -9,12 +9,11 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 ## Current Plan and Progress
 
 - Replace flask with FastAPI (Done)
-  - applying knowledge from previous project
 - Make it work 100% locally (Done)
-  - will use kompose to convert docker-compose.yml to kubernetes
 - Apply unit testing (Done)
 - Apply load testing using locust swarm (In Progress)
 - Make sure this application works using minikube
+  - [kompose](https://kompose.io) is used to convert from docker-compose.yml to kubernetes
 - Convert server from monolith to microservice
 - Apply CI/CD using circleci
 - Deploy this app to AWS EKS via circleci
