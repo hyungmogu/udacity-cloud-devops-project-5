@@ -1,6 +1,6 @@
 import tempfile
 from PIL import Image
-from locust import HttpLocust, TaskSet, between
+from locust import HttpLocust, task, between
 
 class ImgToJPG(HttpLocust):
   wait_time = between(5, 15)
