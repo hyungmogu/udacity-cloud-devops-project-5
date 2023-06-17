@@ -131,7 +131,7 @@ jobs:
 
     scan-backend:
         docker:
-            - image: node:13.8-buster
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
