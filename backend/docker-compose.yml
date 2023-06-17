@@ -6,6 +6,7 @@ services:
     container_name: server
     ports:
     - "8004:8004"
+    - "8089:8089"
     command: [ "python", "app.py"]
     env_file:
       - .env
