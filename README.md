@@ -48,7 +48,7 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 
 ### Load Test
 1. go to `backend` folder
-2. type `make start`
+2. type `make start_load_test`
 3. go to a browser of choice, and type "http://localhost:8089" in url.
 
 ## Pipeline, Architecture and System Design
