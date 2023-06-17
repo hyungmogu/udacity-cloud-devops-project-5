@@ -41,7 +41,7 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 ## Setup Instruction (AWS)
 
 ## Test Instruction (Local)
-
+### Load Test
 1. go to `backend` folder
 2. type `make start`
 3. go to a browser of choice, and type "http://localhost:8089" in url.
