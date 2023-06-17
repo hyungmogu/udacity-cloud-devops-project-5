@@ -10,6 +10,9 @@ build_local:
 test_local:
 	python -m unittest tests/services/convert.py
 
+setup_local:
+	sh ./setup.sh
+
 start:
 	docker-compose build server &&\
 	docker-compose up server 
