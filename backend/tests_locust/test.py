@@ -1,10 +1,8 @@
-#!/usr/bin/python
 import tempfile
 from PIL import Image
 from locust import HttpLocust, TaskSet, between
 
 class ImgToJPG(HttpUser):
-
   wait_time = between(5, 15)
 
   @task
@@ -23,7 +21,6 @@ class ImgToJPG(HttpUser):
           
 
 class ImgToPNG(HttpUser):
-
   wait_time = between(5, 15)
 
   @task
@@ -41,7 +38,6 @@ class ImgToPNG(HttpUser):
               img_data, content_type)})
           
 class ImgToWEBP(HttpUser):
-
   wait_time = between(5, 15)
 
   @task
