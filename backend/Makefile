@@ -11,7 +11,7 @@ test_local:
 	python -m unittest tests/services/convert.py
 
 test_load_local:
-	locust -f tests_load/locustfile.py --host http://localhost:5000
+	locust -f tests_load/locustfile.py -P 8089
 
 start:
 	docker-compose build server &&\
