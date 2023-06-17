@@ -10,6 +10,9 @@ build_local:
 test_local:
 	python -m unittest tests/services/convert.py
 
+test_load_local:
+	locust
+
 start:
 	docker-compose build server &&\
 	docker-compose up server 
