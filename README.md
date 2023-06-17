@@ -19,6 +19,8 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 - Apply CI/CD using circleci
 - Deploy this app to AWS EKS via circleci
 - Provide an easier way to setup and run locally
+- Make sure this app works in all operating systems
+- Submit project
 
 ## Setup Instruction (Local)
 
