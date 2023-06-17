@@ -40,6 +40,12 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 
 ## Setup Instruction (AWS)
 
+## Test Instruction (Local)
+
+1. go to `backend` folder
+2. type `make start`
+3. go to a browser of choice, and type "http://localhost:8089" in url.
+
 ## Pipeline, Architecture and System Design
 
 <img src="https://user-images.githubusercontent.com/6856382/219821091-e647fe37-0c6f-40ec-a483-2ee99b91ae1d.png"/>
