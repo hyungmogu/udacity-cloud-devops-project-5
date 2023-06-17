@@ -12,7 +12,7 @@ This app is meant to demonstrate author's devops skills including AWS, designing
   - applying knowledge from previous project
 - Make it work 100% locally (Done)
   - will use kompose to convert docker-compose.yml to kubernetes
-- Apply unit testing (In Progress)
+- Apply unit testing (Done)
 - Apply testing using locust swarm (In Progress)
 - Make sure this application works using minikube
 - Apply CI/CD using circleci
