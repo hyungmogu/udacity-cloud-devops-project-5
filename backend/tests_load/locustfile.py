@@ -1,8 +1,8 @@
 import tempfile
 from PIL import Image
-from locust import HttpLocust, task, between
+from locust import HttpUser, task, between
 
-class ImgToJPG(HttpLocust):
+class ImgToJPG(HttpUser):
   wait_time = between(5, 15)
 
   @task
@@ -20,7 +20,7 @@ class ImgToJPG(HttpLocust):
               img_data, content_type)})
           
 
-class ImgToPNG(HttpLocust):
+class ImgToPNG(HttpUser):
   wait_time = between(5, 15)
 
   @task
@@ -37,7 +37,7 @@ class ImgToPNG(HttpLocust):
               files={'image': ('test{}'.format(img_format),
               img_data, content_type)})
           
-class ImgToWEBP(HttpLocust):
+class ImgToWEBP(HttpUser):
   wait_time = between(5, 15)
 
   @task
