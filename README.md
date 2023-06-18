@@ -31,12 +31,15 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 
 1. Go to `backend` folder
 2. type `make setup_local` if not done.
-3. Type `make start` to run server
+3. fill out the following fields in `.env` file located in the project root folder.
+    - "AWS_S3_BUCKET"
+    - "AWS_ACCESS_KEY_ID"
+    - "AWS_SECRET_ACCESS_KEY"
+4. Type `make start` to run server
 
 ### Run Program (frontend)
 
 1. Go to `frontend` folder
-
 2. Type `make start` to run frontend program
 
 ## Setup Instruction (AWS)
