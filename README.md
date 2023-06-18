@@ -30,8 +30,8 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 ### Run Program (backend)
 
 1. Go to `backend` folder
-
-2. Type `make start` to run server
+2. type `make setup_local` if not done.
+3. Type `make start` to run server
 
 ### Run Program (frontend)
 
