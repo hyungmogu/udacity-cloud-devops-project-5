@@ -4,12 +4,14 @@ from fastapi import FastAPI
 
 from src.database.connections import conn
 from src.routers.convert import convert_router
+from src.routers.convert import convert_router
 from src.routers.health import health_router
 
 logging.basicConfig(level=logging.DEBUG)
 
 app = FastAPI()
 
+app.include_router(convert_router, prefix="/convert_load_test", tags=["Convert Load Test"])
 app.include_router(convert_router, prefix="/convert", tags=["Convert"])
 app.include_router(health_router, prefix="/health", tags=["Health"])
 
