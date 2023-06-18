@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, status, UploadFile
 from src.services.convert import ImgToJPGService, ImgToPNGService, ImgToWEBPService
 
 convert_router = APIRouter(
-    tags=["Convert"]
+    tags=["Convert Load Test"]
 )
 
 @convert_router.post('/to-jpg', response_model=str, status_code=201)
