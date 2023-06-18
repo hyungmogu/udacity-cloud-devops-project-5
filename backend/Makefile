@@ -7,11 +7,12 @@ audit_local:
 build_local:
 	pip install -r requirements.txt
 
-test_local:
-	python -m unittest tests/services/convert.py
-
 setup_local:
 	sh ./setup.sh
+
+start_unit_test:
+	docker-compose build server &&\
+	docker-compose up unit_test
 
 start:
 	docker-compose build server &&\
