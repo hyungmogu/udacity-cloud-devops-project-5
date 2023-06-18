@@ -2,11 +2,11 @@ import tempfile
 from PIL import Image
 from locust import HttpUser, task, between
 
-class ImgToJPG(HttpUser):
+class WebsiteUser(HttpUser):
   wait_time = between(5, 15)
 
   @task
-  def index(self):
+  def convert_to_jpg(self):
     for img_format in ['.webp', '.png', '.jpg', '.jpeg']:
       content_type = 'image/{}'.format(img_format[1:])
       with tempfile.NamedTemporaryFile(suffix=img_format) as \
@@ -19,12 +19,8 @@ class ImgToJPG(HttpUser):
               files={'image': ('test{}'.format(img_format),
               img_data, content_type)})
           
-
-class ImgToPNG(HttpUser):
-  wait_time = between(5, 15)
-
   @task
-  def index(self):
+  def convert_to_png(self):
     for img_format in ['.webp', '.png', '.jpg', '.jpeg']:
       content_type = 'image/{}'.format(img_format[1:])
       with tempfile.NamedTemporaryFile(suffix=img_format) as \
@@ -37,11 +33,8 @@ class ImgToPNG(HttpUser):
               files={'image': ('test{}'.format(img_format),
               img_data, content_type)})
           
-class ImgToWEBP(HttpUser):
-  wait_time = between(5, 15)
-
   @task
-  def index(self):
+  def convert_to_webp(self):
     for img_format in ['.webp', '.png', '.jpg', '.jpeg']:
       content_type = 'image/{}'.format(img_format[1:])
       with tempfile.NamedTemporaryFile(suffix=img_format) as \
