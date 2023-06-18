@@ -407,7 +407,7 @@ jobs:
                 name: Update cloudfront distribution
                 command: |
                     aws cloudformation deploy \
-                    --template-file .circleci/files/cloudfront.yml \
+                    --template-file .circleci/aws/cloudfront.yml \
                     --stack-name InitialStack \
                     --parameter-overrides WorkflowID="img-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter
