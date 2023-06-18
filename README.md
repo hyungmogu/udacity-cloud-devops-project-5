@@ -11,8 +11,9 @@ This app is meant to demonstrate author's devops skills involving AWS, designing
 - Replace flask with FastAPI (Done)
 - Make it work 100% locally (Done)
 - Apply unit testing (Done)
-- Apply load testing using locust swarm (In Progress)
-- Make sure this application works using minikube
+- Apply load testing using locust swarm (Done)
+- Make sure this application works using minikube (In Progress)
+  - [Minikube](https://minikube.sigs.k8s.io/docs/start/) is kubernetes running on local computer.
   - [kompose](https://kompose.io) is used to convert from docker-compose.yml to kubernetes
 - Convert server from monolith to microservice
 - Apply CI/CD using circleci
