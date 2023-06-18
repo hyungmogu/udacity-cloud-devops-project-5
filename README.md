@@ -22,6 +22,34 @@ This app is meant to demonstrate author's devops skills involving AWS, designing
 - Make sure this app works in all operating systems
 - Submit project
 
+## Setup Instruction (General. Don't skip this step)
+
+### Construct AWS S3 Storage
+
+1. Login to [Amazon AWS Service](https://aws.amazon.com/)
+2. Click `S3` from the intro dashboard
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/4275b9dd-4e09-4f66-8879-27edd8e60937"/>
+
+3. Select `Create Bucket` on top right corner
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/80d7b0d2-7d86-4f2e-95ba-0882b0dedf1e"/>
+
+4. Enter bucket name
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/8b88eb3c-523e-4444-9b86-878de1d26081"/>
+
+5. Deselect `Block all public access`
+    - This is to allow frontend program to access the url and offer converted image to client
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/31d6e3a8-ee90-4e68-ab2b-8171878d1806"/>
+
+6. Scroll to the bottom and select `Create Bucket`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/c371427c-e0c0-4ae8-ada7-f118abdaab21"/>
+
+### Get AWS S3 Access key and Secret Key
+
 ## Setup Instruction (Local)
 
 ### Install Docker
