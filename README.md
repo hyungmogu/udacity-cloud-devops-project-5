@@ -42,14 +42,29 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 ## Setup Instruction (AWS)
 
 ## Test Instruction (Local)
+
 ### Unit Test
 1. go to `backend` folder
 2. type `make start_unit_test`
 
 ### Load Test
 1. go to `backend` folder
-2. type `make start_load_test`
-3. go to a browser of choice, and type "http://localhost:8089" in url.
+2. type `make setup_local` if not done.
+3. fill out the following fields in `.env` file located in the project root folder.
+    - "AWS_S3_BUCKET"
+    - "AWS_ACCESS_KEY_ID"
+    - "AWS_SECRET_ACCESS_KEY"
+4. type `make start_load_test`
+5. go to a browser of choice, and type "http://localhost:8089" in url.
+6. in the input fileds enter as below:
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/67674efc-960e-4ba6-8636-0bd05fa2b3e2"/>
+
+7. Click `Start Swarming` button
+
+8. Click `Charts` to see activity as a graph
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/039ae455-eecc-4cb4-88e8-538083ec4cdb"/>
 
 ## Pipeline, Architecture and System Design
 
