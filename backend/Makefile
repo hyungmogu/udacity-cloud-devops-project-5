@@ -10,6 +10,10 @@ build_local:
 setup_local:
 	sh ./setup.sh
 
+start_load_test:
+	docker-compose build server &&\
+	docker-compose up load_test
+
 start_unit_test:
 	docker-compose build server &&\
 	docker-compose up unit_test
