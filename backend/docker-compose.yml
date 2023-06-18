@@ -37,6 +37,24 @@ services:
     depends_on:
       server_db:
         condition: service_healthy
+  unit_test:
+    build: ./
+    container_name: unit_test_server
+    ports:
+    - "8089:8089"
+    command: [ "sh", "unit_test.sh"]
+    env_file:
+      - .env
+    volumes:
+      - "./:/app"
+    healthcheck:
+      test: curl --fail http://localhost:8004/health/ || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      server_db:
+        condition: service_healthy
   server_db:
     image: postgres:13.1
     ports:
