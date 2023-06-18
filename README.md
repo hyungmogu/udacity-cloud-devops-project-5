@@ -29,35 +29,35 @@ This app is meant to demonstrate author's devops skills including AWS, designing
 
 ### Run Program (backend)
 
-1. Go to `backend` folder
-2. type `make setup_local` if not done.
+1. Go to `backend` folder in terminal from project root folder
+2. type `make setup_local` in terminal if not done.
 3. fill out the following fields in `.env` file located in the project root folder.
     - "AWS_S3_BUCKET"
     - "AWS_ACCESS_KEY_ID"
     - "AWS_SECRET_ACCESS_KEY"
-4. Type `make start` to run server
+4. Type `make start` in terminal to run server
 
 ### Run Program (frontend)
 
-1. Go to `frontend` folder
-2. Type `make start` to run frontend program
+1. Go to `frontend` folder in terminal from project root folder
+2. Type `make start` in terminal to run frontend program
 
 ## Setup Instruction (AWS)
 
 ## Test Instruction (Local)
 
 ### Unit Test
-1. go to `backend` folder
-2. type `make start_unit_test`
+1. go to `backend` folder in terminal from project root folder
+2. type `make start_unit_test` in terminal to run unit test
 
 ### Load Test
-1. go to `backend` folder
-2. type `make setup_local` if not done.
+1. go to `backend` folder in terminal from project root folder
+2. type `make setup_local` in terminal if not done.
 3. fill out the following fields in `.env` file located in the project root folder.
     - "AWS_S3_BUCKET"
     - "AWS_ACCESS_KEY_ID"
     - "AWS_SECRET_ACCESS_KEY"
-4. type `make start_load_test`
+4. type `make start_load_test` in terminal
 5. go to a browser of choice, and type "http://localhost:8089" in url.
 6. in the input fileds enter as below:
 
