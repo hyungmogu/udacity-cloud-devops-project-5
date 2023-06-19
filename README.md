@@ -50,6 +50,63 @@ This app is meant to demonstrate author's devops skills involving AWS, designing
 
 ### Get AWS S3 Access key and Secret Key
 
+1. Login to [Amazon AWS Service](https://aws.amazon.com/)
+2. Click `IAM` from the intro dashboard
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/01314857-6587-49a6-975d-4d728b2ad642"/>
+
+3. Select `Users`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/962beb02-cff6-4169-a7bc-5ac085f29560"/>
+
+4. Select `Add Users`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/0ff51061-29a1-4245-bf28-3d098291e0d5"/>
+
+5. Type in `User name` (can be any. example: img-converter), and then click `Next`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/846abb6b-4c31-4fb9-bf41-994409e062a6"/>
+
+6. Select `Attach Policies Directly`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/b3d7c018-6a6a-4324-ada5-6a4d0c8489e0"/>
+
+7. In `Search` field, type `S3`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/a1b9b4bd-f078-4522-8f7f-c26ba6d5a963"/>
+
+8. Select `AmazonS3FullAccess`, and click `Next` button
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/3fbe2205-b03d-4746-b1f6-07bf3889ce5b"/>
+
+9. Select `Create User` button
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/ad56904a-4036-4966-a09c-9494545239c1"/>
+
+10. Select newly created IAM User (in the author's case, img-converter-2)
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/34e99ad0-e86d-4482-a38f-4bbe19db5860"/>
+
+11. Select `Security Credentials` tab
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/c82976ad-85d2-416b-848d-5d97067611c3"/>
+
+12. Select `Create Access Key` button under `Access Keys`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/e61c5bb4-dadf-49bd-981d-4f660bd49f61"/>
+
+13. Select `Other` and click `Next`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/fb9d9d3e-a1d5-42de-868d-f54e0522d20c"/>
+
+14. Select `Create Access Key`
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/7c41a62c-af31-448f-8d9d-c329aaca9705"/>
+
+15. Copy and paste respective value to respective variable in `.env` file
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/39dbe54a-8a76-4530-a741-4e454e9aed0c"/>
+
 ## Setup Instruction (Local)
 
 ### Install Docker
