@@ -17,9 +17,9 @@ services:
       timeout: 3s
       retries: 3
     depends_on:
-      server_db:
+      server-db:
         condition: service_healthy
-  load_test:
+  load-test:
     build: ./
     container_name: load_test_server
     ports:
@@ -36,9 +36,9 @@ services:
       timeout: 3s
       retries: 3
     depends_on:
-      server_db:
+      server-db:
         condition: service_healthy
-  unit_test:
+  unit-test:
     build: ./
     container_name: unit_test_server
     ports:
@@ -54,9 +54,9 @@ services:
       timeout: 3s
       retries: 3
     depends_on:
-      server_db:
+      server-db:
         condition: service_healthy
-  server_db:
+  server-db:
     image: postgres:13.1
     ports:
       - "5432:5432"
