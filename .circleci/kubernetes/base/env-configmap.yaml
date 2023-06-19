@@ -12,7 +12,6 @@ data:
   POSTGRES_USER: postgres
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   labels:
     io.kompose.service: server-env
   name: env
