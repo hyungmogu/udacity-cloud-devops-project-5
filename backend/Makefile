@@ -10,6 +10,9 @@ build_local:
 setup_local:
 	sh ./setup.sh
 
+start_minikube:
+	sh ./minikube.sh
+
 start_load_test:
 	docker-compose build server &&\
 	docker-compose up load_test
