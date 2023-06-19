@@ -1,3 +1,3 @@
 #!/bin/bash
-minikube start &;
-kubectl apply -f ./.circleci/kubernetes/base/;
+minikube start && \
+kubectl apply -f ../.circleci/kubernetes/base/
