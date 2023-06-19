@@ -130,6 +130,8 @@ This app is meant to demonstrate author's devops skills involving AWS, designing
 
 ## Setup Instruction (AWS)
 
+### Setup CircleCI
+
 ## Test Instruction (Local)
 
 ### Unit Test
