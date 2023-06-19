@@ -56,14 +56,3 @@ services:
     depends_on:
       server-db:
         condition: service_healthy
-  server-db:
-    image: postgres:13.1
-    ports:
-      - "5432:5432"
-    env_file:
-      - .env
-    healthcheck:
-      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
-      interval: 10s
-      timeout: 3s
-      retries: 3
