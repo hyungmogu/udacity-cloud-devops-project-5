@@ -15,11 +15,11 @@ start_minikube:
 
 start_load_test:
 	docker-compose build server &&\
-	docker-compose up load_test
+	docker-compose up load-test
 
 start_unit_test:
 	docker-compose build server &&\
-	docker-compose up unit_test
+	docker-compose up unit-test
 
 start:
 	docker-compose build server &&\
