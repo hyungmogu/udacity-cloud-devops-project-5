@@ -16,9 +16,6 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-    depends_on:
-      server-db:
-        condition: service_healthy
   load-test:
     build: ./
     container_name: load-test-server
@@ -35,9 +32,6 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-    depends_on:
-      server-db:
-        condition: service_healthy
   unit-test:
     build: ./
     container_name: unit-test-server
@@ -53,9 +47,6 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-    depends_on:
-      server-db:
-        condition: service_healthy
   audit:
     build: ./
     container_name: audit-server
@@ -71,6 +62,3 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-    depends_on:
-      server-db:
-        condition: service_healthy
