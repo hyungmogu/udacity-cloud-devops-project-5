@@ -13,6 +13,10 @@ setup_local:
 start_minikube:
 	sh ./minikube.sh
 
+start_audit:
+	docker-compose build server &&\
+	docker-compose up audit
+
 start_load_test:
 	docker-compose build server &&\
 	docker-compose up load-test
