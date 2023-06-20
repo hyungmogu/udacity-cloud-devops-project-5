@@ -56,3 +56,21 @@ services:
     depends_on:
       server-db:
         condition: service_healthy
+  audit:
+    build: ./
+    container_name: audit-server
+    ports:
+    - "8004:8004"
+    command: [ "sh", "audit.sh"]
+    env_file:
+      - .env
+    volumes:
+      - "./:/app"
+    healthcheck:
+      test: curl --fail http://localhost:8004/health/ || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      server-db:
+        condition: service_healthy
