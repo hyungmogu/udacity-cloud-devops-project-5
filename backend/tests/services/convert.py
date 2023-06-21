@@ -1,10 +1,8 @@
 import os
-import requests
 import unittest
 import tempfile
 import boto3
 from moto import mock_s3
-from io import BytesIO
 from PIL import Image
 from fastapi.testclient import TestClient
 
