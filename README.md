@@ -20,6 +20,7 @@ This app is meant to demonstrate author's devops skills involving AWS, designing
 - Deploy this app to AWS EKS via circleci
 - Provide an easier way to setup and run locally
 - Make sure this app works in all operating systems
+- Add fallback instructions for the case after running of server
 - Submit project
 
 ## Setup Instruction (General. Don't skip this step)
