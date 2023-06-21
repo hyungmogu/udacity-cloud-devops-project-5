@@ -305,3 +305,4 @@ convertToWEBP(image)
 2. Udacity. (2023). Cloud DevOps Engineer Nanodegree. https://www.udacity.com/course/cloud-dev-ops-nanodegree--nd9991
 3. Jonatan Heyman, Carl Byström, Joakim Hamrén, Hugo Heyman. (2023). Locust - An open source load testing tool. https://locust.io
 4. Ashley D. (2021). Bootstrapping Microservices with Docker, Kubernetes and Terraform. Manning Publications Co.
+5. Ben Dilts, Karl Sun, et. al. (2023). Lucid chart - Where seeing becomes doing. Lucid.https://www.lucidchart.com/pages/landing
