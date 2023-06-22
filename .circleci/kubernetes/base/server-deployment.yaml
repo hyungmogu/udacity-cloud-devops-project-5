@@ -55,12 +55,12 @@ spec:
                   name: env
           image: server
           livenessProbe:
-            exec:
-              command:
-                - curl --fail http://localhost:8004/health/ || exit 1
-            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 8004
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
             periodSeconds: 10
-            timeoutSeconds: 3
           name: server
           ports:
             - containerPort: 8004
