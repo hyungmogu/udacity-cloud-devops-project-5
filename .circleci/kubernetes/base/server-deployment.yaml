@@ -23,8 +23,8 @@ spec:
           ports:
             - containerPort: 8004
           args:
-            - python
-            - app.py
+            - sh
+            - run.sh
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
