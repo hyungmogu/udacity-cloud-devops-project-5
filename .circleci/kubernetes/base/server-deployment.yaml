@@ -65,12 +65,5 @@ spec:
           ports:
             - containerPort: 8004
           resources: {}
-          volumeMounts:
-            - mountPath: /app
-              name: server-claim0
       restartPolicy: Always
-      volumes:
-        - name: server-claim0
-          persistentVolumeClaim:
-            claimName: server-claim0
 status: {}
