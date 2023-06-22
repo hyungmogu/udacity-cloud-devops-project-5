@@ -24,7 +24,11 @@ spec:
         io.kompose.service: server
     spec:
       containers:
-        - args:
+        - image: server
+          name: server
+          ports:
+            - containerPort: 8004
+          args:
             - python
             - app.py
           env:
@@ -53,7 +57,6 @@ spec:
                 configMapKeyRef:
                   key: AWS_SECRET_ACCESS_KEY
                   name: env
-          image: server
           livenessProbe:
             httpGet:
               path: /health
@@ -61,9 +64,5 @@ spec:
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 10
-          name: server
-          ports:
-            - containerPort: 8004
-          resources: {}
       restartPolicy: Always
 status: {}
