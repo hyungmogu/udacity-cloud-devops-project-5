@@ -133,6 +133,10 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 
 ### Setup CircleCI
 
+### Clone and Upload Repository to Github
+
+### Run CircleCI 
+
 ## Test Instruction (Local)
 
 ### Unit Test
