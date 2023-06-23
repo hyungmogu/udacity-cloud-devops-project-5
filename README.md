@@ -2,7 +2,7 @@
 
 This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. 
 
-This app converts an image from a format (e g. png, jpg, webp) to another. It runs on kubernetes with docker. It uses AWS EKS for app hosting, and circleci for integration and deployment. It is also suited for local purposes.
+This app converts an image from a format (e g. png, jpg, webp) to another. It runs on Kubernetes with docker. It uses AWS EKS for app hosting, and circleci for integration and deployment. It is also suited for local purposes.
 
 This app demonstrates author's devops skills including AWS, designing and deploying infrastructure as code, monitoring CI/CD pipelines, and deploying scalable microservices using Kubernetes.
 
