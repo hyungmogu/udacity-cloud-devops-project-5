@@ -14,7 +14,7 @@ This app is meant to demonstrate author's devops skills involving AWS, designing
 - Apply load testing using locust swarm (Done)
 - Make sure this application works using minikube (In Progress)
   - [Minikube](https://minikube.sigs.k8s.io/docs/start/) is kubernetes running on local computer. The author will use this to test and simulate app before deploying to AWS EKS environment.
-  - [kompose](https://kompose.io) is used to convert from docker-compose.yml to kubernetes. The author will use this as an initial setup code like a guardrail.
+  - [Kompose](https://kompose.io) is used to convert from docker-compose.yml to kubernetes. The author will use this as an initial setup code like a guardrail.
 - Convert server from monolith to microservice
 - Apply CI/CD using circleci
 - Deploy this app to AWS EKS via circleci
