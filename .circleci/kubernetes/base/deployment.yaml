@@ -14,11 +14,10 @@ spec:
   template:
     metadata:
       labels:
-        app.network/backend-default: "true"
         app.service: server
     spec:
       containers:
-        - image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        - image: $SERVER_DOCKER_IMAGE_NAME:$BUILD_NUMBER
           name: server
           ports:
             - containerPort: 8004
