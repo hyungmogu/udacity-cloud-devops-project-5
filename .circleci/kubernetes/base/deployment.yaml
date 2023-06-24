@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: server
+    name:  cfr
   maxReplicas: 5
   minReplicas: 3
   metrics:
@@ -28,20 +28,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: server
+    app.service: server
   name: server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: server
+      app.service: server
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        io.kompose.network/backend-default: "true"
-        io.kompose.service: server
+        app.network/backend-default: "true"
+        app.service: server
     spec:
       containers:
         - image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
