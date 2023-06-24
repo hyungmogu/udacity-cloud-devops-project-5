@@ -4,6 +4,9 @@ run_kompose:
 build_local:
 	pip install -r requirements.txt
 
+prepare_kubernetes:
+	python ./prepare_kubernetes.py
+
 setup_local:
 	sh ./setup.sh
 
