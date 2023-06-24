@@ -9,5 +9,3 @@ spec:
       targetPort: 8004
   selector:
     app.service: server
-status:
-  loadBalancer: {}
