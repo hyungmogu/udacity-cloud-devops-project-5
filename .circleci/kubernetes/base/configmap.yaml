@@ -8,5 +8,5 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    io.kompose.service: server-env
+    app.service: server-env
   name: env
