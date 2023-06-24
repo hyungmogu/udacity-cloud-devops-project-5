@@ -311,4 +311,5 @@ convertToWEBP(image)
 3. Jonatan Heyman, Carl Byström, Joakim Hamrén, Hugo Heyman. (2023). Locust - An open source load testing tool. https://locust.io
 4. Ashley D. (2021). Bootstrapping Microservices with Docker, Kubernetes and Terraform. Manning Publications Co.
 5. Ben Dilts, Karl Sun, et. al. (2023). Lucid chart - Where seeing becomes doing. Lucid.https://www.lucidchart.com/pages/landing
-6. Benjamin Muschko. (2021).Certified Kubernetes Application Developer (CKAD) Study Guide: In-Depth Guidance and Practice 1st Edition. O'Reilly Publications.
+6. Benjamin Muschko. (2021). Certified Kubernetes Application Developer (CKAD) Study Guide: In-Depth Guidance and Practice 1st Edition. O'Reilly Publications.
+7. Benjamin Muschko. (2022). Certified Kubernetes Administrator (CKA) Study Guide. O'Reilly Publications.
