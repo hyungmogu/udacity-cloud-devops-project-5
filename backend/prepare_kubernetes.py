@@ -14,15 +14,15 @@ def run():
 
     # for each file in .circleci/kubernetes folder with .example.yaml extension,
     # replace the placeholder starting with $ with the value from env_variables
-    for file in os.listdir(".circleci/kubernetes"):
+    for file in os.listdir("../.circleci/kubernetes/base"):
         if file.endswith(".example.yaml"):
-            with open(".circleci/kubernetes/{}".format(file), "r") as f:
+            with open("../.circleci/kubernetes/base/{}".format(file), "r") as f:
                 content = f.read()
 
             for key, value in env_variables.items():
                 content = content.replace("${}".format(key), value)
 
-            with open(".circleci/kubernetes/{}.yaml".format(file.split(".")[0]), "w") as f:
+            with open("../.circleci/kubernetes/base/{}.yaml".format(file.split(".")[0]), "w") as f:
                 f.write(content)
 
 if __name__ == "__main__":
