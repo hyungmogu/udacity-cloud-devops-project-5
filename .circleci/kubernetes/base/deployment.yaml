@@ -88,4 +88,3 @@ spec:
             requests:
               cpu: 200m
       restartPolicy: Always
-status: {}
