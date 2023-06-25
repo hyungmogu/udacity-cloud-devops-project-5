@@ -6,7 +6,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name:  cfr
+    name:  server
   maxReplicas: 5
   minReplicas: 3
   metrics:
