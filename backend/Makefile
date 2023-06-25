@@ -11,10 +11,13 @@ build_local:
 prepare_kubernetes:
 	python ./prepare_kubernetes.py
 
+prepare_docker:
+	sh ./docker.sh
+
 setup_local:
 	sh ./setup.sh
 
-start_minikube venv/bin/activate:
+start_minikube prepare_docker venv/bin/activate:
 	sh ./minikube.sh
 
 start_audit:
