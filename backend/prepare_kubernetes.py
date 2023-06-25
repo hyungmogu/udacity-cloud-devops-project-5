@@ -14,6 +14,10 @@ def run():
         "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", "")
     }
 
+    # Create folder "../.circleci/kubernetes/base_src" if it doesn't exist
+    if not os.path.exists("../.circleci/kubernetes/base_src"):
+        os.makedirs("../.circleci/kubernetes/base_src")
+
     # for each file in .circleci/kubernetes folder with .example.yaml extension,
     # replace the placeholder starting with $ with the value from env_variables
     for file in os.listdir("../.circleci/kubernetes/base"):
@@ -24,7 +28,7 @@ def run():
             for key, value in env_variables.items():
                 content = content.replace("${}".format(key), str(value))
 
-            with open("../.circleci/kubernetes/base/{}.yaml".format(file.split(".")[0]), "w+") as f:
+            with open("../.circleci/kubernetes/base_src/{}.yaml".format(file.split(".")[0]), "w+") as f:
                 f.write(content)
 
 if __name__ == "__main__":
