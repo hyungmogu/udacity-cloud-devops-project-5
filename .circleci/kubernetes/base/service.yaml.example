@@ -7,7 +7,7 @@ metadata:
 spec:
   ports:
     - name: "8004"
-      port: 8004
-      targetPort: 8004
+      port: $SERVER_POD_PORT
+      targetPort: $SERVER_POD_PORT
   selector:
     app.service: server

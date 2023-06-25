@@ -18,7 +18,7 @@ spec:
         - image: $SERVER_DOCKER_IMAGE_NAME:$BUILD_NUMBER
           name: server
           ports:
-            - containerPort: 8004
+            - containerPort: $SERVER_POD_PORT
           args:
             - sh
             - run.sh
@@ -51,7 +51,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /health
-              port: 8004
+              port: $SERVER_POD_PORT
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 10

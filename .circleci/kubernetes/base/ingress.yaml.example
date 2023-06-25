@@ -11,6 +11,6 @@ spec:
           service:
             name: server
             port:
-              number: 8004
+              number: $SERVER_POD_PORT
         path: /
         pathType: Prefix
