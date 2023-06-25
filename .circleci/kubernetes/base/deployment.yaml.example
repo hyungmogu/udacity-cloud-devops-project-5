@@ -15,7 +15,7 @@ spec:
         app.service: server
     spec:
       containers:
-        - image: $SERVER_DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        - image: $SERVER_DOCKER_IMAGE_NAME:$SERVER_DOCKER_IMAGE_BUILD_NUMBER
           name: server
           ports:
             - containerPort: $SERVER_POD_PORT
