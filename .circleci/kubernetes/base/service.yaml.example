@@ -6,7 +6,7 @@ metadata:
     app: server
 spec:
   ports:
-    - name: "port-to-server"
+    - name: "server"
       port: $SERVER_POD_PORT
       targetPort: $SERVER_POD_PORT
   selector:
