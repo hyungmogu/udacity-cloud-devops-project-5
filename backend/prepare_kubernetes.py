@@ -20,7 +20,7 @@ def run():
                 content = f.read()
 
             for key, value in env_variables.items():
-                content = content.replace("${}".format(key), value)
+                content = content.replace("${}".format(key), str(value))
 
             with open("../.circleci/kubernetes/base/{}.yaml".format(file.split(".")[0]), "w") as f:
                 f.write(content)
