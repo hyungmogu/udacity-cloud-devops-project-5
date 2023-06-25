@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: server
   labels:
-    app.service: server
+    app: server
 spec:
   ports:
     - name: "port-to-server"
       port: $SERVER_POD_PORT
       targetPort: $SERVER_POD_PORT
   selector:
-    app.service: server
+    app: server

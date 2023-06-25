@@ -7,6 +7,4 @@ data:
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
 kind: ConfigMap
 metadata:
-  labels:
-    app.service: server-env
   name: env
