@@ -1,4 +1,4 @@
-venv/bin/activate: ./requirements.txt
+venv/bin/activate:
 	python3 -m venv ./venv &&\
 	./venv/bin/pip install python-dotenv==1.0.0
 
