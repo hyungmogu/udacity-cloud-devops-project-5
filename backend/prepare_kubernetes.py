@@ -7,7 +7,7 @@ def run():
     env_variables = {
         "SERVER_DOCKER_IMAGE_NAME": os.environ.get("SERVER_DOCKER_IMAGE_NAME", ""),
         "SERVER_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_DOCKER_IMAGE_BUILD_NUMBER", ""),
-        "HOST_NAME": os.environ.get("HOST_NAME", ""),
+        "SERVER_HOST_NAME": os.environ.get("SERVER_HOST_NAME", ""),
         "SERVER_POD_PORT": os.environ.get("SERVER_POD_PORT", ""),
         "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
         "AWS_OBJECT_EXPIRES_IN": int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0")),
