@@ -5,6 +5,8 @@ load_dotenv(find_dotenv())
 
 def run():
     env_variables = {
+        "HOST_NAME": os.environ.get("HOST_NAME", ""),
+        "SERVER_POD_PORT": os.environ.get("SERVER_POD_PORT", ""),
         "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
         "AWS_OBJECT_EXPIRES_IN": int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0")),
         "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
@@ -22,7 +24,7 @@ def run():
             for key, value in env_variables.items():
                 content = content.replace("${}".format(key), str(value))
 
-            with open("../.circleci/kubernetes/base/{}.yaml".format(file.split(".")[0]), "w") as f:
+            with open("../.circleci/kubernetes/base/{}.yaml".format(file.split(".")[0]), "w+") as f:
                 f.write(content)
 
 if __name__ == "__main__":
