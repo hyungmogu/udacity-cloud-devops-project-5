@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.service: server
-  name: server
+    deploy: app-cache
+  name: app-cache
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.service: server
+      app: server-main
   template:
     metadata:
       labels:
-        app.service: server
+        app: server-main
     spec:
       containers:
         - image: $SERVER_DOCKER_IMAGE_NAME:$SERVER_DOCKER_IMAGE_BUILD_NUMBER
-          name: server
+          name: server-main
           ports:
             - containerPort: $SERVER_POD_PORT
           args:
