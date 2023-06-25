@@ -1,3 +1,7 @@
+venv/bin/activate: ./requirements.txt
+	python3 -m venv ./venv &&\
+	./venv/bin/pip install python-dotenv==1.0.0
+
 run_kompose:
 	kompose convert -f docker-compose.yml
 
@@ -10,7 +14,7 @@ prepare_kubernetes:
 setup_local:
 	sh ./setup.sh
 
-start_minikube:
+start_minikube venv/bin/activate:
 	sh ./minikube.sh
 
 start_audit:
