@@ -17,7 +17,6 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 - Convert server from monolith to microservice
 - Apply CI/CD using circleci
 - Deploy this app to AWS EKS via circleci
-- Provide an easier way to setup and run locally
 - Make sure this app works in all operating systems
 - Add fallback instructions for the case after running of server
 - Automate the creation of S3 and IAM if it doesn't exist
