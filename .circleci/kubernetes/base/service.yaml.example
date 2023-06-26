@@ -9,6 +9,6 @@ spec:
   ports:
     - name: "server"
       port: $SERVER_POD_PORT
-      nodePort: $SERVER_POD_PORT
+      nodePort: $SERVER_SERVICE_NODE_PORT
   selector:
     app: server
