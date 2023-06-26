@@ -5,6 +5,7 @@ load_dotenv(find_dotenv())
 
 def run():
     env_variables = {
+        "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
         "SERVER_DOCKER_IMAGE_NAME": os.environ.get("SERVER_DOCKER_IMAGE_NAME", ""),
         "SERVER_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_DOCKER_IMAGE_BUILD_NUMBER", ""),
         "SERVER_HOST_NAME": os.environ.get("SERVER_HOST_NAME", ""),
