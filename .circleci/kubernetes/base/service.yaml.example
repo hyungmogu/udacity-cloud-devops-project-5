@@ -5,9 +5,10 @@ metadata:
   labels:
     app: server
 spec:
+  type: NodePort
   ports:
     - name: "server"
       port: $SERVER_POD_PORT
-      targetPort: $SERVER_POD_PORT
+      nodePort: $SERVER_POD_PORT
   selector:
     app: server
