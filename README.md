@@ -22,7 +22,7 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 - Make sure this app works in all operating systems
 - Add fallback instructions for the case after running of server
 - Automate the creation of S3 and IAM if it doesn't exist
-- Make it easy to use by ordinary people
+- Make this app easy to use by ordinary people
 - Submit project
 
 ## Setup Instruction (General. Don't skip this step)
@@ -132,6 +132,8 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 2. Type `make start` in terminal to run frontend program
 
 ## Setup Instruction (AWS)
+
+### Setup Docker Hub
 
 ### Setup CircleCI
 
