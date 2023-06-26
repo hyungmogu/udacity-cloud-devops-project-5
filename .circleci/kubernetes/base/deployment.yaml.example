@@ -15,7 +15,7 @@ spec:
         app: server-main
     spec:
       containers:
-        - image: $SERVER_DOCKER_IMAGE_NAME:$SERVER_DOCKER_IMAGE_BUILD_NUMBER
+        - image: $DOCKER_ID/$SERVER_DOCKER_IMAGE_NAME:$SERVER_DOCKER_IMAGE_BUILD_NUMBER
           name: server-main
           ports:
             - containerPort: $SERVER_POD_PORT
