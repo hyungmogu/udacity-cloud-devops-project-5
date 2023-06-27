@@ -10,6 +10,7 @@ def run():
         "SERVER_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_DOCKER_IMAGE_BUILD_NUMBER", ""),
         "SERVER_HOST_NAME": os.environ.get("SERVER_HOST_NAME", ""),
         "SERVER_POD_PORT": os.environ.get("SERVER_POD_PORT", ""),
+        "SERVER_SERVICE_NODE_PORT": os.environ.get("SERVER_SERVICE_NODE_PORT", ""),
         "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
         "AWS_OBJECT_EXPIRES_IN": int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0")),
         "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
