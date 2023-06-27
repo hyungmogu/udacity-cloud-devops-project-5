@@ -16,6 +16,9 @@ setup_local:
 start_minikube_dashboard:
 	minikube dashboard
 
+clear_minikube:
+	minikube delete --all
+
 start_minikube:
 	sh ./minikube.sh
 
