@@ -11,9 +11,9 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 - Replace flask with FastAPI (Done)
 - Make it work 100% locally (Done)
 - Apply unit testing (Done)
-- Apply load testing using locust swarm (Done)
-- Make sure this application works using minikube (In Progress)
-  - Currently working on establishing connection between local computer (localhost) to minikube kubernetes cluster
+- Apply load testing using Locust swarm (Done)
+- Make sure this application works using Minikube (In Progress)
+  - Currently working on establishing connection between local computer (localhost) to Minikube Kubernetes cluster
   - [Minikube](https://minikube.sigs.k8s.io/docs/start/) is Kubernetes running on local computer. The author will use this to test and simulate app before deploying to AWS EKS environment.
 - Convert server from monolith to microservice
 - Apply CI/CD using circleci
