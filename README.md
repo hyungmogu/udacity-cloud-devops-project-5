@@ -18,8 +18,8 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 - Convert server from monolith to microservice
 - Add emergency break instructions just in case program doesn't perform as expected
 - Automate the creation of S3 and IAM if it doesn't exist
-- Apply CI/CD using CircleCI
 - Make this app is easy to start and use by ordinary people
+- Apply CI/CD using CircleCI
 - Submit project
 
 ## Setup Instruction (General. Don't skip this step)
@@ -134,7 +134,7 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 
 ### Setup CircleCI
 
-### Fill environment variables in CircleCI
+### Fill Environment Variables in CircleCI
 
 ### Clone and Upload Repository to Github
 
