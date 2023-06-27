@@ -17,6 +17,9 @@ prepare_docker:
 setup_local:
 	sh ./setup.sh
 
+start_minikube_dashboard:
+	minikube dashboard
+
 start_minikube venv/bin/activate:
 	sh ./minikube.sh
 
