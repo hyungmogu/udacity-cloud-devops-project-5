@@ -16,8 +16,8 @@ This app demonstrates author's devops skills including AWS, designing and deploy
   - Currently working on establishing connection between local computer (localhost) and Minikube.
   - [Minikube](https://minikube.sigs.k8s.io/docs/start/) is Kubernetes running on local computer. The author will use this to test and simulate app before deploying to AWS EKS environment.
 - Convert server from monolith to microservice
-- Apply CI/CD using circleci
-- Deploy this app to AWS EKS via circleci
+- Apply CI/CD using CircleCI
+- Deploy this app to AWS EKS via CircleCI
 - Make sure this app works in all operating systems
 - Add fallback instructions for the case after running of server
 - Automate the creation of S3 and IAM if it doesn't exist
