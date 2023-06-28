@@ -11,4 +11,4 @@ spec:
       port: $SERVER_POD_PORT
       nodePort: $SERVER_SERVICE_NODE_PORT
   selector:
-    app: server
+    app: server-main
