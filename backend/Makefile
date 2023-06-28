@@ -13,11 +13,11 @@ prepare_docker:
 setup_local:
 	sh ./setup.sh
 
-start_minikube_dashboard:
-	minikube dashboard
-
 clear_minikube:
 	minikube delete --all
+
+start_minikube_dashboard:
+	minikube dashboard
 
 start_minikube:
 	sh ./minikube.sh
