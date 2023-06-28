@@ -5,7 +5,7 @@ metadata:
     deploy: app-cache
   name: app-cache
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: server-main
@@ -58,4 +58,8 @@ spec:
           resources:
             requests:
               cpu: 200m
-      restartPolicy: Always
+              memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+
