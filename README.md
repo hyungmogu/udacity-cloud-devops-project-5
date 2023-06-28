@@ -135,7 +135,8 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 
 ### Fill Environment Variables in CircleCI
 
-### Clone and Upload Repository to Github
+### Fork Repository
+1. click `fork` on the top right corner of this [page](https://github.com/hyungmogu/udacity-cloud-devops-project-5/tree/main)
 
 ### Run CircleCI 
 
