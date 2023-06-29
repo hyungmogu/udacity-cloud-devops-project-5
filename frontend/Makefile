@@ -13,3 +13,6 @@ test_local:
 
 start:
 	pass 
+
+stop:
+	pass
