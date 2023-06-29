@@ -36,4 +36,4 @@ start_unit_test:
 
 start:
 	docker-compose build server &&\
-	docker-compose up server 
+	docker-compose up server -d
