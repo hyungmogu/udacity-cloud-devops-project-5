@@ -12,7 +12,7 @@ test_local:
 	npm run test:unit 
 
 start:
-	pass 
+	vite
 
 stop:
 	pass
