@@ -3,7 +3,7 @@ start_backend:
 	make start;
 
 start_frontend:
-	cd frontend;
+	cd frontend &&\
 	make start;
 
 start_local: start_backend start_frontend
