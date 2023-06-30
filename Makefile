@@ -1,10 +1,10 @@
 start_backend:
-  cd backend &&\
-  make start
+	cd backend;
+	make start;
 
 start_frontend:
-  cd frontend &&\
-  make start
+	cd frontend;
+	make start;
 
 start_local: start_backend start_frontend
 
