@@ -1,6 +1,6 @@
 start_backend:
 	cd backend &&\
-	sh start.sh;
+	make start;
 
 start_frontend:
 	cd frontend &&\

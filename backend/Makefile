@@ -35,4 +35,5 @@ start_unit_test:
 	docker-compose up unit-test
 
 start:
-	sh start.sh
+	docker-compose build server &&\
+	docker-compose up server -d

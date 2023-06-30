@@ -6,7 +6,7 @@ services:
     container_name: server
     ports:
     - "8004:8004"
-    command: [ "sh", "run.sh"]
+    command: [ "sh", "start.sh"]
     env_file:
       - .env
     volumes:
