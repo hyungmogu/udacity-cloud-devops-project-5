@@ -1,5 +1,5 @@
 start_backend:
-	cd backend;
+	cd backend &&\
 	make start;
 
 start_frontend:
