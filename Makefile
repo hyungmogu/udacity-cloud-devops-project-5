@@ -1,10 +1,10 @@
 start_backend:
 	cd backend &&\
-	make start;
+	sh start.sh;
 
 start_frontend:
 	cd frontend &&\
-	make start;
+	sh start.sh;
 
 start_local: start_backend start_frontend
 
