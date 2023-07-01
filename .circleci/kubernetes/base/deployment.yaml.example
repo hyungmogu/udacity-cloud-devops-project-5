@@ -4,6 +4,7 @@ metadata:
   labels:
     deploy: app-cache
   name: app-cache
+  namespace: imgconverter
 spec:
   replicas: 1
   selector:
