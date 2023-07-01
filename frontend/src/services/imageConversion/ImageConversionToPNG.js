@@ -21,7 +21,7 @@ export default class ImageConversionToPNG extends ImageConversionInterface {
                 'Content-Type': 'multipart/form-data'
             }); 
 
-            if (result.status !== 200) {
+            if (result.status < 200 && result.status >= 300) {
                 this.error = true;
                 throw new Error("[ImageConversionToPNG, convert]: Something happened to server. Please check backend code. Status " + result.status);
             }
