@@ -4,6 +4,7 @@ metadata:
   name: server
   labels:
     app: server
+  namespace: imgconverter
 spec:
   type: NodePort
   ports:
