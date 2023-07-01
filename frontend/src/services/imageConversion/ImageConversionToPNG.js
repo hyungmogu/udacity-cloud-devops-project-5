@@ -17,7 +17,7 @@ export default class ImageConversionToPNG extends ImageConversionInterface {
         formData.append("image", this.file);
 
         try {
-            const result = await axios.post('http://localhost:8004/api/convert-to-png', formData, {
+            const result = await axios.post('http://localhost:8004/convert/to-png', formData, {
                 'Content-Type': 'multipart/form-data'
             }); 
 

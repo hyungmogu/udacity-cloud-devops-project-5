@@ -15,7 +15,7 @@ export default class ImageConversionToJPG extends ImageConversionInterface {
         const formData = new FormData();
         formData.append("image", this.file);
         try {
-            const result = await axios.post('http://localhost:8004/api/convert-to-jpg', formData, {
+            const result = await axios.post('http://localhost:8004/convert/to-jpg', formData, {
                 'Content-Type': 'multipart/form-data'
             }); 
     
