@@ -4,7 +4,7 @@ start_backend:
 
 start_frontend:
 	cd frontend &&\
-	sh start.sh;
+	make start;
 
 start_local: start_backend start_frontend
 
