@@ -10,7 +10,5 @@ spec:
     - name: "server"
       port: $SERVER_POD_PORT
       nodePort: $SERVER_SERVICE_NODE_PORT
-  externalIPs:
-    - 127.0.0.1
   selector:
     app: server-main

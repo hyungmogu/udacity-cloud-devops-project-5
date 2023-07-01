@@ -13,6 +13,9 @@ prepare_docker:
 setup_local:
 	sh ./setup.sh
 
+get_minikube_ip:
+	minikube ip
+
 clear_minikube:
 	minikube delete --all
 
