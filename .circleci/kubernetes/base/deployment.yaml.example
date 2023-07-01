@@ -10,11 +10,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: server-main
+      run: server-main-pod
   template:
     metadata:
       labels:
-        app: server-main
+        run: server-main-pod
     spec:
       containers:
         - image: $DOCKER_ID/$SERVER_DOCKER_IMAGE_NAME:$SERVER_DOCKER_IMAGE_BUILD_NUMBER
