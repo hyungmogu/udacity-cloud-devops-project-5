@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - image: $DOCKER_ID/$SERVER_DOCKER_IMAGE_NAME:$SERVER_DOCKER_IMAGE_BUILD_NUMBER
-          name: server-main
+          name: server-main-pod
           ports:
             - containerPort: $SERVER_POD_PORT
           args:
