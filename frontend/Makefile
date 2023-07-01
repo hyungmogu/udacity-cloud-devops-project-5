@@ -12,7 +12,8 @@ test_local:
 	npm run test:unit 
 
 start:
-	vite
+	npm install &&\
+	npm run dev;
 
 stop:
 	pass
