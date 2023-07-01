@@ -2,7 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    deploy: app-cache
+    app: v1
+    tier: PROD
   name: app-cache
   namespace: imgconverter
 spec:
