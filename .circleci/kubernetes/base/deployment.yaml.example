@@ -1,10 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: server
   labels:
-    app: v1
-    tier: PROD
-  name: app-cache
+    app: server
   namespace: imgconverter
 spec:
   replicas: 1
