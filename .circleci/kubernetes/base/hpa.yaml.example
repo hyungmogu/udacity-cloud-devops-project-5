@@ -7,8 +7,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name:  app-cache
-  maxReplicas: 5
-  minReplicas: 3
+  maxReplicas: 1
+  minReplicas: 1
   metrics:
   - type: Resource
     resource:
