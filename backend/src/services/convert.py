@@ -7,10 +7,7 @@ from abc import ABC
 from uuid import uuid4
 from time import time
 from botocore.exceptions import ClientError
-
-
-AWS_S3_BUCKET = os.environ.get("AWS_S3_BUCKET", "")
-AWS_OBJECT_EXPIRES_IN = int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0"))
+from config import AWS_S3_BUCKET, AWS_OBJECT_EXPIRES_IN
 
 class ConvertService(ABC):
   def upload(self, new_img, file_extension) -> dict:
@@ -24,7 +21,7 @@ class ConvertService(ABC):
       response = s3_client.generate_presigned_url(
         "get_object",
         Params={"Bucket": AWS_S3_BUCKET, "Key": file_name},
-        ExpiresIn=AWS_OBJECT_EXPIRES_IN,
+        ExpiresIn=int(AWS_OBJECT_EXPIRES_IN)
       )
 
     except ClientError as e:
