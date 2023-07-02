@@ -20,6 +20,7 @@ services:
       - cache
     ports:
       - '8089:8089'
+    command: [ "sh", "start.sh"]
 
 
 
