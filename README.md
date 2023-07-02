@@ -12,8 +12,7 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 - Make it work 100% locally (Done)
 - Apply unit testing (Done)
 - Apply load testing using Locust swarm (Done)
-- Make sure this application works using Minikube (In Progress)
-  - Currently working on debugging connection between local computer (localhost) and Minikube.
+- Make sure this application works using Minikube (Done)
   - [Minikube](https://minikube.sigs.k8s.io/docs/start/) is Kubernetes running on local computer. The author will use this to test and simulate app before deploying to AWS EKS environment.
 - Convert server from monolith to microservice
 - Automate the creation of S3 and IAM if it doesn't exist
@@ -306,3 +305,4 @@ convertToWEBP(image)
 7. Benjamin Muschko. (2022). Certified Kubernetes Administrator (CKA) Study Guide. O'Reilly Publications.
 8. Bas Meijer, Lorin, Hochstein, Rene Moser. (2022). Ansible: Up and Running, Third Edition. O'Reilly Publications.
 9. Ashley Davis. (2021). Bootstrapping Microservices with Docker, Kubernetes and Terraform. Manning Publications.
+10. Imam Bux. (2020, Aug 4th). minikube ip is not reachable. Stack Overflow. https://stackoverflow.com/questions/60710171/minikube-ip-is-not-reachable#answer-63243909
