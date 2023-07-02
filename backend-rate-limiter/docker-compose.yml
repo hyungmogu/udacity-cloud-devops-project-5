@@ -9,7 +9,7 @@ services:
     restart: always
     ports:
       - '6379:6379' 
-  api:
+  rate_limiter:
     build: .
     container_name: rate-limiter-api
     env_file:
