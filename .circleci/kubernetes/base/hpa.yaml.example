@@ -3,6 +3,8 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: server-hpa
   namespace: imgconverter
+  labels:
+    app: server
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
