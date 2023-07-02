@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: server
+  name: server-ingress
   namespace: imgconverter
 spec:
   rules:
@@ -10,7 +10,7 @@ spec:
       paths:
       - backend:
           service:
-            name: server
+            name: server-service
             port:
               number: $SERVER_POD_PORT
         path: /
