@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: server-ingress
-  namespace: imgconverter
   labels:
     app: server
 spec:
