@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: server-ingress
   namespace: imgconverter
+  labels:
+    app: server
 spec:
   rules:
   - host: $SERVER_HOST_NAME
