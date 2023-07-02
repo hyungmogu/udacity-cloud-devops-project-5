@@ -15,7 +15,8 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 - Make sure this application works using Minikube (Done)
   - [Minikube](https://minikube.sigs.k8s.io/docs/start/) is Kubernetes running on local computer. The author will use this to test and simulate app before deploying to AWS EKS environment.
 - Apply Prometheus and Grafana to monolith server (In Progress)
-- Convert server from monolith to microservice (In Progress)
+- Convert server from monolith to microservices (In Progress)
+- Add rate limiter to microservices
 - Apply Prometheus and Grafana to microservice
 - Automate the creation of S3 and IAM if it doesn't exist
 - Make this app is easy to start and use locally by ordinary people (Done)
