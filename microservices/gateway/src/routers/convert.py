@@ -22,8 +22,16 @@ async def convert_to_jpg(image: UploadFile, url: str = None):
     }
 
 @convert_router.post('/to-png', response_model=str, status_code=201)
-async def convert_to_png(image: UploadFile):
-    pass
+async def convert_to_png(image: UploadFile, url: str = None):
+    # @TODO: Add code that checks for rate limit
+
+    async_client = httpx_client_wrapper()
+    res = await async_client.post(url, files={'file': image.file})
+    result = res.text
+    return {
+        'result': result,
+        'status': res.status_code
+    }
 
 @convert_router.post('/to-webp', response_model=str, status_code=201)
 async def convert_to_webp(image: UploadFile):
