@@ -1,5 +1,5 @@
 start_backend:
-	cd backend &&\
+	cd microservices/server &&\
 	make start;
 
 start_frontend:
