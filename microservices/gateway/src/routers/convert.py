@@ -3,8 +3,6 @@ import logging
 from fastapi import APIRouter, HTTPException, status, UploadFile
 from src.utils.httpx import httpx_client_wrapper
 
-from src.services.convert import ImgToJPGService, ImgToPNGService, ImgToWEBPService
-
 convert_router = APIRouter(
     tags=["Convert"]
 )
