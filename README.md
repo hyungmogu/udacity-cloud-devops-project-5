@@ -123,6 +123,8 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 
 ### Setup Docker Hub
 
+1. Sign up / sign in to [Docker Hub](https://hub.docker.com/) account
+
 ### Setup CircleCI
 
 ### Fill Environment Variables in CircleCI
