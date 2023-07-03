@@ -1,4 +1,5 @@
 from io import BytesIO
+import httpx
 import logging
 from fastapi import APIRouter, HTTPException, status, UploadFile
 
