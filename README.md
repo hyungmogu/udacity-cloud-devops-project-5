@@ -122,7 +122,7 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 
 ### Setup Docker Hub
 
-1. Sign up / sign in to [Docker Hub](https://hub.docker.com/) account
+1. Sign up / sign in to [Docker Hub](https://hub.docker.com/)
 
 ### Setup CircleCI
 
@@ -132,6 +132,8 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 1. click `fork` on the top right corner of this [page](https://github.com/hyungmogu/udacity-cloud-devops-project-5/tree/main)
 
 ### Run CircleCI 
+
+1. Sign up or sign in to [CircleCI](https://circleci.com)
 
 ## Test Instruction (Local)
 
