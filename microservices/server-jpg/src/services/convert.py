@@ -1,6 +1,5 @@
 from PIL import Image
 from io import BytesIO
-import os
 import logging
 import boto3
 from abc import ABC
@@ -34,24 +33,6 @@ class ImgToJPGService(ConvertService):
     pil_image = Image.open(buffer).convert("RGB")
     in_mem_file = BytesIO()
     pil_image.save(in_mem_file, format="jpeg")
-    in_mem_file.seek(0)
-
-    return in_mem_file
-  
-class ImgToPNGService(ConvertService):
-  def convert(self, img):
-    pil_image = Image.open(img).convert("RGB")
-    in_mem_file = BytesIO()
-    pil_image.save(in_mem_file, format="png")
-    in_mem_file.seek(0)
-
-    return in_mem_file
-  
-class ImgToWEBPService(ConvertService):
-  def convert(self, img):
-    pil_image = Image.open(img).convert("RGB")
-    in_mem_file = BytesIO()
-    pil_image.save(in_mem_file, format="webp")
     in_mem_file.seek(0)
 
     return in_mem_file

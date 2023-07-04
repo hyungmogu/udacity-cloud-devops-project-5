@@ -1,4 +1,3 @@
-from io import BytesIO
 import logging
 from fastapi import APIRouter, HTTPException, status, UploadFile
 from src.utils.httpx import httpx_client_wrapper
