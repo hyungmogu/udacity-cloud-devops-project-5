@@ -114,6 +114,10 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 
 1. Please follow instruction from [here](https://docs.docker.com/get-docker/)
 
+### Install Minikube
+
+1. Please follow instruction from [here](https://minikube.sigs.k8s.io/docs/start/)
+
 ### Run Program
 
 1. Type `make start_local` in terminal from project root folder
@@ -163,6 +167,10 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 ## Pipeline, Architecture and System Design
 
 <img src="https://user-images.githubusercontent.com/6856382/219821091-e647fe37-0c6f-40ec-a483-2ee99b91ae1d.png"/>
+
+### Basic Diagram
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/14dfd567-1f43-49b4-813e-e800dfcd195b"/> 
 
 ### Infrastructure Diagram
 
