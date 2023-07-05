@@ -1,9 +1,11 @@
 version: "2.1"
 
 services:
-  server:
-    build: ./
-    container_name: server
+  server-jpg:
+    build:
+      context: ./microservices/server-jpg
+      dockerfile: Dockerfile
+    container_name: server-jpg
     ports:
     - "8004:8004"
     command: [ "sh", "start.sh"]
@@ -16,13 +18,14 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-  load-test:
-    build: ./
-    container_name: load-test-server
+  server-png:
+    build:
+      context: ./microservices/server-png
+      dockerfile: Dockerfile
+    container_name: server-png
     ports:
-    - "8004:8004"
-    - "8089:8089"
-    command: [ "sh", "load_test.sh"]
+    - "8005:8005"
+    command: [ "sh", "start.sh"]
     env_file:
       - .env
     volumes:
@@ -32,27 +35,14 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
-  unit-test:
-    build: ./
-    container_name: unit-test-server
+  server-webp:
+    build:
+      context: ./microservices/server-webp
+      dockerfile: Dockerfile
+    container_name: server-webp
     ports:
-    - "8089:8089"
-    command: [ "sh", "unit_test.sh"]
-    env_file:
-      - .env
-    volumes:
-      - "./:/app"
-    healthcheck:
-      test: curl --fail http://localhost:8004/health/ || exit 1
-      interval: 10s
-      timeout: 3s
-      retries: 3
-  audit:
-    build: ./
-    container_name: audit-server
-    ports:
-    - "8004:8004"
-    command: [ "sh", "audit.sh"]
+    - "8006:8006"
+    command: [ "sh", "start.sh"]
     env_file:
       - .env
     volumes:
