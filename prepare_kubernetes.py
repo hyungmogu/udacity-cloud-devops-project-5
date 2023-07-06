@@ -18,7 +18,7 @@ def run():
         "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", "")
     }
 
-    # Create folder "../.circleci/kubernetes/base_src" if it doesn't exist
+    # Create folder ".circleci/kubernetes/base_src" if it doesn't exist
     if not os.path.exists(".circleci/kubernetes/base_src"):
         os.makedirs(".circleci/kubernetes/base_src")
 
