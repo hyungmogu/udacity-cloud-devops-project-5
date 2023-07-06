@@ -7,15 +7,9 @@ prepare_microservices:
 	./venv/bin/pip install python-dotenv==1.0.0 &&\
 	./venv/bin/python3 ./prepare_docker.py
 
-start_frontend:
-	cd frontend &&\
-	make start;
-
 setup_local:
 	cp .env.example .env;
 
-start_local: prepare_microservices start_microservices start_frontend
+start_local: prepare_microservices start_microservices
 
 stop_local: stop_backend stop_frontend
-
-
