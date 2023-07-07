@@ -11,5 +11,3 @@ setup_local:
 	cp .env.example .env;
 
 start_local: prepare_microservices start_microservices
-
-stop_local: stop_backend stop_frontend
