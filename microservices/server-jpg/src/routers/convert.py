@@ -2,7 +2,7 @@ from io import BytesIO
 import logging
 from fastapi import APIRouter, HTTPException, status, UploadFile
 
-from src.services.convert import ImgToJPGService, ImgToPNGService, ImgToWEBPService
+from src.services.convert import ImgToJPGService
 
 convert_router = APIRouter(
     tags=["Convert"]

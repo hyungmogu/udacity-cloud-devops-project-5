@@ -11,8 +11,6 @@ services:
     command: [ "npm", "run", "dev"]
     env_file:
       - .env
-    volumes:
-      - "./:/app"
   gateway:
     build:
       context: ./microservices/gateway
@@ -23,8 +21,6 @@ services:
     command: [ "python", "app.py"]
     env_file:
       - .env
-    volumes:
-      - "./:/app"
     healthcheck:
       test: curl --fail http://localhost:8004/health/ || exit 1
       interval: 10s
@@ -40,8 +36,6 @@ services:
     command: [ "python", "app.py"]
     env_file:
       - .env
-    volumes:
-      - "./:/app"
     healthcheck:
       test: curl --fail http://localhost:8004/health/ || exit 1
       interval: 10s
@@ -57,8 +51,6 @@ services:
     command: [ "python", "app.py"]
     env_file:
       - .env
-    volumes:
-      - "./:/app"
     healthcheck:
       test: curl --fail http://localhost:8004/health/ || exit 1
       interval: 10s
@@ -74,8 +66,6 @@ services:
     command: [ "python", "app.py"]
     env_file:
       - .env
-    volumes:
-      - "./:/app"
     healthcheck:
       test: curl --fail http://localhost:8004/health/ || exit 1
       interval: 10s
