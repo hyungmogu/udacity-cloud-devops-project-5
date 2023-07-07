@@ -178,7 +178,7 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 
 ### Kubernetes Cluster Diagram
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/5bc3b67f-9179-4c9b-ac8f-4611e721be88"/>
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/a98a12e9-a6af-4447-a349-059be5050ffd"/>
 
 ### Requirements and Resource Estimation
 
