@@ -9,7 +9,8 @@ def run():
         "for": ["gateway"],
         "values": {
             "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", "5"),
-            "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", "86400")
+            "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", "86400"),
+            "REDIS_HOST_LOCAL": os.environ.get("REDIS_HOST_LOCAL", "")
         }
     },{
         "for": ["server-jpg", "server-png", "server-webp"],

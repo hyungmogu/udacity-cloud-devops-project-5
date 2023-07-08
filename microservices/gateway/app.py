@@ -7,6 +7,7 @@ from fastapi_limiter import FastAPILimiter
 from src.routers.convert import convert_router
 from src.routers.health import health_router
 from src.utils.httpx import httpx_client_wrapper
+from config import REDIS_HOST_LOCAL
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -19,7 +20,7 @@ app.include_router(health_router, prefix="/health", tags=["Health"])
 async def startup_event():
     httpx_client_wrapper.start()
 
-    redis_c = redis.from_url("redis://localhost", encoding="utf-8", decode_responses=True)
+    redis_c = redis.from_url("redis://{}".format(REDIS_HOST_LOCAL), encoding="utf-8", decode_responses=True)
     await FastAPILimiter.init(redis_c)
 
 @app.on_event("shutdown")

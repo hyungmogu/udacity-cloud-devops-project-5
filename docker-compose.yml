@@ -11,6 +11,12 @@ services:
     command: [ "npm", "run", "dev"]
     env_file:
       - .env
+  gateway-redis:
+    image: redis:7.0.10-alpine
+    container_name: gateway-redis
+    restart: always
+    ports:
+      - '6379:6379' 
   gateway:
     build:
       context: ./microservices/gateway
