@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deployment
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-main-pod 
+  template:
+    metadata:
+      labels:
+        app: gateway-main-pod
+    spec:
+      containers:
+        - image: $DOCKER_ID/$GATEWAY_DOCKER_IMAGE_NAME:$GATEWAY_DOCKER_IMAGE_BUILD_NUMBER
+          name: gateway-main-pod
+          ports:
+            - containerPort: $GATEWAY_PORT
+          args:
+            - sh
+            - run.sh
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_ACCESS_KEY_ID
+                  name: env
+            - name: AWS_OBJECT_EXPIRES_IN
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_OBJECT_EXPIRES_IN
+                  name: env
+            - name: AWS_S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_S3_BUCKET
+                  name: env
+            - name: AWS_S3_REGION
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_S3_REGION
+                  name: env
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_SECRET_ACCESS_KEY
+                  name: env
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: $GATEWAY_PORT
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 200m
+            limits:
+              cpu: 500m
+
