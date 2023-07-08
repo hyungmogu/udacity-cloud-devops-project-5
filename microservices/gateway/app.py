@@ -7,7 +7,7 @@ from fastapi_limiter import FastAPILimiter
 from src.routers.convert import convert_router
 from src.routers.health import health_router
 from src.utils.httpx import httpx_client_wrapper
-from config import REDIS_HOST_LOCAL
+from config import REDIS_HOST_LOCAL, GATEWAY_PORT
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -29,4 +29,4 @@ async def shutdown_event():
 
 
 if __name__ == '__main__':
-    uvicorn.run("app:app", host="0.0.0.0", port=8010, reload=True) 
+    uvicorn.run("app:app", host="0.0.0.0", port=GATEWAY_PORT, reload=True) 
