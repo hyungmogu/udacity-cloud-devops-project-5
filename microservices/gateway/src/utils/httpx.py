@@ -28,3 +28,5 @@ class HTTPXClientWrapper:
         assert self.async_client is not None
         LOGGER.info(f'httpx async_client.is_closed(): {self.async_client.is_closed}. Id (will be unchanged): {id(self.async_client)}')
         return self.async_client
+
+httpx_client_wrapper = HTTPXClientWrapper()
