@@ -19,7 +19,8 @@ async def convert_to_jpg(image: UploadFile, request: Request):
         SERVER_PROTOCOL, SERVER_JPG_HOST, SERVER_JPG_PORT, 
         urlparse(str(request.url)).path)
     async_client = httpx_client_wrapper()
-    res = await async_client.post(outbound_url, files={'file': image.file})
+    file = {'image': (image.filename, image.file, image.content_type)}
+    res = await async_client.post(outbound_url, files=file)
     result = res.text
     return result
 
@@ -29,7 +30,8 @@ async def convert_to_png(image: UploadFile, request: Request):
         SERVER_PROTOCOL, SERVER_PNG_HOST, SERVER_PNG_PORT, 
         urlparse(str(request.url)).path)
     async_client = httpx_client_wrapper()
-    res = await async_client.post(outbound_url, files={'file': image.file})
+    file = {'image': (image.filename, image.file, image.content_type)}
+    res = await async_client.post(outbound_url, files=file)
     result = res.text
     return result
 
@@ -39,6 +41,7 @@ async def convert_to_webp(image: UploadFile, request: Request):
         SERVER_PROTOCOL, SERVER_WEBP_HOST, SERVER_WEBP_PORT, 
         urlparse(str(request.url)).path)
     async_client = httpx_client_wrapper()
-    res = await async_client.post(outbound_url, files={'file': image.file})
+    file = {'image': (image.filename, image.file, image.content_type)}
+    res = await async_client.post(outbound_url, files=file)
     result = res.text
     return result
