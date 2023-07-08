@@ -7,7 +7,7 @@ convert_router = APIRouter(
     tags=["Convert"]
 )
 
-@convert_router.post('/to-jpg', response_model=str, dependencies=[Depends(RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY))], status_code=201)
+@convert_router.post('/to-jpg', response_model=str, dependencies=[Depends(RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))], status_code=201)
 async def convert_to_jpg(image: UploadFile, url: str = None):
     async_client = httpx_client_wrapper()
     res = await async_client.post(url, files={'file': image.file})

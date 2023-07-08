@@ -11,7 +11,6 @@ from src.utils.httpx import httpx_client_wrapper
 logging.basicConfig(level=logging.DEBUG)
 
 app = FastAPI()
-httpx_client_wrapper = HTTPXClientWrapper()
 
 app.include_router(convert_router, prefix="/convert", tags=["Convert"])
 app.include_router(health_router, prefix="/health", tags=["Health"])
