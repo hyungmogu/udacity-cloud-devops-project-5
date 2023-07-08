@@ -1,14 +1,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: server-hpa
+  name: server-webp-hpa
   labels:
-    app: server
+    app: server-webp
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: server-deployment
+    name: server-webp-deployment
   maxReplicas: 1
   minReplicas: 1
   metrics:

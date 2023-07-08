@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-png-service
+  labels:
+    app: server-png
+spec:
+  type: LoadBalancer
+  selector:
+    app: server-png-main-pod
+  ports:
+    - protocol: "TCP"
+      port: $SERVER_PNG_PORT
+      targetPort: $SERVER_PNG_PORT

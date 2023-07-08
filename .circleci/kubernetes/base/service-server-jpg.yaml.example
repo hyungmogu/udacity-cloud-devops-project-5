@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-jpg-service
+  labels:
+    app: server-jpg
+spec:
+  type: LoadBalancer
+  selector:
+    app: server-jpg-main-pod
+  ports:
+    - protocol: "TCP"
+      port: $SERVER_JPG_PORT
+      targetPort: $SERVER_JPG_PORT

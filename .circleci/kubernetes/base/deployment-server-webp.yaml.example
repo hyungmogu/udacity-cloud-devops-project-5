@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server-deployment
+  name: server-webp-deployment
   labels:
-    app: server
+    app: server-webp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: server-main-pod 
+      app: server-webp-main-pod 
   template:
     metadata:
       labels:
-        app: server-main-pod
+        app: server-webp-main-pod
     spec:
       containers:
-        - image: $DOCKER_ID/$SERVER_DOCKER_IMAGE_NAME:$SERVER_DOCKER_IMAGE_BUILD_NUMBER
-          name: server-main-pod
+        - image: $DOCKER_ID/$SERVER_WEBP_DOCKER_IMAGE_NAME:$SERVER_WEBP_DOCKER_IMAGE_BUILD_NUMBER
+          name: server-webp-main-pod
           ports:
-            - containerPort: $SERVER_POD_PORT
+            - containerPort: $SERVER_WEBP_PORT
           args:
             - sh
             - run.sh
@@ -51,7 +51,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /health
-              port: $SERVER_POD_PORT
+              port: $SERVER_WEBP_PORT
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 10
