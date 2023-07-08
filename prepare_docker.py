@@ -10,14 +10,43 @@ def run():
         "values": {
             "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", "5"),
             "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", "86400"),
-            "REDIS_HOST": os.environ.get("REDIS_HOST", "")
+            "REDIS_HOST": os.environ.get("REDIS_HOST", ""),
+            "GATEWAY_PORT": os.environ.get("GATEWAY_PORT", ""),
+            "SERVER_PROTOCOL": os.environ.get("SERVER_PROTOCOL", ""),
+            "SERVER_JPG_HOST": os.environ.get("SERVER_JPG_HOST", ""),
+            "SERVER_JPG_PORT": os.environ.get("SERVER_JPG_PORT", ""),
+            "SERVER_PNG_HOST": os.environ.get("SERVER_PNG_HOST", ""),
+            "SERVER_PNG_PORT": os.environ.get("SERVER_PNG_PORT", ""),
+            "SERVER_WEBP_HOST": os.environ.get("SERVER_WEBP_HOST", ""),
+            "SERVER_WEBP_PORT": os.environ.get("SERVER_WEBP_PORT", "")
         }
     },{
-        "for": ["server-jpg", "server-png", "server-webp"],
+        "for": ["server-jpg"],
         "values": {
-            "SERVER_HOST_NAME": os.environ.get("SERVER_HOST_NAME", ""),
-            "SERVER_POD_PORT": os.environ.get("SERVER_POD_PORT", ""),
-            "SERVER_SERVICE_NODE_PORT": os.environ.get("SERVER_SERVICE_NODE_PORT", ""),
+            "SERVER_JPG_HOST": os.environ.get("SERVER_JPG_HOST", ""),
+            "SERVER_JPG_PORT": os.environ.get("SERVER_JPG_PORT", ""),
+            "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
+            "AWS_OBJECT_EXPIRES_IN": int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0")),
+            "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
+            "AWS_SECRET_ACCESS_KEY": os.environ.get("AWS_SECRET_ACCESS_KEY", ""),
+            "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", "")
+        }
+    }, {
+        "for": [ "server-png"],
+        "values": {
+            "SERVER_PNG_HOST": os.environ.get("SERVER_PNG_HOST", ""),
+            "SERVER_PNG_PORT": os.environ.get("SERVER_PNG_PORT", ""),
+            "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
+            "AWS_OBJECT_EXPIRES_IN": int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0")),
+            "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
+            "AWS_SECRET_ACCESS_KEY": os.environ.get("AWS_SECRET_ACCESS_KEY", ""),
+            "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", "")
+        }
+    }, {
+        "for": ["server-webp"],
+        "values": {
+            "SERVER_WEBP_HOST": os.environ.get("SERVER_WEBP_HOST", ""),
+            "SERVER_WEBP_PORT": os.environ.get("SERVER_WEBP_PORT", ""),
             "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
             "AWS_OBJECT_EXPIRES_IN": int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0")),
             "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),

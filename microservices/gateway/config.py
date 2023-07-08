@@ -3,10 +3,10 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-API_MAX_REQUESTS_PER_DAY = os.getenv("API_MAX_REQUESTS_PER_DAY", 5)
-API_SECONDS_IN_DAY = os.getenv("API_SECONDS_IN_DAY", 86400)
+API_MAX_REQUESTS_PER_DAY = int(os.getenv("API_MAX_REQUESTS_PER_DAY", "0"))
+API_SECONDS_IN_DAY = int(os.getenv("API_SECONDS_IN_DAY", "0"))
+GATEWAY_PORT = int(os.getenv("GATEWAY_PORT", "0"))
 REDIS_HOST = os.getenv("REDIS_HOST", "")
-GATEWAY_PORT = os.getenv("GATEWAY_PORT", 8010)
 SERVER_PROTOCOL = os.getenv("SERVER_PROTOCOL", "")
 SERVER_JPG_HOST = os.getenv("SERVER_JPG_HOST", "")
 SERVER_JPG_PORT = os.getenv("SERVER_JPG_PORT", "")
