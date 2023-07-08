@@ -10,7 +10,7 @@ def run():
         "values": {
             "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", "5"),
             "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", "86400"),
-            "REDIS_HOST_LOCAL": os.environ.get("REDIS_HOST_LOCAL", "")
+            "REDIS_HOST": os.environ.get("REDIS_HOST", "")
         }
     },{
         "for": ["server-jpg", "server-png", "server-webp"],
