@@ -20,34 +20,84 @@ spec:
           ports:
             - containerPort: $GATEWAY_PORT
           args:
-            - sh
-            - run.sh
+            - python
+            - app.py
           env:
-            - name: AWS_ACCESS_KEY_ID
+            - name: REDIS_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: AWS_ACCESS_KEY_ID
-                  name: env
-            - name: AWS_OBJECT_EXPIRES_IN
+                  key: REDIS_HOST
+                  name: gateway-env
+            - name: REDIS_USERNAME
               valueFrom:
                 configMapKeyRef:
-                  key: AWS_OBJECT_EXPIRES_IN
-                  name: env
-            - name: AWS_S3_BUCKET
+                  key: REDIS_USERNAME
+                  name: gateway-env
+            - name: REDIS_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  key: AWS_S3_BUCKET
-                  name: env
-            - name: AWS_S3_REGION
+                  key: REDIS_PASSWORD
+                  name: gateway-env
+            - name: REDIS_USERNAME
               valueFrom:
                 configMapKeyRef:
-                  key: AWS_S3_REGION
-                  name: env
-            - name: AWS_SECRET_ACCESS_KEY
+                  key: REDIS_USERNAME
+                  name: gateway-env
+            - name: REDIS_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  key: AWS_SECRET_ACCESS_KEY
-                  name: env
+                  key: REDIS_PASSWORD
+                  name: gateway-env
+            - name: API_MAX_REQUESTS_PER_DAY
+              valueFrom:
+                configMapKeyRef:
+                  key: API_MAX_REQUESTS_PER_DAY
+                  name: gateway-env
+            - name: API_SECONDS_IN_DAY
+              valueFrom:
+                configMapKeyRef:
+                  key: API_SECONDS_IN_DAY
+                  name: gateway-env
+            - name: SERVER_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_PROTOCOL
+                  name: gateway-env
+            - name: GATEWAY_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: GATEWAY_PORT
+                  name: gateway-env
+            - name: SERVER_JPG_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_JPG_HOST
+                  name: gateway-env
+            - name: SERVER_JPG_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_JPG_PORT
+                  name: gateway-env
+            - name: SERVER_PNG_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_PNG_HOST
+                  name: gateway-env
+            - name: SERVER_PNG_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_PNG_PORT
+                  name: gateway-env
+            - name: SERVER_WEBP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_WEBP_HOST
+                  name: gateway-env
+            - name: SERVER_WEBP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_WEBP_PORT
+                  name: gateway-env
           livenessProbe:
             httpGet:
               path: /health

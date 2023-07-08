@@ -20,34 +20,34 @@ spec:
           ports:
             - containerPort: $SERVER_WEBP_PORT
           args:
-            - sh
-            - run.sh
+            - python
+            - app.py
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 configMapKeyRef:
                   key: AWS_ACCESS_KEY_ID
-                  name: env
+                  name: server-webp-env
             - name: AWS_OBJECT_EXPIRES_IN
               valueFrom:
                 configMapKeyRef:
                   key: AWS_OBJECT_EXPIRES_IN
-                  name: env
+                  name: server-webp-env
             - name: AWS_S3_BUCKET
               valueFrom:
                 configMapKeyRef:
                   key: AWS_S3_BUCKET
-                  name: env
+                  name: server-webp-env
             - name: AWS_S3_REGION
               valueFrom:
                 configMapKeyRef:
                   key: AWS_S3_REGION
-                  name: env
+                  name: server-webp-env
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 configMapKeyRef:
                   key: AWS_SECRET_ACCESS_KEY
-                  name: env
+                  name: server-webp-env
           livenessProbe:
             httpGet:
               path: /health

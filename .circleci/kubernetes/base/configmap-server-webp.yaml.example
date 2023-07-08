@@ -1,8 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: env
+  name: server-webp-env
 data:
+  SERVER_WEBP_HOST: "$SERVER_WEBP_HOST"
+  SERVER_WEBP_PORT: "$SERVER_WEBP_PORT"
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_OBJECT_EXPIRES_IN: "$AWS_OBJECT_EXPIRES_IN"
   AWS_S3_BUCKET: "$AWS_S3_BUCKET"
