@@ -23,15 +23,15 @@ spec:
             - python
             - app.py
           env:
-            - name: SERVER_PNG_HOST
+            - name: SERVER_WEBP_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: SERVER_PNG_HOST
+                  key: SERVER_WEBP_HOST
                   name: server-webp-env
-            - name: SERVER_PNG_PORT
+            - name: SERVER_WEBP_PORT
               valueFrom:
                 configMapKeyRef:
-                  key: SERVER_PNG_PORT
+                  key: SERVER_WEBP_PORT
                   name: server-webp-env
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
