@@ -48,10 +48,10 @@ spec:
                 configMapKeyRef:
                   key: AWS_S3_BUCKET
                   name: server-png-env
-            - name: AWS_S3_REGION
+            - name: AWS_DEFAULT_REGION
               valueFrom:
                 configMapKeyRef:
-                  key: AWS_S3_REGION
+                  key: AWS_DEFAULT_REGION
                   name: server-png-env
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
