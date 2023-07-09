@@ -5,10 +5,11 @@ metadata:
   labels:
     app: gateway
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: gateway-main-pod
   ports:
     - protocol: "TCP"
       port: $GATEWAY_PORT
       targetPort: $GATEWAY_PORT
+      nodePort: 30001
