@@ -7,6 +7,10 @@ class KubernetesSetupTool:
     def prepare_manifest(self):
         env_variables = {
             "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
+            "REDIS_HOST": os.environ.get("REDIS_HOST", ""),
+            "REDIS_PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
+            "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", ""),
+            "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", ""),
             "GATEWAY_DOCKER_IMAGE_NAME" : os.environ.get("GATEWAY_DOCKER_IMAGE_NAME", ""),
             "SERVER_JPG_DOCKER_IMAGE_NAME" : os.environ.get("SERVER_JPG_DOCKER_IMAGE_NAME", ""),
             "SERVER_PNG_DOCKER_IMAGE_NAME" : os.environ.get("SERVER_PNG_DOCKER_IMAGE_NAME", ""),

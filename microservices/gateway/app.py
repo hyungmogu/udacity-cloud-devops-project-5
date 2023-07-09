@@ -1,13 +1,14 @@
 import uvicorn
 import logging
 import redis.asyncio as redis
+from urllib.parse import quote
 from fastapi import FastAPI
 from fastapi_limiter import FastAPILimiter
 
 from src.routers.convert import convert_router
 from src.routers.health import health_router
 from src.utils.httpx import httpx_client_wrapper
-from config import REDIS_HOST, GATEWAY_PORT
+from config import REDIS_HOST, REDIS_PASSWORD, GATEWAY_PORT
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -19,8 +20,8 @@ app.include_router(health_router, prefix="/health", tags=["Health"])
 @app.on_event("startup")
 async def startup_event():
     httpx_client_wrapper.start()
-
-    redis_c = redis.from_url("redis://{}".format(REDIS_HOST), encoding="utf-8", decode_responses=True)
+    REDIS_PASSWORD_ECODE_SAFE = quote(REDIS_PASSWORD, safe="")
+    redis_c = redis.from_url("redis://{}@{}:6379".format(REDIS_PASSWORD_ECODE_SAFE, REDIS_HOST), encoding="utf-8", decode_responses=True)
     await FastAPILimiter.init(redis_c)
 
 @app.on_event("shutdown")

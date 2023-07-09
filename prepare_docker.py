@@ -16,6 +16,7 @@ class DockerComposeSetupTool:
                 "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", "5"),
                 "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", "86400"),
                 "REDIS_HOST": os.environ.get("REDIS_HOST", ""),
+                "REDIS_PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
                 "GATEWAY_PORT": os.environ.get("GATEWAY_PORT", ""),
                 "SERVER_PROTOCOL": os.environ.get("SERVER_PROTOCOL", ""),
                 "SERVER_JPG_HOST": os.environ.get("SERVER_JPG_HOST", ""),

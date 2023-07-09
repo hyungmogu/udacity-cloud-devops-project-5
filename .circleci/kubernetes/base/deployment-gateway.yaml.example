@@ -28,11 +28,6 @@ spec:
                 configMapKeyRef:
                   key: REDIS_HOST
                   name: gateway-env
-            - name: REDIS_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  key: REDIS_USERNAME
-                  name: gateway-env
             - name: REDIS_PASSWORD
               valueFrom:
                 configMapKeyRef:
