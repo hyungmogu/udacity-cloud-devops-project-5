@@ -5,7 +5,7 @@ metadata:
   labels:
     app: server-png
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: server-png-main-pod
   ports:

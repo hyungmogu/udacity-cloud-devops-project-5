@@ -9,6 +9,9 @@ prepare_microservices_minikube:
 	./venv/bin/pip install python-dotenv==1.0.0 &&\
 	./venv/bin/python3 ./prepare_kubernetes.py
 
+clean_microservices_minikube:
+	minikube delete --all
+
 start_microservices:
 	docker-compose build &&\
 	docker-compose up
@@ -23,4 +26,7 @@ setup_local:
 
 start_local: prepare_microservices start_microservices
 
-start_local_minikube: prepare_microservices_minikube start_microservices_minikube
+start_local_minikube_dashboard:
+	minikube dashboard
+
+start_local_minikube: clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
