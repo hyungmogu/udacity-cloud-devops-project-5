@@ -9,6 +9,10 @@ class DockerComposeSetupTool:
         {   
             "for": ["gateway"],
             "values": {
+                "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
+                "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
+                "GATEWAY_DOCKER_IMAGE_NAME": os.environ.get("GATEWAY_DOCKER_IMAGE_NAME", ""),
+                "GATEWAY_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("GATEWAY_DOCKER_IMAGE_BUILD_NUMBER", ""),
                 "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", "5"),
                 "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", "86400"),
                 "REDIS_HOST": os.environ.get("REDIS_HOST", ""),
@@ -24,6 +28,8 @@ class DockerComposeSetupTool:
         },{
             "for": ["server-jpg"],
             "values": {
+                "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
+                "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
                 "SERVER_JPG_DOCKER_IMAGE_NAME": os.environ.get("SERVER_JPG_DOCKER_IMAGE_NAME", ""),
                 "SERVER_JPG_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_JPG_DOCKER_IMAGE_BUILD_NUMBER", ""),
                 "SERVER_JPG_HOST": os.environ.get("SERVER_JPG_HOST", ""),
@@ -37,6 +43,8 @@ class DockerComposeSetupTool:
         }, {
             "for": [ "server-png"],
             "values": {
+                "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
+                "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
                 "SERVER_PNG_DOCKER_IMAGE_NAME": os.environ.get("SERVER_PNG_DOCKER_IMAGE_NAME", ""),
                 "SERVER_PNG_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_PNG_DOCKER_IMAGE_BUILD_NUMBER", ""),
                 "SERVER_PNG_HOST": os.environ.get("SERVER_PNG_HOST", ""),
@@ -50,6 +58,8 @@ class DockerComposeSetupTool:
         }, {
             "for": ["server-webp"],
             "values": {
+                "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
+                "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
                 "SERVER_WEBP_DOCKER_IMAGE_NAME": os.environ.get("SERVER_WEBP_DOCKER_IMAGE_NAME", ""),
                 "SERVER_WEBP_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_WEBP_DOCKER_IMAGE_BUILD_NUMBER", ""),
                 "SERVER_WEBP_HOST": os.environ.get("SERVER_WEBP_HOST", ""),
@@ -80,7 +90,7 @@ class DockerComposeSetupTool:
                         # for each key, value in env_variable_group["values"]
                         for key, value in env_variable_group["values"].items():
                             # write key=value
-                            f.write("{}={}\n".format(key, value))
+                            f.write("{}=\"{}\"\n".format(key, value))
     
     def run(self):
         self.prepare_docker_environment_variables()
