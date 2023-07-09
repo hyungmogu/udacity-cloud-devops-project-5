@@ -27,12 +27,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: SERVER_PNG_HOST
-                  name: server-jpg-env
+                  name: server-png-env
             - name: SERVER_PNG_PORT
               valueFrom:
                 configMapKeyRef:
                   key: SERVER_PNG_PORT
-                  name: server-jpg-env
+                  name: server-png-env
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 configMapKeyRef:
