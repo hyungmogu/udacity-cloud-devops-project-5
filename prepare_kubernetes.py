@@ -43,7 +43,7 @@ class KubernetesSetupTool:
                 with open(".circleci/kubernetes/base_src/{}.yaml".format(file.split(".")[0]), "w+") as f:
                     f.write(content)
 
-    def prepare_docker_images(self):
+    def deploy_docker_images(self):
         # for each folder in microservices folder, run docker.sh script
         for folder in os.listdir("microservices"):
             if os.path.isdir("microservices/{}".format(folder)):
@@ -51,7 +51,7 @@ class KubernetesSetupTool:
 
     def run(self):
         self.prepare_manifest()
-        self.prepare_docker_images()
+        self.deploy_docker_images()
 
 
 if __name__ == "__main__":

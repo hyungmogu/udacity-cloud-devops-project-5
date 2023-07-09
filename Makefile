@@ -7,6 +7,7 @@ start_microservices_minikube:
 prepare_microservices_minikube:
 	python3 -m venv ./venv &&\
 	./venv/bin/pip install python-dotenv==1.0.0 &&\
+	./venv/bin/python3 ./prepare_docker.py &&\
 	./venv/bin/python3 ./prepare_kubernetes.py
 
 clean_microservices_minikube:

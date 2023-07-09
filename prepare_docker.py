@@ -24,6 +24,8 @@ class DockerComposeSetupTool:
         },{
             "for": ["server-jpg"],
             "values": {
+                "SERVER_JPG_DOCKER_IMAGE_NAME": os.environ.get("SERVER_JPG_DOCKER_IMAGE_NAME", ""),
+                "SERVER_JPG_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_JPG_DOCKER_IMAGE_BUILD_NUMBER", ""),
                 "SERVER_JPG_HOST": os.environ.get("SERVER_JPG_HOST", ""),
                 "SERVER_JPG_PORT": os.environ.get("SERVER_JPG_PORT", ""),
                 "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
@@ -35,6 +37,8 @@ class DockerComposeSetupTool:
         }, {
             "for": [ "server-png"],
             "values": {
+                "SERVER_PNG_DOCKER_IMAGE_NAME": os.environ.get("SERVER_PNG_DOCKER_IMAGE_NAME", ""),
+                "SERVER_PNG_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_PNG_DOCKER_IMAGE_BUILD_NUMBER", ""),
                 "SERVER_PNG_HOST": os.environ.get("SERVER_PNG_HOST", ""),
                 "SERVER_PNG_PORT": os.environ.get("SERVER_PNG_PORT", ""),
                 "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
@@ -46,6 +50,8 @@ class DockerComposeSetupTool:
         }, {
             "for": ["server-webp"],
             "values": {
+                "SERVER_WEBP_DOCKER_IMAGE_NAME": os.environ.get("SERVER_WEBP_DOCKER_IMAGE_NAME", ""),
+                "SERVER_WEBP_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_WEBP_DOCKER_IMAGE_BUILD_NUMBER", ""),
                 "SERVER_WEBP_HOST": os.environ.get("SERVER_WEBP_HOST", ""),
                 "SERVER_WEBP_PORT": os.environ.get("SERVER_WEBP_PORT", ""),
                 "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
