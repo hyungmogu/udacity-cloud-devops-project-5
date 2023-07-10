@@ -319,3 +319,5 @@ convertToWEBP(image)
 10. Imam Bux. (2020, Aug 4th). minikube ip is not reachable. Stack Overflow. https://stackoverflow.com/questions/60710171/minikube-ip-is-not-reachable#answer-63243909
 11. Jeff Geerling. (2011). Ansible for DevOps. Leanpub.
 12. Amazon. (2023). Auto Scaling Template Snippets. AWS. https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-autoscaling.html
+13. Andres. (05.03.2023). Multiple Playbooks in Ansible. dev.to. https://dev.to/andresfmoya/multiple-playbooks-in-ansible-2pdc
+14. Build Virtual. Deploy a kubernetes cluster using ansible. Build Virtual. https://buildvirtual.net/deploy-a-kubernetes-cluster-using-ansible/
