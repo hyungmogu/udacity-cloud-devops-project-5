@@ -1,5 +1,5 @@
 Description: >
-  Cloudfront distribution for UdaPeople.
+  Cloudfront distribution for Image Converter. This is used to serve static frontend files.
 
 Parameters:
   WorkflowID:
