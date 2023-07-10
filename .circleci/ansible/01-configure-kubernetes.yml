@@ -1,0 +1,12 @@
+---
+- hosts: masters
+  user: ubuntu
+  become: true
+  become_method: sudo
+  become_user: root  
+  gather_facts: true
+  roles:
+    - configure-kubernetes
+
+
+
