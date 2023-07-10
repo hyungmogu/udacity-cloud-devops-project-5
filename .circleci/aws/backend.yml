@@ -49,6 +49,72 @@ Resources:
           Description: Prometheus node exporter
           CidrIp: 0.0.0.0/0
 
+  mainLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Sub ${AWS::StackName}-launch-template
+      LaunchTemplateData:
+        ImageId: ami-02354e95b3example
+        InstanceType: t3.micro
+        IamInstanceProfile:
+          Name: !Ref myInstanceProfile
+        SecurityGroupIds:
+        - !Ref myNewEC2SecurityGroup
+        - sg-083cd3bfb8example
+        UserData:
+          Fn::Base64:!Sub |
+            #!/bin/bash
+            cd /tmp
+            sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+            sudo systemctl enable amazon-ssm-agent
+            sudo systemctl start amazon-ssm-agent
+        TagSpecifications:
+        - ResourceType: instance
+          Tags:
+          - Key: environment
+            Value: development
+        - ResourceType: volume
+          Tags:
+          - Key: environment
+            Value: development
+
+  mainInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: InstanceRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: 'Allow'
+          Principal:
+            Service:
+            - 'ec2.amazonaws.com'
+          Action:
+          - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/myCustomerManagedPolicy'
+        
+  myInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: '/'
+      Roles:
+      - !Ref mainInstanceRole
+
+  mainServerGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier:
+        - !Ref myPublicSubnet1
+        - !Ref myPublicSubnet2
+      LaunchTemplate:
+        LaunchTemplateId: !Ref mainLaunchTemplate
+        Version: !GetAtt mainLaunchTemplate.LatestVersionNumber
+      MaxSize: '5'
+      MinSize: '1'
+      TargetGroupARNs:
+        - !Ref myTargetGroup
+      
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:

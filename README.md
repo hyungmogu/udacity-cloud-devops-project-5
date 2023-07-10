@@ -318,3 +318,4 @@ convertToWEBP(image)
 9. Ashley Davis. (2021). Bootstrapping Microservices with Docker, Kubernetes and Terraform. Manning Publications.
 10. Imam Bux. (2020, Aug 4th). minikube ip is not reachable. Stack Overflow. https://stackoverflow.com/questions/60710171/minikube-ip-is-not-reachable#answer-63243909
 11. Jeff Geerling. (2011). Ansible for DevOps. Leanpub.
+12. Amazon. (2023). Auto Scaling Template Snippets. AWS. https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-autoscaling.html
