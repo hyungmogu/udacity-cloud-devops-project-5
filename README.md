@@ -18,7 +18,7 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 - Add rate limiter to microservices (Done)
 - Apply Prometheus and Grafana to microservice
 - Add Ansible for initial cloud server setup (In Progress)
-- Automate the creation of S3 and IAM if it doesn't exist
+- Automate the creation of S3 and IAM if it doesn't exist (In Progress)
 - Make this app is easy to start and use locally by ordinary people (Done)
 - Apply CI/CD using CircleCI
 - Submit project
