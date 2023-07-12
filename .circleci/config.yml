@@ -404,7 +404,133 @@ jobs:
             - notify_slack_error
             - notify_slack_pass
     
-    deploy-backend:
+    deploy-gateway:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - add_ssh_keys:
+                fingerprints: ["07:1b:74:a1:a7:95:0f:c3:a1:17:b2:ed:d8:79:9c:a0"]
+            - attach_workspace:
+                at: .circleci/ansible/
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install dependencies (Tar)
+                command: |
+                    apt-get -y install tar
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run: 
+                name: Install dependencies (Ansible)
+                command: |
+                    apt-get -y install ansible
+            - run:
+                name: Deploy backend
+                command: |
+                    cd backend
+                    npm i
+                    npm run build
+                    cd ..
+                    tar -C backend -czvf artifact.tar.gz .
+                    echo "Contents  of the inventory.txt file is -------"
+                    cd .circleci/ansible
+                    cat inventory.txt
+                    ansible-playbook -i inventory.txt deploy-backend.yml
+            - destroy_environment 
+            - revert-migrations 
+            - notify_slack_error
+            - notify_slack_pass
+    
+    deploy-microservice-server-jpg:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - add_ssh_keys:
+                fingerprints: ["07:1b:74:a1:a7:95:0f:c3:a1:17:b2:ed:d8:79:9c:a0"]
+            - attach_workspace:
+                at: .circleci/ansible/
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install dependencies (Tar)
+                command: |
+                    apt-get -y install tar
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run: 
+                name: Install dependencies (Ansible)
+                command: |
+                    apt-get -y install ansible
+            - run:
+                name: Deploy backend
+                command: |
+                    cd backend
+                    npm i
+                    npm run build
+                    cd ..
+                    tar -C backend -czvf artifact.tar.gz .
+                    echo "Contents  of the inventory.txt file is -------"
+                    cd .circleci/ansible
+                    cat inventory.txt
+                    ansible-playbook -i inventory.txt deploy-backend.yml
+            - destroy_environment 
+            - revert-migrations 
+            - notify_slack_error
+            - notify_slack_pass
+    
+    deploy-microservice-server-png:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - add_ssh_keys:
+                fingerprints: ["07:1b:74:a1:a7:95:0f:c3:a1:17:b2:ed:d8:79:9c:a0"]
+            - attach_workspace:
+                at: .circleci/ansible/
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install dependencies (Tar)
+                command: |
+                    apt-get -y install tar
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run: 
+                name: Install dependencies (Ansible)
+                command: |
+                    apt-get -y install ansible
+            - run:
+                name: Deploy backend
+                command: |
+                    cd backend
+                    npm i
+                    npm run build
+                    cd ..
+                    tar -C backend -czvf artifact.tar.gz .
+                    echo "Contents  of the inventory.txt file is -------"
+                    cd .circleci/ansible
+                    cat inventory.txt
+                    ansible-playbook -i inventory.txt deploy-backend.yml
+            - destroy_environment 
+            - revert-migrations 
+            - notify_slack_error
+            - notify_slack_pass 
+    
+    deploy-microservice-server-webp:
         docker:
             - image: python:3.10-buster
         steps:
@@ -569,7 +695,7 @@ workflows:
                 requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
             - scan-frontend:
                 requires: [build-frontend]
-            - scan-gateway:
+            - scan-backend:
                 requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
             - scan-microservice-server-jpg:
                 requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
