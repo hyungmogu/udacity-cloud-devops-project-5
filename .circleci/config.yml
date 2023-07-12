@@ -231,7 +231,52 @@ jobs:
             - notify_slack_error
             - notify_slack_pass
 
-    scan-backend:
+    scan-gateway:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - restore_cache:
+                keys: [backend-build]
+            - run:
+                name: Run backend scan
+                command: |
+                    cd backend
+                    make audit_local
+            - notify_slack_error
+            - notify_slack_pass
+    
+    scan-microservice-server-jpg:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - restore_cache:
+                keys: [backend-build]
+            - run:
+                name: Run backend scan
+                command: |
+                    cd backend
+                    make audit_local
+            - notify_slack_error
+            - notify_slack_pass
+    
+    scan-microservice-server-png:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - restore_cache:
+                keys: [backend-build]
+            - run:
+                name: Run backend scan
+                command: |
+                    cd backend
+                    make audit_local
+            - notify_slack_error
+            - notify_slack_pass
+    
+    scan-microservice-server-webp:
         docker:
             - image: python:3.10-buster
         steps:
@@ -695,7 +740,13 @@ workflows:
                 requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
             - scan-frontend:
                 requires: [build-frontend]
-            - scan-backend:
+            - scan-gateway:
+                requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
+            - scan-microservice-server-jpg:
+                requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
+            - scan-microservice-server-png:
+                requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
+            - scan-microservice-server-webp:
                 requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
             - scan-microservice-server-jpg:
                 requires: [build-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
