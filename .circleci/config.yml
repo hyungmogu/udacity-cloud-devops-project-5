@@ -463,7 +463,7 @@ jobs:
                 command: |
                     # Add Code Here
             - run:
-                name: Deploy Gateway
+                name: Deploy Microservice Gateway
                 command: |
                     cd microservices/gateway
                     make deploy
@@ -486,7 +486,7 @@ jobs:
                 command: |
                     # Add Code Here
             - run:
-                name: Deploy Gateway
+                name: Deploy Server Jpg
                 command: |
                     cd microservices/server-jpg
                     make deploy
@@ -509,7 +509,7 @@ jobs:
                 command: |
                     # Add Code Here
             - run:
-                name: Deploy Gateway
+                name: Deploy Microservice Png
                 command: |
                     cd microservices/server-png
                     make deploy
@@ -532,7 +532,7 @@ jobs:
                 command: |
                     # Add Code Here
             - run:
-                name: Deploy Gateway
+                name: Deploy Microservice Webp
                 command: |
                     cd microservices/server-webp
                     make deploy
