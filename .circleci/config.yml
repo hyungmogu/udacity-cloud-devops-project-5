@@ -227,7 +227,7 @@ jobs:
                 name: Run frontend scan
                 command: |
                     cd frontend
-                    make audit_local
+                    make scan_local
             - notify_slack_error
             - notify_slack_pass
 
@@ -242,7 +242,7 @@ jobs:
                 name: Run backend scan
                 command: |
                     cd microservices/gateway
-                    make audit_local
+                    make scan_local
             - notify_slack_error
             - notify_slack_pass
     
@@ -257,7 +257,7 @@ jobs:
                 name: Run backend scan
                 command: |
                     cd microservices/server-jpg
-                    make audit_local
+                    make scan_local
             - notify_slack_error
             - notify_slack_pass
     
@@ -272,7 +272,7 @@ jobs:
                 name: Run backend scan
                 command: |
                     cd microservices/server-png
-                    make audit_local
+                    make scan_local
             - notify_slack_error
             - notify_slack_pass
     
@@ -287,7 +287,7 @@ jobs:
                 name: Run backend scan
                 command: |
                     cd microservices/server-webp
-                    make audit_local
+                    make scan_local
             - notify_slack_error
             - notify_slack_pass
     
