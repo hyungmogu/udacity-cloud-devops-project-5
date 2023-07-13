@@ -461,12 +461,13 @@ jobs:
             - run:
                 name: Install Docker
                 command: |
-                    # Add Code Here
+                    cd microservices/gateway;
+                    make deploy;
             - run:
                 name: Deploy Microservice Gateway
                 command: |
-                    cd microservices/gateway
-                    make deploy
+                    cd microservices/gateway;
+                    make deploy;
             - destroy_environment 
             - revert-migrations 
             - notify_slack_error
@@ -484,12 +485,13 @@ jobs:
             - run:
                 name: Install Docker
                 command: |
-                    # Add Code Here
+                    cd microservices/gateway;
+                    make deploy;
             - run:
                 name: Deploy Server Jpg
                 command: |
-                    cd microservices/server-jpg
-                    make deploy
+                    cd microservices/server-jpg;
+                    make deploy;
             - destroy_environment 
             - revert-migrations 
             - notify_slack_error
@@ -507,7 +509,8 @@ jobs:
             - run:
                 name: Install Docker
                 command: |
-                    # Add Code Here
+                    cd microservices/gateway;
+                    make deploy;
             - run:
                 name: Deploy Microservice Png
                 command: |
@@ -530,7 +533,8 @@ jobs:
             - run:
                 name: Install Docker
                 command: |
-                    # Add Code Here
+                    cd microservices/gateway;
+                    make deploy;
             - run:
                 name: Deploy Microservice Webp
                 command: |
