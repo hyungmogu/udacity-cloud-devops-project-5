@@ -164,7 +164,7 @@ jobs:
             - restore_cache:
                 keys: [backend-build]
             - run:
-                name: Run backend test
+                name: Run Test for Microservice Server Gateway
                 command: |
                     cd microservices/gateway
                     make test_local
@@ -179,7 +179,7 @@ jobs:
             - restore_cache:
                 keys: [backend-build]
             - run:
-                name: Run backend test
+                name: Run Test for Microservice Server Jpg
                 command: |
                     cd microservices/server-jpg
                     make test_local
@@ -194,7 +194,7 @@ jobs:
             - restore_cache:
                 keys: [backend-build]
             - run:
-                name: Run backend test
+                name: Run Test for Microservice Server Png 
                 command: |
                     cd microservices/server-png
                     make test_local
@@ -209,7 +209,7 @@ jobs:
             - restore_cache:
                 keys: [backend-build]
             - run:
-                name: Run backend test
+                name: Run Test for Microservice Server Webp
                 command: |
                     cd microservices/server-webp
                     make test_local
