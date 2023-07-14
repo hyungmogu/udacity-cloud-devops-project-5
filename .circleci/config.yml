@@ -73,7 +73,7 @@ jobs:
             - restore_cache: 
                 key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
-                name: Back-end build
+                name: Run Build for Micoservice Gateway
                 command: |
                     cd microservices/gateway
                     make build_local
@@ -92,7 +92,7 @@ jobs:
             - restore_cache: 
                 key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
-                name: Back-end build
+                name: Run Build for Microservice Server Jpg
                 command: |
                     cd microservices/server-jpg
                     make build_local
@@ -111,7 +111,7 @@ jobs:
             - restore_cache: 
                 key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
-                name: Back-end build
+                name: Run Build for Microservice Server Png
                 command: |
                     cd microservices/server-png
                     make build_local
@@ -130,7 +130,7 @@ jobs:
             - restore_cache: 
                 key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
-                name: Back-end build
+                name: Run Build for Microservice Webp
                 command: |
                     cd microservices/server-webp
                     make build_local
