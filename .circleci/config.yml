@@ -239,7 +239,7 @@ jobs:
             - restore_cache:
                 keys: [backend-build]
             - run:
-                name: Run backend scan
+                name: Scan Microservice Server Gateway
                 command: |
                     cd microservices/gateway
                     make scan_local
@@ -254,7 +254,7 @@ jobs:
             - restore_cache:
                 keys: [backend-build]
             - run:
-                name: Run backend scan
+                name: Scan Microservice Server Jpg
                 command: |
                     cd microservices/server-jpg
                     make scan_local
@@ -269,7 +269,7 @@ jobs:
             - restore_cache:
                 keys: [backend-build]
             - run:
-                name: Run backend scan
+                name: Scan Microservice Server Png
                 command: |
                     cd microservices/server-png
                     make scan_local
@@ -284,7 +284,7 @@ jobs:
             - restore_cache:
                 keys: [backend-build]
             - run:
-                name: Run backend scan
+                name: Scan Microservice Server Webp
                 command: |
                     cd microservices/server-webp
                     make scan_local
