@@ -59,6 +59,11 @@ jobs:
                 command: |
                     cd microservices/gateway
                     make build_local
+            - run:
+                name: Checking Directory
+                command: |
+                    cd microservices/gateway
+                    ls -al
             - save_cache:
                 key: v1-dependencies-{{ checksum "microservices/gateway/requirements.txt" }}
                 paths:
@@ -76,6 +81,11 @@ jobs:
                 command: |
                     cd microservices/server-jpg
                     make build_local
+            - run:
+                name: Checking Directory
+                command: |
+                    cd microservices/server-jpg
+                    ls -al
             - save_cache:
                 key: v1-dependencies-{{ checksum "microservices/server-jpg/requirements.txt" }}
                 paths:
@@ -93,6 +103,11 @@ jobs:
                 command: |
                     cd microservices/server-png
                     make build_local
+            - run:
+                name: Checking Directory
+                command: |
+                    cd microservices/server-png
+                    ls -al
             - save_cache:
                 key: v1-dependencies-{{ checksum "microservices/server-png/requirements.txt" }}
                 paths:
@@ -110,6 +125,11 @@ jobs:
                 command: |
                     cd microservices/server-webp
                     make build_local
+            - run:
+                name: Checking Directory
+                command: |
+                    cd microservices/server-webp
+                    ls -al
             - save_cache:
                 key: v1-dependencies-{{ checksum "microservices/server-webp/requirements.txt" }}
                 paths:
