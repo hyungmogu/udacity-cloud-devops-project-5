@@ -309,12 +309,20 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
-                name: Ensure back-end infrastructure exists
+                name: Ensure Kubernetes Network Infrastructure exists
                 command: |
                     aws cloudformation deploy \
-                    --template-file .circleci/aws/backend.yml \
+                    --template-file .circleci/aws/network.yml \
                     --tags project=img-converter \
-                    --stack-name "img-converter-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name "img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+            - run:
+                name: Ensure Kubernetes Server Infrastructure exists
+                command: |
+                    aws cloudformation deploy \
+                    --template-file .circleci/aws/server.yml \
+                    --tags project=img-converter \
+                    --stack-name "img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
             - run:
                 name: Ensure front-end infrastructure exist
