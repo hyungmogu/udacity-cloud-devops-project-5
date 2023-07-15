@@ -1,5 +1,5 @@
 build_local:
-	pip install requirements.txt
+	pip install -r requirements.txt
 
 test_local:
 	python -m unittest tests/health.py
