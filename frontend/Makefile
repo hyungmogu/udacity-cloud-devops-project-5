@@ -1,15 +1,15 @@
 audit_local:
-	npm install
+	npm install &&\
     npm audit --audit-level=critical
 
 build_local:
 	echo "Building locally" &&\
 	npm install &&\
-	npm run build
+	npm run build;
 	
 test_local:
 	echo "Running tests locally" &&\
-	npm run test:unit 
+	npm run test:unit;
 
 start:
 	npm install &&\
