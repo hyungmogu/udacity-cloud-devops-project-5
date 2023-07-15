@@ -62,7 +62,7 @@ jobs:
             - save_cache:
                 key: v1-dependencies-{{ checksum "microservices/gateway/requirements.txt" }}
                 paths:
-                    - "venv"
+                    - "microservices/gateway/venv"
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -79,7 +79,7 @@ jobs:
             - save_cache:
                 key: v1-dependencies-{{ checksum "microservices/server-jpg/requirements.txt" }}
                 paths:
-                    - "venv"
+                    - "microservices/server-jpg/venv"
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -96,7 +96,7 @@ jobs:
             - save_cache:
                 key: v1-dependencies-{{ checksum "microservices/server-png/requirements.txt" }}
                 paths:
-                    - "venv"
+                    - "microservices/server-png/venv"
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -113,7 +113,7 @@ jobs:
             - save_cache:
                 key: v1-dependencies-{{ checksum "microservices/server-webp/requirements.txt" }}
                 paths:
-                    - "venv"
+                    - "microservices/server-webp/venv"
             # - notify_slack_error
             # - notify_slack_pass
 
