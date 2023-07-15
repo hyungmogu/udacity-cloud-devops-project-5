@@ -70,8 +70,6 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - restore_cache: 
-                key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
                 name: Run Build for Micoservice Gateway
                 command: |
@@ -89,8 +87,6 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - restore_cache: 
-                key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
                 name: Run Build for Microservice Server Jpg
                 command: |
@@ -108,8 +104,6 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - restore_cache: 
-                key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
                 name: Run Build for Microservice Server Png
                 command: |
@@ -127,8 +121,6 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - restore_cache: 
-                key: &deps1-cache deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
             - run:
                 name: Run Build for Microservice Webp
                 command: |
