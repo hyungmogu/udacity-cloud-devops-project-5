@@ -534,7 +534,7 @@ jobs:
                 name: Backend smoke test.
                 command: |
                     BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-                    API_URL="http://${BACKEND_IP}:3030"
+                    API_URL="http://${BACKEND_IP}:8010"
                     echo "API URL: ${API_URL}"
 
                     if curl "${API_URL}/api/status" | grep "ok"
@@ -637,12 +637,6 @@ workflows:
             - scan-frontend:
                 requires: [build-frontend]
             - scan-microservice-gateway:
-                requires: [build-microservice-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
-            - scan-microservice-server-jpg:
-                requires: [build-microservice-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
-            - scan-microservice-server-png:
-                requires: [build-microservice-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
-            - scan-microservice-server-webp:
                 requires: [build-microservice-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
             - scan-microservice-server-jpg:
                 requires: [build-microservice-gateway, build-microservice-jpg, build-microservice-png, build-microservice-webp]
