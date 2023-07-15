@@ -373,7 +373,6 @@ jobs:
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
                     aws s3 cp dist s3://img-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             - destroy_environment 
-            - revert-migrations
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -397,7 +396,6 @@ jobs:
                     cd microservices/gateway;
                     make deploy;
             - destroy_environment 
-            - revert-migrations 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -421,7 +419,6 @@ jobs:
                     cd microservices/server-jpg;
                     make deploy;
             - destroy_environment 
-            - revert-migrations 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -445,7 +442,6 @@ jobs:
                     cd microservices/server-png
                     make deploy
             - destroy_environment 
-            - revert-migrations 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -469,7 +465,6 @@ jobs:
                     cd microservices/server-webp
                     make deploy
             - destroy_environment 
-            - revert-migrations 
             # - notify_slack_error
             # - notify_slack_pass 
 
@@ -515,7 +510,6 @@ jobs:
                         exit 1
                     fi
             - destroy_environment 
-            - revert-migrations
             # - notify_slack_error
             # - notify_slack_pass   
 
@@ -541,7 +535,6 @@ jobs:
                     --parameter-overrides WorkflowID="img-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter
             - destroy_environment 
-            - revert-migrations
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -572,7 +565,6 @@ jobs:
                         aws cloudformation delete-stack --stack-name "img-converter-frontend-${OldWorkflowID}"
                     fi
             - destroy_environment 
-            - revert-migrations
             # - notify_slack_error
             # - notify_slack_pass
 
