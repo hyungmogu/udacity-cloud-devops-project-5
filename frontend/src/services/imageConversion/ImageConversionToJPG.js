@@ -1,5 +1,5 @@
 import axios from 'axios'
-import ImageConversionInterface from './imageConversionInterface.js';
+import ImageConversionInterface from './ImageConversionInterface.js';
 
 export default class ImageConversionToJPG extends ImageConversionInterface {
     constructor(file) {
