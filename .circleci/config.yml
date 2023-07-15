@@ -138,7 +138,9 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                keys: [backend-build]
+                keys:
+                    - v1-dependencies-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-
             - run:
                 name: Run Test for Microservice Server Gateway
                 command: |
@@ -153,7 +155,9 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                keys: [backend-build]
+                keys:
+                    - v1-dependencies-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                    - v1-dependencies-
             - run:
                 name: Run Test for Microservice Server Jpg
                 command: |
@@ -168,7 +172,9 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                keys: [backend-build]
+                keys:
+                    - v1-dependencies-{{ checksum "microservices/server-png/requirements.txt" }}
+                    - v1-dependencies-
             - run:
                 name: Run Test for Microservice Server Png 
                 command: |
@@ -183,7 +189,9 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                keys: [backend-build]
+                keys:
+                    - v1-dependencies-{{ checksum "microservices/server-webp/requirements.txt" }}
+                    - v1-dependencies-
             - run:
                 name: Run Test for Microservice Server Webp
                 command: |
