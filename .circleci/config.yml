@@ -59,6 +59,10 @@ jobs:
                 command: |
                     cd microservices/gateway
                     make build_local
+            - save_cache:
+                key: *deps1-cache
+                paths:
+                    - "venv"
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -72,6 +76,10 @@ jobs:
                 command: |
                     cd microservices/server-jpg
                     make build_local
+            - save_cache:
+                key: *deps2-cache
+                paths:
+                    - "venv"
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -85,6 +93,10 @@ jobs:
                 command: |
                     cd microservices/server-png
                     make build_local
+            - save_cache:
+                key: *deps3-cache
+                paths:
+                    - "venv"
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -98,6 +110,10 @@ jobs:
                 command: |
                     cd microservices/server-webp
                     make build_local
+            - save_cache:
+                key: *deps4-cache
+                paths:
+                    - "venv"
             # - notify_slack_error
             # - notify_slack_pass
 
