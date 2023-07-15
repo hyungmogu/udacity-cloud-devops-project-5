@@ -7,3 +7,6 @@ test_local:
 
 scan_local:
 	pip-audit -r ./requirements.txt
+
+deploy:
+	sh docker.sh
