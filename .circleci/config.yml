@@ -4,17 +4,17 @@ orbs:
   slack: circleci/slack@4.12.0
 
 commands:
-    notify_slack_error:
-        steps:
-            - slack/notify:
-                event: fail
-                template: basic_fail_1
+    # notify_slack_error:
+    #     steps:
+    #         - slack/notify:
+    #             event: fail
+    #             template: basic_fail_1
 
-    notify_slack_pass:
-        steps:
-            - slack/notify:
-                event: pass
-                template: basic_success_1
+    # notify_slack_pass:
+    #     steps:
+    #         - slack/notify:
+    #             event: pass
+    #             template: basic_success_1
     
     destroy_environment:
         description: Destroy back-end and front-end cloudformation stacks given a workflow ID.  
@@ -62,8 +62,8 @@ jobs:
             - save_cache:
                 paths: [frontend/node_modules]
                 key: frontend-build
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
 
     build-microservice-gateway:
         docker:
@@ -75,8 +75,8 @@ jobs:
                 command: |
                     cd microservices/gateway
                     make build_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     build-microservice-jpg:
         docker:
@@ -88,8 +88,8 @@ jobs:
                 command: |
                     cd microservices/server-jpg
                     make build_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
 
     build-microservice-png:
         docker:
@@ -101,8 +101,8 @@ jobs:
                 command: |
                     cd microservices/server-png
                     make build_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     build-microservice-webp:
         docker:
@@ -114,8 +114,8 @@ jobs:
                 command: |
                     cd microservices/server-webp
                     make build_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
 
     test-frontend:
         docker:
@@ -129,8 +129,8 @@ jobs:
                 command: |
                     cd frontend
                     make test_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
 
     test-microservice-gateway:
         docker:
@@ -144,8 +144,8 @@ jobs:
                 command: |
                     cd microservices/gateway
                     make test_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     test-microservice-server-jpg:
         docker:
@@ -159,8 +159,8 @@ jobs:
                 command: |
                     cd microservices/server-jpg
                     make test_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     test-microservice-server-png:
         docker:
@@ -174,8 +174,8 @@ jobs:
                 command: |
                     cd microservices/server-png
                     make test_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     test-microservice-server-webp:
         docker:
@@ -189,8 +189,8 @@ jobs:
                 command: |
                     cd microservices/server-webp
                     make test_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
 
     scan-frontend:
         docker:
@@ -204,8 +204,8 @@ jobs:
                 command: |
                     cd frontend
                     make scan_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
 
     scan-microservice-gateway:
         docker:
@@ -219,8 +219,8 @@ jobs:
                 command: |
                     cd microservices/gateway
                     make scan_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     scan-microservice-server-jpg:
         docker:
@@ -234,8 +234,8 @@ jobs:
                 command: |
                     cd microservices/server-jpg
                     make scan_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     scan-microservice-server-png:
         docker:
@@ -249,8 +249,8 @@ jobs:
                 command: |
                     cd microservices/server-png
                     make scan_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     scan-microservice-server-webp:
         docker:
@@ -264,8 +264,8 @@ jobs:
                 command: |
                     cd microservices/server-webp
                     make scan_local
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     deploy-infrastructure:
         docker:
@@ -319,8 +319,8 @@ jobs:
                 paths:
                     - inventory.txt
             - destroy_environment
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
             
     configure-infrastructure:
         docker:
@@ -350,8 +350,8 @@ jobs:
                     cd .circleci/ansible
                     ansible-playbook -i inventory.txt configure-server.yml
             - destroy_environment 
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
 
     deploy-frontend:
         docker:
@@ -390,8 +390,8 @@ jobs:
                     aws s3 cp dist s3://img-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             - destroy_environment 
             - revert-migrations
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     deploy-microservice-gateway:
         docker:
@@ -414,8 +414,8 @@ jobs:
                     make deploy;
             - destroy_environment 
             - revert-migrations 
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     deploy-microservice-server-jpg:
         docker:
@@ -438,8 +438,8 @@ jobs:
                     make deploy;
             - destroy_environment 
             - revert-migrations 
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     deploy-microservice-server-png:
         docker:
@@ -462,8 +462,8 @@ jobs:
                     make deploy
             - destroy_environment 
             - revert-migrations 
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     deploy-microservice-server-webp:
         docker:
@@ -486,8 +486,8 @@ jobs:
                     make deploy
             - destroy_environment 
             - revert-migrations 
-            - notify_slack_error
-            - notify_slack_pass 
+            # - notify_slack_error
+            # - notify_slack_pass 
 
     smoke-test:
         docker:
@@ -532,8 +532,8 @@ jobs:
                     fi
             - destroy_environment 
             - revert-migrations
-            - notify_slack_error
-            - notify_slack_pass   
+            # - notify_slack_error
+            # - notify_slack_pass   
 
     cloudfront-update:
         docker:
@@ -558,8 +558,8 @@ jobs:
                     --tags project=img-converter
             - destroy_environment 
             - revert-migrations
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
     
     cleanup:
         docker:
@@ -589,8 +589,8 @@ jobs:
                     fi
             - destroy_environment 
             - revert-migrations
-            - notify_slack_error
-            - notify_slack_pass
+            # - notify_slack_error
+            # - notify_slack_pass
 
 workflows:
     default:
