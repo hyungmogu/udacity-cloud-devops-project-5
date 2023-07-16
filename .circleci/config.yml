@@ -237,7 +237,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ checksum "microservices/server-webp/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-webp/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Checking Project Root Directory
