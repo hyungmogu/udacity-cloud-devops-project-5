@@ -162,6 +162,10 @@ jobs:
                     - v1-dependencies-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
+                name: Checking Project Root Directory
+                command: |
+                    ls -al
+            - run:
                 name: Checking Directory
                 command: |
                     cd microservices/gateway
@@ -183,6 +187,10 @@ jobs:
                 keys:
                     - v1-dependencies-{{ checksum "microservices/server-jpg/requirements.txt" }}
                     - v1-dependencies-
+            - run:
+                name: Checking Project Root Directory
+                command: |
+                    ls -al
             - run:
                 name: Checking Directory
                 command: |
@@ -206,6 +214,10 @@ jobs:
                     - v1-dependencies-{{ checksum "microservices/server-png/requirements.txt" }}
                     - v1-dependencies-
             - run:
+                name: Checking Project Root Directory
+                command: |
+                    ls -al
+            - run:
                 name: Checking Directory
                 command: |
                     cd microservices/server-png
@@ -227,6 +239,10 @@ jobs:
                 keys:
                     - v1-dependencies-{{ checksum "microservices/server-webp/requirements.txt" }}
                     - v1-dependencies-
+            - run:
+                name: Checking Project Root Directory
+                command: |
+                    ls -al
             - run:
                 name: Checking Directory
                 command: |
