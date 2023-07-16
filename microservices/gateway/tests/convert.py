@@ -62,7 +62,7 @@ class TestSimplePositiveImgToPNG(unittest.TestCase):
 ## WEBP
 
 # 1. check if sending a request to server-webp has correct url. It's okay if response is not 200.
-class TestSimplePositiveImgToPNG(unittest.TestCase):
+class TestSimplePositiveImgToWEBP(unittest.TestCase):
     def setUp(self):
         self.app = TestClient(app)
 
