@@ -29,7 +29,7 @@ class TestSimplePositiveImgToPNGService(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                response = self.app.post("/convert/to-jpg",
+                response = self.app.post("/convert/to-png",
                                             files={"image": ("test.jpg", img_data, "image/jpg")})
 
                 self.assertEqual(response.status_code, 201)
