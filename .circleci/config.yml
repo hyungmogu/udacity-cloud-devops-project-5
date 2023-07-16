@@ -393,37 +393,6 @@ jobs:
             - destroy_environment
             # - notify_slack_error
             # - notify_slack_pass
-            
-    configure-infrastructure:
-        docker:
-            - image: python:3.10-buster
-        steps:
-            - checkout
-            - add_ssh_keys:
-                fingerprints: ["07:1b:74:a1:a7:95:0f:c3:a1:17:b2:ed:d8:79:9c:a0"] 
-            - attach_workspace:
-                at: .circleci/ansible/
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install Ansible
-                command: |
-                    apt-get -y install ansible
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
-            - run:
-                name: Run Playbook and Configure server
-                no_output_timeout: 30m
-                command: |
-                    cd .circleci/ansible
-                    ansible-playbook -i inventory.txt configure-server.yml
-            - destroy_environment 
-            # - notify_slack_error
-            # - notify_slack_pass
 
     deploy-frontend:
         docker:
@@ -554,7 +523,38 @@ jobs:
                     make deploy
             - destroy_environment 
             # - notify_slack_error
-            # - notify_slack_pass 
+            # - notify_slack_pass
+    
+    configure-infrastructure:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - add_ssh_keys:
+                fingerprints: ["07:1b:74:a1:a7:95:0f:c3:a1:17:b2:ed:d8:79:9c:a0"] 
+            - attach_workspace:
+                at: .circleci/ansible/
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install Ansible
+                command: |
+                    apt-get -y install ansible
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run:
+                name: Run Playbook and Configure server
+                no_output_timeout: 30m
+                command: |
+                    cd .circleci/ansible
+                    ansible-playbook -i inventory.txt configure-server.yml
+            - destroy_environment 
+            # - notify_slack_error
+            # - notify_slack_pass
 
     smoke-test:
         docker:
@@ -684,23 +684,23 @@ workflows:
                 requires: [build-microservice-png]
             - scan-microservice-server-webp:
                 requires: [build-microservice-webp]
-            - deploy-frontend:
-                requires: [test-frontend, scan-frontend]
-            - deploy-microservice-gateway:
-                requires: [test-microservice-gateway, scan-microservice-gateway]
-            - deploy-microservice-server-jpg:
-                requires: [test-microservice-server-jpg, scan-microservice-server-jpg]
-            - deploy-microservice-server-png:
-                requires: [test-microservice-server-png, scan-microservice-server-png]
-            - deploy-microservice-server-webp:
-                requires: [test-microservice-server-webp, scan-microservice-server-webp]
             - deploy-infrastructure:
                 requires: [test-frontend, test-microservice-gateway, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
-                filters:
-                    branches:
-                        only: [test-feature-branch]
-            - configure-infrastructure:
+                # filters:
+                #     branches:
+                #         only: [test-feature-branch]
+            - deploy-frontend:
                 requires: [deploy-infrastructure]
+            - deploy-microservice-gateway:
+                requires: [deploy-infrastructure]
+            - deploy-microservice-server-jpg:
+                requires: [deploy-infrastructure]
+            - deploy-microservice-server-png:
+                requires: [deploy-infrastructure]
+            - deploy-microservice-server-webp:
+                requires: [deploy-infrastructure]
+            - configure-infrastructure:
+                requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - smoke-test:
                 requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp, deploy-frontend]
             - cloudfront-update:
