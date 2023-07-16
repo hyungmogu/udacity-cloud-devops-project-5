@@ -3,8 +3,8 @@ build_local:
 	./venv/bin/pip install -r requirements.txt
 
 test_local:
-	python -m unittest tests/health.py
-	python -m unittest tests/convert.py
+	./venv/bin/python3 -m unittest tests/health.py
+	./venv/bin/python3 -m unittest tests/convert.py
 
 scan_local:
 	pip-audit -r ./requirements.txt
