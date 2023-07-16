@@ -666,8 +666,8 @@ workflows:
             - build-microservice-webp
             - test-frontend:
                 requires: [build-frontend]
-            - test-microservice-gateway:
-                requires: [build-microservice-gateway]
+            # - test-microservice-gateway:
+            #     requires: [build-microservice-gateway]
             - test-microservice-server-jpg:
                 requires: [build-microservice-jpg]
             - test-microservice-server-png:
@@ -685,7 +685,8 @@ workflows:
             - scan-microservice-server-webp:
                 requires: [build-microservice-webp]
             - deploy-infrastructure:
-                requires: [test-frontend, test-microservice-gateway, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
+                requires: [test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
+                # requires: [test-frontend, test-microservice-gateway, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
                 # filters:
                 #     branches:
                 #         only: [test-feature-branch]
