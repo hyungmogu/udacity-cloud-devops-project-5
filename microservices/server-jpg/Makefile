@@ -7,7 +7,7 @@ test_local:
 	./venv/bin/python3 -m unittest tests/convert.py
 
 scan_local:
-	./venv/bin/python3 -m pip-audit -r ./requirements.txt
+	./venv/bin/python3 -m pip_audit -r ./requirements.txt
 
 deploy:
 	sh docker.sh
