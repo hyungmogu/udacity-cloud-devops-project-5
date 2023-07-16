@@ -702,7 +702,7 @@ workflows:
             - configure-infrastructure:
                 requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - smoke-test:
-                requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp, deploy-frontend]
+                requires: [configure-infrastructure]
             - cloudfront-update:
                 requires: [smoke-test]
             - cleanup:
