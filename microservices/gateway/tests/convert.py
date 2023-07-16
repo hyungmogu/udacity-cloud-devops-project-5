@@ -47,7 +47,7 @@ class TestSimplePositiveImgToPNG(unittest.TestCase):
 
             with open(img_file.name, "rb") as img_data:
                 response = self.app.post("/convert/to-png",
-                                         files={"image": ("test.png", img_data, "image/jpg")})
+                                         files={"image": ("test.jpg", img_data, "image/jpg")})
 
                 # check response url pathname is correct
                 pathname = urlparse(response.url).path
