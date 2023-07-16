@@ -22,8 +22,13 @@ prepare_microservices:
 	./venv/bin/pip install python-dotenv==1.0.0 &&\
 	./venv/bin/python3 ./prepare_docker.py
 
+start_locust:
+	locust -f tests_load/locustfile.py -P 8089
+
 setup_local:
 	cp .env.example .env;
+
+test_load_local: start_locust clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
 
 start_local: prepare_microservices start_microservices
 
