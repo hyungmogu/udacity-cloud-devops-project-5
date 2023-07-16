@@ -277,7 +277,9 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                keys: [backend-build]
+                keys:
+                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-
             - run:
                 name: Scan Microservice Server Gateway
                 command: |
@@ -292,7 +294,9 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                keys: [backend-build]
+                keys:
+                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                    - v1-dependencies-
             - run:
                 name: Scan Microservice Server Jpg
                 command: |
@@ -307,7 +311,9 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                keys: [backend-build]
+                keys:
+                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-png/requirements.txt" }}
+                    - v1-dependencies-
             - run:
                 name: Scan Microservice Server Png
                 command: |
@@ -322,7 +328,9 @@ jobs:
         steps:
             - checkout
             - restore_cache:
-                keys: [backend-build]
+                keys:
+                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-webp/requirements.txt" }}
+                    - v1-dependencies-
             - run:
                 name: Scan Microservice Server Webp
                 command: |
