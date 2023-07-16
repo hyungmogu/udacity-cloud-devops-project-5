@@ -15,8 +15,6 @@ from app import app
 from src.services.convert import ImgToWEBPService
 
 
-# # TESTING IMG TO WEBP SERVICE
-
 @mock_s3
 class TestSimplePositiveImgToWEBPService(unittest.TestCase):
     def setUp(self):

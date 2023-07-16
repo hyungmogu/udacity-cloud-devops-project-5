@@ -15,8 +15,6 @@ from app import app
 from src.services.convert import ImgToJPGService
 
 
-# TESTING IMG TO JPG SERVICE
-
 @mock_s3
 class TestSimplePositiveImgToJPGService(unittest.TestCase):
     def setUp(self):
