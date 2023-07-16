@@ -1,4 +1,4 @@
-audit_local:
+scan_local:
 	npm install &&\
     npm audit --audit-level=critical
 
