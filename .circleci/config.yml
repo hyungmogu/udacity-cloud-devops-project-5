@@ -65,7 +65,7 @@ jobs:
                     cd microservices/gateway
                     ls -al
             - save_cache:
-                key: v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                key: v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                 paths:
                     - "microservices/gateway/venv"
             # - notify_slack_error
@@ -87,7 +87,7 @@ jobs:
                     cd microservices/server-jpg
                     ls -al
             - save_cache:
-                key: v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                key: v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
                 paths:
                     - "microservices/server-jpg/venv"
             # - notify_slack_error
@@ -109,7 +109,7 @@ jobs:
                     cd microservices/server-png
                     ls -al
             - save_cache:
-                key: v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-png/requirements.txt" }}
+                key: v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
                 paths:
                     - "microservices/server-png/venv"
             # - notify_slack_error
@@ -131,7 +131,7 @@ jobs:
                     cd microservices/server-webp
                     ls -al
             - save_cache:
-                key: v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-webp/requirements.txt" }}
+                key: v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
                 paths:
                     - "microservices/server-webp/venv"
             # - notify_slack_error
@@ -159,7 +159,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Checking Project Root Directory
@@ -185,7 +185,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                    - v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Checking Project Root Directory
@@ -211,7 +211,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-png/requirements.txt" }}
+                    - v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Checking Project Root Directory
@@ -237,7 +237,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-webp/requirements.txt" }}
+                    - v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Checking Project Root Directory
@@ -278,7 +278,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Scan Microservice Server Gateway
@@ -295,7 +295,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                    - v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Scan Microservice Server Jpg
@@ -312,7 +312,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-png/requirements.txt" }}
+                    - v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Scan Microservice Server Png
@@ -329,7 +329,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "microservices/server-webp/requirements.txt" }}
+                    - v1-dependencies-{{ CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Scan Microservice Server Webp
