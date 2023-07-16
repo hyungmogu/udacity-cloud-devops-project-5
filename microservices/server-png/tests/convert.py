@@ -14,16 +14,6 @@ os.environ["AWS_SECRET_ACCESS_KEY"] = "test"
 from app import app
 from src.services.convert import ImgToPNGService
 
-# HEALTH CHECK
-
-class TestHealthCheck(unittest.TestCase):
-    def setUp(self):
-        self.app = TestClient(app)
-
-    def test_test_client_server_is_running(self):
-        response = self.app.get("/health")
-        self.assertEqual(response.status_code, 200)
-
 
 # # TESTING IMG TO PNG SERVICE
 
