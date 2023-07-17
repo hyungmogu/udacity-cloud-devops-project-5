@@ -455,7 +455,7 @@ jobs:
                 command: |
                     cd microservices/gateway;
                     make deploy;
-            - destroy_environment 
+            # - destroy_environment 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -481,7 +481,7 @@ jobs:
                 command: |
                     cd microservices/server-jpg;
                     make deploy;
-            - destroy_environment 
+            # - destroy_environment 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -507,7 +507,7 @@ jobs:
                 command: |
                     cd microservices/server-png
                     make deploy
-            - destroy_environment 
+            # - destroy_environment 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -533,7 +533,7 @@ jobs:
                 command: |
                     cd microservices/server-webp
                     make deploy
-            - destroy_environment 
+            # - destroy_environment 
             # - notify_slack_error
             # - notify_slack_pass
     
