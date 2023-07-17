@@ -443,7 +443,7 @@ jobs:
                 command: |
                     apt update
             - run:
-                name: Install Docker
+                name: Deploy containers to Docker Hub
                 command: |
                     cd microservices/gateway;
                     make deploy;
@@ -466,9 +466,9 @@ jobs:
                 command: |
                     apt update
             - run:
-                name: Install Docker
+                name: Deploy containers to Docker Hub
                 command: |
-                    cd microservices/gateway;
+                    cd microservices/server-jpg;
                     make deploy;
             - run:
                 name: Deploy Server Jpg
@@ -489,9 +489,9 @@ jobs:
                 command: |
                     apt update
             - run:
-                name: Install Docker
+                name: Deploy containers to Docker Hub
                 command: |
-                    cd microservices/gateway;
+                    cd microservices/server-png;
                     make deploy;
             - run:
                 name: Deploy Microservice Png
@@ -512,9 +512,9 @@ jobs:
                 command: |
                     apt update
             - run:
-                name: Install Docker
+                name: Deploy containers to Docker Hub
                 command: |
-                    cd microservices/gateway;
+                    cd microservices/server-webp;
                     make deploy;
             - run:
                 name: Deploy Microservice Webp
