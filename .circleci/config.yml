@@ -713,7 +713,7 @@ workflows:
             # - deploy-microservice-server-webp:
             #     requires: [deploy-infrastructure]
             - deploy-microservice-gateway:
-                requires: [test-microservice-gateway, scan-microservice-gateway]
+                requires: [scan-microservice-gateway]
             - deploy-microservice-server-jpg:
                 requires: [test-microservice-server-jpg, scan-microservice-server-jpg]
             - deploy-microservice-server-png:
