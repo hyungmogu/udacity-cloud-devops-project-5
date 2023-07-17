@@ -465,7 +465,7 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker:
-                version: 20.10.14
+                version: 20.10.23
                 docker_layer_caching: true
             - run:
                 name: Update packages
@@ -696,27 +696,35 @@ workflows:
                 requires: [build-microservice-png]
             - scan-microservice-server-webp:
                 requires: [build-microservice-webp]
-            - deploy-infrastructure:
-                requires: [test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
-                # requires: [test-frontend, test-microservice-gateway, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
-                # filters:
-                #     branches:
-                #         only: [test-feature-branch]
-            - deploy-frontend:
-                requires: [deploy-infrastructure]
+            # - deploy-infrastructure:
+            #     requires: [test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
+            #     # requires: [test-frontend, test-microservice-gateway, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
+            #     # filters:
+            #     #     branches:
+            #     #         only: [test-feature-branch]
+            # - deploy-frontend:
+            #     requires: [deploy-infrastructure]
+            # - deploy-microservice-gateway:
+            #     requires: [deploy-infrastructure]
+            # - deploy-microservice-server-jpg:
+            #     requires: [deploy-infrastructure]
+            # - deploy-microservice-server-png:
+            #     requires: [deploy-infrastructure]
+            # - deploy-microservice-server-webp:
+            #     requires: [deploy-infrastructure]
             - deploy-microservice-gateway:
-                requires: [deploy-infrastructure]
+                requires: [test-microservice-gateway, scan-microservice-gateway]
             - deploy-microservice-server-jpg:
-                requires: [deploy-infrastructure]
+                requires: [test-microservice-server-jpg, scan-microservice-server-jpg]
             - deploy-microservice-server-png:
-                requires: [deploy-infrastructure]
+                requires: [test-microservice-server-png, scan-microservice-server-png]
             - deploy-microservice-server-webp:
-                requires: [deploy-infrastructure]
-            - configure-infrastructure:
-                requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
-            - smoke-test:
-                requires: [configure-infrastructure]
-            - cloudfront-update:
-                requires: [smoke-test]
-            - cleanup:
-                requires: [cloudfront-update]
+                requires: [test-microservice-server-webp, scan-microservice-server-webp]
+            # - configure-infrastructure:
+            #     requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
+            # - smoke-test:
+            #     requires: [configure-infrastructure]
+            # - cloudfront-update:
+            #     requires: [smoke-test]
+            # - cleanup:
+            #     requires: [cloudfront-update]
