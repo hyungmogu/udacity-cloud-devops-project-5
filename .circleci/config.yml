@@ -438,9 +438,6 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - setup_remote_docker:
-                version: 20.10.23
-                docker_layer_caching: true
             - run:
                 name: Update packages
                 command: |
@@ -464,9 +461,6 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - setup_remote_docker:
-                version: 20.10.23
-                docker_layer_caching: true
             - run:
                 name: Update packages
                 command: |
@@ -490,9 +484,6 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - setup_remote_docker:
-                version: 20.10.23
-                docker_layer_caching: true
             - run:
                 name: Update packages
                 command: |
@@ -516,9 +507,6 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - setup_remote_docker:
-                version: 20.10.23
-                docker_layer_caching: true
             - run:
                 name: Update packages
                 command: |
