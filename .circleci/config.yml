@@ -35,7 +35,7 @@ commands:
 jobs:
     build-frontend:
         docker:
-            - image: node:18.14-buster
+            - image: node:18.14-alpine
         steps:
             - checkout
             - run:
@@ -51,7 +51,7 @@ jobs:
 
     build-microservice-gateway:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -73,7 +73,7 @@ jobs:
     
     build-microservice-jpg:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -95,7 +95,7 @@ jobs:
 
     build-microservice-png:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -117,7 +117,7 @@ jobs:
     
     build-microservice-webp:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -139,7 +139,7 @@ jobs:
 
     test-frontend:
         docker:
-            - image: node:18.14-buster
+            - image: node:18.14-alpine
         steps:
             - checkout
             - restore_cache:
@@ -154,7 +154,7 @@ jobs:
 
     test-microservice-gateway:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - restore_cache:
@@ -180,7 +180,7 @@ jobs:
     
     test-microservice-server-jpg:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - restore_cache:
@@ -206,7 +206,7 @@ jobs:
     
     test-microservice-server-png:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - restore_cache:
@@ -232,7 +232,7 @@ jobs:
     
     test-microservice-server-webp:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - restore_cache:
@@ -258,7 +258,7 @@ jobs:
 
     scan-frontend:
         docker:
-            - image: node:13.8-buster
+            - image: node:13.8-alpine
         steps:
             - checkout
             - restore_cache:
@@ -273,7 +273,7 @@ jobs:
 
     scan-microservice-gateway:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - restore_cache:
@@ -290,7 +290,7 @@ jobs:
     
     scan-microservice-server-jpg:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - restore_cache:
@@ -307,7 +307,7 @@ jobs:
     
     scan-microservice-server-png:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - restore_cache:
@@ -324,7 +324,7 @@ jobs:
     
     scan-microservice-server-webp:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - restore_cache:
@@ -341,7 +341,7 @@ jobs:
     
     deploy-infrastructure:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -396,7 +396,7 @@ jobs:
 
     deploy-frontend:
         docker:
-            - image: node:13.8-buster
+            - image: node:13.8-alpine
         steps:
             - checkout
             - run:
@@ -435,7 +435,7 @@ jobs:
     
     deploy-microservice-gateway:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -458,7 +458,7 @@ jobs:
     
     deploy-microservice-server-jpg:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -481,7 +481,7 @@ jobs:
     
     deploy-microservice-server-png:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -504,7 +504,7 @@ jobs:
     
     deploy-microservice-server-webp:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -527,7 +527,7 @@ jobs:
     
     configure-infrastructure:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - add_ssh_keys:
@@ -558,7 +558,7 @@ jobs:
 
     smoke-test:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -603,7 +603,7 @@ jobs:
 
     cloudfront-update:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
@@ -628,7 +628,7 @@ jobs:
     
     cleanup:
         docker:
-            - image: python:3.10-buster
+            - image: python:3.10-alpine
         steps:
             - checkout
             - run:
