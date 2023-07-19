@@ -441,7 +441,11 @@ jobs:
             - run:
                 name: Update packages
                 command: |
-                    apt update
+                    apt update        
+            - run:
+                name: Install Docker
+                command: |
+                    sh docker_install_ubuntu.sh
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -466,6 +470,10 @@ jobs:
                 command: |
                     apt update
             - run:
+                name: Install Docker
+                command: |
+                    sh docker_install_ubuntu.sh
+            - run:
                 name: Deploy containers to Docker Hub
                 command: |
                     cd microservices/server-jpg;
@@ -489,6 +497,10 @@ jobs:
                 command: |
                     apt update
             - run:
+                name: Install Docker
+                command: |
+                    sh docker_install_ubuntu.sh
+            - run:
                 name: Deploy containers to Docker Hub
                 command: |
                     cd microservices/server-png;
@@ -511,6 +523,10 @@ jobs:
                 name: Update packages
                 command: |
                     apt update
+            - run:
+                name: Install Docker
+                command: |
+                    sh docker_install_ubuntu.sh
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
