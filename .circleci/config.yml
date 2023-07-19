@@ -445,7 +445,8 @@ jobs:
             - run:
                 name: Install Docker
                 command: |
-                    sh docker_install_cicd.sh
+                    cd microservices/gateway;
+                    sh docker_install_cicd.sh;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -472,7 +473,8 @@ jobs:
             - run:
                 name: Install Docker
                 command: |
-                    sh docker_install_cicd.sh
+                    cd microservices/server-jpg;
+                    sh docker_install_cicd.sh;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -499,7 +501,8 @@ jobs:
             - run:
                 name: Install Docker
                 command: |
-                    sh docker_install_cicd.sh
+                    cd microservices/server-png;
+                    sh docker_install_cicd.sh;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -526,7 +529,8 @@ jobs:
             - run:
                 name: Install Docker
                 command: |
-                    sh docker_install_cicd.sh
+                    cd microservices/server-webp;
+                    sh docker_install_cicd.sh;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
