@@ -35,13 +35,9 @@ commands:
 jobs:
     build-frontend:
         docker:
-            - image: node:18.14-alpine
+            - image: node:18.14-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Build front-end
                 command: |
@@ -55,13 +51,9 @@ jobs:
 
     build-microservice-gateway:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Run Build for Micoservice Gateway
                 command: |
@@ -81,13 +73,9 @@ jobs:
     
     build-microservice-jpg:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Run Build for Microservice Server Jpg
                 command: |
@@ -107,13 +95,9 @@ jobs:
 
     build-microservice-png:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Run Build for Microservice Server Png
                 command: |
@@ -133,13 +117,9 @@ jobs:
     
     build-microservice-webp:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Run Build for Microservice Webp
                 command: |
@@ -159,15 +139,11 @@ jobs:
 
     test-frontend:
         docker:
-            - image: node:18.14-alpine
+            - image: node:18.14-buster
         steps:
             - checkout
             - restore_cache:
                 keys: [frontend-build]
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Run frontend test
                 command: |
@@ -178,17 +154,13 @@ jobs:
 
     test-microservice-gateway:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Checking Project Root Directory
                 command: |
@@ -208,17 +180,13 @@ jobs:
     
     test-microservice-server-jpg:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Checking Project Root Directory
                 command: |
@@ -238,17 +206,13 @@ jobs:
     
     test-microservice-server-png:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Checking Project Root Directory
                 command: |
@@ -268,17 +232,13 @@ jobs:
     
     test-microservice-server-webp:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Checking Project Root Directory
                 command: |
@@ -298,15 +258,11 @@ jobs:
 
     scan-frontend:
         docker:
-            - image: node:13.8-alpine
+            - image: node:13.8-buster
         steps:
             - checkout
             - restore_cache:
                 keys: [frontend-build]
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Run frontend scan
                 command: |
@@ -317,17 +273,13 @@ jobs:
 
     scan-microservice-gateway:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Scan Microservice Server Gateway
                 command: |
@@ -338,17 +290,13 @@ jobs:
     
     scan-microservice-server-jpg:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Scan Microservice Server Jpg
                 command: |
@@ -359,17 +307,13 @@ jobs:
     
     scan-microservice-server-png:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Scan Microservice Server Png
                 command: |
@@ -380,17 +324,13 @@ jobs:
     
     scan-microservice-server-webp:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Scan Microservice Server Webp
                 command: |
@@ -401,7 +341,7 @@ jobs:
     
     deploy-infrastructure:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - run:
@@ -456,7 +396,7 @@ jobs:
 
     deploy-frontend:
         docker:
-            - image: node:13.8-alpine
+            - image: node:13.8-buster
         steps:
             - checkout
             - run:
@@ -495,13 +435,9 @@ jobs:
     
     deploy-microservice-gateway:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Update packages
                 command: |
@@ -522,13 +458,9 @@ jobs:
     
     deploy-microservice-server-jpg:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Update packages
                 command: |
@@ -549,13 +481,9 @@ jobs:
     
     deploy-microservice-server-png:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Update packages
                 command: |
@@ -576,13 +504,9 @@ jobs:
     
     deploy-microservice-server-webp:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Add Make
-                command: |
-                    apk add --no-cache make
             - run:
                 name: Update packages
                 command: |
@@ -603,7 +527,7 @@ jobs:
     
     configure-infrastructure:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - add_ssh_keys:
@@ -634,7 +558,7 @@ jobs:
 
     smoke-test:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - run:
@@ -679,7 +603,7 @@ jobs:
 
     cloudfront-update:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - run:
@@ -704,7 +628,7 @@ jobs:
     
     cleanup:
         docker:
-            - image: python:3.10-alpine
+            - image: python:3.10-buster
         steps:
             - checkout
             - run:
