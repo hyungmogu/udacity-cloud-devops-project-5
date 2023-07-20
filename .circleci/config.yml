@@ -483,11 +483,6 @@ jobs:
                 command: |
                     cd microservices/server-jpg;
                     make deploy;
-            - run:
-                name: Deploy Server Jpg
-                command: |
-                    cd microservices/server-jpg;
-                    make deploy;
             # - destroy_environment 
             # - notify_slack_error
             # - notify_slack_pass
@@ -547,11 +542,6 @@ jobs:
                 command: |
                     cd microservices/server-webp;
                     make deploy;
-            - run:
-                name: Deploy Microservice Webp
-                command: |
-                    cd microservices/server-webp
-                    make deploy
             # - destroy_environment 
             # - notify_slack_error
             # - notify_slack_pass
