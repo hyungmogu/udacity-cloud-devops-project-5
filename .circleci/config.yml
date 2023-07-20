@@ -448,16 +448,11 @@ jobs:
                     cd microservices/gateway;
                     sh docker_install_cicd.sh;
             - run:
-                name: Deploy containers to Docker Hub
-                command: |
-                    cd microservices/gateway;
-                    make deploy;
-            - run:
                 name: See current directory
                 command: |
                     pwd
             - run:
-                name: Deploy Microservice Gateway
+                name: Deploy containers to Docker Hub
                 command: |
                     cd microservices/gateway;
                     make deploy;
@@ -480,14 +475,14 @@ jobs:
                     cd microservices/server-jpg;
                     sh docker_install_cicd.sh;
             - run:
+                name: See current directory
+                command: |
+                    pwd
+            - run:
                 name: Deploy containers to Docker Hub
                 command: |
                     cd microservices/server-jpg;
                     make deploy;
-            - run:
-                name: See current directory
-                command: |
-                    pwd
             - run:
                 name: Deploy Server Jpg
                 command: |
@@ -544,14 +539,14 @@ jobs:
                     cd microservices/server-webp;
                     sh docker_install_cicd.sh;
             - run:
+                name: See current directory
+                command: |
+                    pwd
+            - run:
                 name: Deploy containers to Docker Hub
                 command: |
                     cd microservices/server-webp;
                     make deploy;
-            - run:
-                name: See current directory
-                command: |
-                    pwd
             - run:
                 name: Deploy Microservice Webp
                 command: |
