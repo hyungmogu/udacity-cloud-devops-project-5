@@ -453,6 +453,10 @@ jobs:
                     cd microservices/gateway;
                     make deploy;
             - run:
+                name: See current directory
+                command: |
+                    pwd
+            - run:
                 name: Deploy Microservice Gateway
                 command: |
                     cd microservices/gateway;
@@ -480,6 +484,10 @@ jobs:
                 command: |
                     cd microservices/server-jpg;
                     make deploy;
+            - run:
+                name: See current directory
+                command: |
+                    pwd
             - run:
                 name: Deploy Server Jpg
                 command: |
@@ -509,6 +517,10 @@ jobs:
                     cd microservices/server-png;
                     make deploy;
             - run:
+                name: See current directory
+                command: |
+                    pwd
+            - run:
                 name: Deploy Microservice Png
                 command: |
                     cd microservices/server-png
@@ -536,6 +548,10 @@ jobs:
                 command: |
                     cd microservices/server-webp;
                     make deploy;
+            - run:
+                name: See current directory
+                command: |
+                    pwd
             - run:
                 name: Deploy Microservice Webp
                 command: |
