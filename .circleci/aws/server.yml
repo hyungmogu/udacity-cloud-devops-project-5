@@ -55,7 +55,7 @@ Resources:
           apt update
           apt-get -y install ansible
       # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
-      ImageId: ami-0747bdcabd34c712a
+      ImageId: ami-08c417ecfdc73a8c2
       # ToDo: Change the key-pair name, as applicable to you. 
       KeyName: nd9990_keypair
       SecurityGroups:
