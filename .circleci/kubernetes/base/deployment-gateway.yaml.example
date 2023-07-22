@@ -15,10 +15,10 @@ spec:
         app: gateway-main-pod
     spec:
       containers:
-        - image: $DOCKER_ID/$GATEWAY_DOCKER_IMAGE_NAME:$GATEWAY_DOCKER_IMAGE_BUILD_NUMBER
+        - image: $DOCKER_ID/$DOCKER_IMAGE_NAME-gateway:$IMAGE_BUILD_NUMBER
           name: gateway-main-pod
           ports:
-            - containerPort: $GATEWAY_PORT
+            - containerPort: $SERVER_GATEWAY_PORT
           args:
             - python
             - app.py
@@ -58,35 +58,20 @@ spec:
                 configMapKeyRef:
                   key: SERVER_PROTOCOL
                   name: gateway-env
-            - name: GATEWAY_PORT
+            - name: SERVER_GATEWAY_PORT
               valueFrom:
                 configMapKeyRef:
-                  key: GATEWAY_PORT
-                  name: gateway-env
-            - name: SERVER_JPG_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: SERVER_JPG_HOST
+                  key: SERVER_GATEWAY_PORT
                   name: gateway-env
             - name: SERVER_JPG_PORT
               valueFrom:
                 configMapKeyRef:
                   key: SERVER_JPG_PORT
                   name: gateway-env
-            - name: SERVER_PNG_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: SERVER_PNG_HOST
-                  name: gateway-env
             - name: SERVER_PNG_PORT
               valueFrom:
                 configMapKeyRef:
                   key: SERVER_PNG_PORT
-                  name: gateway-env
-            - name: SERVER_WEBP_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: SERVER_WEBP_HOST
                   name: gateway-env
             - name: SERVER_WEBP_PORT
               valueFrom:
@@ -96,7 +81,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /health
-              port: $GATEWAY_PORT
+              port: $SERVER_GATEWAY_PORT
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 10
