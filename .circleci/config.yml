@@ -440,6 +440,10 @@ jobs:
             - checkout
             - setup_remote_docker
             - run:
+                name: Check if docker is working
+                command: |
+                    docker run hello-world;
+            - run:
                 name: Install Make
                 command: |
                     apk add --no-cache make;
@@ -458,6 +462,10 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker
+            - run:
+                name: Check if docker is working
+                command: |
+                    docker run hello-world;
             - run:
                 name: Install Make
                 command: |
@@ -478,6 +486,10 @@ jobs:
             - checkout
             - setup_remote_docker
             - run:
+                name: Check if docker is working
+                command: |
+                    docker run hello-world;
+            - run:
                 name: Install Make
                 command: |
                     apk add --no-cache make;
@@ -496,6 +508,10 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker
+            - run:
+                name: Check if docker is working
+                command: |
+                    docker run hello-world;
             - run:
                 name: Install Make
                 command: |
