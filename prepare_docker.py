@@ -56,9 +56,8 @@ class DockerComposeSetupTool:
             "values": {
                 "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
                 "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
-                "SERVER_WEBP_DOCKER_IMAGE_NAME": os.environ.get("SERVER_WEBP_DOCKER_IMAGE_NAME", ""),
-                "SERVER_WEBP_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("SERVER_WEBP_DOCKER_IMAGE_BUILD_NUMBER", ""),
-                "SERVER_WEBP_HOST": os.environ.get("SERVER_WEBP_HOST", ""),
+                "DOCKER_IMAGE_NAME": os.environ.get("DOCKER_IMAGE_NAME", ""),
+                "IMAGE_BUILD_NUMBER": os.environ.get("IMAGE_BUILD_NUMBER", ""),
                 "SERVER_WEBP_PORT": os.environ.get("SERVER_WEBP_PORT", ""),
                 "AWS_S3_BUCKET": os.environ.get("AWS_S3_BUCKET", ""),
                 "AWS_OBJECT_EXPIRES_IN": int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0")),
