@@ -23,11 +23,6 @@ spec:
             - python
             - app.py
           env:
-            - name: DOCKER_IMAGE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  key: DOCKER_IMAGE_NAME
-                  name: server-webp-env
             - name: SERVER_WEBP_PORT
               valueFrom:
                 configMapKeyRef:

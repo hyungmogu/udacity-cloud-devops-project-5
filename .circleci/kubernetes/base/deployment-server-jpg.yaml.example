@@ -23,11 +23,6 @@ spec:
             - python
             - app.py
           env:
-            - name: DOCKER_IMAGE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  key: DOCKER_IMAGE_NAME
-                  name: server-jpg-env
             - name: SERVER_JPG_PORT
               valueFrom:
                 configMapKeyRef:
