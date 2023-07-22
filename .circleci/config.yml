@@ -435,22 +435,10 @@ jobs:
     
     deploy-microservice-gateway:
         docker:
-            - image: python:3.10-buster
+            - image: docker:23.0.6-cli-alpine3.18
         steps:
             - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update        
-            - run:
-                name: Install Docker
-                command: |
-                    cd microservices/gateway;
-                    sh docker_install_cicd.sh;
-            - run:
-                name: See current directory
-                command: |
-                    pwd
+            - setup_remote_docker
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -462,22 +450,10 @@ jobs:
     
     deploy-microservice-server-jpg:
         docker:
-            - image: python:3.10-buster
+            - image: docker:23.0.6-cli-alpine3.18
         steps:
             - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install Docker
-                command: |
-                    cd microservices/server-jpg;
-                    sh docker_install_cicd.sh;
-            - run:
-                name: See current directory
-                command: |
-                    pwd
+            - setup_remote_docker
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -492,24 +468,7 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install Docker
-                command: |
-                    cd microservices/server-png;
-                    sh docker_install_cicd.sh;
-            - run:
-                name: Deploy containers to Docker Hub
-                command: |
-                    cd microservices/server-png;
-                    make deploy;
-            - run:
-                name: See current directory
-                command: |
-                    pwd
+            - setup_remote_docker
             - run:
                 name: Deploy Microservice Png
                 command: |
@@ -524,19 +483,7 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install Docker
-                command: |
-                    cd microservices/server-webp;
-                    sh docker_install_cicd.sh;
-            - run:
-                name: See current directory
-                command: |
-                    pwd
+            - setup_remote_docker
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
