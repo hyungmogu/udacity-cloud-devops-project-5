@@ -10,4 +10,4 @@ scan_local:
 	./venv/bin/python3 -m pip_audit -r ./requirements.txt
 
 deploy:
-	sh docker.sh
+	sh deploy.sh
