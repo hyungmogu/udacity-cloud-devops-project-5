@@ -439,6 +439,10 @@ jobs:
         steps:
             - checkout
             - run:
+                name: Check if docker is running
+                command: |
+                    docker run hello-world;
+            - run:
                 name: Deploy containers to Docker Hub
                 command: |
                     cd microservices/gateway;
@@ -452,6 +456,10 @@ jobs:
             - image: cimg/base:2021.04
         steps:
             - checkout
+            - run:
+                name: Check if docker is running
+                command: |
+                    docker run hello-world;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -467,6 +475,10 @@ jobs:
         steps:
             - checkout
             - run:
+                name: Check if docker is running
+                command: |
+                    docker run hello-world;
+            - run:
                 name: Deploy Microservice Png
                 command: |
                     cd microservices/server-png
@@ -480,6 +492,10 @@ jobs:
             - image: cimg/base:2021.04
         steps:
             - checkout
+            - run:
+                name: Check if docker is running
+                command: |
+                    docker run hello-world;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
