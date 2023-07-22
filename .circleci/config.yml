@@ -438,15 +438,6 @@ jobs:
             - image: cimg/base:2021.04
         steps:
             - checkout
-            - setup_remote_docker
-            - run:
-                name: Check if docker is working
-                command: |
-                    docker run hello-world;
-            - run:
-                name: Install Make
-                command: |
-                    apk add --no-cache make;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -461,15 +452,6 @@ jobs:
             - image: cimg/base:2021.04
         steps:
             - checkout
-            - setup_remote_docker
-            - run:
-                name: Check if docker is working
-                command: |
-                    docker run hello-world;
-            - run:
-                name: Install Make
-                command: |
-                    apk add --no-cache make;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -485,14 +467,6 @@ jobs:
         steps:
             - checkout
             - run:
-                name: Check if docker is working
-                command: |
-                    docker run hello-world;
-            - run:
-                name: Install Make
-                command: |
-                    apk add --no-cache make;
-            - run:
                 name: Deploy Microservice Png
                 command: |
                     cd microservices/server-png
@@ -506,15 +480,6 @@ jobs:
             - image: cimg/base:2021.04
         steps:
             - checkout
-            - setup_remote_docker
-            - run:
-                name: Check if docker is working
-                command: |
-                    docker run hello-world;
-            - run:
-                name: Install Make
-                command: |
-                    apk add --no-cache make;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
