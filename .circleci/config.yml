@@ -435,7 +435,7 @@ jobs:
     
     deploy-microservice-gateway:
         docker:
-            - image: docker:23.0.6-cli-alpine3.18
+            - image: cimg/base:2021.04
         steps:
             - checkout
             - setup_remote_docker
@@ -458,7 +458,7 @@ jobs:
     
     deploy-microservice-server-jpg:
         docker:
-            - image: docker:23.0.6-cli-alpine3.18
+            - image: cimg/base:2021.04
         steps:
             - checkout
             - setup_remote_docker
@@ -481,10 +481,9 @@ jobs:
     
     deploy-microservice-server-png:
         docker:
-            - image: python:3.10-buster
+            - image: cimg/base:2021.04
         steps:
             - checkout
-            - setup_remote_docker
             - run:
                 name: Check if docker is working
                 command: |
@@ -504,7 +503,7 @@ jobs:
     
     deploy-microservice-server-webp:
         docker:
-            - image: python:3.10-buster
+            - image: cimg/base:2021.04
         steps:
             - checkout
             - setup_remote_docker
