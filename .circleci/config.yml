@@ -438,10 +438,15 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
+            - setup_remote_docker
             - run:
                 name: Update packages
                 command: |
                     apt update        
+            - run:
+                name: Check Docker
+                command: |
+                    docker run hello-world;
             - run:
                 name: Install Docker
                 command: |
