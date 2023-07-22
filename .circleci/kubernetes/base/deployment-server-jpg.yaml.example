@@ -15,7 +15,7 @@ spec:
         app: server-jpg-main-pod
     spec:
       containers:
-        - image: $DOCKER_ID/$SERVER_JPG_DOCKER_IMAGE_NAME:$SERVER_JPG_DOCKER_IMAGE_BUILD_NUMBER
+        - image: $DOCKER_ID/$DOCKER_IMAGE_NAME-jpg:$IMAGE_BUILD_NUMBER
           name: server-jpg-main-pod
           ports:
             - containerPort: $SERVER_JPG_PORT
@@ -23,10 +23,10 @@ spec:
             - python
             - app.py
           env:
-            - name: SERVER_JPG_HOST
+            - name: DOCKER_IMAGE_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: SERVER_JPG_HOST
+                  key: DOCKER_IMAGE_NAME
                   name: server-jpg-env
             - name: SERVER_JPG_PORT
               valueFrom:
