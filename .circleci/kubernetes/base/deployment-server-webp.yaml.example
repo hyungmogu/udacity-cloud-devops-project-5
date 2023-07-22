@@ -15,7 +15,7 @@ spec:
         app: server-webp-main-pod
     spec:
       containers:
-        - image: $DOCKER_ID/$SERVER_WEBP_DOCKER_IMAGE_NAME:$SERVER_WEBP_DOCKER_IMAGE_BUILD_NUMBER
+        - image: $DOCKER_ID/$DOCKER_IMAGE_NAME-webp:$IMAGE_BUILD_NUMBER
           name: server-webp-main-pod
           ports:
             - containerPort: $SERVER_WEBP_PORT
@@ -23,10 +23,10 @@ spec:
             - python
             - app.py
           env:
-            - name: SERVER_WEBP_HOST
+            - name: DOCKER_IMAGE_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: SERVER_WEBP_HOST
+                  key: DOCKER_IMAGE_NAME
                   name: server-webp-env
             - name: SERVER_WEBP_PORT
               valueFrom:
