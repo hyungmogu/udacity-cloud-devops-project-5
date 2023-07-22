@@ -11,19 +11,16 @@ class DockerComposeSetupTool:
             "values": {
                 "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
                 "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
-                "GATEWAY_DOCKER_IMAGE_NAME": os.environ.get("GATEWAY_DOCKER_IMAGE_NAME", ""),
-                "GATEWAY_DOCKER_IMAGE_BUILD_NUMBER": os.environ.get("GATEWAY_DOCKER_IMAGE_BUILD_NUMBER", ""),
+                "DOCKER_IMAGE_NAME": os.environ.get("DOCKER_IMAGE_NAME", ""),
+                "IMAGE_BUILD_NUMBER": os.environ.get("IMAGE_BUILD_NUMBER", ""),
                 "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", "5"),
                 "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", "86400"),
                 "REDIS_HOST": os.environ.get("REDIS_HOST", ""),
                 "REDIS_PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
-                "GATEWAY_PORT": os.environ.get("GATEWAY_PORT", ""),
                 "SERVER_PROTOCOL": os.environ.get("SERVER_PROTOCOL", ""),
-                "SERVER_JPG_HOST": os.environ.get("SERVER_JPG_HOST", ""),
+                "SERVER_GATEWAY_PORT": os.environ.get("SERVER_GATEWAY_PORT", ""),
                 "SERVER_JPG_PORT": os.environ.get("SERVER_JPG_PORT", ""),
-                "SERVER_PNG_HOST": os.environ.get("SERVER_PNG_HOST", ""),
                 "SERVER_PNG_PORT": os.environ.get("SERVER_PNG_PORT", ""),
-                "SERVER_WEBP_HOST": os.environ.get("SERVER_WEBP_HOST", ""),
                 "SERVER_WEBP_PORT": os.environ.get("SERVER_WEBP_PORT", "")
             }
         },{
