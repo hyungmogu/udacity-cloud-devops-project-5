@@ -440,6 +440,10 @@ jobs:
             - checkout
             - setup_remote_docker
             - run:
+                name: Install Make
+                command: |
+                    apk add --no-cache make;
+            - run:
                 name: Deploy containers to Docker Hub
                 command: |
                     cd microservices/gateway;
@@ -454,6 +458,10 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker
+            - run:
+                name: Install Make
+                command: |
+                    apk add --no-cache make;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
@@ -470,6 +478,10 @@ jobs:
             - checkout
             - setup_remote_docker
             - run:
+                name: Install Make
+                command: |
+                    apk add --no-cache make;
+            - run:
                 name: Deploy Microservice Png
                 command: |
                     cd microservices/server-png
@@ -484,6 +496,10 @@ jobs:
         steps:
             - checkout
             - setup_remote_docker
+            - run:
+                name: Install Make
+                command: |
+                    apk add --no-cache make;
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
