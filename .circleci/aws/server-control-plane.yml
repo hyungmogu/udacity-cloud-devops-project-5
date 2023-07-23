@@ -6,7 +6,7 @@ Parameters:
         Description: An environment name that will be prefixed to resource names
         Type: String
 Resources:
-    WebServerSecGroup:
+    InstanceSecurityGroup:
         Type: AWS::EC2::SecurityGroup
         Properties:
         GroupDescription: Allow http to our hosts and SSH from local only
