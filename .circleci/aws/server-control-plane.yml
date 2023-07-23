@@ -9,7 +9,7 @@ Resources:
     InstanceSecurityGroup:
         Type: AWS::EC2::SecurityGroup
         Properties:
-        GroupDescription: Allow http to our hosts and SSH from local only
+        GroupDescription: Allow access via SSH only
         VpcId:
             Fn::ImportValue:
             !Sub "${EnvironmentName}-VPCID"
@@ -40,15 +40,3 @@ Resources:
         - DeviceName: "/dev/sdk"
             Ebs:
             VolumeSize: '10'
-    WebAppGroup:
-        Type: AWS::AutoScaling::AutoScalingGroup
-        Properties:
-        VPCZoneIdentifier:
-        - Fn::ImportValue: 
-            !Sub "${EnvironmentName}-PRIV-NETS"
-        LaunchConfigurationName:
-            Ref: WebAppLaunchConfig
-        MinSize: '1'
-        MaxSize: '1'
-        TargetGroupARNs:
-        - Ref: WebAppTargetGroup
