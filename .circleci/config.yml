@@ -377,8 +377,8 @@ jobs:
                 command: |
                     aws cloudformation deploy \
                     --template-file .circleci/aws/server-control-plane.yml \
-                    --tags project=img-converter-control-plane \
-                    --stack-name "img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --tags project=img-converter type=control-plane \
+                    --stack-name "img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
             - run:
                 name: Ensure front-end infrastructure exist
