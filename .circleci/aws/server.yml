@@ -57,7 +57,7 @@ Resources:
       # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
       ImageId: ami-08c417ecfdc73a8c2
       # ToDo: Change the key-pair name, as applicable to you. 
-      KeyName: nd9990_keypair
+      KeyName: image-converter-ec2
       SecurityGroups:
       - Ref: WebServerSecGroup
       InstanceType: t3.medium
