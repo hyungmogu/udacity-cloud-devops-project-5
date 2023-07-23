@@ -2,7 +2,6 @@ Description: >
     Creditor: Carlos Rivas / Udacity 2019
 
 Parameters:
-
     EnvironmentName:
         Description: An environment name that will be prefixed to resource names
         Type: String
@@ -54,9 +53,7 @@ Resources:
           #!/bin/bash
           apt update
           apt-get -y install ansible
-      # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
       ImageId: ami-08c417ecfdc73a8c2
-      # ToDo: Change the key-pair name, as applicable to you. 
       KeyName: image-converter-ec2
       SecurityGroups:
       - Ref: WebServerSecGroup
