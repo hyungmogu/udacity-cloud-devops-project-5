@@ -381,8 +381,9 @@ jobs:
                     --stack-name "img-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
             - run:
-                name: Add back-end ip to ansible inventory
+                name: Add server control plane ip to ansible inventory
                 command: |
+                    "[control-plane]" >> .circleci/ansible/inventory.txt;
                     aws ec2 describe-instances \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory.txt 
