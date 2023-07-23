@@ -376,7 +376,7 @@ jobs:
                 name: Ensure front-end infrastructure exist
                 command: |
                     aws cloudformation deploy \
-                    --template-file .circleci/aws/frontend.yml \
+                    --template-file .circleci/aws/cloudfront.yml \
                     --tags project=img-converter \
                     --stack-name "img-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
