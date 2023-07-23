@@ -52,11 +52,3 @@ Resources:
         MaxSize: '1'
         TargetGroupARNs:
         - Ref: WebAppTargetGroup
-    WebAppLB:
-        Type: AWS::ElasticLoadBalancingV2::LoadBalancer
-        Properties:
-        Subnets:
-        - Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN"
-        - Fn::ImportValue: !Sub "${EnvironmentName}-PUB2-SN"
-        SecurityGroups:
-        - Ref: LBSecGroup
