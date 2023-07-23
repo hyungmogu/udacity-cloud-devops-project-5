@@ -34,7 +34,7 @@ Resources:
         ImageId: ami-08c417ecfdc73a8c2
         KeyName: image-converter-ec2
         SecurityGroups:
-        - Ref: WebServerSecGroup
+        - Ref: InstanceSecurityGroup
         InstanceType: t3.medium
         BlockDeviceMappings:
         - DeviceName: "/dev/sdk"
@@ -60,14 +60,3 @@ Resources:
         - Fn::ImportValue: !Sub "${EnvironmentName}-PUB2-SN"
         SecurityGroups:
         - Ref: LBSecGroup
-    Listener:
-        Type: AWS::ElasticLoadBalancingV2::Listener
-        Properties:
-        DefaultActions:
-        - Type: forward
-            TargetGroupArn:
-            Ref: WebAppTargetGroup
-        LoadBalancerArn:
-            Ref: WebAppLB
-        Port: '80'
-        Protocol: HTTP
