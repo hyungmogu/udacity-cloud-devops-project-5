@@ -426,10 +426,10 @@ jobs:
             - run:
                 name: Get backend url
                 command: |
-                    export BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-                    export API_URL="http://${BACKEND_IP}:8010"
+                    export KUBERNETES_SERVER_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+                    export API_URL="http://${KUBERNETES_SERVER_IP}:8010"
                     echo "${API_URL}"
-                    echo API_URL="http://${BACKEND_IP}:8010" >> frontend/.env
+                    echo API_URL="http://${KUBERNETES_SERVER_IP}:8010" >> frontend/.env
       
                     cat frontend/.env
             - run:
@@ -556,8 +556,8 @@ jobs:
             - run:
                 name: Backend smoke test.
                 command: |
-                    BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-                    API_URL="http://${BACKEND_IP}:8010"
+                    KUBERNETES_SERVER_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+                    API_URL="http://${KUBERNETES_SERVER_IP}:8010"
                     echo "API URL: ${API_URL}"
 
                     if curl "${API_URL}/api/status" | grep "ok"
