@@ -353,6 +353,14 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
+                name: Check Access Key
+                command: |
+                    echo $AWS_ACCESS_KEY_ID
+            - run:
+                name: Check Secret Access Key
+                command: |
+                    echo $AWS_SECRET_ACCESS_KEY
+            - run:
                 name: Ensure Kubernetes Network Infrastructure exists
                 command: |
                     aws cloudformation deploy \
