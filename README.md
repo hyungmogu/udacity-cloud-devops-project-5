@@ -14,10 +14,11 @@ This app demonstrates author's devops skills including AWS, designing and deploy
 - Apply load testing using Locust swarm (Done)
 - Make sure this application works using Minikube (Done)
   - [Minikube](https://minikube.sigs.k8s.io/docs/start/) is Kubernetes running on local computer. The author will use this to test and simulate app before deploying to AWS EKS environment.
-- Convert server from monolith to microservices (In Progress)
+- Convert server from monolith to microservices (Done)
 - Add rate limiter to microservices (Done)
 - Apply Prometheus and Grafana to microservice
 - Add Ansible for initial cloud server setup (In Progress)
+- Work on AWS (In Progress)
 - Automate the creation of S3 and IAM if it doesn't exist (In Progress)
 - Make this app is easy to start and use locally by ordinary people (Done)
 - Apply CI/CD using CircleCI (In Progress)
