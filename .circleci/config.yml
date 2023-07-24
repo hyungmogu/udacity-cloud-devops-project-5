@@ -637,7 +637,8 @@ jobs:
                     if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
                     then
                         aws s3 rm "s3://img-converter-${OldWorkflowID}" --recursive
-                        aws cloudformation delete-stack --stack-name "img-converter-backend-${OldWorkflowID}"
+                        aws cloudformation delete-stack --stack-name "img-converter-kubernetes-server-cp-${OldWorkflowID}"
+                        aws cloudformation delete-stack --stack-name "img-converter-kubernetes-server-${OldWorkflowID}"
                         aws cloudformation delete-stack --stack-name "img-converter-frontend-${OldWorkflowID}"
                     fi
             - destroy_environment 
