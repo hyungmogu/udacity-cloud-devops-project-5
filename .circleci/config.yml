@@ -359,7 +359,7 @@ jobs:
                     --template-file .circleci/aws/network.yml \
                     --tags project=img-converter type=network \
                     --stack-name "img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+                    --parameter-overrides .circleci/aws/network-parameters.json
             - run:
                 name: Ensure Kubernetes Server Infrastructure exists
                 command: |
