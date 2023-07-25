@@ -353,21 +353,12 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
-                name: Check Access Key
-                command: |
-                    echo $AWS_ACCESS_KEY_ID
-            - run:
-                name: Check Secret Access Key
-                command: |
-                    echo $AWS_SECRET_ACCESS_KEY
-            - run:
                 name: Ensure Kubernetes Network Infrastructure exists
                 command: |
                     aws cloudformation deploy \
                     --template-file .circleci/aws/network.yml \
                     --tags project=img-converter type=network \
                     --stack-name "img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameters .circleci/aws/network-parameters.json \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
             - run:
                 name: Ensure Kubernetes Server Infrastructure exists
