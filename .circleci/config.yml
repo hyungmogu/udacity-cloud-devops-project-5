@@ -353,10 +353,6 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
-                name: Check path before aws cloudformation is being executed
-                command: |
-                    pwd
-            - run:
                 name: Ensure Kubernetes Network Infrastructure exists
                 command: |
                     CURRENT_DIR=$(pwd);
