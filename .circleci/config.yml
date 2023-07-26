@@ -360,7 +360,8 @@ jobs:
                 name: Ensure Kubernetes Network Infrastructure exists
                 command: |
                     CURRENT_DIR=$(pwd);
-                    aws cloudformation create-stack --stack-name "img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" --template-body "file://$CURRENT_DIR/.circleci/aws/network.yml" --parameters "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" --tags project=img-converter type=network --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" --region=us-east-1
+                    echo "$CURRENT_DIR";
+                    aws cloudformation create-stack --stack-name "img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" --template-body "file://$CURRENT_DIR/.circleci/aws/network.yml" --parameters "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" --tags project=img-converter,type=network --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" --region=us-east-1
             - run:
                 name: Ensure Kubernetes Server Infrastructure exists
                 command: |
