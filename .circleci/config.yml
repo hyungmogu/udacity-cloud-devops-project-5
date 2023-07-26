@@ -364,27 +364,30 @@ jobs:
             - run:
                 name: Ensure Kubernetes Server Infrastructure exists
                 command: |
+                    CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
                     --template-file .circleci/aws/server.yml \
-                    --tags project=img-converter type=server \
                     --stack-name "img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"
+                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
+                    --tags project=img-converter type=server
             - run:
                 name: Ensure Kubernetes Server Infrastructure for Control Plane exists
                 command: |
+                    CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
                     --template-file .circleci/aws/server-control-plane.yml \
-                    --tags project=img-converter type=control-plane \
                     --stack-name "img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
+                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
+                    --tags project=img-converter type=control-plane
             - run:
                 name: Ensure front-end infrastructure exist
                 command: |
+                    CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
                     --template-file .circleci/aws/frontend.yml \
-                    --tags project=img-converter type=frontend \
-                    --stack-name "img-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
+                    --stack-name "img-converter-kubernetes-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --tags project=img-converter type=frontend
             - run:
                 name: Add server control plane ip to ansible inventory
                 command: |
