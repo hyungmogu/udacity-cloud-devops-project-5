@@ -57,7 +57,7 @@ Resources:
             InstanceType: t3.medium
             BlockDeviceMappings:
             - DeviceName: "/dev/sdk"
-                Ebs:
+              Ebs:
                 VolumeSize: '10'
     WebAppGroup:
         Type: AWS::AutoScaling::AutoScalingGroup
