@@ -14,9 +14,9 @@ Resources:
             Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
         SecurityGroupIngress:
         - IpProtocol: tcp
-            FromPort: 22
-            ToPort: 22
-            CidrIp: 0.0.0.0/0
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
         SecurityGroupEgress:
         - IpProtocol: tcp
             FromPort: 0
