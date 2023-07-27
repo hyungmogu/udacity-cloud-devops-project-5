@@ -83,7 +83,7 @@ Resources:
         Properties:
             DefaultActions:
             - Type: forward
-                TargetGroupArn:
+              TargetGroupArn:
                 Ref: WebAppTargetGroup
             LoadBalancerArn:
                 Ref: WebAppLB
