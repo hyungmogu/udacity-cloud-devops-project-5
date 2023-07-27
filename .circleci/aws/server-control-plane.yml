@@ -11,8 +11,7 @@ Resources:
         Properties:
         GroupDescription: Allow access via SSH only
         VpcId:
-            Fn::ImportValue:
-            !Sub "${EnvironmentName}-VPCID"
+            Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
         SecurityGroupIngress:
         - IpProtocol: tcp
             FromPort: 22
