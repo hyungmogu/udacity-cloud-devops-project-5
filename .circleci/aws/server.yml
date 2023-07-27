@@ -11,8 +11,7 @@ Resources:
         Properties:
             GroupDescription: Allow http to our load balancer
             VpcId:
-                Fn::ImportValue:
-                !Sub "${EnvironmentName}-VPCID"
+                Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
             SecurityGroupIngress:
             - IpProtocol: tcp
                 FromPort: 80
@@ -28,8 +27,7 @@ Resources:
         Properties:
             GroupDescription: Allow http to our hosts and SSH from local only
             VpcId:
-                Fn::ImportValue:
-                !Sub "${EnvironmentName}-VPCID"
+                Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
             SecurityGroupIngress:
             - IpProtocol: tcp
                 FromPort: 8010
@@ -65,8 +63,7 @@ Resources:
         Type: AWS::AutoScaling::AutoScalingGroup
         Properties:
             VPCZoneIdentifier:
-            - Fn::ImportValue: 
-                !Sub "${EnvironmentName}-PRIV-NETS"
+            - Fn::ImportValue: !Sub "${EnvironmentName}-PRIV-NETS"
             LaunchConfigurationName:
                 Ref: WebAppLaunchConfig
             MinSize: '2'
