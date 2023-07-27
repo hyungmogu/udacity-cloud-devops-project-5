@@ -94,10 +94,10 @@ Resources:
         Properties:
             Actions:
             - Type: forward
-            TargetGroupArn: !Ref 'WebAppTargetGroup'
+              TargetGroupArn: !Ref 'WebAppTargetGroup'
             Conditions:
             - Field: path-pattern
-            Values: [/]
+              Values: [/]
             ListenerArn: !Ref 'Listener'
             Priority: 1
     WebAppTargetGroup:
