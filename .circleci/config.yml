@@ -388,6 +388,7 @@ jobs:
                     --tags project=img-converter type=network
             - run:
                 name: Ensure Kubernetes Server Infrastructure exists
+                no_output_timeout: 20m
                 command: |
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
