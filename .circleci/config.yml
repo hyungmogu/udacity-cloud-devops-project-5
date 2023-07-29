@@ -485,7 +485,7 @@ jobs:
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
                     --template-file .circleci/aws/frontend.yml \
-                    --stack-name "img-converter-kubernetes-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name "img-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter type=frontend
             - check_aws_status_front_end
