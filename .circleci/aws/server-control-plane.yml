@@ -31,7 +31,7 @@ Resources:
                     apt update
                     apt-get -y install ansible
             ImageId: ami-08c417ecfdc73a8c2
-            KeyName: image-converter-ec2-cp
+            KeyName: image-converter-ec2
             SecurityGroups:
             - Ref: InstanceSecurityGroup
             InstanceType: t3.medium
