@@ -11,6 +11,9 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub "image-converter-${ID}"
+      PublicAccessBlockConfiguration:
+        BlockPublicPolicy: false
+        RestrictPublicBuckets: false
       OwnershipControls:
         Rules:
           - ObjectOwnership: ObjectWriter
@@ -23,6 +26,7 @@ Resources:
     Properties:
       Bucket: !Ref 'WebsiteBucket'
       PolicyDocument:
+        Version: 2012-10-17
         Statement:
         - Sid: PublicReadForGetBucketObjects
           Effect: Allow
