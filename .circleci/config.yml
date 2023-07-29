@@ -24,9 +24,6 @@ commands:
                 when: on_fail
                 command: |
                     aws cloudformation describe-stack-events --stack-name img-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation describe-stack-events --stack-name img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation describe-stack-events --stack-name img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation describe-stack-events --stack-name img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
             - run:
                 name: See description of what happened (Server Control Plane)
                 when: on_fail
