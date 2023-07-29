@@ -513,14 +513,14 @@ jobs:
             - run:
                 name: Add server control plane ip to ansible inventory
                 command: |
-                    "[control-plane]" >> .circleci/ansible/inventory.txt;
+                    echo "[control-plane]" >> .circleci/ansible/inventory.txt;
                     aws ec2 describe-instances \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory.txt 
             - run:
                 name: Add server Server ip to ansible inventory
                 command: |
-                    "[server]" >> .circleci/ansible/inventory.txt;
+                    echo "[server]" >> .circleci/ansible/inventory.txt;
                     aws ec2 describe-instances \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory.txt 
