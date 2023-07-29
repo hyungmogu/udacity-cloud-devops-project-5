@@ -322,3 +322,4 @@ convertToWEBP(image)
 12. Amazon. (2023). Auto Scaling Template Snippets. AWS. https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-autoscaling.html
 13. Andres. (05.03.2023). Multiple Playbooks in Ansible. dev.to. https://dev.to/andresfmoya/multiple-playbooks-in-ansible-2pdc
 14. Build Virtual. Deploy a kubernetes cluster using ansible. Build Virtual. https://buildvirtual.net/deploy-a-kubernetes-cluster-using-ansible/
+14. Troung. AWS S3: Bucket cannot have ACLs set with ObjectOwnership's BucketOwnerEnforced setting. Stack Overflow. https://stackoverflow.com/questions/76097031/aws-s3-bucket-cannot-have-acls-set-with-objectownerships-bucketownerenforced-s#76107203
