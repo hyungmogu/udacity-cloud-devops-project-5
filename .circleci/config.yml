@@ -392,6 +392,7 @@ jobs:
                     --stack-name "img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
                     --tags project=img-converter type=network
+            - check_aws_status_network
             - destroy_environment
             # - notify_slack_error
             # - notify_slack_pass
@@ -423,6 +424,10 @@ jobs:
                     --stack-name "img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
                     --tags project=img-converter type=server
+            - check_aws_status_server
+            - destroy_environment
+            # - notify_slack_error
+            # - notify_slack_pass
 
     deploy-infrastructure-server-cp:
         docker:
@@ -451,6 +456,10 @@ jobs:
                     --stack-name "img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
                     --tags project=img-converter type=control-plane
+            - check_aws_status_server_cp
+            - destroy_environment
+            # - notify_slack_error
+            # - notify_slack_pass
 
     deploy-infrastructure-frontend:
         docker:
@@ -479,6 +488,10 @@ jobs:
                     --stack-name "img-converter-kubernetes-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter type=frontend
+            - check_aws_status_front_end
+            - destroy_environment
+            # - notify_slack_error
+            # - notify_slack_pass
 
     update-ansible-ips:
         docker:
@@ -515,6 +528,9 @@ jobs:
                 root: .circleci/ansible/
                 paths:
                     - inventory.txt
+            - destroy_environment
+            # - notify_slack_error
+            # - notify_slack_pass
 
     deploy-frontend:
         docker:
