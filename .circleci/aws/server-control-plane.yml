@@ -19,9 +19,9 @@ Resources:
           CidrIp: 0.0.0.0/0
         SecurityGroupEgress:
         - IpProtocol: tcp
-            FromPort: 0
-            ToPort: 65535
-            CidrIp: 0.0.0.0/0
+          FromPort: 0
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
     WebAppLaunchConfig:
         Type: AWS::AutoScaling::LaunchConfiguration
         Properties:
