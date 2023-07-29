@@ -398,6 +398,7 @@ jobs:
                     --tags project=img-converter type=server
             - run:
                 name: Ensure Kubernetes Server Infrastructure for Control Plane exists
+                no_output_timeout: 20m
                 command: |
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
@@ -407,6 +408,7 @@ jobs:
                     --tags project=img-converter type=control-plane
             - run:
                 name: Ensure front-end infrastructure exist
+                no_output_timeout: 20m
                 command: |
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
