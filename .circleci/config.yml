@@ -360,7 +360,7 @@ jobs:
             # - notify_slack_error
             # - notify_slack_pass
     
-    deploy-infrastructure:
+    deploy-infrastructure-network:
         docker:
             - image: python:3.10-buster
         steps:
@@ -387,36 +387,6 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
                     --tags project=img-converter type=network
             - run:
-                name: Ensure Kubernetes Server Infrastructure exists
-                no_output_timeout: 20m
-                command: |
-                    CURRENT_DIR=$(pwd);
-                    aws cloudformation deploy \
-                    --template-file .circleci/aws/server.yml \
-                    --stack-name "img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
-                    --tags project=img-converter type=server
-            - run:
-                name: Ensure Kubernetes Server Infrastructure for Control Plane exists
-                no_output_timeout: 20m
-                command: |
-                    CURRENT_DIR=$(pwd);
-                    aws cloudformation deploy \
-                    --template-file .circleci/aws/server-control-plane.yml \
-                    --stack-name "img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
-                    --tags project=img-converter type=control-plane
-            - run:
-                name: Ensure front-end infrastructure exist
-                no_output_timeout: 20m
-                command: |
-                    CURRENT_DIR=$(pwd);
-                    aws cloudformation deploy \
-                    --template-file .circleci/aws/frontend.yml \
-                    --stack-name "img-converter-kubernetes-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --tags project=img-converter type=frontend
-            - run:
                 name: Add server control plane ip to ansible inventory
                 command: |
                     "[control-plane]" >> .circleci/ansible/inventory.txt;
@@ -437,6 +407,90 @@ jobs:
             - destroy_environment
             # - notify_slack_error
             # - notify_slack_pass
+
+    deploy-infrastructure-server:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install tar and gzip
+                command: |
+                    apt-get -y install tar gzip
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run:
+                name: Ensure Kubernetes Server Infrastructure exists
+                no_output_timeout: 20m
+                command: |
+                    CURRENT_DIR=$(pwd);
+                    aws cloudformation deploy \
+                    --template-file .circleci/aws/server.yml \
+                    --stack-name "img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
+                    --tags project=img-converter type=server
+
+    deploy-infrastructure-server-cp:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install tar and gzip
+                command: |
+                    apt-get -y install tar gzip
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run:
+                name: Ensure Kubernetes Server Infrastructure for Control Plane exists
+                no_output_timeout: 20m
+                command: |
+                    CURRENT_DIR=$(pwd);
+                    aws cloudformation deploy \
+                    --template-file .circleci/aws/server-control-plane.yml \
+                    --stack-name "img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
+                    --tags project=img-converter type=control-plane
+
+    deploy-infrastructure-frontend:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install tar and gzip
+                command: |
+                    apt-get -y install tar gzip
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run:
+                name: Ensure front-end infrastructure exist
+                no_output_timeout: 20m
+                command: |
+                    CURRENT_DIR=$(pwd);
+                    aws cloudformation deploy \
+                    --template-file .circleci/aws/frontend.yml \
+                    --stack-name "img-converter-kubernetes-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --tags project=img-converter type=frontend
 
     deploy-frontend:
         docker:
