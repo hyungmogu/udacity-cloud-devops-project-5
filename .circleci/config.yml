@@ -799,16 +799,18 @@ workflows:
                 requires: [deploy-infrastructure-network]
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
+            - update-ansible-ips:
+                requires: [deploy-infrastructure-server, deploy-infrastructure-server-cp, deploy-infrastructure-frontend]
             - deploy-frontend:
-                requires: [deploy-infrastructure-server, deploy-infrastructure-server-cp, deploy-infrastructure-frontend]
+                requires: [update-ansible-ips]
             - deploy-microservice-gateway:
-                requires: [deploy-infrastructure-server, deploy-infrastructure-server-cp, deploy-infrastructure-frontend]
+                requires: [update-ansible-ips]
             - deploy-microservice-server-jpg:
-                requires: [deploy-infrastructure-server, deploy-infrastructure-server-cp, deploy-infrastructure-frontend]
+                requires: [update-ansible-ips]
             - deploy-microservice-server-png:
-                requires: [deploy-infrastructure-server, deploy-infrastructure-server-cp, deploy-infrastructure-frontend]
+                requires: [update-ansible-ips]
             - deploy-microservice-server-webp:
-                requires: [deploy-infrastructure-server, deploy-infrastructure-server-cp, deploy-infrastructure-frontend]            
+                requires: [update-ansible-ips]            
             - configure-infrastructure:
                 requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - smoke-test:
