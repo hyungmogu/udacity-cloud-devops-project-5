@@ -393,7 +393,7 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
                     --tags project=img-converter type=network
             - check_aws_status_network
-            # - destroy_environment
+            - destroy_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -425,7 +425,7 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
                     --tags project=img-converter type=server
             - check_aws_status_server
-            # - destroy_environment
+            - destroy_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -457,7 +457,7 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
                     --tags project=img-converter type=control-plane
             - check_aws_status_server_cp
-            # - destroy_environment
+            - destroy_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -489,7 +489,7 @@ jobs:
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter type=frontend
             - check_aws_status_front_end
-            # - destroy_environment
+            - destroy_environment
             # - notify_slack_error
             # - notify_slack_pass
 
