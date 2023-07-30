@@ -397,6 +397,10 @@ jobs:
                     wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64 &&\
                     chmod +x /bin/hadolint
             - run:
+                name: Check Hadolint is Working
+                command: |
+                    hadolint
+            - run:
                 name: Lint Microservice Server Gateway
                 command: |
                     cd microservices/gateway
@@ -419,6 +423,10 @@ jobs:
                     wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64 &&\
                     chmod +x /bin/hadolint
             - run:
+                name: Check Hadolint is Working
+                command: |
+                    hadolint
+            - run:
                 name: Lint Microservice Server JPG
                 command: |
                     cd microservices/server-jpg
@@ -435,6 +443,10 @@ jobs:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
+            - run:
+                name: Check Hadolint is Working
+                command: |
+                    hadolint
             - run:
                 name: Install Hadolint
                 command: |
@@ -462,6 +474,10 @@ jobs:
                 command: |
                     wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64 &&\
                     chmod +x /bin/hadolint
+            - run:
+                name: Check Hadolint is Working
+                command: |
+                    hadolint
             - run:
                 name: Lint Microservice Server WEBP
                 command: |
