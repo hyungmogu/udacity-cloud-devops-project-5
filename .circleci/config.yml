@@ -366,6 +366,21 @@ jobs:
                     make scan_local
             # - notify_slack_error
             # - notify_slack_pass
+
+    lint-frontend:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - restore_cache:
+                keys: [frontend-build]
+            - run:
+                name: Run frontend test
+                command: |
+                    cd frontend
+                    make lint_local
+            # - notify_slack_error
+            # - notify_slack_pass
     
     lint-microservice-gateway:
         docker:
