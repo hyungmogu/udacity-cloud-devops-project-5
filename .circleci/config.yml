@@ -286,7 +286,7 @@ jobs:
 
     scan-frontend:
         docker:
-            - image: node:14.18-buster
+            - image: node:18.14-buster
         steps:
             - checkout
             - restore_cache:
@@ -366,7 +366,7 @@ jobs:
                     make scan_local
             # - notify_slack_error
             # - notify_slack_pass
-
+    
     lint-microservice-gateway:
         docker:
             - image: python:3.10-buster
@@ -633,7 +633,7 @@ jobs:
 
     deploy-frontend:
         docker:
-            - image: node:14.18-buster
+            - image: node:18.14-buster
         steps:
             - checkout
             - run:
