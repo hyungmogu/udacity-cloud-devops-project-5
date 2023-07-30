@@ -515,7 +515,7 @@ jobs:
                 command: |
                     echo "[control-plane]" >> .circleci/ansible/inventory.txt;
                     aws ec2 describe-instances \
-                    --filters Name=tag-project,Values=img-converter Name=tag-type,Values=control-plane \
+                    --filters Name=tag:project,Values=img-converter Name=tag:type,Values=control-plane \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory.txt 
             - run:
@@ -527,7 +527,7 @@ jobs:
                 command: |
                     echo "[server]" >> .circleci/ansible/inventory.txt;
                     aws ec2 describe-instances \
-                    --filters Name=tag-project,Values=img-converter Name=tag-type,Values=server \
+                    --filters Name=tag:project,Values=img-converter Name=tag:type,Values=server \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory.txt 
             - run:
