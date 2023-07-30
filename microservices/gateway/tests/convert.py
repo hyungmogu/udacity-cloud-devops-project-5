@@ -4,7 +4,7 @@ from PIL import Image
 from urllib.parse import urlparse
 from fastapi.testclient import TestClient
 
-from app import app
+from gateway.app import app
 from config import SERVER_JPG_HOST, SERVER_JPG_PORT, SERVER_PNG_HOST, SERVER_PNG_PORT, SERVER_WEBP_HOST, SERVER_WEBP_PORT, SERVER_PROTOCOL
 
 ## JPG
