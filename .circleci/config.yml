@@ -391,7 +391,7 @@ jobs:
                     --template-file .circleci/aws/network.yml \
                     --stack-name "image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
-                    --tags project=img-converter type=network
+                    --tags project=image-converter type=network
             - check_aws_status_network
             - rollback_environment
             # - notify_slack_error
@@ -423,7 +423,7 @@ jobs:
                     --template-file .circleci/aws/server.yml \
                     --stack-name "image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
-                    --tags project=img-converter type=server
+                    --tags project=image-converter type=server
             - check_aws_status_server
             - rollback_environment
             # - notify_slack_error
@@ -455,7 +455,7 @@ jobs:
                     --template-file .circleci/aws/server-control-plane.yml \
                     --stack-name "image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
-                    --tags project=img-converter type=control-plane
+                    --tags project=image-converter type=control-plane
             - check_aws_status_server_cp
             - rollback_environment
             # - notify_slack_error
@@ -487,7 +487,7 @@ jobs:
                     --template-file .circleci/aws/frontend.yml \
                     --stack-name "image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --tags project=img-converter type=frontend
+                    --tags project=image-converter type=frontend
             - check_aws_status_front_end
             - rollback_environment
             # - notify_slack_error
@@ -515,7 +515,7 @@ jobs:
                 command: |
                     echo "[control-plane]" >> .circleci/ansible/inventory.txt;
                     aws ec2 describe-instances \
-                    --filters Name=tag:project,Values=img-converter Name=tag:type,Values=control-plane \
+                    --filters Name=tag:project,Values=image-converter Name=tag:type,Values=control-plane \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory.txt 
             - run:
@@ -527,7 +527,7 @@ jobs:
                 command: |
                     echo "[server]" >> .circleci/ansible/inventory.txt;
                     aws ec2 describe-instances \
-                    --filters Name=tag:project,Values=img-converter Name=tag:type,Values=server \
+                    --filters Name=tag:project,Values=image-converter Name=tag:type,Values=server \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory.txt 
             - run:
@@ -737,7 +737,7 @@ jobs:
                     --template-file .circleci/aws/cloudfront.yml \
                     --stack-name InitialStack \
                     --parameter-overrides WorkflowID="image-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --tags project=img-converter
+                    --tags project=image-converter
             - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
