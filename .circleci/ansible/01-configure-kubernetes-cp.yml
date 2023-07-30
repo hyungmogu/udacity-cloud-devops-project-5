@@ -6,7 +6,7 @@
   become_user: root  
   gather_facts: true
   roles:
-    - configure-kubernetes
+    - configure-kubernetes-control-plane
 
 
 
