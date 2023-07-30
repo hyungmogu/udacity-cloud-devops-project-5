@@ -285,7 +285,7 @@ jobs:
 
     scan-frontend:
         docker:
-            - image: node:13.8-buster
+            - image: node:14.18-buster
         steps:
             - checkout
             - restore_cache:
@@ -544,7 +544,7 @@ jobs:
 
     deploy-frontend:
         docker:
-            - image: node:13.8-buster
+            - image: node:14.18-buster
         steps:
             - checkout
             - run:
