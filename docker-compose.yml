@@ -34,7 +34,7 @@ services:
       retries: 3
   server-jpg:
     build:
-      context: ./microservices/server-jpg
+      context: ./microservices/server_jpg
       dockerfile: Dockerfile
     container_name: server-jpg
     ports:
@@ -49,7 +49,7 @@ services:
       retries: 3
   server-png:
     build:
-      context: ./microservices/server-png
+      context: ./microservices/server_png
       dockerfile: Dockerfile
     container_name: server-png
     ports:
@@ -64,7 +64,7 @@ services:
       retries: 3
   server-webp:
     build:
-      context: ./microservices/server-webp
+      context: ./microservices/server_webp
       dockerfile: Dockerfile
     container_name: server-webp
     ports:

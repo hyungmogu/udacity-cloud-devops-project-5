@@ -107,17 +107,17 @@ jobs:
             - run:
                 name: Run Build for Microservice Server Jpg
                 command: |
-                    cd microservices/server-jpg
+                    cd microservices/server_jpg
                     make build_local
             - run:
                 name: Checking Directory
                 command: |
-                    cd microservices/server-jpg
+                    cd microservices/server_jpg
                     ls -al
             - save_cache:
-                key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_jpg/requirements.txt" }}
                 paths:
-                    - "microservices/server-jpg/venv"
+                    - "microservices/server_jpg/venv"
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -129,17 +129,17 @@ jobs:
             - run:
                 name: Run Build for Microservice Server Png
                 command: |
-                    cd microservices/server-png
+                    cd microservices/server_png
                     make build_local
             - run:
                 name: Checking Directory
                 command: |
-                    cd microservices/server-png
+                    cd microservices/server_png
                     ls -al
             - save_cache:
-                key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
+                key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_png/requirements.txt" }}
                 paths:
-                    - "microservices/server-png/venv"
+                    - "microservices/server_png/venv"
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -151,17 +151,17 @@ jobs:
             - run:
                 name: Run Build for Microservice Webp
                 command: |
-                    cd microservices/server-webp
+                    cd microservices/server_webp
                     make build_local
             - run:
                 name: Checking Directory
                 command: |
-                    cd microservices/server-webp
+                    cd microservices/server_webp
                     ls -al
             - save_cache:
-                key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
+                key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_webp/requirements.txt" }}
                 paths:
-                    - "microservices/server-webp/venv"
+                    - "microservices/server_webp/venv"
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -213,7 +213,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_jpg/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Checking Project Root Directory
@@ -222,12 +222,12 @@ jobs:
             - run:
                 name: Checking Directory
                 command: |
-                    cd microservices/server-jpg
+                    cd microservices/server_jpg
                     ls -al
             - run:
                 name: Run Test for Microservice Server Jpg
                 command: |
-                    cd microservices/server-jpg
+                    cd microservices/server_jpg
                     make test_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -239,7 +239,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_png/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Checking Project Root Directory
@@ -248,12 +248,12 @@ jobs:
             - run:
                 name: Checking Directory
                 command: |
-                    cd microservices/server-png
+                    cd microservices/server_png
                     ls -al
             - run:
                 name: Run Test for Microservice Server Png 
                 command: |
-                    cd microservices/server-png
+                    cd microservices/server_png
                     make test_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -265,7 +265,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_webp/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Checking Project Root Directory
@@ -274,12 +274,12 @@ jobs:
             - run:
                 name: Checking Directory
                 command: |
-                    cd microservices/server-webp
+                    cd microservices/server_webp
                     ls -al
             - run:
                 name: Run Test for Microservice Server Webp
                 command: |
-                    cd microservices/server-webp
+                    cd microservices/server_webp
                     make test_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -323,12 +323,12 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_jpg/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Scan Microservice Server Jpg
                 command: |
-                    cd microservices/server-jpg
+                    cd microservices/server_jpg
                     make scan_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -340,12 +340,12 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_png/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Scan Microservice Server Png
                 command: |
-                    cd microservices/server-png
+                    cd microservices/server_png
                     make scan_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -357,12 +357,12 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_webp/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Scan Microservice Server Webp
                 command: |
-                    cd microservices/server-webp
+                    cd microservices/server_webp
                     make scan_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -413,7 +413,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-jpg/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_jpg/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Install Hadolint
@@ -425,7 +425,7 @@ jobs:
             - run:
                 name: Lint Microservice Server JPG
                 command: |
-                    cd microservices/server-jpg
+                    cd microservices/server_jpg
                     make lint_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -437,7 +437,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-png/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_png/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Install Hadolint
@@ -449,7 +449,7 @@ jobs:
             - run:
                 name: Lint Microservice Server PNG
                 command: |
-                    cd microservices/server-png
+                    cd microservices/server_png
                     make lint_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -461,7 +461,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server-webp/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_webp/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Install Hadolint
@@ -473,7 +473,7 @@ jobs:
             - run:
                 name: Lint Microservice Server WEBP
                 command: |
-                    cd microservices/server-webp
+                    cd microservices/server_webp
                     make lint_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -717,7 +717,7 @@ jobs:
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
-                    cd microservices/server-jpg;
+                    cd microservices/server_jpg;
                     make deploy;
             # - rollback_environment
             # - notify_slack_error
@@ -732,7 +732,7 @@ jobs:
             - run:
                 name: Deploy Microservice Png
                 command: |
-                    cd microservices/server-png
+                    cd microservices/server_png
                     make deploy
             # - rollback_environment
             # - notify_slack_error
@@ -747,7 +747,7 @@ jobs:
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
-                    cd microservices/server-webp;
+                    cd microservices/server_webp;
                     make deploy;
             # - rollback_environment
             # - notify_slack_error
