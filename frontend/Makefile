@@ -1,3 +1,6 @@
+lint_local:
+	npm run lint;
+
 scan_local:
 	npm install &&\
     npm audit --audit-level=critical
