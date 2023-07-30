@@ -15,7 +15,7 @@ commands:
     #         - slack/notify:
     #             event: pass
     #             template: basic_success_1
-    
+
     check_aws_status_front_end:
         description: Checks for front-end cloudformation events before destroy. For debugging purpose.  
         steps:
@@ -377,6 +377,11 @@ jobs:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
+                name: Install Hadolint
+                command: |
+                    wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64 &&\
+                    chmod +x /bin/hadolint
+            - run:
                 name: Lint Microservice Server Gateway
                 command: |
                     cd microservices/gateway
@@ -393,6 +398,11 @@ jobs:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
+            - run:
+                name: Install Hadolint
+                command: |
+                    wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64 &&\
+                    chmod +x /bin/hadolint
             - run:
                 name: Lint Microservice Server JPG
                 command: |
@@ -411,6 +421,11 @@ jobs:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
+                name: Install Hadolint
+                command: |
+                    wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64 &&\
+                    chmod +x /bin/hadolint
+            - run:
                 name: Lint Microservice Server PNG
                 command: |
                     cd microservices/server-png
@@ -427,6 +442,11 @@ jobs:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
+            - run:
+                name: Install Hadolint
+                command: |
+                    wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Darwin-x86_64 &&\
+                    chmod +x /bin/hadolint
             - run:
                 name: Lint Microservice Server WEBP
                 command: |
