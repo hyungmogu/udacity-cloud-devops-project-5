@@ -47,7 +47,7 @@ commands:
                 when: on_fail
                 command: |
                     aws cloudformation describe-stack-events --stack-name img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
-    destroy_environment:
+    rollback_environment:
         description: Destroy kubernetes server and front-end cloudformation stacks given a workflow ID.  
         steps:                    
             - run:
@@ -393,7 +393,7 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
                     --tags project=img-converter type=network
             - check_aws_status_network
-            - destroy_environment
+            - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -425,7 +425,7 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
                     --tags project=img-converter type=server
             - check_aws_status_server
-            - destroy_environment
+            - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -457,7 +457,7 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
                     --tags project=img-converter type=control-plane
             - check_aws_status_server_cp
-            - destroy_environment
+            - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -489,7 +489,7 @@ jobs:
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter type=frontend
             - check_aws_status_front_end
-            - destroy_environment
+            - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -538,7 +538,7 @@ jobs:
                 root: .circleci/ansible/
                 paths:
                     - inventory.txt
-            - destroy_environment
+            - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -577,7 +577,7 @@ jobs:
                     npm run build
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
                     aws s3 cp dist s3://img-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-            # - destroy_environment 
+            # - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -592,7 +592,7 @@ jobs:
                 command: |
                     cd microservices/gateway;
                     make deploy;
-            # - destroy_environment 
+            # - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -607,7 +607,7 @@ jobs:
                 command: |
                     cd microservices/server-jpg;
                     make deploy;
-            # - destroy_environment
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -622,7 +622,7 @@ jobs:
                 command: |
                     cd microservices/server-png
                     make deploy
-            # - destroy_environment
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -637,7 +637,7 @@ jobs:
                 command: |
                     cd microservices/server-webp;
                     make deploy;
-            # - destroy_environment
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -668,7 +668,7 @@ jobs:
                 command: |
                     cd .circleci/ansible
                     ansible-playbook -i inventory.txt configure-server.yml
-            - destroy_environment 
+            - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -713,7 +713,7 @@ jobs:
                     else
                         exit 1
                     fi
-            - destroy_environment 
+            - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass   
 
@@ -738,7 +738,7 @@ jobs:
                     --stack-name InitialStack \
                     --parameter-overrides WorkflowID="img-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter
-            - destroy_environment 
+            - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -769,7 +769,7 @@ jobs:
                         aws cloudformation delete-stack --stack-name "img-converter-kubernetes-server-${OldWorkflowID}"
                         aws cloudformation delete-stack --stack-name "img-converter-frontend-${OldWorkflowID}"
                     fi
-            - destroy_environment 
+            - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
 
