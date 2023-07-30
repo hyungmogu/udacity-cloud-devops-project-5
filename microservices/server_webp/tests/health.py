@@ -1,7 +1,7 @@
 import unittest
 from fastapi.testclient import TestClient
 
-from app import app
+from server_webp.app import app
 
 class TestHealthCheck(unittest.TestCase):
     def setUp(self):
