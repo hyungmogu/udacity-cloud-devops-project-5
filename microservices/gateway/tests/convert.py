@@ -5,9 +5,7 @@ from urllib.parse import urlparse
 from fastapi.testclient import TestClient
 
 from gateway.app import app
-from config import SERVER_JPG_HOST, SERVER_JPG_PORT, SERVER_PNG_HOST, SERVER_PNG_PORT, SERVER_WEBP_HOST, SERVER_WEBP_PORT, SERVER_PROTOCOL
-
-## JPG
+from gateway.config import SERVER_JPG_HOST, SERVER_JPG_PORT, SERVER_PNG_HOST, SERVER_PNG_PORT, SERVER_WEBP_HOST, SERVER_WEBP_PORT
 
 # 1. check if sending a request to server-jpg has correct url. It's okay if response is not 200.
 class TestSimplePositiveImgToJPG(unittest.TestCase):
