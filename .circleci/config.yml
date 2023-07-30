@@ -905,6 +905,8 @@ workflows:
                 requires: [build-microservice-png]
             - scan-microservice-server-webp:
                 requires: [build-microservice-webp]
+            - lint-frontend:
+                requires: [build-frontend]
             - lint-microservice-gateway:
                 requires: [build-microservice-gateway]
             - lint-microservice-server-jpg:
