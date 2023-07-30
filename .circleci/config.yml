@@ -22,7 +22,7 @@ commands:
                 name: See description of what happened (Frontend)
                 when: on_fail
                 command: |
-                    aws cloudformation describe-stack-events --stack-name img-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation describe-stack-events --stack-name image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
     check_aws_status_server:
         description: Checks for server cloudformation events before destroy. For debugging purpose.  
         steps:
@@ -30,7 +30,7 @@ commands:
                 name: See description of what happened (server)
                 when: on_fail
                 command: |
-                    aws cloudformation describe-stack-events --stack-name img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}
     check_aws_status_server_cp:
         description: Checks for server control plane cloudformation events before destroy. For debugging purpose.  
         steps:
@@ -38,7 +38,7 @@ commands:
                 name: See description of what happened (server control plane)
                 when: on_fail
                 command: |
-                    aws cloudformation describe-stack-events --stack-name img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}
     check_aws_status_network:
         description: Checks for network cloudformation events before destroy. For debugging purpose.  
         steps:
@@ -46,7 +46,7 @@ commands:
                 name: See description of what happened (network)
                 when: on_fail
                 command: |
-                    aws cloudformation describe-stack-events --stack-name img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
     rollback_environment:
         description: Destroy kubernetes server and front-end cloudformation stacks given a workflow ID.  
         steps:                    
@@ -54,10 +54,10 @@ commands:
                 name: Destroy environments
                 when: on_fail
                 command: |
-                    aws cloudformation delete-stack --stack-name img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation delete-stack --stack-name img-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation delete-stack --stack-name img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation delete-stack --stack-name img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation delete-stack --stack-name image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}
     
 jobs:
     build-frontend:
@@ -389,7 +389,7 @@ jobs:
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
                     --template-file .circleci/aws/network.yml \
-                    --stack-name "img-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name "image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
                     --tags project=img-converter type=network
             - check_aws_status_network
@@ -421,7 +421,7 @@ jobs:
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
                     --template-file .circleci/aws/server.yml \
-                    --stack-name "img-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name "image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
                     --tags project=img-converter type=server
             - check_aws_status_server
@@ -453,7 +453,7 @@ jobs:
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
                     --template-file .circleci/aws/server-control-plane.yml \
-                    --stack-name "img-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name "image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
                     --tags project=img-converter type=control-plane
             - check_aws_status_server_cp
@@ -485,7 +485,7 @@ jobs:
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
                     --template-file .circleci/aws/frontend.yml \
-                    --stack-name "img-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name "image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter type=frontend
             - check_aws_status_front_end
@@ -576,7 +576,7 @@ jobs:
 
                     npm run build
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-                    aws s3 cp dist s3://img-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+                    aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             # - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
@@ -705,7 +705,7 @@ jobs:
             - run:
                 name: Frontend smoke test.
                 command: |
-                    URL="http://img-converter-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
+                    URL="http://image-converter-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
                     echo ${URL} 
                     if curl -s ${URL} | grep "Welcome"
                     then
@@ -736,7 +736,7 @@ jobs:
                     aws cloudformation deploy \
                     --template-file .circleci/aws/cloudfront.yml \
                     --stack-name InitialStack \
-                    --parameter-overrides WorkflowID="img-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --parameter-overrides WorkflowID="image-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=img-converter
             - rollback_environment 
             # - notify_slack_error
@@ -764,10 +764,10 @@ jobs:
                 command: |
                     if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
                     then
-                        aws s3 rm "s3://img-converter-${OldWorkflowID}" --recursive
-                        aws cloudformation delete-stack --stack-name "img-converter-kubernetes-server-cp-${OldWorkflowID}"
-                        aws cloudformation delete-stack --stack-name "img-converter-kubernetes-server-${OldWorkflowID}"
-                        aws cloudformation delete-stack --stack-name "img-converter-frontend-${OldWorkflowID}"
+                        aws s3 rm "s3://image-converter-${OldWorkflowID}" --recursive
+                        aws cloudformation delete-stack --stack-name "image-converter-kubernetes-server-cp-${OldWorkflowID}"
+                        aws cloudformation delete-stack --stack-name "image-converter-kubernetes-server-${OldWorkflowID}"
+                        aws cloudformation delete-stack --stack-name "image-converter-frontend-${OldWorkflowID}"
                     fi
             - rollback_environment 
             # - notify_slack_error
