@@ -1,3 +1,7 @@
+lint_local:
+	hadolint Dockerfile
+	pylint --disable=R,C,W1203,W1202 ./**/**.py
+	
 build_local:
 	python3 -m venv venv
 	./venv/bin/pip install -r requirements.txt
