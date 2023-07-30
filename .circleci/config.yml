@@ -399,10 +399,6 @@ jobs:
                     export PATH="/bin/hadolint:$PATH"
                     source ~/.bashrc
             - run:
-                name: Check Hadolint is Working
-                command: |
-                    hadolint
-            - run:
                 name: Lint Microservice Server Gateway
                 command: |
                     cd microservices/gateway
@@ -427,10 +423,6 @@ jobs:
                     export PATH="/bin/hadolint:$PATH"
                     source ~/.bashrc
             - run:
-                name: Check Hadolint is Working
-                command: |
-                    hadolint
-            - run:
                 name: Lint Microservice Server JPG
                 command: |
                     cd microservices/server-jpg
@@ -447,10 +439,6 @@ jobs:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Check Hadolint is Working
-                command: |
-                    hadolint
             - run:
                 name: Install Hadolint
                 command: |
@@ -482,10 +470,6 @@ jobs:
                     chmod +x /bin/hadolint
                     export PATH="/bin/hadolint:$PATH"
                     source ~/.bashrc
-            - run:
-                name: Check Hadolint is Working
-                command: |
-                    hadolint
             - run:
                 name: Lint Microservice Server WEBP
                 command: |
