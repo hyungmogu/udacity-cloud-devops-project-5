@@ -801,6 +801,14 @@ workflows:
                 requires: [build-microservice-png]
             - scan-microservice-server-webp:
                 requires: [build-microservice-webp]
+            - lint-microservice-gateway:
+                requires: [build-microservice-gateway]
+            - lint-microservice-server-jpg:
+                requires: [build-microservice-jpg]
+            - lint-microservice-server-png:
+                requires: [build-microservice-png]
+            - lint-microservice-server-webp:
+                requires: [build-microservice-webp]
             - deploy-infrastructure-network:
                 requires: [test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
             - deploy-infrastructure-server:
