@@ -15,6 +15,7 @@ commands:
     #         - slack/notify:
     #             event: pass
     #             template: basic_success_1
+    
     check_aws_status_front_end:
         description: Checks for front-end cloudformation events before destroy. For debugging purpose.  
         steps:
@@ -363,6 +364,74 @@ jobs:
                 command: |
                     cd microservices/server-webp
                     make scan_local
+            # - notify_slack_error
+            # - notify_slack_pass
+
+    lint-microservice-gateway:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-
+            - run:
+                name: Lint Microservice Server Gateway
+                command: |
+                    cd microservices/gateway
+                    make lint_local
+            # - notify_slack_error
+            # - notify_slack_pass
+
+    lint-microservice-server-jpg:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-
+            - run:
+                name: Lint Microservice Server JPG
+                command: |
+                    cd microservices/server-jpg
+                    make lint_local
+            # - notify_slack_error
+            # - notify_slack_pass
+
+    lint-microservice-server-png:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-
+            - run:
+                name: Lint Microservice Server PNG
+                command: |
+                    cd microservices/server-png
+                    make lint_local
+            # - notify_slack_error
+            # - notify_slack_pass
+
+    lint-microservice-server-webp:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-
+            - run:
+                name: Lint Microservice Server WEBP
+                command: |
+                    cd microservices/server-webp
+                    make lint_local
             # - notify_slack_error
             # - notify_slack_pass
     
