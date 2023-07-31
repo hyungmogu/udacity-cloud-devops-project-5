@@ -7,8 +7,7 @@ build_local:
 	./venv/bin/pip install -r requirements.txt
 
 test_local:
-	./venv/bin/python3 -m unittest tests.convert
-	./venv/bin/python3 -m unittest tests.health
+	./venv/bin/python3 -m unittest discover
 
 scan_local:
 	./venv/bin/python3 -m pip_audit -r ./requirements.txt

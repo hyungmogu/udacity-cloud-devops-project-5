@@ -1,7 +1,7 @@
 import unittest
 from fastapi.testclient import TestClient
 
-from server_jpg.app import app
+from app import app
 
 class TestHealthCheck(unittest.TestCase):
     def setUp(self):
