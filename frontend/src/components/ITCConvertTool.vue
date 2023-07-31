@@ -38,7 +38,7 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
     </form>
     <div class="itc-convert-tool__result">
       <h2 v-if="tasks.length > 0">Result</h2>
-      <article class="itc-convert-tool__result-item" v-for="item in tasks">
+      <article class="itc-convert-tool__result-item" v-for="item in tasks" v-bind:key="item.id">
         <div class="itc-convert-tool__result-item-wrap">
           <div class="itc-convert-tool__result-item-header">
             <h3 class="itc-convert-tool__result-item-title">
@@ -89,7 +89,7 @@ export default {
     },
     handleAddTasks() {
       this.tasks = [];
-
+      let i = 0;
       for (const file of this.form.images.files) {
         let factory;
         switch (this.form.convert_to) {
@@ -106,7 +106,7 @@ export default {
             throw new Error("[ITCConvertTool, handleAddTasks]: Image convert to type is invalid. Please check if radio values are correct.");
         }
 
-        this.tasks.push(factory.createTask(file));
+        this.tasks.push(factory.createTask(file, i));
       }
     },
     convertImage(e) {
