@@ -369,7 +369,7 @@ jobs:
 
     lint-frontend:
         docker:
-            - image: python:3.10-buster
+            - image: node:18.14-buster
         steps:
             - checkout
             - restore_cache:
