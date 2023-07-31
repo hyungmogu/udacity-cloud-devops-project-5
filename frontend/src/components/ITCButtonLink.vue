@@ -1,5 +1,5 @@
 <template>
-    <div class="itc-button itc-button--link" :class="class">
+    <div class="itc-button itc-button--link" :class="className">
         <a :href="href" :download="download" :target="target" class="itc-button__button" :disabled="disabled ? disabled : null">
             <slot></slot>
         </a>
@@ -16,7 +16,7 @@ export default {
       type: String,
       default: ''  
     },
-    class:{
+    className:{
       type:String,
       default:'',
     },
