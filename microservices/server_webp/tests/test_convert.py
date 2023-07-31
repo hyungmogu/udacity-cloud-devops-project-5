@@ -11,8 +11,8 @@ os.environ["AWS_S3_BUCKET"] = AWS_S3_BUCKET
 os.environ["AWS_ACCESS_KEY_ID"] = "test"
 os.environ["AWS_SECRET_ACCESS_KEY"] = "test"
 
-from server_webp.app import app
-from server_webp.src.services.convert import ImgToWEBPService
+from app import app
+from src.services.convert import ImgToWEBPService
 
 
 @mock_s3

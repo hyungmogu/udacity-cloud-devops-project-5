@@ -1,7 +1,7 @@
 import unittest
 from fastapi.testclient import TestClient
 
-from gateway.app import app
+from app import app
 
 class TestHealthCheck(unittest.TestCase):
     def setUp(self):
