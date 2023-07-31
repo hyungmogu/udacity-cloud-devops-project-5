@@ -114,7 +114,7 @@ export default {
       this.handleAddTasks();
       this.handleSubmitTasks();
     },
-    updateSelected(e) {
+    updateSelected() {
       this.handleUpdateImages();
       this.handleUpdateListOfImagesAnnotation();
     },
