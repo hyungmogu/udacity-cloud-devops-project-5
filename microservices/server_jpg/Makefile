@@ -1,6 +1,6 @@
 lint_local:
 	hadolint Dockerfile
-	./venv/bin/python3 -m pylint --disable=R,C,W1203,W1202 ./**/**.py
+	./venv/bin/python3 -m pylint --rcfile=.pylintrc --disable=R,C,W1203,W1202 ./**/**.py
 
 build_local:
 	python3 -m venv venv
