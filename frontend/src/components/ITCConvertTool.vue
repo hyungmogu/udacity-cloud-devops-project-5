@@ -52,7 +52,7 @@ import ConcreteImageConversionToWEBP from '@/services/imageConversion/concreteIm
           </div>
           <div class="itc-convert-tool__result-item-body">
             <div class="itc-convert-tool__result-item-progress">
-              <ITCProgressMeter :class="{complete: item.complete, error: item.error}"/> 
+              <ITCProgressMeter :className="{complete: item.complete, error: item.error}"/> 
             </div>
             <ITCButtonLink :href="item.result" :target="'_blank'" :download="item.fileNameAfter" :className='"itc-convert-tool__result-item-download"' :disabled="!item.complete">Download</ITCButtonLink>
           </div>

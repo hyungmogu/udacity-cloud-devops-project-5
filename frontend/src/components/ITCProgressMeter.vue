@@ -1,12 +1,12 @@
 <template>
-    <div class="itc-progress-meter" :class="class" >
+    <div class="itc-progress-meter" :class="className" >
         <span class="itc-progress-meter__bar"></span>
     </div>
 </template>
 <script>
 export default {
   props:{
-    class:{
+    className:{
       type:String,
       default:'',
      }
