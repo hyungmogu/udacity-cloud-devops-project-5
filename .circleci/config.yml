@@ -642,7 +642,8 @@ jobs:
                     aws ec2 describe-instances \
                     --filters Name=tag:project,Values=image-converter Name=tag:type,Values=server \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
-                    --output text >> .circleci/ansible/inventory.txt 
+                    --output text >> .circleci/ansible/inventory_server_raw.txt
+                    cat .circleci/ansible/inventory_server_raw.txt | python3 aws_ip_parser.py | .circleci/ansible/inventory.txt 
             - run:
                 name: Check Ansible output
                 command: |
