@@ -635,6 +635,10 @@ jobs:
                 name: Check Ansible output
                 command: |
                     cat .circleci/ansible/inventory.txt
+            - store_artifacts:
+                path: .circleci/ansible/inventory_cp_raw.txt
+            - store_artifacts:
+                path: .circleci/ansible/inventory.txt
             - run:
                 name: Add server Server ip to ansible inventory
                 command: |
