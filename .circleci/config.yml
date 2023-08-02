@@ -615,10 +615,6 @@ jobs:
                 command: |
                     apt update
             - run:
-                name: Install tar and gzip
-                command: |
-                    apt-get -y install tar gzip
-            - run:
                 name: Install dependencies (AWS-Cli)
                 command: |
                     apt-get -y install awscli
