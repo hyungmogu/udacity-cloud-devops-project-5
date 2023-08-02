@@ -631,10 +631,6 @@ jobs:
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory_cp_raw.txt 
                     cat .circleci/ansible/inventory_cp_raw.txt | python3 .circleci/aws_ip_parser.py >> .circleci/ansible/inventory.txt
-            - run:
-                name: Check Ansible output
-                command: |
-                    cat .circleci/ansible/inventory.txt
             - store_artifacts:
                 path: .circleci/ansible/inventory_cp_raw.txt
             - store_artifacts:
@@ -648,10 +644,6 @@ jobs:
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory_server_raw.txt
                     cat .circleci/ansible/inventory_server_raw.txt | python3 .circleci/aws_ip_parser.py >> .circleci/ansible/inventory.txt 
-            - run:
-                name: Check Ansible output
-                command: |
-                    cat .circleci/ansible/inventory.txt
             - persist_to_workspace:
                 root: .circleci/ansible/
                 paths:
