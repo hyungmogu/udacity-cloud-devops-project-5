@@ -607,7 +607,6 @@ jobs:
                 command: |
                     echo "[control-plane]" >> .circleci/ansible/inventory.txt;
                     aws ec2 describe-instances \
-                    --filters Name=tag:project,Values=image-converter \
                     --query 'Reservations[*].Instances[*].PublicIpAddress' \
                     --output text >> .circleci/ansible/inventory_cp_raw.txt 
                     cat .circleci/ansible/inventory_cp_raw.txt | python3 .circleci/aws_ip_parser.py >> .circleci/ansible/inventory.txt
