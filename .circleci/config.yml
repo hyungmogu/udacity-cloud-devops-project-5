@@ -758,7 +758,7 @@ jobs:
                 command: |
                     cd .circleci/ansible
                     ansible-playbook -i inventory.txt main.yml
-            - rollback_environment 
+            # - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
 
