@@ -61,6 +61,15 @@ commands:
                     aws cloudformation delete-stack --stack-name image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}
     
 jobs:
+    lint-infrastructure-network:
+        docker:
+        steps:
+    lint-infrastructure-server:
+        docker:
+        steps:
+    lint-infrastructure-server-cp:
+        docker:
+        steps:
     build-frontend:
         docker:
             - image: node:18.14-buster
@@ -872,6 +881,9 @@ workflows:
             - build-microservice-jpg
             - build-microservice-png
             - build-microservice-webp
+            - lint-infrastructure-network
+            - lint-infrastructure-server
+            - lint-infrastructure-server-cp
             - test-frontend:
                 requires: [build-frontend]
             # - test-microservice-gateway:
@@ -901,13 +913,13 @@ workflows:
             - lint-microservice-server-png:
                 requires: [build-microservice-png]
             - lint-microservice-server-webp:
-                requires: [build-microservice-webp]
+                requires: [build-microservice-webp]                
             - deploy-infrastructure-network:
-                requires: [lint-frontend, lint-microservice-gateway, lint-microservice-server-jpg, lint-microservice-server-png, lint-microservice-server-webp, test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
+                requires: [lint-infrastructure-network, lint-frontend, lint-microservice-gateway, lint-microservice-server-jpg, lint-microservice-server-png, lint-microservice-server-webp, test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
             - deploy-infrastructure-server:
-                requires: [deploy-infrastructure-network]
+                requires: [lint-infrastructure-server, deploy-infrastructure-network]
             - deploy-infrastructure-server-cp:
-                requires: [deploy-infrastructure-network]
+                requires: [lint-infrastructure-server-cp, deploy-infrastructure-network]
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
             - update-ansible-ips:
