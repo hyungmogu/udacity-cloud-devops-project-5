@@ -1,41 +1,38 @@
 Description: >
-    Creditor: Carlos Rivas / Udacity 2019
+  UdaPeople backend stack.
 
 Parameters:
-    EnvironmentName:
-        Description: An environment name that will be prefixed to resource names
-        Type: String
+  ID:
+    Description: Unique identifier.
+    Type: String
+
 Resources:
-    InstanceSecurityGroup:
-        Type: AWS::EC2::SecurityGroup
-        Properties:
-            GroupDescription: Allow access via SSH only
-            VpcId:
-                Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
-            SecurityGroupIngress:
-            - IpProtocol: tcp
-              FromPort: 22
-              ToPort: 22
-              CidrIp: 0.0.0.0/0
-            SecurityGroupEgress:
-            - IpProtocol: tcp
-              FromPort: 0
-              ToPort: 65535
-              CidrIp: 0.0.0.0/0
-    WebAppLaunchConfig:
-        Type: AWS::AutoScaling::LaunchConfiguration
-        Properties:
-            UserData:
-                Fn::Base64: !Sub |
-                    #!/bin/bash
-                    apt update
-                    apt-get -y install ansible
-            ImageId: ami-08c417ecfdc73a8c2
-            KeyName: image-converter-ec2
-            SecurityGroups:
-            - Ref: InstanceSecurityGroup
-            InstanceType: t3.medium
-            BlockDeviceMappings:
-            - DeviceName: "/dev/sdk"
-              Ebs:
-                VolumeSize: '10'
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub UdaPeople-${ID}
+      GroupDescription: Allow port 22 and port 3030.
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 3030
+          ToPort: 3030
+          CidrIp: 0.0.0.0/0
+
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      SecurityGroups:
+        - Ref: InstanceSecurityGroup
+      KeyName: udacity # If you use another key pair name, you should change this value to match.
+      # If this ami id is not available for you, you can find another (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)
+      # Ubuntu 18 or higher works fine
+      ImageId: ami-08c417ecfdc73a8c2 
+      Tags:
+        - Key: Name
+          Value: !Sub backend-${ID}
+
