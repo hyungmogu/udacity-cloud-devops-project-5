@@ -11,7 +11,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub Image-Converter-${ID}
-      GroupDescription: Allow port 22 and port 3030.
+      GroupDescription: Allow port 22.
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -28,5 +28,5 @@ Resources:
       ImageId: ami-08c417ecfdc73a8c2 
       Tags:
         - Key: Name
-          Value: !Sub backend-${ID}
+          Value: !Sub Image-Converter-Kubernetes-CP-${ID}
 
