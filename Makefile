@@ -23,7 +23,7 @@ prepare_microservices:
 	./venv/bin/python3 ./prepare_docker.py
 
 start_locust:
-	locust -f tests_load/locustfile.py -P 8089
+	locust -f tests/load/locustfile.py -P 8089
 
 setup_local:
 	cp .env.example .env;
