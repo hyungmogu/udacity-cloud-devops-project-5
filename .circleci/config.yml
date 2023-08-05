@@ -568,7 +568,7 @@ jobs:
                     aws cloudformation deploy \
                     --template-file .circleci/aws/server-control-plane.yml \
                     --stack-name "image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
+                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
                     --tags project=image-converter type=control-plane
             - check_aws_status_server_cp
             - rollback_environment
