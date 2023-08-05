@@ -57,7 +57,9 @@ Resources:
         - Ref: InstanceSecurityGroup
         - Ref: PrometheusSecurityGroup
       KeyName: image-converter-ec2
-      ImageId: ami-053b0d53c279acc90 
+      ImageId: ami-053b0d53c279acc90
       Tags:
-        - Key: Name
-          Value: !Sub kubernetes-server-${ID}
+        - Key: Project
+          Value: !Sub ${ProjectName}
+        - Key: Type
+          Value: Server
