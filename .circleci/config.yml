@@ -157,11 +157,6 @@ jobs:
                 command: |
                     cd microservices/gateway
                     make build_local
-            - run:
-                name: Checking Directory
-                command: |
-                    cd microservices/gateway
-                    ls -al
             - save_cache:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                 paths:
@@ -179,11 +174,6 @@ jobs:
                 command: |
                     cd microservices/server_jpg
                     make build_local
-            - run:
-                name: Checking Directory
-                command: |
-                    cd microservices/server_jpg
-                    ls -al
             - save_cache:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_jpg/requirements.txt" }}
                 paths:
@@ -201,11 +191,6 @@ jobs:
                 command: |
                     cd microservices/server_png
                     make build_local
-            - run:
-                name: Checking Directory
-                command: |
-                    cd microservices/server_png
-                    ls -al
             - save_cache:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_png/requirements.txt" }}
                 paths:
@@ -223,11 +208,6 @@ jobs:
                 command: |
                     cd microservices/server_webp
                     make build_local
-            - run:
-                name: Checking Directory
-                command: |
-                    cd microservices/server_webp
-                    ls -al
             - save_cache:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_webp/requirements.txt" }}
                 paths:
@@ -260,15 +240,6 @@ jobs:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
-                name: Checking Project Root Directory
-                command: |
-                    ls -al
-            - run:
-                name: Checking Directory
-                command: |
-                    cd microservices/gateway
-                    ls -al
-            - run:
                 name: Run Test for Microservice Server Gateway
                 command: |
                     cd microservices/gateway
@@ -285,15 +256,6 @@ jobs:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_jpg/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Checking Project Root Directory
-                command: |
-                    ls -al
-            - run:
-                name: Checking Directory
-                command: |
-                    cd microservices/server_jpg
-                    ls -al
             - run:
                 name: Run Test for Microservice Server Jpg
                 command: |
@@ -312,15 +274,6 @@ jobs:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_png/requirements.txt" }}
                     - v1-dependencies-
             - run:
-                name: Checking Project Root Directory
-                command: |
-                    ls -al
-            - run:
-                name: Checking Directory
-                command: |
-                    cd microservices/server_png
-                    ls -al
-            - run:
                 name: Run Test for Microservice Server Png 
                 command: |
                     cd microservices/server_png
@@ -337,15 +290,6 @@ jobs:
                 keys:
                     - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_webp/requirements.txt" }}
                     - v1-dependencies-
-            - run:
-                name: Checking Project Root Directory
-                command: |
-                    ls -al
-            - run:
-                name: Checking Directory
-                command: |
-                    cd microservices/server_webp
-                    ls -al
             - run:
                 name: Run Test for Microservice Server Webp
                 command: |
