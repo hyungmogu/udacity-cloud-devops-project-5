@@ -72,7 +72,6 @@ Resources:
           - Fn::ImportValue:
               !Sub "${EnvironmentName}-PUB2-SN"
 
-
   EKSNodegroup:
     Type: 'AWS::EKS::Nodegroup'
     Properties:
