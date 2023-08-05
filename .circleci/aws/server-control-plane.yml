@@ -53,9 +53,14 @@ Resources:
         - Ref: InstanceSecurityGroup
         - Ref: PrometheusSecurityGroup
       KeyName: image-converter-ec2
-      ImageId: ami-053b0d53c279acc90 
+      ImageId: ami-053b0d53c279acc90
+      NetworkInterfaces: 
+      - AssociatePublicIpAddress: "true"
+        SubnetId: 
+          Ref: "PublicSubnet"
       Tags:
         - Key: Project
           Value: !Sub ${ProjectName}
         - Key: Type
           Value: Control-Plane
+     
