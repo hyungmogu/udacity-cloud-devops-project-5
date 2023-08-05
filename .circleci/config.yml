@@ -63,7 +63,18 @@ commands:
 jobs:
     lint-infrastructure-network:
         docker:
+            - image: python:3.10-buster
         steps:
+            - checkout
+            - run:
+                name: Install cfn-lint
+                command: |
+                    pip install cfn-lint
+            - run:
+                name: Lint AWS Network File
+                command: |
+                    cd .circleci/aws
+                    cfn-lint -t network.yml
     lint-infrastructure-server:
         docker:
         steps:
