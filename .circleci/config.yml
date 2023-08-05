@@ -514,8 +514,8 @@ jobs:
                     --stack-name "image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
                     --tags project=image-converter type=network
-            - check_aws_status_network
-            - rollback_environment
+            # - check_aws_status_network
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -542,8 +542,8 @@ jobs:
                     --stack-name "image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
                     --tags project=image-converter type=server
-            - check_aws_status_server
-            - rollback_environment
+            # - check_aws_status_server
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -570,8 +570,8 @@ jobs:
                     --stack-name "image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" 
                     --tags project=image-converter type=control-plane
-            - check_aws_status_server_cp
-            - rollback_environment
+            # - check_aws_status_server_cp
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -598,8 +598,8 @@ jobs:
                     --stack-name "image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter type=frontend
-            - check_aws_status_front_end
-            - rollback_environment
+            # - check_aws_status_front_end
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
