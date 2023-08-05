@@ -885,7 +885,7 @@ workflows:
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
             - update-ansible-ips:
-                requires: [deploy-infrastructure-server, deploy-infrastructure-server-cp, deploy-infrastructure-frontend]
+                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
             - deploy-frontend:
                 requires: [update-ansible-ips]
             - deploy-microservice-gateway:
