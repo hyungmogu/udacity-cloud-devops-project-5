@@ -29,7 +29,7 @@ Resources:
                 #!/bin/bash
                 apt update
                 apt-get -y install ansible
-            ImageId: ami-08c417ecfdc73a8c2
+            ImageId: ami-053b0d53c279acc90
             KeyName: image-converter-ec2
             SecurityGroups:
             - Ref: WebServerSecGroup
