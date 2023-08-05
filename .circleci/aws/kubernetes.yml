@@ -51,7 +51,7 @@ Resources:
       GroupDescription: Cluster communication with worker nodes
       VpcId:
         Fn::ImportValue:
-          !Sub "${VPCStack}-VPCID"
+          !Sub "${EnvironmentName}-VPCID"
 
   ControlPlane:
     Type: "AWS::EKS::Cluster"
@@ -64,13 +64,13 @@ Resources:
           - !Ref ClusterControlPlaneSecurityGroup
         SubnetIds:
           - Fn::ImportValue:
-              !Sub "${VPCStack}-PRI01-SN"
+              !Sub "${EnvironmentName}-PRI1-SN"
           - Fn::ImportValue:
-              !Sub "${VPCStack}-PRI02-SN"
+              !Sub "${EnvironmentName}-PRI2-SN"
           - Fn::ImportValue:
-              !Sub "${VPCStack}-PUB01-SN"
+              !Sub "${EnvironmentName}-PUB1-SN"
           - Fn::ImportValue:
-              !Sub "${VPCStack}-PUB02-SN"
+              !Sub "${EnvironmentName}-PUB2-SN"
 
 
   EKSNodegroup:
@@ -87,8 +87,8 @@ Resources:
       Labels:
         Name: Capstone
       Subnets:
-      - Fn::ImportValue: !Sub "${VPCStack}-PRI01-SN"
-      - Fn::ImportValue: !Sub "${VPCStack}-PRI02-SN"
+      - Fn::ImportValue: !Sub "${EnvironmentName}-PRI1-SN"
+      - Fn::ImportValue: !Sub "${EnvironmentName}-PRI2-SN"
 
       Tags:
         kubernetes.io/cluster/prod: 'owned' 
