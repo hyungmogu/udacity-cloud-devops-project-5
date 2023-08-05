@@ -1,0 +1,61 @@
+Description: >
+  Image Converter Kubernetes Server stack.
+
+Parameters:
+  ID:
+    Description: Unique identifier.
+    Type: String
+
+Resources:
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub Image-Converter-Kubernetes-Server-CP-${ID}
+      GroupDescription: Allow port 22.
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+    
+  PrometheusSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub Image-Converter-Kubernetes-Server-Prometheus-${ID}
+      GroupDescription: Allow port 22, port 9090, 9093, 9100.
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          Description: SSH
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9090
+          ToPort: 9090
+          Description: Prometheus server
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9093
+          ToPort: 9093
+          Description: Prometheus alert manager
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9100
+          ToPort: 9100
+          Description: Prometheus node exporter
+          CidrIp: 0.0.0.0/0
+
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      SecurityGroups:
+        - Ref: InstanceSecurityGroup
+        - Ref: PrometheusSecurityGroup
+      KeyName: image-converter-ec2
+      ImageId: ami-053b0d53c279acc90 
+      Tags:
+        - Key: Project
+          Value: !Sub ${ProjectName}
+        - Key: Type
+          Value: Control-Plane
