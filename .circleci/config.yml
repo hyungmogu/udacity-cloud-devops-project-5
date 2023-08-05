@@ -505,7 +505,7 @@ jobs:
             # - notify_slack_error
             # - notify_slack_pass
 
-    deploy-infrastructure-server:
+    deploy-infrastructure-kubernetes:
         docker:
             - image: python:3.10-buster
         steps:
@@ -519,44 +519,16 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
-                name: Ensure Kubernetes Server Infrastructure exists
+                name: Ensure Kubernetes Infrastructure exists
                 no_output_timeout: 20m
                 command: |
                     CURRENT_DIR=$(pwd);
                     aws cloudformation deploy \
-                    --template-file .circleci/aws/server.yml \
-                    --stack-name "image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-parameters.json" \
-                    --tags project=image-converter type=server
+                    --template-file .circleci/aws/kubernetes.yml \
+                    --stack-name "image-converter-kubernetes-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/kubernetes-parameters.json" \
+                    --tags project=image-converter type=kubernetes
             # - check_aws_status_server
-            # - rollback_environment
-            # - notify_slack_error
-            # - notify_slack_pass
-
-    deploy-infrastructure-server-cp:
-        docker:
-            - image: python:3.10-buster
-        steps:
-            - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
-            - run:
-                name: Ensure Kubernetes Server Infrastructure for Control Plane exists
-                no_output_timeout: 20m
-                command: |
-                    CURRENT_DIR=$(pwd);
-                    aws cloudformation deploy \
-                    --template-file .circleci/aws/server-control-plane.yml \
-                    --stack-name "image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/server-control-plane-parameters.json" \
-                    --tags project=image-converter type=control-plane
-            # - check_aws_status_server_cp
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
@@ -908,9 +880,7 @@ workflows:
                 requires: [build-microservice-webp]                
             - deploy-infrastructure-network:
                 requires: [lint-infrastructure-cloudfront, lint-infrastructure-frontend, lint-infrastructure-network, lint-infrastructure-kubernetes, lint-frontend, lint-microservice-gateway, lint-microservice-server-jpg, lint-microservice-server-png, lint-microservice-server-webp, test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
-            - deploy-infrastructure-server:
-                requires: [deploy-infrastructure-network]
-            - deploy-infrastructure-server-cp:
+            - deploy-infrastructure-kubernetes:
                 requires: [deploy-infrastructure-network]
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
