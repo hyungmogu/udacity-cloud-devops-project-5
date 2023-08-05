@@ -91,7 +91,18 @@ jobs:
                     cfn-lint -t server.yml
     lint-infrastructure-server-cp:
         docker:
+            - image: python:3.10-buster
         steps:
+            - checkout
+            - run:
+                name: Install cfn-lint
+                command: |
+                    pip install cfn-lint
+            - run:
+                name: Lint AWS Server File
+                command: |
+                    cd .circleci/aws
+                    cfn-lint -t server-control-plane.yml
     build-frontend:
         docker:
             - image: node:18.14-buster
