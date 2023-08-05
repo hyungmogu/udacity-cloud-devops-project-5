@@ -914,6 +914,8 @@ workflows:
             - build-microservice-jpg
             - build-microservice-png
             - build-microservice-webp
+            - lint-infrastructure-cloudfront
+            - lint-infrastructure-frontend
             - lint-infrastructure-network
             - lint-infrastructure-server
             - lint-infrastructure-server-cp
@@ -948,11 +950,11 @@ workflows:
             - lint-microservice-server-webp:
                 requires: [build-microservice-webp]                
             - deploy-infrastructure-network:
-                requires: [lint-infrastructure-network, lint-frontend, lint-microservice-gateway, lint-microservice-server-jpg, lint-microservice-server-png, lint-microservice-server-webp, test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
+                requires: [lint-infrastructure-cloudfront, lint-infrastructure-frontend, lint-infrastructure-network, lint-infrastructure-server, lint-infrastructure-server-cp, lint-frontend, lint-microservice-gateway, lint-microservice-server-jpg, lint-microservice-server-png, lint-microservice-server-webp, test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
             - deploy-infrastructure-server:
-                requires: [lint-infrastructure-server, deploy-infrastructure-network]
+                requires: [deploy-infrastructure-network]
             - deploy-infrastructure-server-cp:
-                requires: [lint-infrastructure-server-cp, deploy-infrastructure-network]
+                requires: [deploy-infrastructure-network]
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
             - update-ansible-ips:
