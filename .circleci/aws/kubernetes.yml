@@ -12,7 +12,6 @@ Mappings:
 
 Resources:
   ClusterRole:
-    Description: Allows EKS to manage clusters on your behalf.
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
