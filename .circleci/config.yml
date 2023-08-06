@@ -688,6 +688,8 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
+            - attach_workspace:
+                at: ~/project/.circleci/kubernetes/base_src
             - run:
                 name: Update packages
                 command: |
@@ -718,12 +720,6 @@ jobs:
                 name: Apply Kubernetes config files via kubectl
                 command: |
                     kubectl apply -f ./.circleci/kubernetes/base_src/
-            - store_artifacts:
-                path: .circleci/kubernetes/base_src
-            - persist_to_workspace:
-                root: ~/project
-                paths:
-                    - .circleci/kubernetes/base_src
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
