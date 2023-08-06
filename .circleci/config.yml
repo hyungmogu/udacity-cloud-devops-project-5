@@ -587,6 +587,10 @@ jobs:
                 name: Prepare Kubernetes Source Files
                 command: |
                     python3 prepare_kubernetes.py
+            - run:
+                name: Apply Kubernetes config files via kubectl
+                command: |
+                    kubectl apply -f ./.circleci/kubernetes/base_src/
             - store_artifacts:
                 path: .circleci/kubernetes/base_src
             - persist_to_workspace:
