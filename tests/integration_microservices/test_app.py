@@ -24,7 +24,11 @@ class TestSimplePositiveGatewayToServerJPG(unittest.TestCase):
 
         if len(self.minikube_service_url) == 0:
             raise Exception("MINIKUBE_SERVICE_URL environment variable is not set")
-        
+
+    def test_health_endpoint_successfully_returns_ok(self):
+        response = requests.get(f"{self.minikube_service_url}:{self.gateway_port}/health", timeout=10)
+        self.assertEqual(response.status_code, 200)
+    
     def test_convert_method_successfully_converts_a_valid_image_to_jpg(self):
         with tempfile.NamedTemporaryFile(suffix=".png") as img_file:
             img = Image.new("RGB", (50, 50), color="red")
@@ -39,7 +43,16 @@ class TestSimplePositiveGatewayToServerJPG(unittest.TestCase):
                 self.assertEqual(response.status_code, 201)
 
     def test_convert_method_returns_error_if_image_is_not_valid(self):
-        pass
+        with tempfile.NamedTemporaryFile(suffix=".txt") as txt_file:
+            txt_file.write(b'INVALID_IMAGE_DATA')
+
+            with open(txt_file.name, "rb") as txt_data:
+                response = requests.post(
+                    f"{self.minikube_service_url}:{self.gateway_port}/convert/to-jpg",
+                    files={"image": ("test.txt", txt_data, "text/plain")}, timeout=10)
+
+                self.assertEqual(response.status_code, 415)
+
 # Check if gateway to server-png works correctly
 class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
     def setUp(self):
@@ -50,6 +63,10 @@ class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
 
         if len(self.minikube_service_url) == 0:
             raise Exception("MINIKUBE_SERVICE_URL environment variable is not set")
+    
+    def test_health_endpoint_successfully_returns_ok(self):
+        response = requests.get(f"{self.minikube_service_url}:{self.gateway_port}/health", timeout=10)
+        self.assertEqual(response.status_code, 200)
 
     def test_convert_method_successfully_converts_a_valid_image_to_png(self):
         with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
@@ -65,7 +82,16 @@ class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
                 self.assertEqual(response.status_code, 201)
 
     def test_convert_method_returns_error_if_image_is_not_valid(self):
-        pass
+        with tempfile.NamedTemporaryFile(suffix=".txt") as txt_file:
+            txt_file.write(b'INVALID_IMAGE_DATA')
+
+            with open(txt_file.name, "rb") as txt_data:
+                response = requests.post(
+                    f"{self.minikube_service_url}:{self.gateway_port}/convert/to-png",
+                    files={"image": ("test.txt", txt_data, "text/plain")}, timeout=10)
+
+                self.assertEqual(response.status_code, 415)
+
 # Check if gateway to server-webp works correctly
 class TestSimplePositiveGatewayToServerWEBP(unittest.TestCase):
     def setUp(self):
@@ -76,6 +102,10 @@ class TestSimplePositiveGatewayToServerWEBP(unittest.TestCase):
 
         if len(self.minikube_service_url) == 0:
             raise Exception("MINIKUBE_SERVICE_URL environment variable is not set")
+    
+    def test_health_endpoint_successfully_returns_ok(self):
+        response = requests.get(f"{self.minikube_service_url}:{self.gateway_port}/health", timeout=10)
+        self.assertEqual(response.status_code, 200)
         
     def test_convert_method_successfully_converts_a_valid_image_to_webp(self):
         with tempfile.NamedTemporaryFile(suffix=".jpg") as img_file:
@@ -91,4 +121,12 @@ class TestSimplePositiveGatewayToServerWEBP(unittest.TestCase):
                 self.assertEqual(response.status_code, 201)
 
     def test_convert_method_returns_error_if_image_is_not_valid(self):
-        pass
+        with tempfile.NamedTemporaryFile(suffix=".txt") as txt_file:
+            txt_file.write(b'INVALID_IMAGE_DATA')
+
+            with open(txt_file.name, "rb") as txt_data:
+                response = requests.post(
+                    f"{self.minikube_service_url}:{self.gateway_port}/convert/to-webp",
+                    files={"image": ("test.txt", txt_data, "text/plain")}, timeout=10)
+
+                self.assertEqual(response.status_code, 415)
