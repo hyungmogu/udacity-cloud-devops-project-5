@@ -850,15 +850,15 @@ workflows:
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
             - deploy-frontend:
-                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
+                requires: [deploy-infrastructure-frontend]
             - deploy-microservice-gateway:
-                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
+                requires: [deploy-infrastructure-kubernetes]
             - deploy-microservice-server-jpg:
-                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
+                requires: [deploy-infrastructure-kubernetes]
             - deploy-microservice-server-png:
-                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
+                requires: [deploy-infrastructure-kubernetes]
             - deploy-microservice-server-webp:
-                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
+                requires: [deploy-infrastructure-kubernetes]
             - setup-kubernetes-cluster:
                 requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - smoke-test:
