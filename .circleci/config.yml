@@ -699,36 +699,6 @@ jobs:
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
-
-    configure-infrastructure:
-        docker:
-            - image: python:3.10-buster
-        steps:
-            - checkout
-            - add_ssh_keys:
-                fingerprints: [""] 
-            - attach_workspace:
-                at: .circleci/ansible/
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install Ansible
-                command: |
-                    apt-get -y install ansible
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
-            - run:
-                name: Run Playbook and Configure server
-                command: |
-                    cd .circleci/ansible
-                    ansible-playbook -i inventory.txt main.yml
-            # - rollback_environment 
-            # - notify_slack_error
-            # - notify_slack_pass
     
     smoke-test:
         docker:
