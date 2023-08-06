@@ -527,6 +527,7 @@ jobs:
                     --template-file .circleci/aws/kubernetes.yml \
                     --stack-name "image-converter-kubernetes-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/kubernetes-parameters.json" \
+                    --capabilities CAPABILITY_IAM \
                     --tags project=image-converter type=kubernetes
             # - check_aws_status_server
             # - rollback_environment
