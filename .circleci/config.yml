@@ -798,9 +798,8 @@ jobs:
                     if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
                     then
                         aws s3 rm "s3://image-converter-${OldWorkflowID}" --recursive
-                        aws cloudformation delete-stack --stack-name "image-converter-kubernetes-server-cp-${OldWorkflowID}"
-                        aws cloudformation delete-stack --stack-name "image-converter-kubernetes-server-${OldWorkflowID}"
-                        aws cloudformation delete-stack --stack-name "image-converter-frontend-${OldWorkflowID}"
+                        aws cloudformation delete-stack --stack-name image-converter-frontend-${OldWorkflowID}
+                        aws cloudformation delete-stack --stack-name image-converter-kubernetes-${OldWorkflowID}                        
                     fi
             - rollback_environment 
             # - notify_slack_error
