@@ -830,8 +830,6 @@ workflows:
             - lint-infrastructure-kubernetes
             - test-frontend:
                 requires: [build-frontend]
-            # - test-microservice-gateway:
-            #     requires: [build-microservice-gateway]
             - test-microservice-server-jpg:
                 requires: [build-microservice-jpg]
             - test-microservice-server-png:
