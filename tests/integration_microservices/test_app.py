@@ -13,7 +13,7 @@ os.environ["AWS_S3_BUCKET"] = AWS_S3_BUCKET
 os.environ["AWS_ACCESS_KEY_ID"] = "test"
 os.environ["AWS_SECRET_ACCESS_KEY"] = "test"
 
-# Check if gateway to server-jpg works correctly
+
 class TestSimplePositiveGatewayToServerJPG(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
@@ -34,7 +34,6 @@ class TestSimplePositiveGatewayToServerJPG(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                # use request to send the image to the server-jpg path /convert/to-jpg via port 8010
                 response = requests.post(
                     f"{self.minikube_service_url}:{self.gateway_port}/convert/to-jpg", 
                     files={"image": ("test.png", img_data, "image/png")}, timeout=10)
@@ -52,7 +51,7 @@ class TestSimplePositiveGatewayToServerJPG(unittest.TestCase):
 
                 self.assertEqual(response.status_code, 415)
 
-# Check if gateway to server-png works correctly
+
 class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
@@ -73,7 +72,6 @@ class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                # use request to send the image to the server-png path /convert/to-png via port 8010
                 response = requests.post(
                     f"{self.minikube_service_url}:{self.gateway_port}/convert/to-png", 
                     files={"image": ("test.jpg", img_data, "image/jpg")}, timeout=10)
@@ -91,7 +89,7 @@ class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
 
                 self.assertEqual(response.status_code, 415)
 
-# Check if gateway to server-webp works correctly
+
 class TestSimplePositiveGatewayToServerWEBP(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
@@ -112,7 +110,6 @@ class TestSimplePositiveGatewayToServerWEBP(unittest.TestCase):
             img.save(img_file.name)
 
             with open(img_file.name, "rb") as img_data:
-                # use request to send the image to the server-webp path /convert/to-webp via port 8010
                 response = requests.post(
                     f"{self.minikube_service_url}:{self.gateway_port}/convert/to-webp", 
                     files={"image": ("test.jpg", img_data, "image/jpg")}, timeout=10)
