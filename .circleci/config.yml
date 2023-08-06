@@ -757,7 +757,7 @@ jobs:
                     else
                         exit 1
                     fi
-            - rollback_environment 
+            # - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass   
 
@@ -782,7 +782,7 @@ jobs:
                     --stack-name InitialStack \
                     --parameter-overrides WorkflowID="image-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter
-            - rollback_environment 
+            # - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -812,7 +812,7 @@ jobs:
                         aws cloudformation delete-stack --stack-name image-converter-frontend-${OldWorkflowID}
                         aws cloudformation delete-stack --stack-name image-converter-kubernetes-${OldWorkflowID}                        
                     fi
-            - rollback_environment 
+            # - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
 
