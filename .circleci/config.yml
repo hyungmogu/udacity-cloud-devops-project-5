@@ -699,7 +699,7 @@ jobs:
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
-    
+
     configure-infrastructure:
         docker:
             - image: python:3.10-buster
@@ -729,7 +729,7 @@ jobs:
             # - rollback_environment 
             # - notify_slack_error
             # - notify_slack_pass
-
+    
     smoke-test:
         docker:
             - image: python:3.10-buster
@@ -879,22 +879,20 @@ workflows:
                 requires: [deploy-infrastructure-network]
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
-            - setup-kubernetes-cluster:
-                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
             - deploy-frontend:
-                requires: [setup-kubernetes-cluster]
+                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
             - deploy-microservice-gateway:
-                requires: [setup-kubernetes-cluster]
+                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
             - deploy-microservice-server-jpg:
-                requires: [setup-kubernetes-cluster]
+                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
             - deploy-microservice-server-png:
-                requires: [setup-kubernetes-cluster]
+                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
             - deploy-microservice-server-webp:
-                requires: [setup-kubernetes-cluster]            
-            - configure-infrastructure:
+                requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
+            - setup-kubernetes-cluster:
                 requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - smoke-test:
-                requires: [configure-infrastructure]
+                requires: [setup-kubernetes-cluster]
             - cloudfront-update:
                 requires: [smoke-test]
             - cleanup:
