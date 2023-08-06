@@ -49,7 +49,6 @@ class KubernetesSetupTool:
 
     def run(self):
         self.prepare_manifest()
-        self.deploy_docker_images()
 
 
 if __name__ == "__main__":
