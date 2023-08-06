@@ -703,6 +703,10 @@ jobs:
                     chmod +x ./kubectl
                     mv ./kubectl /usr/local/bin/kubectl
             - run:
+                name: Check $PATH to debug aws-iam-authenticator is not installed properly error
+                command: |
+                    echo $PATH
+            - run:
                 name: Set EKS named `prod` as the url to be interacted by kubectl
                 command: |
                     aws eks --region us-east-1 update-kubeconfig --name prod
