@@ -675,6 +675,12 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
+                name: Install dependencies (Kubectl)
+                command: |
+                    curl -LO https://storage.googleapis.com/kubernetes-release/release/1.7.0/bin/linux/amd64/kubectl
+                    chmod +x ./kubectl
+                    mv ./kubectl /usr/local/bin/kubectl
+            - run:
                 name: Install dotenv
                 command: |
                     pip install python-dotenv==1.0.0
