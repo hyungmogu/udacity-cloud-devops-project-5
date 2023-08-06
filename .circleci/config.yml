@@ -680,6 +680,11 @@ jobs:
     setup-kubernetes-cluster:
         docker:
             - image: python:3.10-buster
+        parameters:
+            cluster-name:
+                description: |
+                    Name of the EKS cluster
+                type: string
         steps:
             - checkout
             - attach_workspace:
