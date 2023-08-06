@@ -44,7 +44,12 @@ commands:
                     aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
     rollback_environment:
         description: Destroy kubernetes server and front-end cloudformation stacks given a workflow ID.  
-        steps:                    
+        steps:
+            - run:
+                name: Clean S3 folder
+                when: on_fail
+                command: |
+                    aws s3 rm s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             - run:
                 name: Destroy environments
                 when: on_fail
@@ -696,6 +701,10 @@ jobs:
                 name: Check kubectl is properly configured
                 command: |
                     kubectl cluster-info
+            - run:
+                name: Check files in folder kubernetes/base_src
+                command: |
+                    ls -al ~/project/.circleci/kubernetes/base_src
             - run:
                 name: Apply Kubernetes config files via kubectl
                 command: |
