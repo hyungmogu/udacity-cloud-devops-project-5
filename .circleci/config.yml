@@ -55,10 +55,9 @@ commands:
                 name: Destroy environments
                 when: on_fail
                 command: |
-                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
                     aws cloudformation delete-stack --stack-name image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
     
 jobs:
     lint-infrastructure-cloudfront:
