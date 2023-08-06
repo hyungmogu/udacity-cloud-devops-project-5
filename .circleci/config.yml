@@ -879,6 +879,7 @@ workflows:
             - prepare-kubernetes-files:
                 requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - setup-kubernetes-cluster:
+                cluster-name: prod
                 requires: [prepare-kubernetes-files]
             - smoke-test:
                 requires: [setup-kubernetes-cluster]
