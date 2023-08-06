@@ -660,6 +660,29 @@ jobs:
             # - notify_slack_error
             # - notify_slack_pass
     
+    prepare-kubernetes-files:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - run:
+                name: Install dotenv
+                command: |
+                    pip install python-dotenv==1.0.0
+            - run:
+                name: Prepare Kubernetes Source Files
+                command: |
+                    python3 prepare_kubernetes.py
+            - store_artifacts:
+                path: .circleci/kubernetes/base_src
+            - persist_to_workspace:
+                root: ~/project
+                paths:
+                    - .circleci/kubernetes/base_src
+            # - rollback_environment
+            # - notify_slack_error
+            # - notify_slack_pass
+
     setup-kubernetes-cluster:
         docker:
             - image: python:3.10-buster
@@ -680,17 +703,13 @@ jobs:
                     chmod +x ./kubectl
                     mv ./kubectl /usr/local/bin/kubectl
             - run:
-                name: Install dotenv
-                command: |
-                    pip install python-dotenv==1.0.0
-            - run:
                 name: Set EKS named `prod` as the url to be interacted by kubectl
                 command: |
                     aws eks --region us-east-1 update-kubeconfig --name prod
             - run:
-                name: Prepare Kubernetes Source Files
+                name: Check kubectl is properly configured
                 command: |
-                    python3 prepare_kubernetes.py
+                    kubectl apply -f ./.circleci/kubernetes/base_src/
             - run:
                 name: Apply Kubernetes config files via kubectl
                 command: |
