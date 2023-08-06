@@ -29,7 +29,7 @@ setup_local:
 	cp .env.example .env;
 
 test_integration_microservices: clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
-	./venv/bin/python3 -m pytest -s -v tests/integration
+	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
 
 test_load_local: start_locust clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
 
