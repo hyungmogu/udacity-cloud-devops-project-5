@@ -679,7 +679,7 @@ jobs:
                 command: |
                     pip install python-dotenv==1.0.0
             - run:
-                name: Install dependencies (AWS-Cli)
+                name: Set EKS named `prod` as the url to be interacted by kubectl
                 command: |
                     aws eks --region us-east-1 update-kubeconfig --name prod
             - run:
