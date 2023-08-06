@@ -562,45 +562,6 @@ jobs:
             # - notify_slack_error
             # - notify_slack_pass
 
-    setup-kubernetes-cluster:
-        docker:
-            - image: python:3.10-buster
-        steps:
-            - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
-            - run:
-                name: Install dotenv
-                command: |
-                    pip install python-dotenv==1.0.0
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    aws eks --region us-east-1 update-kubeconfig --name prod
-            - run:
-                name: Prepare Kubernetes Source Files
-                command: |
-                    python3 prepare_kubernetes.py
-            - run:
-                name: Apply Kubernetes config files via kubectl
-                command: |
-                    kubectl apply -f ./.circleci/kubernetes/base_src/
-            - store_artifacts:
-                path: .circleci/kubernetes/base_src
-            - persist_to_workspace:
-                root: ~/project
-                paths:
-                    - .circleci/kubernetes/base_src
-            # - rollback_environment
-            # - notify_slack_error
-            # - notify_slack_pass
-
     deploy-frontend:
         docker:
             - image: node:18.14-buster
@@ -696,6 +657,45 @@ jobs:
                 command: |
                     cd microservices/server_webp;
                     make deploy;
+            # - rollback_environment
+            # - notify_slack_error
+            # - notify_slack_pass
+    
+    setup-kubernetes-cluster:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run:
+                name: Install dotenv
+                command: |
+                    pip install python-dotenv==1.0.0
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    aws eks --region us-east-1 update-kubeconfig --name prod
+            - run:
+                name: Prepare Kubernetes Source Files
+                command: |
+                    python3 prepare_kubernetes.py
+            - run:
+                name: Apply Kubernetes config files via kubectl
+                command: |
+                    kubectl apply -f ./.circleci/kubernetes/base_src/
+            - store_artifacts:
+                path: .circleci/kubernetes/base_src
+            - persist_to_workspace:
+                root: ~/project
+                paths:
+                    - .circleci/kubernetes/base_src
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
