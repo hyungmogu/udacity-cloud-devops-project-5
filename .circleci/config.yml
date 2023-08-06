@@ -562,7 +562,7 @@ jobs:
             # - notify_slack_error
             # - notify_slack_pass
 
-    update-ansible-ips:
+    setup-kubernetes-cluster:
         docker:
             - image: python:3.10-buster
         steps:
@@ -576,22 +576,23 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
-                name: Add server control plane ip to ansible inventory
+                name: Install dotenv
                 command: |
-                    echo "[control-plane]" >> .circleci/ansible/inventory.txt;
-                    aws ec2 describe-instances \
-                    --filters Name=tag:project,Values=image-converter Name=tag:type,Values=kubernetes \
-                    --query 'Reservations[*].Instances[*].PublicIpAddress' \
-                    --output text >> .circleci/ansible/inventory_cp_raw.txt 
-                    cat .circleci/ansible/inventory_kubernetes.txt | python3 .circleci/aws_ip_parser.py >> .circleci/ansible/inventory.txt
+                    pip install python-dotenv==1.0.0
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    aws eks --region us-east-1 update-kubeconfig --name prod
+            - run:
+                name: Prepare Kubernetes Source Files
+                command: |
+                    python3 prepare_kubernetes.py
             - store_artifacts:
-                path: .circleci/ansible/inventory_kubernetes.txt
-            - store_artifacts:
-                path: .circleci/ansible/inventory.txt
+                path: .circleci/kubernetes/base_src
             - persist_to_workspace:
-                root: .circleci/ansible/
+                root: ~/project
                 paths:
-                    - inventory.txt
+                    - .circleci/kubernetes/base_src
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
@@ -874,18 +875,18 @@ workflows:
                 requires: [deploy-infrastructure-network]
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
-            - update-ansible-ips:
+            - setup-kubernetes-cluster:
                 requires: [deploy-infrastructure-kubernetes, deploy-infrastructure-frontend]
             - deploy-frontend:
-                requires: [update-ansible-ips]
+                requires: [setup-kubernetes-cluster]
             - deploy-microservice-gateway:
-                requires: [update-ansible-ips]
+                requires: [setup-kubernetes-cluster]
             - deploy-microservice-server-jpg:
-                requires: [update-ansible-ips]
+                requires: [setup-kubernetes-cluster]
             - deploy-microservice-server-png:
-                requires: [update-ansible-ips]
+                requires: [setup-kubernetes-cluster]
             - deploy-microservice-server-webp:
-                requires: [update-ansible-ips]            
+                requires: [setup-kubernetes-cluster]            
             - configure-infrastructure:
                 requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - smoke-test:
