@@ -24,22 +24,14 @@ commands:
                 when: on_fail
                 command: |
                     aws cloudformation describe-stack-events --stack-name image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
-    check_aws_status_server:
-        description: Checks for server cloudformation events before destroy. For debugging purpose.  
-        steps:
-            - run:
-                name: See description of what happened (server)
-                when: on_fail
-                command: |
-                    aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-server-${CIRCLE_WORKFLOW_ID:0:7}
-    check_aws_status_server_cp:
+    check_aws_status_kubernetes:
         description: Checks for server control plane cloudformation events before destroy. For debugging purpose.  
         steps:
             - run:
-                name: See description of what happened (server control plane)
+                name: See description of what happened (Kubernetes)
                 when: on_fail
                 command: |
-                    aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-server-cp-${CIRCLE_WORKFLOW_ID:0:7}
+                    aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-${CIRCLE_WORKFLOW_ID:0:7}
     check_aws_status_network:
         description: Checks for network cloudformation events before destroy. For debugging purpose.  
         steps:
@@ -528,7 +520,7 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/kubernetes-parameters.json" \
                     --capabilities CAPABILITY_IAM \
                     --tags project=image-converter type=kubernetes
-            # - check_aws_status_server
+            # - check_aws_status_kubernetes
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
