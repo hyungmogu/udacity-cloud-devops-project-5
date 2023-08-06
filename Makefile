@@ -29,6 +29,10 @@ setup_local:
 	cp .env.example .env;
 
 test_integration_microservices: clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
+	./venv/bin/pip install requests==2.31.0 &&\
+	./venv/bin/pip install Pillow==9.5.0 &&\
+	./venv/bin/pip install boto3==1.26.148 &&\
+	./venv/bin/pip install python-dotenv==1.0.0 &&\
 	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
 
 test_load_local: start_locust clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
