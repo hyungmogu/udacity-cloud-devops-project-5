@@ -693,22 +693,6 @@ jobs:
             - aws-eks/update-kubeconfig-with-authenticator:
                 cluster-name: << parameters.cluster-name >>
             - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
-            - run:
-                name: Check $PATH to debug aws-iam-authenticator is not installed properly error
-                command: |
-                    echo $PATH
-            - run:
-                name: Set EKS named `prod` as the url to be interacted by kubectl
-                command: |
-                    aws eks --region us-east-1 update-kubeconfig --name prod
-            - run:
                 name: Check kubectl is properly configured
                 command: |
                     kubectl cluster-info
