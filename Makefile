@@ -33,7 +33,7 @@ test_integration_microservices: clean_microservices_minikube prepare_microservic
 
 test_load_local: start_locust clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
 
-start_local_minikube_dashboard:
+start_minikube_dashboard:
 	minikube dashboard
 
 start_minikube: clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
