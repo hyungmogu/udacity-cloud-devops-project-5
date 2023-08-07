@@ -490,7 +490,7 @@ jobs:
             - run:
                 name: Prepare Kubernetes
                 command: |
-                    python3 prepare_kubernetes.py
+                    ./venv/bin/python3 prepare_kubernetes.py
             - run:
                 name: Apply Kubernetes Configuration
                 command: |
