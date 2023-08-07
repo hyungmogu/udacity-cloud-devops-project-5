@@ -41,12 +41,6 @@ class KubernetesSetupTool:
                 with open(".circleci/kubernetes/base_src/{}.yaml".format(file.split(".")[0]), "w+") as f:
                     f.write(content)
 
-    def deploy_docker_images(self):
-        # for each folder in microservices folder, run docker.sh script
-        for folder in os.listdir("microservices"):
-            if os.path.isdir("microservices/{}".format(folder)):
-                os.system("cd microservices/{} && sh docker.sh".format(folder))
-
     def run(self):
         self.prepare_manifest()
 
