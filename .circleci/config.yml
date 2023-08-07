@@ -530,7 +530,7 @@ jobs:
             - run:
                 name: Perform Microservices Integration Tests
                 command: |
-                    ./venv/bin/python3 -m pytest -s -v tests/integration_microservices
+                    ./venv/bin/python3 -m unittest tests/integration_microservices/test_app.py
             # - notify_slack_error
             # - notify_slack_pass
     
