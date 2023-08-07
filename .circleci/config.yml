@@ -852,25 +852,25 @@ workflows:
             - lint-microservice-server-png:
                 requires: [build-microservice-png]
             - lint-microservice-server-webp:
-                requires: [build-microservice-webp]                
+                requires: [build-microservice-webp]
+            - deploy-microservice-gateway:
+                requires: [scan-microservice-gateway, lint-microservice-gateway]
+            - deploy-microservice-server-jpg:
+                requires: [scan-microservice-server-jpg, lint-microservice-server-jpg, test-microservice-server-jpg]
+            - deploy-microservice-server-png:
+                requires: [scan-microservice-server-png, lint-microservice-server-png, test-microservice-server-png]
+            - deploy-microservice-server-webp:
+                requires: [scan-microservice-server-webp, lint-microservice-server-webp, test-microservice-server-webp]         
             - deploy-infrastructure-network:
-                requires: [lint-infrastructure-cloudfront, lint-infrastructure-frontend, lint-infrastructure-network, lint-infrastructure-kubernetes, lint-frontend, lint-microservice-gateway, lint-microservice-server-jpg, lint-microservice-server-png, lint-microservice-server-webp, test-frontend, test-microservice-server-jpg, test-microservice-server-png, test-microservice-server-webp, scan-frontend, scan-microservice-gateway, scan-microservice-server-jpg, scan-microservice-server-png, scan-microservice-server-webp]
+                requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp, lint-frontend, scan-frontend, test-frontend]
             - deploy-infrastructure-kubernetes:
                 requires: [deploy-infrastructure-network]
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
             - deploy-frontend:
                 requires: [deploy-infrastructure-frontend]
-            - deploy-microservice-gateway:
-                requires: [deploy-infrastructure-kubernetes]
-            - deploy-microservice-server-jpg:
-                requires: [deploy-infrastructure-kubernetes]
-            - deploy-microservice-server-png:
-                requires: [deploy-infrastructure-kubernetes]
-            - deploy-microservice-server-webp:
-                requires: [deploy-infrastructure-kubernetes]
             - prepare-kubernetes-files:
-                requires: [deploy-frontend, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
+                requires: [deploy-frontend, deploy-infrastructure-kubernetes]
             - setup-kubernetes-cluster:
                 cluster-name: prod
                 requires: [prepare-kubernetes-files]
