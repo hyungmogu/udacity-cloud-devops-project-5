@@ -10,6 +10,6 @@ spec:
     app: gateway-main-pod
   ports:
     - protocol: "TCP"
-      port: $GATEWAY_PORT
-      targetPort: $GATEWAY_PORT
+      port: $SERVER_GATEWAY_PORT
+      targetPort: $SERVER_GATEWAY_PORT
       nodePort: 30001
