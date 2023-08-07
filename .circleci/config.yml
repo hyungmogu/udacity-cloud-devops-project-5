@@ -475,6 +475,27 @@ jobs:
                     make lint_local
             # - notify_slack_error
             # - notify_slack_pass
+
+    test-integration-microservices:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - kubernetes/install
+            - run:
+                name: Prepare Microservices
+                command: |
+                    wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64 &&\
+                    chmod +x /bin/hadolint
+                    export PATH="/bin/hadolint:$PATH"
+                    source ~/.bashrc
+            - run:
+                name: Lint Microservice Server WEBP
+                command: |
+                    cd microservices/server_webp
+                    make lint_local
+            # - notify_slack_error
+            # - notify_slack_pass
     
     deploy-infrastructure-network:
         docker:

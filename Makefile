@@ -36,4 +36,4 @@ test_load_local: start_locust clean_microservices_minikube prepare_microservices
 start_local_minikube_dashboard:
 	minikube dashboard
 
-start_local_minikube: clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
+start_minikube: clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
