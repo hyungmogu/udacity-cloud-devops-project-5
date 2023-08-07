@@ -21,9 +21,6 @@ prepare_microservices:
 start_locust:
 	locust -f tests/load/locustfile.py -P 8089
 
-setup_local:
-	cp .env.example .env;
-
 test_integration_microservices: clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
 	./venv/bin/pip install requests==2.31.0 &&\
 	./venv/bin/pip install Pillow==9.5.0 &&\
@@ -37,3 +34,6 @@ start_minikube_dashboard:
 	minikube dashboard
 
 start_minikube: clean_microservices_minikube prepare_microservices_minikube start_microservices_minikube
+
+setup_minikube:
+	cp .env.example .env;
