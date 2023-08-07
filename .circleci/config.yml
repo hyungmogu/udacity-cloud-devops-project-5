@@ -4,7 +4,6 @@ orbs:
   slack: circleci/slack@4.12.0
   aws-eks: circleci/aws-eks@2.2.0
   kubernetes: circleci/kubernetes@1.3
-  minikube: takescoop/minikube@1.0.0
 
 commands:
     # notify_slack_error:
