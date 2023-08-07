@@ -18,7 +18,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 - Add integration testing for microservices (In Progress)
 - Apply Blue/Green Deployment
 - Apply Prometheus and Grafana to microservice using Helm Chart
-- Make this app is easy to start and use locally by ordinary people (Done)
+- Make this app is easy to start and use locally by ordinary people (In Progress)
 - Submit project
 
 ## Setup Instruction (General. Don't skip this step)
