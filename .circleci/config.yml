@@ -524,9 +524,9 @@ jobs:
                 command: |
                     ./venv/bin/python3 prepare_kubernetes.py
             - run:
-                name: Apply Kubernetes Configuration
+                name: Setup Minikube
                 command: |
-                    kubectl apply -f .circleci/kubernets/base_src
+                    make start_minikube
             - run:
                 name: Perform Microservices Integration Tests
                 command: |
