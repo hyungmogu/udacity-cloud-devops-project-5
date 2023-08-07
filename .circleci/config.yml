@@ -481,19 +481,36 @@ jobs:
         machine:
             image: ubuntu-2204:current
         parameters:
-            version:
+            minikube-version:
                 default: latest
                 description: The version of minikube to install
+                type: string
+            kubectl-version:
+                default: stable
                 type: string
         steps:
             - checkout
             - run:
                 name: Download and install minikube
                 command: |-
-                    filename="minikube_<< parameters.version >>_amd64.deb"
-                    curl -LO "https://storage.googleapis.com/minikube/releases/<< parameters.version >>/$filename"
+                    filename="minikube_<< parameters.minikube-version >>_amd64.deb"
+                    curl -LO "https://storage.googleapis.com/minikube/releases/<< parameters.minikube-version >>/$filename"
                     sudo dpkg -i "$filename"
                     rm "$filename"
+            - run:
+                command: |-
+                    if [[ <<parameters.kubectl-version>> == "stable" || <<parameters.kubectl-version>> == "latest" ]]; then
+                      KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/<<parameters.kubectl-version>>.txt)
+                    else
+                      KUBECTL_VERSION=<<parameters.kubectl-version>>
+                    fi
+
+                    # download kubectl
+                    curl -LO https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl
+
+                    sudo chmod +x ./kubectl
+                    sudo mv ./kubectl /usr/local/bin
+                name: Install kubectl
             - run:
                 name: Install dependencies
                 command: |
