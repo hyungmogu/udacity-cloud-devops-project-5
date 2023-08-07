@@ -530,6 +530,10 @@ jobs:
                 command: |
                     make start_minikube
             - run:
+                name: Check Minikube status
+                command: |
+                    minikube status
+            - run:
                 name: Perform Microservices Integration Tests
                 command: |
                     ./venv/bin/python3 -m unittest tests/integration_microservices/test_app.py

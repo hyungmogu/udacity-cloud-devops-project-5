@@ -25,10 +25,9 @@ clean_minikube:
 	minikube delete --all
 
 start_minikube: install_dependencies clean_minikube prepare_minikube
-	minikube start && \
+	minikube start --vm-driver=docker --kubernetes-version=v1.27.0 && \
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
-	minikube service gateway-service
 
 setup_minikube:
 	cp .env.example .env;
