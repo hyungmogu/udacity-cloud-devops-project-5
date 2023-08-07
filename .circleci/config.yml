@@ -479,7 +479,7 @@ jobs:
 
     test-integration-microservices:
         machine:
-            image: ubuntu-2204:2023.07.2
+            image: ubuntu-2204:current
         parameters:
             version:
                 default: latest
