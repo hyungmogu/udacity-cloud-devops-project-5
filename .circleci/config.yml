@@ -511,6 +511,9 @@ jobs:
                     sudo chmod +x ./kubectl
                     sudo mv ./kubectl /usr/local/bin
             - run:
+                name: "Install Python 3.10.0"
+                command: pyenv install 3.10.0
+            - run:
                 name: "Set Python Version"
                 command: pyenv global 3.10.0
             - run:
