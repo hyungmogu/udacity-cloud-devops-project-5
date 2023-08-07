@@ -483,17 +483,22 @@ jobs:
             - checkout
             - kubernetes/install
             - run:
-                name: Prepare Microservices
+                name: Install dependencies
                 command: |
-                    wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64 &&\
-                    chmod +x /bin/hadolint
-                    export PATH="/bin/hadolint:$PATH"
-                    source ~/.bashrc
+                    python3 -m venv venv &&\
+                    ./venv/bin/pip install python-dotenv==1.0.0
             - run:
-                name: Lint Microservice Server WEBP
+                name: Prepare Kubernetes
                 command: |
-                    cd microservices/server_webp
-                    make lint_local
+                    python3 prepare_kubernetes.py
+            - run:
+                name: Apply Kubernetes Configuration
+                command: |
+                    kubectl apply -f .circleci/kubernets/base_src
+            - run:
+                name: Perform Microservices Integration Tests
+                command: |
+                    ./venv/bin/python3 -m pytest -s -v tests/integration_microservices
             # - notify_slack_error
             # - notify_slack_pass
     
