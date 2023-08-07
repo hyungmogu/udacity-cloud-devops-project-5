@@ -4,6 +4,7 @@ install_dependencies:
 	./venv/bin/pip install requests==2.31.0 &&\
 	./venv/bin/pip install Pillow==9.5.0 &&\
 	./venv/bin/pip install boto3==1.26.148 &&\
+	./venv/bin/pip install moto==4.1.11 &&\
 	./venv/bin/pip install locust==2.16.1
 
 prepare_minikube:

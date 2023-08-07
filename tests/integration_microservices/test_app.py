@@ -2,9 +2,10 @@ import os
 import unittest
 import requests
 import tempfile
+import boto3
 from PIL import Image
 from dotenv import find_dotenv, load_dotenv
-import boto3
+from moto import mock_s3
 
 load_dotenv(find_dotenv())
 
@@ -13,7 +14,7 @@ os.environ["AWS_S3_BUCKET"] = AWS_S3_BUCKET
 os.environ["AWS_ACCESS_KEY_ID"] = "test"
 os.environ["AWS_SECRET_ACCESS_KEY"] = "test"
 
-
+@mock_s3
 class TestSimplePositiveGatewayToServerJPG(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
@@ -50,7 +51,7 @@ class TestSimplePositiveGatewayToServerJPG(unittest.TestCase):
 
                 self.assertEqual(response.status_code, 415)
 
-
+@mock_s3
 class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
@@ -87,7 +88,7 @@ class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
 
                 self.assertEqual(response.status_code, 415)
 
-
+@mock_s3
 class TestSimplePositiveGatewayToServerWEBP(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
