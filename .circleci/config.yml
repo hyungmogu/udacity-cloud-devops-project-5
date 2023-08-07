@@ -478,11 +478,22 @@ jobs:
             # - notify_slack_pass
 
     test-integration-microservices:
-        docker:
-            - image: python:3.10-buster
+        machine:
+            image: ubuntu-2204:2023.07.2
+        parameters:
+            version:
+                default: latest
+                description: The version of minikube to install
+                type: string
         steps:
             - checkout
-            - kubernetes/install
+            - run:
+                name: Download and install minikube
+                command: |-
+                    filename="minikube_<< parameters.version >>_amd64.deb"
+                    curl -LO "https://storage.googleapis.com/minikube/releases/<< parameters.version >>/$filename"
+                    sudo dpkg -i "$filename"
+                    rm "$filename"
             - run:
                 name: Install dependencies
                 command: |
