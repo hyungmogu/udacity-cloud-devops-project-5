@@ -870,12 +870,12 @@ workflows:
             - deploy-frontend:
                 requires: [deploy-infrastructure-frontend]
             - prepare-kubernetes-files:
-                requires: [deploy-frontend, deploy-infrastructure-kubernetes]
+                requires: [deploy-infrastructure-kubernetes]
             - setup-kubernetes-cluster:
                 cluster-name: prod
                 requires: [prepare-kubernetes-files]
             - smoke-test:
-                requires: [setup-kubernetes-cluster]
+                requires: [deploy-frontend, setup-kubernetes-cluster]
             - cloudfront-update:
                 requires: [smoke-test]
             - cleanup:
