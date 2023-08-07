@@ -498,6 +498,7 @@ jobs:
                     sudo dpkg -i "$filename"
                     rm "$filename"
             - run:
+                name: Install kubectl
                 command: |-
                     if [[ <<parameters.kubectl-version>> == "stable" || <<parameters.kubectl-version>> == "latest" ]]; then
                       KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/<<parameters.kubectl-version>>.txt)
@@ -510,7 +511,9 @@ jobs:
 
                     sudo chmod +x ./kubectl
                     sudo mv ./kubectl /usr/local/bin
-                name: Install kubectl
+            - run:
+                name: "Set Python Version"
+                command: pyenv global 3.10.0
             - run:
                 name: Install dependencies
                 command: |
