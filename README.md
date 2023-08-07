@@ -15,6 +15,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 - Convert server from monolith to microservices (Done)
 - Add rate limiter to microservices (Done)
 - Apply CI/CD using CircleCI (In Progress)
+- Add integration testing for microservices (In Progress)
 - Apply Blue/Green Deployment
 - Apply Prometheus and Grafana to microservice using Helm Chart
 - Make this app is easy to start and use locally by ordinary people (Done)
