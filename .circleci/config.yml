@@ -487,6 +487,9 @@ jobs:
             kubectl-version:
                 default: stable
                 type: string
+            kubernetes-version:
+                default: v1.27.0
+                type: string
         steps:
             - checkout
             - run:
@@ -533,7 +536,7 @@ jobs:
             - run:
                 name: Start Minikube
                 command: |
-                    sudo -E minikube start --vm-driver=none --cpus 2 --memory 2048 --kubernetes-version=<<parameters.version>> &> $HOME/minikube.log 2>&1 < /dev/null
+                    sudo -E minikube start --vm-driver=none --cpus 2 --memory 2048 --kubernetes-version=<<parameters.kubernetes-version>> &> $HOME/minikube.log 2>&1 < /dev/null
             - run:
                 name: Check Minikube status
                 command: |
