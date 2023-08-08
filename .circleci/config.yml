@@ -526,6 +526,14 @@ jobs:
                     sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
                     rm -f crictl-$VERSION-linux-amd64.tar.gz
             - run:
+                name: "Install cri-dockerd for Minikube"
+                command: |
+                    install -o root -g root -m 0755 cri-dockerd /usr/local/bin/cri-dockerd
+                    install packaging/systemd/* /etc/systemd/system
+                    sed -i -e 's,/usr/bin/cri-dockerd,/usr/local/bin/cri-dockerd,' /etc/systemd/system/cri-docker.service
+                    systemctl daemon-reload
+                    systemctl enable --now cri-docker.socket
+            - run:
                 name: "Install Python 3.10.0"
                 command: pyenv install 3.10.0
             - run:
