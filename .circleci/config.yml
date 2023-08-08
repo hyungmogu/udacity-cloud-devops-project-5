@@ -511,6 +511,14 @@ jobs:
                     sudo chmod +x ./kubectl
                     sudo mv ./kubectl /usr/local/bin
             - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: "Install conntrack for Minikube"
+                command: |
+                    apt-get -y install conntrack
+            - run:
                 name: "Install Python 3.10.0"
                 command: pyenv install 3.10.0
             - run:
