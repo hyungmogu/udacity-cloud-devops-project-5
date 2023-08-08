@@ -528,8 +528,9 @@ jobs:
             - run:
                 name: "Install cri-dockerd for Minikube"
                 command: |
-                    wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.4/cri-dockerd-v0.3.4-linux-amd64.tar.gz
-                    tar xvf cri-dockerd-v0.2.0-linux-amd64.tar.gz
+                    VER=$(curl -s https://api.github.com/repos/Mirantis/cri-dockerd/releases/latest|grep tag_name | cut -d '"' -f 4|sed 's/v//g')
+                    wget https://github.com/Mirantis/cri-dockerd/releases/download/v${VER}/cri-dockerd-${VER}.amd64.tgz
+                    tar xvf cri-dockerd-${VER}.amd64.tgz
                     sudo mv ./cri-dockerd /usr/local/bin/
             - run:
                 name: "Configure systemd units for cri-dockerd"
