@@ -526,9 +526,14 @@ jobs:
                 command: |
                     ./venv/bin/python3 prepare_kubernetes.py
             - run:
-                name: Setup Minikube
+                name: Prepare Minikube
                 command: |
-                    make start_minikube
+                    make install_dependencies
+                    make prepare_minikube
+            - run:
+                name: Start Minikube
+                command: |
+                    sudo -E minikube start --vm-driver=none --cpus 2 --memory 2048 --kubernetes-version=<<parameters.version>> &> $HOME/minikube.log 2>&1 < /dev/null
             - run:
                 name: Check Minikube status
                 command: |
