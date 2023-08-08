@@ -543,6 +543,10 @@ jobs:
                     sudo systemctl enable cri-docker.service
                     sudo systemctl enable --now cri-docker.socket
             - run:
+                name: "Check for cri-dockerd"
+                command: |
+                    systemctl status docker
+            - run:
                 name: "Install Python 3.10.0"
                 command: pyenv install 3.10.0
             - run:
