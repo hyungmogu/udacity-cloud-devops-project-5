@@ -29,11 +29,7 @@ start_minikube: install_dependencies clean_minikube prepare_minikube
 	minikube config set WantUpdateNotification false &&\
 	minikube start --vm-driver=docker --kubernetes-version=v1.27.0 &&\
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
-	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
-	kubectl expose deployment/gateway-deployment --type="NodePort" --port 8010
-	NODE_PORT="$(kubectl get services/kubernetes-bootcamp -o go-template='{{(index .spec.ports 0).nodePort}}')"
-	export MINIKUBE_SERVICE_URL="http://$(minikube ip):$NODE_PORT"
-	echo "$MINIKUBE_SERVICE_URL"
+	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 setup_minikube:
 	cp .env.example .env;
