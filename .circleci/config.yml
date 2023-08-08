@@ -520,32 +520,13 @@ jobs:
                 name: "Set Python Version"
                 command: pyenv global 3.10.0
             - run:
-                name: Install dependencies
-                command: |
-                    python3 -m venv venv &&\
-                    ./venv/bin/pip install python-dotenv==1.0.0
-            - run:
-                name: Prepare Kubernetes
-                command: |
-                    ./venv/bin/python3 prepare_kubernetes.py
-            - run:
-                name: Prepare Minikube
-                command: |
-                    make install_dependencies
-                    make prepare_minikube
-            - run:
                 name: Start Minikube
                 command: |
-                    sudo -E minikube start --vm-driver=none --cpus 2 --memory 2048 --kubernetes-version=<<parameters.kubernetes-version>> &> $HOME/minikube.log 2>&1 < /dev/null
+                    make start_minikube
             - run:
                 name: Check Minikube status
                 command: |
                     minikube status
-            - run:
-                name: Configure Minikube
-                command: |
-                    kubectl apply -f ./.circleci/kubernetes/base_src/ &&\ 
-                    kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
             - run:
                 name: Perform Microservices Integration Tests
                 command: |
