@@ -542,6 +542,11 @@ jobs:
                 command: |
                     minikube status
             - run:
+                name: Configure Minikube
+                command: |
+                    kubectl apply -f ./.circleci/kubernetes/base_src/ &&\ 
+                    kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+            - run:
                 name: Perform Microservices Integration Tests
                 command: |
                     ./venv/bin/python3 -m unittest tests/integration_microservices/test_app.py
