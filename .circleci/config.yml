@@ -524,6 +524,10 @@ jobs:
                 command: |
                     make start_minikube
             - run:
+                name: Check Minikube status
+                command: |
+                    minikube status
+            - run:
                 name: Perform Microservices Integration Tests
                 command: |
                     kubectl expose deployment/gateway-deployment --type="NodePort" --port 8010
@@ -531,10 +535,6 @@ jobs:
                     export MINIKUBE_SERVICE_URL="http://$(minikube ip):$NODE_PORT"
                     echo "$MINIKUBE_SERVICE_URL"
                     ./venv/bin/python3 -m unittest tests/integration_microservices/test_app.py
-            - run:
-                name: Check Minikube status
-                command: |
-                    minikube status
             # - notify_slack_error
             # - notify_slack_pass
     
