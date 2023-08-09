@@ -488,7 +488,7 @@ jobs:
                 default: stable
                 type: string
             kubernetes-version:
-                default: v1.27.0
+                default: v1.26.3
                 type: string
         steps:
             - checkout
