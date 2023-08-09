@@ -322,3 +322,4 @@ convertToWEBP(image)
 14. Troung. AWS S3: Bucket cannot have ACLs set with ObjectOwnership's BucketOwnerEnforced setting. Stack Overflow. https://stackoverflow.com/questions/76097031/aws-s3-bucket-cannot-have-acls-set-with-objectownerships-bucketownerenforced-s#76107203
 15. Tamás Panyi. Build a Kubernetes Cluster on AWS with CloudFormation from Scratch. Medium. https://medium.com/@panyitamas/build-a-kubernetes-cluster-on-aws-with-cloudformation-from-scratch-d7ecfbed16a2
 16. Ankit Gangwar. Setup Prometheus and Grafana monitoring on Kubernetes cluster using Helm. Medium. https://medium.com/globant/setup-prometheus-and-grafana-monitoring-on-kubernetes-cluster-using-helm-3484efd85891
+17. The Kubernetes Authors. Configuring Redis using a ConfigMap. Kubernetes. https://kubernetes.io/docs/tutorials/configuration/configure-redis-using-configmap
