@@ -33,11 +33,6 @@ spec:
                 configMapKeyRef:
                   key: REDIS_PASSWORD
                   name: gateway-env
-            - name: REDIS_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  key: REDIS_PASSWORD
-                  name: gateway-env
             - name: API_MAX_REQUESTS_PER_DAY
               valueFrom:
                 configMapKeyRef:
