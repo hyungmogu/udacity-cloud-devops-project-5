@@ -27,7 +27,7 @@ clean_minikube:
 
 start_minikube_cicd: install_dependencies clean_minikube prepare_minikube
 	minikube config set WantUpdateNotification false &&\
-	minikube start --vm-driver=docker --kubernetes-version=v1.27.0 &&\
+	minikube start --vm-driver=docker --kubernetes-version=v1.26.3 &&\
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
