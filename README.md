@@ -323,3 +323,4 @@ convertToWEBP(image)
 15. Tamás Panyi. Build a Kubernetes Cluster on AWS with CloudFormation from Scratch. Medium. https://medium.com/@panyitamas/build-a-kubernetes-cluster-on-aws-with-cloudformation-from-scratch-d7ecfbed16a2
 16. Ankit Gangwar. Setup Prometheus and Grafana monitoring on Kubernetes cluster using Helm. Medium. https://medium.com/globant/setup-prometheus-and-grafana-monitoring-on-kubernetes-cluster-using-helm-3484efd85891
 17. The Kubernetes Authors. Configuring Redis using a ConfigMap. Kubernetes. https://kubernetes.io/docs/tutorials/configuration/configure-redis-using-configmap
+18. Shahar Azulay. Redis on Kubernetes: A Powerful Solution – With Limits. groundcover. https://www.groundcover.com/blog/redis-cluster-kubernetes
