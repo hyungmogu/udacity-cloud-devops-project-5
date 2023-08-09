@@ -32,10 +32,10 @@ start_minikube_cicd: install_dependencies clean_minikube prepare_minikube
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 start_minikube_local: install_dependencies clean_minikube prepare_minikube
-	minikube start --kubernetes-version=v1.27.0 &&\
+	minikube start &&\
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
-	minikube service gateway-service --url
+	minikube service gateway-service
 
 setup_minikube:
 	cp .env.example .env;
