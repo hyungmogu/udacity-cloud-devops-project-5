@@ -25,11 +25,17 @@ start_minikube_dashboard:
 clean_minikube:
 	minikube delete --all
 
-start_minikube: install_dependencies clean_minikube prepare_minikube
+start_minikube_cicd: install_dependencies clean_minikube prepare_minikube
 	minikube config set WantUpdateNotification false &&\
 	minikube start --vm-driver=docker --kubernetes-version=v1.27.0 &&\
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+start_minikube_local: install_dependencies clean_minikube prepare_minikube
+	minikube start --kubernetes-version=v1.27.0 &&\
+	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
+	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
+	minikube service gateway-service --url
 
 setup_minikube:
 	cp .env.example .env;
