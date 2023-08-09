@@ -522,7 +522,7 @@ jobs:
             - run:
                 name: Start Minikube
                 command: |
-                    make start_minikube
+                    make start_minikube_cicd
             - run:
                 name: Check Minikube status
                 command: |
