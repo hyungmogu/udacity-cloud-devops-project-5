@@ -33,8 +33,9 @@ start_minikube_cicd: install_dependencies clean_minikube prepare_minikube
 
 start_minikube_local: install_dependencies clean_minikube prepare_minikube
 	minikube start &&\
+	kubectl apply -f ./.circleci/kubernetes/namespaces_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
-	kubectl apply -f ./.circleci/kubernetes/base_local_src/ &&\
+	kubectl apply -f ./.circleci/kubernetes/base_redis_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
 	minikube service gateway-service
 
