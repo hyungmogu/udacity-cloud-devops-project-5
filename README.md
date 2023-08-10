@@ -19,7 +19,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 - Apply Blue/Green Deployment
 - Apply Prometheus and Grafana to microservice using Helm Chart
 - Make this app is easy to start and use locally by ordinary people (In Progress)
-- Redo README.md. Nearly half of contents need update.
+- Finalize README.md. Nearly half of contents need update.
 - Submit project
 
 ## Setup Instruction (General. Don't skip this step)
