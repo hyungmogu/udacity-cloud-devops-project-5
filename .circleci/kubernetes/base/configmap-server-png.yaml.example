@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: server-png-env
+  namespace: image-converter-main
 data:
   DOCKER_IMAGE_NAME: "$DOCKER_IMAGE_NAME"
   SERVER_PNG_PORT: "$SERVER_PNG_PORT"

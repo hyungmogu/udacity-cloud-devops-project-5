@@ -2,6 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: server-jpg-hpa
+  namespace: image-converter-main
   labels:
     app: server-jpg
 spec:

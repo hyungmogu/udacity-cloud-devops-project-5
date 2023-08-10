@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: server-jpg-deployment
+  namespace: image-converter-main
   labels:
     app: server-jpg
 spec:
