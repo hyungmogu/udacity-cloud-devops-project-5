@@ -3,6 +3,8 @@ kind: StatefulSet
 metadata:
   name: redis-cluster
   namespace: image-converter-redis
+  labels:
+    app: redis-cluster
 spec:
   serviceName: redis-cluster-service
   replicas: 9
