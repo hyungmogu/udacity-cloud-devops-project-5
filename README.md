@@ -169,7 +169,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 ### Infrastructure Diagram
 
-<img src="https://user-images.githubusercontent.com/6856382/229294233-491937b2-ad4b-4a22-af8c-f3bb5666fa20.jpeg"/> 
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/5200178e-dbaf-46c9-9e45-d59b27a3281e"/> 
 
 ### Kubernetes Cluster Diagram
 
