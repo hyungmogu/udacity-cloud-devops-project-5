@@ -5,7 +5,7 @@ load_dotenv(find_dotenv())
 
 class KubernetesSetupTool:
     def prepare_manifest(self):
-        base_paths = [".circleci/kubernetes/base", ".circleci/kubernetes/base_local"]
+        base_paths = [".circleci/kubernetes/base", ".circleci/kubernetes/base_redis"]
         env_variables = {
             "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
             "REDIS_HOST": os.environ.get("REDIS_HOST", ""),
