@@ -1,4 +1,7 @@
 #!/bin/bash
+# Wait until redis pods are setup
+kubectl rollout status --watch --timeout=600s statefulset/redis-cluster -n image-converter-redis
+
 # Find ClusterIPs of Redis nodes
 export REDIS_NODES=$(kubectl get pods  -l app=redis-cluster -n image-converter-redis -o json | jq -r '.items | map(.status.podIP) | join(":6379 ")'):6379
 # Activate the Redis cluster
