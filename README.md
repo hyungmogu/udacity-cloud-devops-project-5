@@ -7,7 +7,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 ## Current Plan and Progress
 
 - Replace flask with FastAPI (Done)
-- Make it work 100% locally (Done)
+- Make it work 100% locally (In progress)
 - Apply unit testing (Done)
 - Apply load testing using Locust swarm (Done)
 - Make sure this application works using Minikube (Done)
