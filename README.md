@@ -326,3 +326,4 @@ convertToWEBP(image)
 17. The Kubernetes Authors. Configuring Redis using a ConfigMap. Kubernetes. https://kubernetes.io/docs/tutorials/configuration/configure-redis-using-configmap
 18. Shahar Azulay. Redis on Kubernetes: A Powerful Solution – With Limits. groundcover. https://www.groundcover.com/blog/redis-cluster-kubernetes
 19. Ferdinand de Antoni. Redis Cluster on Kubernetes. Medium. https://medium.com/geekculture/redis-cluster-on-kubernetes-c9839f1c14b6
+20. Dragonfly DB. Error: redis.exceptions.responseerror moved. Dragonfly. https://www.dragonflydb.io/error-solutions/redis-exceptions-responseerror-moved
