@@ -37,7 +37,7 @@ start_minikube_local: install_dependencies clean_minikube prepare_minikube
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/base_redis_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
-	minikube service gateway-service
+	minikube service gateway-service -n image-converter-main
 
 setup_minikube:
 	cp .env.example .env;
