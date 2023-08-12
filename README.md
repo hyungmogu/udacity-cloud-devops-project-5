@@ -7,7 +7,6 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 ## Current Plan and Progress
 
 - Replace flask with FastAPI (Done)
-- Make it work 100% locally (In progress)
 - Apply unit testing (Done)
 - Apply load testing using Locust swarm (Done)
 - Make sure this application works using Minikube (Done)
@@ -18,6 +17,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 - Add integration testing for microservices (In Progress)
 - Apply Blue/Green Deployment
 - Apply Prometheus and Grafana to microservice using Helm Chart
+- Make it work 100% locally (In progress)
 - Make this app is easy to start and use locally by ordinary people (In Progress)
 - Finalize README.md. Nearly half of contents need update.
 - Submit project
