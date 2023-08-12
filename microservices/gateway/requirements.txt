@@ -1,7 +1,6 @@
 # Gateway Requirements
 fastapi==0.96.0
 uvicorn==0.22.0
-fastapi-limiter==0.1.5
 python-dotenv==1.0.0
 httpx==0.24.1
 python-multipart==0.0.6
