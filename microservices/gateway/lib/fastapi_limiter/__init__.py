@@ -86,7 +86,6 @@ end"""
         cls.identifier = identifier
         cls.http_callback = http_callback
         cls.ws_callback = ws_callback
-        cls.lua_sha = await redis.script_load(cls.lua_script)
 
     @classmethod
     async def close(cls):
