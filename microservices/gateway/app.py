@@ -3,7 +3,7 @@ import logging
 import redis.asyncio as redis_async
 from urllib.parse import quote
 from fastapi import FastAPI
-from fastapi_limiter import FastAPILimiter
+from lib.fastapi_limiter import FastAPILimiter
 
 from src.routers.convert import convert_router
 from src.routers.health import health_router
