@@ -13,6 +13,7 @@ convert_router = APIRouter(
 )
 
 @convert_router.post('/to-jpg', response_model=str, dependencies=[Depends(RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))], status_code=201)
+@rate_limiter
 async def convert_to_jpg(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
         SERVER_JPG_HOST, SERVER_JPG_PORT,
@@ -24,6 +25,7 @@ async def convert_to_jpg(image: UploadFile, request: Request):
     return result
 
 @convert_router.post('/to-png', response_model=str, dependencies=[Depends(RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))], status_code=201)
+@rate_limiter
 async def convert_to_png(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
         SERVER_PNG_HOST, SERVER_PNG_PORT,
@@ -35,6 +37,7 @@ async def convert_to_png(image: UploadFile, request: Request):
     return result
 
 @convert_router.post('/to-webp', response_model=str, dependencies=[Depends(RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))], status_code=201)
+@rate_limiter
 async def convert_to_webp(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
         SERVER_WEBP_HOST, SERVER_WEBP_PORT,
