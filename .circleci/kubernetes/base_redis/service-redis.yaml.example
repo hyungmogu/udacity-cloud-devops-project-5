@@ -5,7 +5,7 @@ metadata:
   namespace: image-converter-redis
 spec:
   type: ExternalName
-  externalName: redis-cluster.image-converter-redis.svc.cluster.local
+  externalName: db.redis-cluster.com
   selector:
     app: redis-cluster
   ports:
