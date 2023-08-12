@@ -63,16 +63,3 @@ class RateLimiter:
             pexpire = await self._check(key)
         if pexpire != 0:
             return await callback(request, response, pexpire)
-
-
-class WebSocketRateLimiter(RateLimiter):
-    async def __call__(self, ws: WebSocket, context_key=""):
-        if not FastAPILimiter.redis:
-            raise Exception("You must call FastAPILimiter.init in startup event of fastapi!")
-        identifier = self.identifier or FastAPILimiter.identifier
-        rate_key = await identifier(ws)
-        key = f"{FastAPILimiter.prefix}:ws:{rate_key}:{context_key}"
-        pexpire = await self._check(key)
-        callback = self.callback or FastAPILimiter.ws_callback
-        if pexpire != 0:
-            return await callback(ws, pexpire)
