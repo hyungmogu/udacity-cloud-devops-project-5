@@ -34,20 +34,6 @@ async def http_default_callback(request: Request, response: Response, pexpire: i
         HTTP_429_TOO_MANY_REQUESTS, "Too Many Requests", headers={"Retry-After": str(expire)}
     )
 
-
-async def ws_default_callback(ws: WebSocket, pexpire: int):
-    """
-    default callback when too many requests
-    :param ws:
-    :param pexpire: The remaining milliseconds
-    :return:
-    """
-    expire = ceil(pexpire / 1000)
-    raise HTTPException(
-        HTTP_429_TOO_MANY_REQUESTS, "Too Many Requests", headers={"Retry-After": str(expire)}
-    )
-
-
 class FastAPILimiter:
     redis = None
     prefix: str = None
@@ -78,14 +64,12 @@ end"""
         redis,
         prefix: str = "fastapi-limiter",
         identifier: Callable = default_identifier,
-        http_callback: Callable = http_default_callback,
-        ws_callback: Callable = ws_default_callback,
+        http_callback: Callable = http_default_callback
     ):
         cls.redis = redis
         cls.prefix = prefix
         cls.identifier = identifier
         cls.http_callback = http_callback
-        cls.ws_callback = ws_callback
 
     @classmethod
     async def close(cls):

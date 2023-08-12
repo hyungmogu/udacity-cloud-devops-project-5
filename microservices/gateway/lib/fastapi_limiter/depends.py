@@ -62,4 +62,4 @@ class RateLimiter:
             )
             pexpire = await self._check(key)
         if pexpire != 0:
-            return await callback(request, response, pexpire)
+            return pexpire
