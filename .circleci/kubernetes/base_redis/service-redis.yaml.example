@@ -4,11 +4,10 @@ metadata:
   name: redis-cluster
   namespace: image-converter-redis
 spec:
-  type: ExternalName
-  externalName: db.redis-cluster.com
+  type: ClusterIP
+  ports:
+  - port: 6379
+    targetPort: 6379
+    name: client
   selector:
     app: redis-cluster
-  ports:
-  - name: client
-    port: 6379
-    targetPort: 6379
