@@ -1,19 +1,17 @@
 from urllib.parse import urlparse
-from fastapi import Depends, APIRouter, UploadFile, Request
+from fastapi import APIRouter, UploadFile, Request
 from src.utils.httpx import httpx_client_wrapper
 from src.utils.rate_limiter import rate_limiter
 from config import (
-    API_MAX_REQUESTS_PER_DAY, API_SECONDS_IN_DAY, 
     SERVER_JPG_HOST, SERVER_JPG_PORT, 
     SERVER_PNG_HOST, SERVER_PNG_PORT, 
     SERVER_WEBP_HOST, SERVER_WEBP_PORT)
-from fastapi_limiter.depends import RateLimiter
 
 convert_router = APIRouter(
     tags=["Convert"]
 )
 
-@convert_router.post('/to-jpg', response_model=str, dependencies=[Depends(RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))], status_code=201)
+@convert_router.post('/to-jpg', response_model=str, status_code=201)
 @rate_limiter
 async def convert_to_jpg(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
@@ -25,7 +23,7 @@ async def convert_to_jpg(image: UploadFile, request: Request):
     result = res.text.replace("\"","")
     return result
 
-@convert_router.post('/to-png', response_model=str, dependencies=[Depends(RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))], status_code=201)
+@convert_router.post('/to-png', response_model=str, status_code=201)
 @rate_limiter
 async def convert_to_png(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
@@ -37,7 +35,7 @@ async def convert_to_png(image: UploadFile, request: Request):
     result = res.text.replace("\"","")
     return result
 
-@convert_router.post('/to-webp', response_model=str, dependencies=[Depends(RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))], status_code=201)
+@convert_router.post('/to-webp', response_model=str, status_code=201)
 @rate_limiter
 async def convert_to_webp(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
