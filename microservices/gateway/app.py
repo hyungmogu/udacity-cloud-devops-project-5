@@ -4,11 +4,12 @@ import redis.asyncio as redis_async
 from urllib.parse import quote
 from fastapi import FastAPI
 from fastapi_limiter import FastAPILimiter
+from fastapi_limiter.depends import RateLimiter
 
 from src.routers.convert import convert_router
 from src.routers.health import health_router
 from src.utils.httpx import httpx_client_wrapper
-from config import REDIS_HOST, REDIS_PASSWORD, GATEWAY_PORT
+from config import REDIS_HOST, REDIS_PASSWORD, GATEWAY_PORT, API_MAX_REQUESTS_PER_DAY, API_SECONDS_IN_DAY
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -16,6 +17,9 @@ async def startup_redis():
     REDIS_PASSWORD_ECODE_SAFE = quote(REDIS_PASSWORD, safe="")
     redis_c = redis_async.from_url("redis://{}@{}".format(REDIS_PASSWORD_ECODE_SAFE, REDIS_HOST), encoding="utf-8", decode_responses=True)
     await FastAPILimiter.init(redis_c)
+
+    rate_limiter = RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))
+    await rate_limiter._check("test")
 
 app = FastAPI()
 
