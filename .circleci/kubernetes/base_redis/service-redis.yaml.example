@@ -4,7 +4,8 @@ metadata:
   name: redis-cluster
   namespace: image-converter-redis
 spec:
-  type: ClusterIP
+  type: ExternalName
+  externalName: redis-cluster.image-converter-redis.svc.cluster.local
   selector:
     app: redis-cluster
   ports:
