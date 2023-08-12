@@ -21,11 +21,10 @@ async def startup_redis():
 
 app = FastAPI()
 
-startup_redis()
-
 @app.on_event("startup")
 async def startup_event():
     httpx_client_wrapper.start()
+    await startup_redis()
 
 @app.on_event("shutdown")
 async def shutdown_event():
