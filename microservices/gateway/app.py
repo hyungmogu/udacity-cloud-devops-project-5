@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 async def startup_redis():
     REDIS_PASSWORD_ECODE_SAFE = quote(REDIS_PASSWORD, safe="")
-    redis_c = redis_async.from_url("redis://{}@{}:6379".format(REDIS_PASSWORD_ECODE_SAFE, REDIS_HOST), encoding="utf-8", decode_responses=True)
+    redis_c = redis_async.from_url("redis://{}@{}".format(REDIS_PASSWORD_ECODE_SAFE, REDIS_HOST), encoding="utf-8", decode_responses=True)
     await FastAPILimiter.init(redis_c)
 
 app = FastAPI()
