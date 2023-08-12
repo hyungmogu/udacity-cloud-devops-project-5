@@ -1,6 +1,5 @@
 import uvicorn
 import logging
-import redis
 import redis.asyncio as redis_async
 from urllib.parse import quote
 from fastapi import FastAPI
