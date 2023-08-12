@@ -1,6 +1,7 @@
 from urllib.parse import urlparse
 from fastapi import Depends, APIRouter, UploadFile, Request
 from src.utils.httpx import httpx_client_wrapper
+from src.utils.rate_limiter import rate_limiter
 from config import (
     API_MAX_REQUESTS_PER_DAY, API_SECONDS_IN_DAY, 
     SERVER_JPG_HOST, SERVER_JPG_PORT, 
