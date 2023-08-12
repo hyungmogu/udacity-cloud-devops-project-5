@@ -330,3 +330,4 @@ convertToWEBP(image)
 21. Anish. Kubernetes Access Service located in another namespace. 8gwifi. https://8gwifi.org/docs/kube-externalname.jsp
 22. Kubernetes. Debugging DNS Resolution. kubernetes. https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
 23. JPG. How to add a custom decorator to a FastAPI route?. https://stackoverflow.com/questions/64497615/how-to-add-a-custom-decorator-to-a-fastapi-route
+24. Mario. Building a Decorator for a Fastapi Route Simplify and Beautify Your App Routes. https://www.pythonbynight.com/blog/building-decorator-for-fastapi
