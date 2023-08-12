@@ -27,6 +27,7 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     await httpx_client_wrapper.stop()
+    await FastAPILimiter.close()
 
 app.include_router(convert_router, prefix="/convert", tags=["Convert"])
 app.include_router(health_router, prefix="/health", tags=["Health"])
