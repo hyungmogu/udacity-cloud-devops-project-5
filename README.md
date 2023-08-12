@@ -328,3 +328,5 @@ convertToWEBP(image)
 19. Ferdinand de Antoni. Redis Cluster on Kubernetes. Medium. https://medium.com/geekculture/redis-cluster-on-kubernetes-c9839f1c14b6
 20. Dragonfly DB. Error: redis.exceptions.responseerror moved. Dragonfly. https://www.dragonflydb.io/error-solutions/redis-exceptions-responseerror-moved
 21. Anish. Kubernetes Access Service located in another namespace. 8gwifi. https://8gwifi.org/docs/kube-externalname.jsp
+22. Kubernetes. Debugging DNS Resolution. kubernetes. https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
+23. JPG. How to add a custom decorator to a FastAPI route?. https://stackoverflow.com/questions/64497615/how-to-add-a-custom-decorator-to-a-fastapi-route
