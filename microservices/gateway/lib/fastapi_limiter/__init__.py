@@ -7,7 +7,6 @@ from typing import Callable, Union
 
 from fastapi import HTTPException
 from starlette.requests import Request
-from starlette.responses import Response
 from starlette.status import HTTP_429_TOO_MANY_REQUESTS
 from starlette.websockets import WebSocket
 
@@ -21,7 +20,7 @@ async def default_identifier(request: Union[Request, WebSocket]):
     return ip + ":" + request.scope["path"]
 
 
-async def http_default_callback(request: Request, response: Response, pexpire: int):
+async def http_default_callback(pexpire: int):
     """
     default callback when too many requests
     :param request:
