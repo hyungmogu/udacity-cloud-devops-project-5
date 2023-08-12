@@ -6,8 +6,6 @@ from typing import Callable, Optional
 
 from pydantic import conint
 from starlette.requests import Request
-from starlette.responses import Response
-from starlette.websockets import WebSocket
 import redis as pyredis
 
 from fastapi_limiter import FastAPILimiter
@@ -36,7 +34,7 @@ class RateLimiter:
         )
         return pexpire
 
-    async def __call__(self, request: Request, response: Response):
+    async def __call__(self, request: Request):
         if not FastAPILimiter.redis:
             raise Exception("You must call FastAPILimiter.init in startup event of fastapi!")
         route_index = 0
@@ -62,4 +60,4 @@ class RateLimiter:
             )
             pexpire = await self._check(key)
         if pexpire != 0:
-            return pexpire
+            return await callback(pexpire)
