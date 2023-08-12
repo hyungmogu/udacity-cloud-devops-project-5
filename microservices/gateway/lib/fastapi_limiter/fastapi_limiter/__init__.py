@@ -1,3 +1,7 @@
+'''
+Creditor: FastAPI-Limiter by long2ice. https://github.com/long2ice/fastapi-limiter
+'''
+
 from math import ceil
 from typing import Callable, Union
 
