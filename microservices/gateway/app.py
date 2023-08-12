@@ -18,9 +18,6 @@ async def startup_redis():
     redis_c = redis_async.from_url("redis://{}@{}".format(REDIS_PASSWORD_ECODE_SAFE, REDIS_HOST), encoding="utf-8", decode_responses=True)
     await FastAPILimiter.init(redis_c)
 
-    rate_limiter = RateLimiter(times=API_MAX_REQUESTS_PER_DAY, seconds=int(API_SECONDS_IN_DAY)))
-    await rate_limiter._check("test")
-
 app = FastAPI()
 
 @app.on_event("startup")
