@@ -8,7 +8,7 @@ from pydantic import conint
 from starlette.requests import Request
 import redis as pyredis
 
-from fastapi_limiter import FastAPILimiter
+from lib.fastapi_limiter import FastAPILimiter
 
 
 class RateLimiter:
