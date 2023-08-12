@@ -14,7 +14,6 @@ from config import REDIS_HOST, REDIS_PASSWORD, GATEWAY_PORT
 logging.basicConfig(level=logging.DEBUG)
 
 async def startup_redis():
-    logging.info("Starting up Redis...")
     REDIS_PASSWORD_ECODE_SAFE = quote(REDIS_PASSWORD, safe="")
     redis_c = redis_async.from_url("redis://{}@{}:6379".format(REDIS_PASSWORD_ECODE_SAFE, REDIS_HOST), encoding="utf-8", decode_responses=True)
     await FastAPILimiter.init(redis_c)
@@ -34,4 +33,4 @@ app.include_router(convert_router, prefix="/convert", tags=["Convert"])
 app.include_router(health_router, prefix="/health", tags=["Health"])
 
 if __name__ == '__main__':
-    uvicorn.run("app:app", host="0.0.0.0", port=GATEWAY_PORT, reload=True, debug=True)
+    uvicorn.run("app:app", host="0.0.0.0", port=GATEWAY_PORT, reload=True)
