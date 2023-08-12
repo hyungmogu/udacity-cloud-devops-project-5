@@ -4,12 +4,11 @@ import redis.asyncio as redis_async
 from urllib.parse import quote
 from fastapi import FastAPI
 from fastapi_limiter import FastAPILimiter
-from fastapi_limiter.depends import RateLimiter
 
 from src.routers.convert import convert_router
 from src.routers.health import health_router
 from src.utils.httpx import httpx_client_wrapper
-from config import REDIS_HOST, REDIS_PASSWORD, GATEWAY_PORT, API_MAX_REQUESTS_PER_DAY, API_SECONDS_IN_DAY
+from config import REDIS_HOST, REDIS_PASSWORD, GATEWAY_PORT
 
 logging.basicConfig(level=logging.DEBUG)
 
