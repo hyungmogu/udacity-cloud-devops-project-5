@@ -2,8 +2,9 @@ import redis
 from functools import wraps
 from urllib.parse import quote
 import redis.asyncio as redis_async
-from fastapi_limiter.depends import RateLimiter
-from fastapi_limiter import FastAPILimiter
+
+from lib.fastapi_limiter.depends import RateLimiter
+from lib.fastapi_limiter import FastAPILimiter
 
 from config import API_SECONDS_IN_DAY, REDIS_PASSWORD
 
