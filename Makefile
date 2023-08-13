@@ -7,6 +7,9 @@ install_dependencies:
 	./venv/bin/pip install moto==4.1.11 &&\
 	./venv/bin/pip install locust==2.16.1
 
+prepare_kubernetes:
+	./venv/bin/python3 ./prepare_kubernetes.py
+
 prepare_minikube:
 	./venv/bin/python3 ./prepare_docker.py &&\
 	./venv/bin/python3 ./prepare_kubernetes.py
