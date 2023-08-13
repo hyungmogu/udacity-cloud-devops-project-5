@@ -139,12 +139,12 @@ jobs:
             - run:
                 name: Run Build for Micoservice Gateway
                 command: |
-                    cd microservices/gateway
+                    cd microservices/server_gateway
                     make build_local
             - save_cache:
-                key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_gateway/requirements.txt" }}
                 paths:
-                    - "microservices/gateway/venv"
+                    - "microservices/server_gateway/venv"
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -221,12 +221,12 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Run Test for Microservice Server Gateway
                 command: |
-                    cd microservices/gateway
+                    cd microservices/server_gateway
                     make test_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -304,12 +304,12 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Scan Microservice Server Gateway
                 command: |
-                    cd microservices/gateway
+                    cd microservices/server_gateway
                     make scan_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -387,7 +387,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/gateway/requirements.txt" }}
+                    - v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_gateway/requirements.txt" }}
                     - v1-dependencies-
             - run:
                 name: Install Hadolint
@@ -399,7 +399,7 @@ jobs:
             - run:
                 name: Lint Microservice Server Gateway
                 command: |
-                    cd microservices/gateway
+                    cd microservices/server_gateway
                     make lint_local
             # - notify_slack_error
             # - notify_slack_pass
@@ -669,7 +669,7 @@ jobs:
             - run:
                 name: Deploy containers to Docker Hub
                 command: |
-                    cd microservices/gateway;
+                    cd microservices/server_gateway;
                     make deploy;
             # - rollback_environment 
             # - notify_slack_error
