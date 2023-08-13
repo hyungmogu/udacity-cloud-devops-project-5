@@ -39,10 +39,15 @@ spec:
                 configMapKeyRef:
                   key: API_MAX_REQUESTS_PER_DAY
                   name: gateway-env
-            - name: API_SECONDS_IN_DAY
+            - name: DOCKER_IMAGE_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: API_SECONDS_IN_DAY
+                  key: DOCKER_IMAGE_NAME
+                  name: gateway-env
+            - name: SERVER_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_PROTOCOL
                   name: gateway-env
             - name: SERVER_PROTOCOL
               valueFrom:
