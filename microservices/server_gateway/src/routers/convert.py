@@ -2,6 +2,7 @@ from urllib.parse import urlparse
 from fastapi import APIRouter, UploadFile, Request
 from src.utils.httpx import httpx_client_wrapper
 from src.utils.rate_limiter import rate_limiter
+from src.utils.ip_address import to_ip_address
 from config import (
     API_MAX_REQUESTS_PER_DAY,
     SERVER_JPG_HOST, SERVER_JPG_PORT,
@@ -16,7 +17,7 @@ convert_router = APIRouter(
 @rate_limiter(API_MAX_REQUESTS_PER_DAY)
 async def convert_to_jpg(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
-        SERVER_JPG_HOST, SERVER_JPG_PORT,
+        to_ip_address(SERVER_JPG_HOST), SERVER_JPG_PORT,
         urlparse(str(request.url)).path)
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
@@ -28,7 +29,7 @@ async def convert_to_jpg(image: UploadFile, request: Request):
 @rate_limiter(API_MAX_REQUESTS_PER_DAY)
 async def convert_to_png(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
-        SERVER_PNG_HOST, SERVER_PNG_PORT,
+        to_ip_address(SERVER_PNG_HOST), SERVER_PNG_PORT,
         urlparse(str(request.url)).path)
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
@@ -40,7 +41,7 @@ async def convert_to_png(image: UploadFile, request: Request):
 @rate_limiter(API_MAX_REQUESTS_PER_DAY)
 async def convert_to_webp(image: UploadFile, request: Request):
     outbound_url = "http://{}:{}{}".format(
-        SERVER_WEBP_HOST, SERVER_WEBP_PORT,
+        to_ip_address(SERVER_WEBP_HOST), SERVER_WEBP_PORT,
         urlparse(str(request.url)).path)
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
