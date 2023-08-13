@@ -12,6 +12,7 @@ prepare_minikube:
 	./venv/bin/python3 ./prepare_kubernetes.py
 
 deploy_docker:
+	eval $$(minikube docker-env) &&\
 	for d in ./microservices/*/ ; do (cd $$d && sh deploy.sh); done
 
 start_locust:
