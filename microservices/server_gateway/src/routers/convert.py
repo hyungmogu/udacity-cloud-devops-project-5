@@ -23,7 +23,8 @@ async def convert_to_jpg(image: UploadFile, request: Request):
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
     res = await async_client.post(outbound_url, files=file)
-    return json.dumps(json.loads(res.text))
+    response_text = res.text.replace('\"', "'")
+    return json.dumps(json.loads(response_text))
 
 @convert_router.post('/to-png', response_model=str, status_code=201)
 @rate_limiter(API_MAX_REQUESTS_PER_DAY)
@@ -34,7 +35,8 @@ async def convert_to_png(image: UploadFile, request: Request):
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
     res = await async_client.post(outbound_url, files=file)
-    return json.dumps(json.loads(res.text))
+    response_text = res.text.replace('\"', "'")
+    return json.dumps(json.loads(response_text))
 
 @convert_router.post('/to-webp', response_model=str, status_code=201)
 @rate_limiter(API_MAX_REQUESTS_PER_DAY)
@@ -45,4 +47,5 @@ async def convert_to_webp(image: UploadFile, request: Request):
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
     res = await async_client.post(outbound_url, files=file)
-    return json.dumps(json.loads(res.text))
+    response_text = res.text.replace('\"', "'")
+    return json.dumps(json.loads(response_text))
