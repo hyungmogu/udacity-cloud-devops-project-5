@@ -9,15 +9,13 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 - Replace flask with FastAPI (Done)
 - Apply unit testing (Done)
 - Apply load testing using Locust swarm (Done)
-- Make sure this application works using Minikube (Done)
-  - [Minikube](https://minikube.sigs.k8s.io/docs/start/) is Kubernetes running on local computer. The author will use this to test and simulate app before deploying to AWS EKS environment.
 - Convert server from monolith to microservices (Done)
 - Add rate limiter to microservices (Done)
 - Apply CI/CD using CircleCI (In Progress)
 - Add integration testing for microservices (In Progress)
 - Apply Blue/Green Deployment
 - Apply Prometheus and Grafana to microservice using Helm Chart
-- Make it work 100% locally (Done)
+- Make it work 100% locally using Minikube (Done)
 - Make this app is easy to start and use locally by ordinary people (In Progress)
 - Finalize README.md. Nearly half of contents need update.
 - Submit project
