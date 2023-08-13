@@ -1,6 +1,6 @@
 import logging
 import redis
-from fastapi import Request
+from fastapi import Request, UploadFile
 from functools import wraps
 from urllib.parse import quote
 import redis.asyncio as redis_async
@@ -15,11 +15,7 @@ def rate_limiter(API_MAX_REQUESTS_PER_DAY: int):
 
     def inner(func):
         @wraps(func)
-        async def wrapper(*args, **kwargs):
-            # filter args to get request. Reuqest should have type Request
-            logging.debug(list(filter(lambda arg: isinstance(arg, Request), args)))
-            request = list(filter(lambda arg: isinstance(arg, Request), args))[0]
-
+        async def wrapper(image: UploadFile, request: Request, *args, **kwargs):
             try:
                 rate_limiter = RateLimiter(API_MAX_REQUESTS_PER_DAY, API_SECONDS_IN_DAY)
                 rate_limiter(request)
@@ -40,6 +36,6 @@ def rate_limiter(API_MAX_REQUESTS_PER_DAY: int):
                     # Handle other types of Redis errors
                     raise
 
-            return await func(*args, **kwargs)
+            return await func(image, request, *args, **kwargs)
         return wrapper
     return inner
