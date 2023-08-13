@@ -1,3 +1,4 @@
+import logging
 import redis
 from fastapi import Request
 from functools import wraps
@@ -16,6 +17,7 @@ def rate_limiter(API_MAX_REQUESTS_PER_DAY: int):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             # filter args to get request. Reuqest should have type Request
+            logging.debug(list(filter(lambda arg: isinstance(arg, Request), args)))
             request = list(filter(lambda arg: isinstance(arg, Request), args))[0]
 
             try:
@@ -38,6 +40,6 @@ def rate_limiter(API_MAX_REQUESTS_PER_DAY: int):
                     # Handle other types of Redis errors
                     raise
 
-            return await func(request, *args, **kwargs)
+            return await func(*args, **kwargs)
         return wrapper
     return inner
