@@ -24,11 +24,6 @@ spec:
             - python
             - app.py
           env:
-            - name: SERVER_GATEWAY_PORT
-              valueFrom:
-                configMapKeyRef:
-                  key: SERVER_GATEWAY_PORT
-                  name: gateway-env
             - name: REDIS_HOST
               valueFrom:
                 configMapKeyRef:
@@ -53,6 +48,26 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: SERVER_PROTOCOL
+                  name: gateway-env
+            - name: SERVER_GATEWAY_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_GATEWAY_PORT
+                  name: gateway-env
+            - name: SERVER_JPG_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_JPG_PORT
+                  name: gateway-env
+            - name: SERVER_PNG_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_PNG_PORT
+                  name: gateway-env
+            - name: SERVER_WEBP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVER_WEBP_PORT
                   name: gateway-env
           livenessProbe:
             httpGet:
