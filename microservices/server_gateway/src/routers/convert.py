@@ -25,7 +25,7 @@ async def convert_to_jpg(image: UploadFile, request: Request) -> Any:
     res = await async_client.post(outbound_url, files=file)
 
     if res.status_code != 201:
-        raise HTTPException(status_code=res.status_code, detail=(res.json())['msg'])
+        raise HTTPException(status_code=res.status_code, detail=res.text)
 
     return res.text
 
@@ -40,7 +40,7 @@ async def convert_to_png(image: UploadFile, request: Request) -> Any:
     res = await async_client.post(outbound_url, files=file)
 
     if res.status_code != 201:
-        raise HTTPException(status_code=res.status_code, detail=(res.json())['msg'])
+        raise HTTPException(status_code=res.status_code, detail=res.text)
 
     return res.text
 
@@ -55,6 +55,6 @@ async def convert_to_webp(image: UploadFile, request: Request) -> Any:
     res = await async_client.post(outbound_url, files=file)
 
     if res.status_code != 201:
-        raise HTTPException(status_code=res.status_code, detail=(res.json())['msg'])
+        raise HTTPException(status_code=res.status_code, detail=res.text)
 
     return res.text
