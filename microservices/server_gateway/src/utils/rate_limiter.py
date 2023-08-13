@@ -1,4 +1,3 @@
-import logging
 import redis
 from fastapi import Request, UploadFile
 from functools import wraps
