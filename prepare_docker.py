@@ -7,7 +7,7 @@ class DockerComposeSetupTool:
     def prepare_docker_environment_variables(self):
         env_variable_groups = [
         {   
-            "for": ["gateway"],
+            "for": ["server_gateway"],
             "values": {
                 "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
                 "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
