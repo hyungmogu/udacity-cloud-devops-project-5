@@ -537,56 +537,15 @@ jobs:
             # - notify_slack_pass
 
     test-integration-microservices:
-        machine:
-            image: ubuntu-2204:current
-        parameters:
-            minikube-version:
-                default: latest
-                description: The version of minikube to install
-                type: string
-            kubectl-version:
-                default: stable
-                type: string
-            kubernetes-version:
-                default: v1.26.3
-                type: string
+        docker:
+            - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Download and install minikube
-                command: |-
-                    filename="minikube_<< parameters.minikube-version >>_amd64.deb"
-                    curl -LO "https://storage.googleapis.com/minikube/releases/<< parameters.minikube-version >>/$filename"
-                    sudo dpkg -i "$filename"
-                    rm "$filename"
-            - run:
-                name: Install kubectl
-                command: |-
-                    if [[ <<parameters.kubectl-version>> == "stable" || <<parameters.kubectl-version>> == "latest" ]]; then
-                      KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/<<parameters.kubectl-version>>.txt)
-                    else
-                      KUBECTL_VERSION=<<parameters.kubectl-version>>
-                    fi
-
-                    # download kubectl
-                    curl -LO https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl
-
-                    sudo chmod +x ./kubectl
-                    sudo mv ./kubectl /usr/local/bin
-            - run:
-                name: "Install Python 3.10.0"
-                command: pyenv install 3.10.0
-            - run:
-                name: "Set Python Version"
-                command: pyenv global 3.10.0
+            - kubernetes/install
             - run:
                 name: Start Minikube
                 command: |
                     make start_minikube_cicd
-            - run:
-                name: Check Minikube status
-                command: |
-                    minikube status
             - run:
                 name: Perform Microservices Integration Tests
                 command: |
