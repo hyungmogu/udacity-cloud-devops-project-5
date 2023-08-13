@@ -10,13 +10,9 @@ REDIS_HOST = os.getenv("REDIS_HOST", "")
 REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "")
 SERVER_PROTOCOL = os.getenv("SERVER_PROTOCOL", "")
 SERVER_JPG_HOST = "{}-jpg-service.image-converter-main".format(os.getenv("DOCKER_IMAGE_NAME", ""))
-SERVER_JPG_PORT = os.getenv("SERVER_JPG_PORT", "")
 SERVER_PNG_HOST = "{}-png-service.image-converter-main".format(os.getenv("DOCKER_IMAGE_NAME", ""))
-SERVER_PNG_PORT = os.getenv("SERVER_PNG_PORT", "")
 SERVER_WEBP_HOST = "{}-webp-service.image-converter-main".format(os.getenv("DOCKER_IMAGE_NAME", ""))
-SERVER_WEBP_PORT = os.getenv("SERVER_WEBP_PORT", "")
 
 __all__ = ["API_MAX_REQUESTS_PER_DAY", "API_SECONDS_IN_DAY", "REDIS_HOST", 
     "REDIS_PASSWORD", "GATEWAY_PORT", "SERVER_PROTOCOL", 
-    "SERVER_JPG_HOST", "SERVER_JPG_PORT", "SERVER_PNG_HOST", 
-    "SERVER_PNG_PORT", "SERVER_WEBP_HOST", "SERVER_WEBP_PORT"]
+    "SERVER_JPG_HOST", "SERVER_PNG_HOST", "SERVER_WEBP_HOST"]
