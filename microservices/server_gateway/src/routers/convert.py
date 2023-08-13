@@ -1,6 +1,6 @@
 from typing import Any
 from urllib.parse import urlparse
-from fastapi import APIRouter, UploadFile, Request
+from fastapi import APIRouter, UploadFile, Request, HTTPException
 from src.utils.httpx import httpx_client_wrapper
 from src.utils.rate_limiter import rate_limiter
 from src.utils.ip_address import to_ip_address
@@ -23,6 +23,10 @@ async def convert_to_jpg(image: UploadFile, request: Request) -> Any:
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
     res = await async_client.post(outbound_url, files=file)
+
+    if res.status_code != 201:
+        raise HTTPException(status_code=res.status_code, detail=(res.json())['msg'])
+
     return res.text
 
 @convert_router.post('/to-png', response_model=str, status_code=201)
@@ -34,6 +38,10 @@ async def convert_to_png(image: UploadFile, request: Request) -> Any:
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
     res = await async_client.post(outbound_url, files=file)
+
+    if res.status_code != 201:
+        raise HTTPException(status_code=res.status_code, detail=(res.json())['msg'])
+
     return res.text
 
 @convert_router.post('/to-webp', response_model=str, status_code=201)
@@ -45,4 +53,8 @@ async def convert_to_webp(image: UploadFile, request: Request) -> Any:
     async_client = httpx_client_wrapper()
     file = {'image': (image.filename, image.file, image.content_type)}
     res = await async_client.post(outbound_url, files=file)
+
+    if res.status_code != 201:
+        raise HTTPException(status_code=res.status_code, detail=(res.json())['msg'])
+
     return res.text
