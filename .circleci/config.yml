@@ -476,6 +476,66 @@ jobs:
             # - notify_slack_error
             # - notify_slack_pass
 
+    deploy-microservice-gateway:
+        docker:
+            - image: cimg/base:2021.04
+        steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name: Deploy containers to Docker Hub
+                command: |
+                    cd microservices/server_gateway;
+                    make deploy;
+            # - rollback_environment
+            # - notify_slack_error
+            # - notify_slack_pass
+
+    deploy-microservice-server-jpg:
+        docker:
+            - image: cimg/base:2021.04
+        steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name: Deploy containers to Docker Hub
+                command: |
+                    cd microservices/server_jpg;
+                    make deploy;
+            # - rollback_environment
+            # - notify_slack_error
+            # - notify_slack_pass
+
+    deploy-microservice-server-png:
+        docker:
+            - image: cimg/base:2021.04
+        steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name: Deploy Microservice Png
+                command: |
+                    cd microservices/server_png
+                    make deploy
+            # - rollback_environment
+            # - notify_slack_error
+            # - notify_slack_pass
+
+    deploy-microservice-server-webp:
+        docker:
+            - image: cimg/base:2021.04
+        steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name: Deploy containers to Docker Hub
+                command: |
+                    cd microservices/server_webp;
+                    make deploy;
+            # - rollback_environment
+            # - notify_slack_error
+            # - notify_slack_pass
+
     test-integration-microservices:
         machine:
             image: ubuntu-2204:current
@@ -657,66 +717,6 @@ jobs:
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
                     aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             # - rollback_environment 
-            # - notify_slack_error
-            # - notify_slack_pass
-    
-    deploy-microservice-gateway:
-        docker:
-            - image: cimg/base:2021.04
-        steps:
-            - checkout
-            - setup_remote_docker
-            - run:
-                name: Deploy containers to Docker Hub
-                command: |
-                    cd microservices/server_gateway;
-                    make deploy;
-            # - rollback_environment 
-            # - notify_slack_error
-            # - notify_slack_pass
-    
-    deploy-microservice-server-jpg:
-        docker:
-            - image: cimg/base:2021.04
-        steps:
-            - checkout
-            - setup_remote_docker
-            - run:
-                name: Deploy containers to Docker Hub
-                command: |
-                    cd microservices/server_jpg;
-                    make deploy;
-            # - rollback_environment
-            # - notify_slack_error
-            # - notify_slack_pass
-    
-    deploy-microservice-server-png:
-        docker:
-            - image: cimg/base:2021.04
-        steps:
-            - checkout
-            - setup_remote_docker
-            - run:
-                name: Deploy Microservice Png
-                command: |
-                    cd microservices/server_png
-                    make deploy
-            # - rollback_environment
-            # - notify_slack_error
-            # - notify_slack_pass
-    
-    deploy-microservice-server-webp:
-        docker:
-            - image: cimg/base:2021.04
-        steps:
-            - checkout
-            - setup_remote_docker
-            - run:
-                name: Deploy containers to Docker Hub
-                command: |
-                    cd microservices/server_webp;
-                    make deploy;
-            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
     
