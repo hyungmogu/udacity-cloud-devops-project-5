@@ -24,7 +24,7 @@ class DockerComposeSetupTool:
                 "SERVER_WEBP_PORT": os.environ.get("SERVER_WEBP_PORT", "")
             }
         },{
-            "for": ["server-jpg"],
+            "for": ["server_jpg"],
             "values": {
                 "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
                 "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
@@ -38,7 +38,7 @@ class DockerComposeSetupTool:
                 "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", "")
             }
         }, {
-            "for": [ "server-png"],
+            "for": [ "server_png"],
             "values": {
                 "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
                 "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
@@ -52,7 +52,7 @@ class DockerComposeSetupTool:
                 "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", "")
             }
         }, {
-            "for": ["server-webp"],
+            "for": ["server_webp"],
             "values": {
                 "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
                 "DOCKER_PASSWORD": os.environ.get("DOCKER_PASSWORD", ""),
