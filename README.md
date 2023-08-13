@@ -331,3 +331,4 @@ convertToWEBP(image)
 22. Kubernetes. Debugging DNS Resolution. kubernetes. https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
 23. JPG. How to add a custom decorator to a FastAPI route?. https://stackoverflow.com/questions/64497615/how-to-add-a-custom-decorator-to-a-fastapi-route
 24. Mario. Building a Decorator for a Fastapi Route Simplify and Beautify Your App Routes. https://www.pythonbynight.com/blog/building-decorator-for-fastapi
+25. Bubu Tripathy. Blue-Green Deployment using Kubernetes. https://medium.com/@bubu.tripathy/blue-green-deployment-using-kubernetes-be994df956b4
