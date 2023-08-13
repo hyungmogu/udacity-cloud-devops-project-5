@@ -11,6 +11,9 @@ prepare_minikube:
 	./venv/bin/python3 ./prepare_docker.py &&\
 	./venv/bin/python3 ./prepare_kubernetes.py
 
+deploy_docker:
+	for d in ./microservices/*/ ; do (cd $$d && sh deploy.sh); done
+
 start_locust:
 	locust -f tests/load/locustfile.py -P 8089
 
@@ -33,7 +36,7 @@ start_minikube_cicd: install_dependencies clean_minikube prepare_minikube
 	kubectl apply -f ./.circleci/kubernetes/base_redis_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
-start_minikube_local: install_dependencies clean_minikube prepare_minikube
+start_minikube_local: install_dependencies clean_minikube prepare_minikube deploy_docker
 	minikube start &&\
 	kubectl apply -f ./.circleci/kubernetes/namespaces_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
