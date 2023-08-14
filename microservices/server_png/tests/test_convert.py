@@ -85,10 +85,7 @@ class TestInputImgToPNGService(unittest.TestCase):
                                             files={"image": ("test.jpg", img_data, "image/jpg")})
                     self.assertEqual(response.status_code, 201)
                     self.assertTrue(len(response.content) > 0)
-                    
-                    # req = requests.get(response.json['url'])
-                    # img = Image.open(BytesIO(req.content))
-                    # self.assertEqual(image_size, img.size)
+
 
 class TestEdgeCaseImgToPNGService(unittest.TestCase):
     def setUp(self):
