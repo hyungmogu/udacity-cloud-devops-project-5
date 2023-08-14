@@ -19,10 +19,10 @@ class TestSimplePositiveGatewayToServerJPG(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
         self.s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
-        self.minikube_service_url = os.environ.get('MINIKUBE_SERVICE_URL', "")
+        self.minikube_service_url = os.environ.get('KUBERNETES_SERVICE_URL', "")
 
         if len(self.minikube_service_url) == 0:
-            raise Exception("MINIKUBE_SERVICE_URL environment variable is not set")
+            raise Exception("KUBERNETES_SERVICE_URL environment variable is not set")
 
     def test_health_endpoint_successfully_returns_ok(self):
         response = requests.get(f"{self.minikube_service_url}/health", timeout=10)
@@ -56,10 +56,10 @@ class TestSimplePositiveGatewayToServerPNG(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
         self.s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
-        self.minikube_service_url = os.environ.get('MINIKUBE_SERVICE_URL', "")
+        self.minikube_service_url = os.environ.get('KUBERNETES_SERVICE_URL', "")
         
         if len(self.minikube_service_url) == 0:
-            raise Exception("MINIKUBE_SERVICE_URL environment variable is not set")
+            raise Exception("KUBERNETES_SERVICE_URL environment variable is not set")
     
     def test_health_endpoint_successfully_returns_ok(self):
         response = requests.get(f"{self.minikube_service_url}/health", timeout=10)
@@ -93,10 +93,10 @@ class TestSimplePositiveGatewayToServerWEBP(unittest.TestCase):
     def setUp(self):
         self.s3_resource = boto3.resource('s3')
         self.s3_resource.create_bucket(Bucket=AWS_S3_BUCKET)
-        self.minikube_service_url = os.environ.get('MINIKUBE_SERVICE_URL', "")
+        self.minikube_service_url = os.environ.get('KUBERNETES_SERVICE_URL', "")
 
         if len(self.minikube_service_url) == 0:
-            raise Exception("MINIKUBE_SERVICE_URL environment variable is not set")
+            raise Exception("KUBERNETES_SERVICE_URL environment variable is not set")
     
     def test_health_endpoint_successfully_returns_ok(self):
         response = requests.get(f"{self.minikube_service_url}/health", timeout=10)

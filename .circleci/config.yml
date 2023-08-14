@@ -551,7 +551,7 @@ jobs:
                 command: |
                     kubectl expose deployment/gateway-deployment -n image-converter-main --type="NodePort" --port 8010
                     NODE_PORT="$(kubectl get services/gateway-deployment -n image-converter-main -o go-template='{{(index .spec.ports 0).nodePort}}')"
-                    export MINIKUBE_SERVICE_URL="http://$(minikube ip):$NODE_PORT"
+                    export KUBERNETES_SERVICE_URL="http://$(minikube ip):$NODE_PORT"
                     ./venv/bin/python3 -m unittest tests/integration_microservices/test_app.py
             # - notify_slack_error
             # - notify_slack_pass
