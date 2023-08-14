@@ -542,10 +542,6 @@ jobs:
         steps:
             - checkout
             - kubernetes/install
-            - kubernetes/create-or-update-resource:
-                get-rollout-status: true
-                resource-file-path: .circleci/kubernetes/namespace_src/
-                show-kubectl-command: true
             - run:
                 name: Start Kubernetes
                 command: |
