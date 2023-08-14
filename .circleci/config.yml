@@ -543,7 +543,7 @@ jobs:
             - checkout
             - kubernetes/install
             - run:
-                name: Start Minikube
+                name: Start Kubernetes
                 command: |
                     make start_minikube_cicd
             - run:

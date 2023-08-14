@@ -28,7 +28,7 @@ start_minikube_dashboard:
 clean_minikube:
 	minikube delete --all
 
-start_minikube_cicd: install_dependencies prepare_minikube
+start_minikube_cicd: install_dependencies prepare_kubernetes
 	kubectl apply -f ./.circleci/kubernetes/namespaces_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/base_redis_src/
