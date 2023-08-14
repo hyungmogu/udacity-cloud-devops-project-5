@@ -86,7 +86,7 @@ class TestInputImgToPNGService(unittest.TestCase):
                     self.assertEqual(response.status_code, 201)
                     self.assertTrue(len(response.content) > 0)
 
-
+@mock_s3
 class TestEdgeCaseImgToPNGService(unittest.TestCase):
     def setUp(self):
         self.app = TestClient(app)
