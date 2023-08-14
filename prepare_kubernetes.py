@@ -5,7 +5,6 @@ load_dotenv(find_dotenv())
 
 class KubernetesSetupTool:
     def prepare_manifest(self):
-        # Get paths of all folders in `.circleci/kundernetes` without `_src` in the name
         base_paths = [os.path.join(".circleci/kubernetes", folder) for folder in os.listdir(".circleci/kubernetes") if "_src" not in folder]
         env_variables = {
             "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
