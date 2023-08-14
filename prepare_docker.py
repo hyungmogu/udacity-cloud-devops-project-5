@@ -67,8 +67,6 @@ class DockerComposeSetupTool:
             }
         }]
         
-        # for each file in microservices folder (except 'server')
-        # delete traditional .env file and create a new one with the same name
         for folder in os.listdir("microservices"):
             if folder == "server":
                 continue
@@ -76,15 +74,11 @@ class DockerComposeSetupTool:
             if os.path.exists("microservices/{}/.env".format(folder)):
                 os.remove("microservices/{}/.env".format(folder))
             
-            # open utf-8 encoding
+
             with open("microservices/{}/.env".format(folder), "w+", encoding="utf-8") as f:
-                # for each env_variable_group
                 for env_variable_group in env_variable_groups:
-                    # if the folder is in the env_variable_group
                     if folder in env_variable_group["for"]:
-                        # for each key, value in env_variable_group["values"]
                         for key, value in env_variable_group["values"].items():
-                            # write key=value
                             f.write("{}=\"{}\"\n".format(key, value))
     
     def run(self):
