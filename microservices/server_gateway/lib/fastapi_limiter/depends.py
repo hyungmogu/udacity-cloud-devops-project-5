@@ -47,7 +47,6 @@ class RateLimiter:
                         dep_index = j
                         break
 
-        # moved here because constructor run before app startup
         identifier = self.identifier or FastAPILimiter.identifier
         callback = self.callback or FastAPILimiter.http_callback
         rate_key = await identifier(request)
