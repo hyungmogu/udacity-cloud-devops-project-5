@@ -32,9 +32,7 @@ start_minikube_cicd: install_dependencies prepare_kubernetes
 	kubectl apply -f ./.circleci/kubernetes/namespaces_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/base_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/base_redis_src/ &&\
-	sh setup_redis_cluster.sh &&\
-	minikube service list &&\
-	minikube service gateway-service -n image-converter-main --url
+	sh setup_redis_cluster.sh
 
 start_minikube_local: install_dependencies clean_minikube prepare_minikube
 	minikube start &&\
