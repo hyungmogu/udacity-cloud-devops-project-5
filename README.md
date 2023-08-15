@@ -135,8 +135,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 ## Test Instruction (Local)
 
 ### Unit Test
-1. go to `backend` folder in terminal from project root folder
-2. type `make start_unit_test` in terminal to run unit test
+1. type `make test_local` in terminal to run unit tests
 
 ### Load Test
 1. go to `backend` folder in terminal from project root folder
