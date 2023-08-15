@@ -690,7 +690,7 @@ jobs:
         steps:
             - checkout
             - attach_workspace:
-                at: ~/project/.circleci/kubernetes/base_src
+                at: ~/project/.circleci/kubernetes/prod_base_src
             - kubernetes/install
             - aws-eks/update-kubeconfig-with-authenticator:
                 cluster-name: << parameters.cluster-name >>
@@ -709,11 +709,11 @@ jobs:
             - run:
                 name: Check files in folder kubernetes/base_src
                 command: |
-                    ls -al ~/project/.circleci/kubernetes/base_src
+                    ls -al ~/project/.circleci/kubernetes/prod_base_src
             - run:
                 name: Apply Kubernetes config files via kubectl
                 command: |
-                    kubectl apply -f ./.circleci/kubernetes/base_src/
+                    kubectl apply -f ./.circleci/kubernetes/prod_base_src/
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
