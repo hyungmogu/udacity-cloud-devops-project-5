@@ -111,6 +111,10 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 1. Please follow instruction from [here](https://docs.docker.com/get-docker/)
 
+### Install Minikube
+
+1. Please follow instruction from [here](https://minikube.sigs.k8s.io/docs/start)
+
 ### Run Program
 
 1. Type `make start_minikube_local` in terminal from project root folder
