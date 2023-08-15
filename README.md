@@ -143,12 +143,13 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 ### Load Test
 1. go to `backend` folder in terminal from project root folder
-2. type `make setup_local` in terminal if not done.
+2. type `make setup_minikube` in terminal if not done.
 3. fill out the following fields in `.env` file located in the project root folder.
     - "AWS_S3_BUCKET"
     - "AWS_ACCESS_KEY_ID"
     - "AWS_SECRET_ACCESS_KEY"
-4. type `make start_load_test` in terminal
+4. type `start_minikube_local` in terminal
+5. In another tab, go to project root folder and type`make start_locust`
 5. go to a browser of choice, and type "http://localhost:8089" in url.
 6. in the input fileds enter as below:
 
