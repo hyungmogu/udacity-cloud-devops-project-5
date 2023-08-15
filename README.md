@@ -113,7 +113,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 ### Run Program
 
-1. Type `make start_local` in terminal from project root folder
+1. Type `make start_minikube_local` in terminal from project root folder
 
 ## Setup Instruction (AWS)
 
