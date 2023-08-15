@@ -20,6 +20,9 @@ start_locust:
 test_integration_microservices: install_dependencies clean_minikube prepare_minikube start_minikube
 	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
 
+test_unit:
+  pass
+
 test_load: install_dependencies start_locust clean_minikube prepare_minikube start_minikube
 
 start_minikube_dashboard:
