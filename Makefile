@@ -1,11 +1,6 @@
 install_dependencies:
 	python3 -m venv ./venv &&\
-	./venv/bin/pip install python-dotenv==1.0.0 &&\
-	./venv/bin/pip install requests==2.31.0 &&\
-	./venv/bin/pip install Pillow==9.5.0 &&\
-	./venv/bin/pip install boto3==1.26.148 &&\
-	./venv/bin/pip install moto==4.1.11 &&\
-	./venv/bin/pip install locust==2.16.1
+	./venv/bin/pip install -r requirements.txt
 
 prepare_kubernetes:
 	./venv/bin/python3 ./prepare_kubernetes.py
@@ -31,14 +26,7 @@ start_minikube_dashboard:
 clean_minikube:
 	minikube delete --all
 
-start_minikube_cicd: install_dependencies prepare_kubernetes
-	kubectl apply -f ./.circleci/kubernetes/local_namespaces_src/ &&\
-	kubectl apply -f ./.circleci/kubernetes/local_base_redis_src/ &&\
-	kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
-	kubectl apply -f ./.circleci/kubernetes/prod_base_src/ &&\
-	sh setup_redis_cluster.sh
-
-start_minikube_local: install_dependencies clean_minikube prepare_minikube
+start_minikube: install_dependencies clean_minikube prepare_minikube
 	minikube start &&\
 	sh deploy_dockers.sh &&\
 	kubectl apply -f ./.circleci/kubernetes/local_namespaces_src/ &&\

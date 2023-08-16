@@ -545,7 +545,15 @@ jobs:
             - run:
                 name: Start Kubernetes
                 command: |
-                    make start_minikube_cicd
+                    python3 -m venv ./venv &&\
+                    ./venv/bin/pip install -r requirements.txt &&\
+                    ./venv/bin/python3 ./prepare_docker.py &&\
+                    ./venv/bin/python3 ./prepare_kubernetes.py &&\
+                    kubectl apply -f ./.circleci/kubernetes/local_namespaces_src/ &&\
+                    kubectl apply -f ./.circleci/kubernetes/local_base_redis_src/ &&\
+                    kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
+                    kubectl apply -f ./.circleci/kubernetes/prod_base_src/ &&\
+                    sh setup_redis_cluster.sh
             - run:
                 name: Perform Microservices Integration Tests
                 command: |
