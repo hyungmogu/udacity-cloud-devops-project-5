@@ -689,8 +689,6 @@ jobs:
                 type: string
         steps:
             - checkout
-            - attach_workspace:
-                at: ~/project/.circleci/kubernetes/prod_base_src
             - kubernetes/install
             - aws-eks/update-kubeconfig-with-authenticator:
                 cluster-name: << parameters.cluster-name >>
