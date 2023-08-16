@@ -701,14 +701,6 @@ jobs:
                 command: |
                     python3 prepare_kubernetes.py
             - run:
-                name: Check kubectl is properly configured
-                command: |
-                    kubectl cluster-info
-            - run:
-                name: Check files in folder kubernetes/base_src
-                command: |
-                    ls -al ~/project/.circleci/kubernetes/prod_base_src
-            - run:
                 name: Apply Kubernetes config files via kubectl
                 command: |
                     kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
