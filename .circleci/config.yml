@@ -727,10 +727,10 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
-                name: Backend smoke test.
+                name: Microservices smoke test.
                 command: |
                     KUBERNETES_SERVER_URL=$(aws eks describe-cluster --name prod --query cluster.endpoint)
-                    API_URL="http://${KUBERNETES_SERVER_URL}:${GATEWAY_PORT}"
+                    API_URL="${KUBERNETES_SERVER_URL}:${GATEWAY_PORT}"
                     echo "API URL: ${API_URL}"
 
                     if curl "${API_URL}/health" | grep "ok"
