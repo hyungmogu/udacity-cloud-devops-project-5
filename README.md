@@ -161,9 +161,11 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 <img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/039ae455-eecc-4cb4-88e8-538083ec4cdb"/>
 
-## Pipeline, Architecture and System Design
+## Pipeline, and Diagrams
 
-<img src="https://user-images.githubusercontent.com/6856382/219821091-e647fe37-0c6f-40ec-a483-2ee99b91ae1d.png"/>
+### Pipeline
+
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/4ec38587-9825-463f-8ef7-96b6184f6ff5"/>
 
 ### Basic Diagram
 
