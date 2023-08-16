@@ -142,7 +142,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 1. type `make test_local` in terminal to run unit tests
 
 ### Load Test
-1. go to `backend` folder in terminal from project root folder
+1. go to the project root folder
 2. type `make setup_minikube` in terminal if not done.
 3. fill out the following fields in `.env` file located in the project root folder.
     - "AWS_S3_BUCKET"
@@ -172,10 +172,6 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 ### Infrastructure Diagram
 
 <img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/5200178e-dbaf-46c9-9e45-d59b27a3281e"/> 
-
-### Kubernetes Cluster Diagram
-
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/a98a12e9-a6af-4447-a349-059be5050ffd"/>
 
 ### Requirements and Resource Estimation
 
