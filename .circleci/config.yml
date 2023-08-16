@@ -713,6 +713,7 @@ jobs:
             - run:
                 name: Apply Kubernetes config files via kubectl
                 command: |
+                    kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
                     kubectl apply -f ./.circleci/kubernetes/prod_base_src/
             # - rollback_environment
             # - notify_slack_error
