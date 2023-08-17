@@ -12,7 +12,21 @@ prepare_minikube:
 start_locust:
 	locust -f tests/load/locustfile.py -P 8089
 
-test_integration_microservices: install_dependencies clean_minikube prepare_minikube start_minikube
+scan: install_dependencies prepare_minikube
+	CURRENT_DIR=`pwd` &&\
+	echo $$CURRENT_DIR &&\
+	for dir in $$(find microservices -maxdepth 1 -type d); do\
+		if [ $$dir != "." ]; then\
+			cd $$CURRENT_DIR/$$dir &&\
+			pwd &&\
+			make clear &&\
+			make build &&\
+			make scan &&\
+			cd $$CURRENT_DIR;\
+		fi;\
+	done
+
+test_integration: install_dependencies clean_minikube prepare_minikube start_minikube
 	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
 
 test_unit: install_dependencies prepare_minikube
