@@ -739,7 +739,7 @@ jobs:
                 name: Microservices smoke test.
                 command: |
                     KUBERNETES_SERVER_URL=$(aws eks describe-cluster --name prod --query cluster.endpoint)
-                    API_URL="${KUBERNETES_SERVER_URL}:${GATEWAY_PORT}"
+                    API_URL="${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
                     echo "API URL: ${API_URL}"
 
                     if curl "${API_URL}/health" | grep "ok"
