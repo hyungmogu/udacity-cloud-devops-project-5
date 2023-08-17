@@ -23,6 +23,7 @@ test_unit: install_dependencies prepare_minikube
 		if [ $$dir != "." ]; then\
 			cd $$CURRENT_DIR/$$dir &&\
 			pwd &&\
+			make clear_local &&\
 			make build_local &&\
 			make test_local &&\
 			cd $$CURRENT_DIR;\
