@@ -1,3 +1,6 @@
+install_hadolint:
+	brew install hadolint
+
 install_dependencies:
 	python3 -m venv ./venv &&\
 	./venv/bin/pip install -r requirements.txt
@@ -11,6 +14,20 @@ prepare_minikube:
 
 start_locust:
 	locust -f tests/load/locustfile.py -P 8089
+
+lint: install_dependencies install_hadolint
+	CURRENT_DIR=`pwd` &&\
+	echo $$CURRENT_DIR &&\
+	for dir in $$(find microservices -maxdepth 1 -type d); do\
+		if [ $$dir != "." ]; then\
+			cd $$CURRENT_DIR/$$dir &&\
+			pwd &&\
+			make clear &&\
+			make build &&\
+			make lint &&\
+			cd $$CURRENT_DIR;\
+		fi;\
+	done
 
 scan: install_dependencies prepare_minikube
 	CURRENT_DIR=`pwd` &&\
