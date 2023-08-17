@@ -15,8 +15,19 @@ start_locust:
 test_integration_microservices: install_dependencies clean_minikube prepare_minikube start_minikube
 	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
 
-test_unit:
-  pass
+test_unit: install_dependencies prepare_minikube
+	# for each microservice folder, go into it and run command `make test_local`
+	CURRENT_DIR=`pwd` &&\
+	echo $$CURRENT_DIR &&\
+	for dir in $$(find microservices -maxdepth 1 -type d); do\
+		if [ $$dir != "." ]; then\
+			cd $$CURRENT_DIR/$$dir &&\
+			pwd &&\
+			make build_local &&\
+			make test_local &&\
+			cd $$CURRENT_DIR;\
+		fi;\
+	done
 
 test_load: install_dependencies start_locust clean_minikube prepare_minikube start_minikube
 
