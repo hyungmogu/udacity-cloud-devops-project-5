@@ -29,7 +29,7 @@ lint: install_dependencies install_hadolint
 		fi;\
 	done
 
-scan: install_dependencies prepare_minikube
+scan: install_dependencies
 	CURRENT_DIR=`pwd` &&\
 	echo $$CURRENT_DIR &&\
 	for dir in $$(find microservices -maxdepth 1 -type d); do\
@@ -46,7 +46,7 @@ scan: install_dependencies prepare_minikube
 test_integration: install_dependencies clean_minikube prepare_minikube start_minikube
 	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
 
-test_unit: install_dependencies prepare_minikube
+test_unit: install_dependencies
 	# for each microservice folder, go into it and run command `make test`
 	CURRENT_DIR=`pwd` &&\
 	echo $$CURRENT_DIR &&\
