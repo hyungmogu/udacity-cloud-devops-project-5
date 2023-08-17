@@ -124,7 +124,7 @@ jobs:
                 name: Build front-end
                 command: |
                     cd frontend;
-                    make build_local;
+                    make build;
             - save_cache:
                 paths: [frontend/node_modules]
                 key: frontend-build
@@ -140,7 +140,7 @@ jobs:
                 name: Run Build for Micoservice Gateway
                 command: |
                     cd microservices/server_gateway
-                    make build_local
+                    make build
             - save_cache:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_gateway/requirements.txt" }}
                 paths:
@@ -157,7 +157,7 @@ jobs:
                 name: Run Build for Microservice Server Jpg
                 command: |
                     cd microservices/server_jpg
-                    make build_local
+                    make build
             - save_cache:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_jpg/requirements.txt" }}
                 paths:
@@ -174,7 +174,7 @@ jobs:
                 name: Run Build for Microservice Server Png
                 command: |
                     cd microservices/server_png
-                    make build_local
+                    make build
             - save_cache:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_png/requirements.txt" }}
                 paths:
@@ -191,7 +191,7 @@ jobs:
                 name: Run Build for Microservice Webp
                 command: |
                     cd microservices/server_webp
-                    make build_local
+                    make build
             - save_cache:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_webp/requirements.txt" }}
                 paths:
@@ -210,7 +210,7 @@ jobs:
                 name: Run frontend test
                 command: |
                     cd frontend
-                    make test_local
+                    make test
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -227,7 +227,7 @@ jobs:
                 name: Run Test for Microservice Server Gateway
                 command: |
                     cd microservices/server_gateway
-                    make test_local
+                    make test
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -244,7 +244,7 @@ jobs:
                 name: Run Test for Microservice Server Jpg
                 command: |
                     cd microservices/server_jpg
-                    make test_local
+                    make test
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -261,7 +261,7 @@ jobs:
                 name: Run Test for Microservice Server Png 
                 command: |
                     cd microservices/server_png
-                    make test_local
+                    make test
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -278,7 +278,7 @@ jobs:
                 name: Run Test for Microservice Server Webp
                 command: |
                     cd microservices/server_webp
-                    make test_local
+                    make test
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -293,7 +293,7 @@ jobs:
                 name: Run frontend scan
                 command: |
                     cd frontend
-                    make scan_local
+                    make scan
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -310,7 +310,7 @@ jobs:
                 name: Scan Microservice Server Gateway
                 command: |
                     cd microservices/server_gateway
-                    make scan_local
+                    make scan
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -327,7 +327,7 @@ jobs:
                 name: Scan Microservice Server Jpg
                 command: |
                     cd microservices/server_jpg
-                    make scan_local
+                    make scan
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -344,7 +344,7 @@ jobs:
                 name: Scan Microservice Server Png
                 command: |
                     cd microservices/server_png
-                    make scan_local
+                    make scan
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -361,7 +361,7 @@ jobs:
                 name: Scan Microservice Server Webp
                 command: |
                     cd microservices/server_webp
-                    make scan_local
+                    make scan
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -376,7 +376,7 @@ jobs:
                 name: Run frontend test
                 command: |
                     cd frontend
-                    make lint_local
+                    make lint
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -400,7 +400,7 @@ jobs:
                 name: Lint Microservice Server Gateway
                 command: |
                     cd microservices/server_gateway
-                    make lint_local
+                    make lint
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -424,7 +424,7 @@ jobs:
                 name: Lint Microservice Server JPG
                 command: |
                     cd microservices/server_jpg
-                    make lint_local
+                    make lint
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -448,7 +448,7 @@ jobs:
                 name: Lint Microservice Server PNG
                 command: |
                     cd microservices/server_png
-                    make lint_local
+                    make lint
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -472,7 +472,7 @@ jobs:
                 name: Lint Microservice Server WEBP
                 command: |
                     cd microservices/server_webp
-                    make lint_local
+                    make lint
             # - notify_slack_error
             # - notify_slack_pass
 

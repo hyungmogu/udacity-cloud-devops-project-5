@@ -16,16 +16,16 @@ test_integration_microservices: install_dependencies clean_minikube prepare_mini
 	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
 
 test_unit: install_dependencies prepare_minikube
-	# for each microservice folder, go into it and run command `make test_local`
+	# for each microservice folder, go into it and run command `make test`
 	CURRENT_DIR=`pwd` &&\
 	echo $$CURRENT_DIR &&\
 	for dir in $$(find microservices -maxdepth 1 -type d); do\
 		if [ $$dir != "." ]; then\
 			cd $$CURRENT_DIR/$$dir &&\
 			pwd &&\
-			make clear_local &&\
-			make build_local &&\
-			make test_local &&\
+			make clear &&\
+			make build &&\
+			make test &&\
 			cd $$CURRENT_DIR;\
 		fi;\
 	done
