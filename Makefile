@@ -43,7 +43,7 @@ scan: install_dependencies
 		fi;\
 	done
 
-test_integration: install_dependencies clean_minikube prepare_minikube start_minikube
+test_integration: start_minikube
 	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
 
 test_unit: install_dependencies
