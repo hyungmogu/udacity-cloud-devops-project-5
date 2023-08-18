@@ -701,6 +701,10 @@ jobs:
             - aws-eks/update-kubeconfig-with-authenticator:
                 cluster-name: << parameters.cluster-name >>
             - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run:
                 name: Install dotenv
                 command: |
                     pip install python-dotenv==1.0.0
@@ -714,6 +718,14 @@ jobs:
                     kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
                     kubectl apply -f ./.circleci/kubernetes/prod_base_src/
                     kubectl expose deployment gateway-deployment -n image-converter-main --type=LoadBalancer --name=gateway-service --port=${SERVER_GATEWAY_PORT} --target-port=${SERVER_GATEWAY_PORT}
+            - run:
+                name: Turn on kubectl verbosity and examine logs
+                command: |
+                    kubectl get svc --v=9
+            - run:
+                name: Verify that the Amazon EKS API server is accessible
+                command: |
+                    aws eks describe-cluster --name prod --region us-east-1 --query cluster.resourcesVpcConfig
 
             # - rollback_environment
             # - notify_slack_error
@@ -736,6 +748,19 @@ jobs:
                 name: Install dependencies (AWS-Cli)
                 command: |
                     apt-get -y install awscli
+            - run:
+                name: Microservices smoke test (without server gateway port).
+                command: |
+                    KUBERNETES_SERVER_URL=$(aws eks describe-cluster --name prod --query cluster.endpoint)
+                    API_URL="${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
+                    echo "API URL: ${API_URL}"
+
+                    if curl "${API_URL}/health" | grep "ok"
+                    then
+                        echo "working"
+                    else
+                        echo "not working"
+                    fi
             - run:
                 name: Microservices smoke test.
                 command: |
