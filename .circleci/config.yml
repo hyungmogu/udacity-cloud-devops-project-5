@@ -713,7 +713,7 @@ jobs:
                 command: |
                     kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
                     kubectl apply -f ./.circleci/kubernetes/prod_base_src/
-                    kubectl expose deployment gateway-deployment --type=LoadBalancer --name=gateway-service --port=${SERVER_GATEWAY_PORT} --target-port=${SERVER_GATEWAY_PORT}
+                    kubectl expose deployment gateway-deployment -n image-converter-main --type=LoadBalancer --name=gateway-service --port=${SERVER_GATEWAY_PORT} --target-port=${SERVER_GATEWAY_PORT}
 
             # - rollback_environment
             # - notify_slack_error
