@@ -73,9 +73,9 @@ start_minikube: install_dependencies clean_minikube prepare_minikube
 	minikube start &&\
 	sh deploy_dockers.sh &&\
 	kubectl apply -f ./.circleci/kubernetes/local_namespaces_src/ &&\
+	kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/local_base_redis_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/local_base_src/ &&\
-	kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/prod_base_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
 	sh setup_redis_cluster.sh &&\
