@@ -1,16 +1,16 @@
-lint_local:
+lint:
 	npm run lint;
 
-scan_local:
+scan:
 	npm install &&\
     npm audit --audit-level=critical
 
-build_local:
+build:
 	echo "Building locally" &&\
 	npm install &&\
 	npm run build;
 	
-test_local:
+test:
 	echo "Running tests locally" &&\
 	npm run test:unit;
 
