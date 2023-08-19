@@ -127,11 +127,11 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 - AWS EKS costs `$73.00` per month
 
-#### Bandwidth Usage Estimation (EC2)
+#### Bandwidth Usage Estimation (AWS)
 
 - Assume the worst case scenario of image format conversion where size of the converted image triples (jpg -> png). That is 5MB -> 15MB.
 - Data transfer to EC2 is free, so no calculation is required here
-- Data transfer out of EC2, there is a charge, and it is:
+- Data transfer out of EC2, there is a charge. The calculation is as follows:
 
 ```
 15MB / file * 5 files * 1,000,000 = 75,000,000 MB  = 75 TB
