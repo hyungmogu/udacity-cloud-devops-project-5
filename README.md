@@ -222,14 +222,13 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 Since AWS charges
 
-1. `$0.09 / GB` for first 10 TB
-2. `$0.085 / GB` for next 40 TB
-3. `$0.07 / GB` for next 100 TB
+1. `$0.023 / GB` for first 50 TB
+2. `$0.022 / GB` for next 450 TB
 
 The total outbound bandwidth cost is
 
 ```
-$0.09 / GB * 10,000 GB + $0.085 / GB * 40,000 GB  + $0.07 / GB * 25,000 GB = $6050
+$0.023 / GB * 50,000 GB + $0.022 / GB * 25,000 GB = $1700
 ```
 
 #### Maximum total costs / month
