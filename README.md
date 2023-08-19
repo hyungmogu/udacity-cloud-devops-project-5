@@ -339,3 +339,4 @@ convertToWEBP(image)
 . https://repost.aws/knowledge-center/eks-cluster-connection
 26. Giant Swarm. Using Kubernetes LoadBalancer Services on AWS. Medium. https://medium.com/@GiantSwarm/using-kubernetes-loadbalancer-services-on-aws-5c22f932d0c9
 27. Meysam. How to Set Up Ingress Controller in AWS EKS. Medium. https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
+28. Kubernetes. Ingress. Kubernetes. https://kubernetes.io/docs/concepts/services-networking/ingress/
