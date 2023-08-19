@@ -115,7 +115,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 #### Number of servers estimation
 
-- AWS EC2 Pricing information can be found [here](https://aws.amazon.com/ec2/pricing/on-demand/)
+- AWS Pricing information can be found [here](https://calculator.aws/#/addService)
 
 - Est_number_of_servers_required = Daily_active_users / Server_daily_request_capacity == 1,000,000 / 86400 ~= 12 servers
     - This is based on conversative assumption that python-based server can handle [1 requests per second (1/12 of the original assumption made in this article)](https://news.ycombinator.com/item?id=26188765)
