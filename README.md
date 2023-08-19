@@ -36,6 +36,8 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 ## Setup Instruction (AWS)
 
+### Activate AWS IAM access key 
+
 ### Setup Docker Hub
 
 1. Sign up / sign in to [Docker Hub](https://hub.docker.com/)
