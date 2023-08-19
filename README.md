@@ -206,7 +206,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 - Given `AWS t4g.medium` costs `$0.0336 server / hour`, it costs
     - `$24.192 server / month`
-    - `$290.30 / month` for 12 servers
+    - `$290.34 / month` for 12 servers
 
 - AWS EKS costs `$73.00` per month
 
