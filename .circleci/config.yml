@@ -731,6 +731,10 @@ jobs:
                 command: |
                     aws eks describe-cluster --name prod --region us-east-1 --query cluster.resourcesVpcConfig
             - run:
+                name: Wait until all pods are deployed
+                command: |
+                    kubectl rollout status --watch --timeout=600s deployment -n image-converter-main
+            - run:
                 name: Check and see if Kubernetes pods are up and running
                 command: |
                     kubectl get pods -n image-converter-main
@@ -772,7 +776,7 @@ jobs:
                 name: Microservices smoke test (without server gateway port).
                 command: |
                     KUBERNETES_SERVER_URL=$(aws eks describe-cluster --name prod --query cluster.endpoint)
-                    API_URL="${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
+                    API_URL="${KUBERNETES_SERVER_URL}"
                     echo "API URL: ${API_URL}"
 
                     if curl "${API_URL}/health" | grep "ok"
