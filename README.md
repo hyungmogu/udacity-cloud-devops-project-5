@@ -236,7 +236,7 @@ $0.023 / GB * 50,000 GB + $0.022 / GB * 25,000 GB = $1700
 The maximum total costs would be 
 
 ```
-$290.30 / month + $6050 / month + $73 / month = $6413.30 / month
+$290.34 / month + $1700 / month + $73 / month = $2063.34 / month
 ```
 
 Of course, cost can be lowered using cheaper providers like Digital Ocean, but the conclusion here is that a sufficient revenue generating model other than google ad is required to keep this afloat.
