@@ -241,7 +241,7 @@ $290.34 / month + $1700 / month + $73 / month = $2063.34 / month
 
 Of course, cost can be lowered using cheaper providers like Digital Ocean, but the conclusion here is that a sufficient revenue generating model other than google ad is required to keep this afloat.
 
-Cost can be lowered using methods like keeping the converted files for only 1 hour. By doing this, the daily required storage reduces from 75 TB to 3 TB, and the cost decreases to $560.30 ($290.30 for AWS EC2 $270.00 for AWS s3). Still, for a solution that's as simple as converting an image format, $560.30 is a cost that's prohibitively expensive.
+Cost can be lowered using methods like keeping the converted files for only 1 hour. By doing this, the daily required storage reduces from 75 TB to 3 TB, and the cost decreases to $432.34 ($290.34 for AWS EC2 $69 for AWS s3, $73 for AWS EKS). Still, for a solution that's as simple as converting an image format, $432.34 is a cost that's prohibitively expensive.
 
 ## API Design
 
