@@ -780,7 +780,7 @@ jobs:
                 name: Extract external IP
                 command: |
                     kubectl get services/gateway-service --namespace=image-converter-main -o json
-                    kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.items[0].externalIP'
+                    kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.status.loadBalancer.ingress[0].hostname'
             - run:
                 name: Microservices smoke test (without server gateway port).
                 command: |
