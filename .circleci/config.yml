@@ -773,9 +773,14 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
+                name: Extract external IP
+                command: |
+                    kubectl get services/gateway-service --namespace=image-converter-main -o json
+                    kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.items[0].externalIP'
+            - run:
                 name: Microservices smoke test (without server gateway port).
                 command: |
-                    KUBERNETES_SERVER_URL=$(aws eks describe-cluster --name prod --query cluster.endpoint)
+                    KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.items[0].externalIP')
                     API_URL="${KUBERNETES_SERVER_URL}"
                     echo "API URL: ${API_URL}"
 
@@ -788,7 +793,7 @@ jobs:
             - run:
                 name: Microservices smoke test.
                 command: |
-                    KUBERNETES_SERVER_URL=$(aws eks describe-cluster --name prod --query cluster.endpoint)
+                    KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.items[0].externalIP')
                     API_URL="${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
                     echo "API URL: ${API_URL}"
 
