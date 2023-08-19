@@ -178,15 +178,15 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 ### Requirements and Resource Estimation
 
 #### Functional Requirements
-1. Uploading images from frontend (user) to client
-2. Converting image from original format to target format
-3. Downloading completed images
+1. Upload images to server
+2. Convert images from original format to target format
+3. Download converted images
 
 #### Non-functional Requirements
 1. High-availability: Target availability of 99% and higher.
 2. Scalability: The following should not be bottleneck when scales
     1. Uploading images
-    2. Simulatenous viewing of website
+    2. Viewing of website
     3. Downloading images
 
 3. Performance: The conversion should be done as quick as possible, as additional delays will clog the system.
@@ -194,27 +194,28 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 #### Resource Estimation
 1. Estimated number of daily active users: 1 million (for demonstration purposes)
 2. Max file size per image: 5MB (1280 x 960, png)
-3. Max number of files submitted per user: 5
-4. Max number of times a user could use this service a day: 5
-5. Max size of an image after conversion: 12MB (From 5MB, jpg -> png)
+3. Max number of files submitted per user per day: 5
 
 #### Number of servers estimation
 
 - AWS EC2 Pricing information can be found [here](https://aws.amazon.com/ec2/pricing/on-demand/)
 
-- Est_number_of_servers_required = Daily_active_users / Server_daily_request_capacity == 1,000,000 / 5,000 = 200 servers
+- Est_number_of_servers_required = Daily_active_users / Server_daily_request_capacity == 1,000,000 / 86400 ~= 12 servers
+    - This is based on conversative assumption that python-based server can handle [1 requests per second (1/12 of the original assumption made in this article)](https://news.ycombinator.com/item?id=26188765)
+
 
 - Given `AWS t4g.medium` costs `$0.0336 server / hour`, it costs
     - `$24.192 server / month`
-    - `$4838.40 / month` for 200 servers
+    - `$290.30 / month` for 12 servers
 
 #### Bandwidth Usage Estimation (EC2)
 
-- Data transfer in to EC2 is free, so no calculation is required here
-- Data transfer out of EC2, we use
+- Assume the worst case scenario of image format conversion where size of the converted image triples (jpg -> png). That is 5MB -> 15MB.
+- Data transfer to EC2 is free, so no calculation is required here
+- Data transfer out of EC2, there is a charge, and it is:
 
 ```
-12MB / file * 5 files * 1,000,000 = 60,000,000 MB  = 60 TB
+15MB / file * 5 files * 1,000,000 = 75,000,000 MB  = 75 TB
 ```
 
 Since AWS charges
@@ -226,7 +227,7 @@ Since AWS charges
 The total outbound bandwidth cost is
 
 ```
-$0.09 / GB * 10,000 GB + $0.085 / GB * 40,000 GB  + $0.07 / GB * 10,000 GB = $5000
+$0.09 / GB * 10,000 GB + $0.085 / GB * 40,000 GB  + $0.07 / GB * 25,000 GB = $6050
 ```
 
 #### Maximum total costs / month
@@ -234,10 +235,12 @@ $0.09 / GB * 10,000 GB + $0.085 / GB * 40,000 GB  + $0.07 / GB * 10,000 GB = $50
 The maximum total costs would be 
 
 ```
-$4838.40 / month + $5000 / month = $9838.40 / month
+$290.30 / month + $6050 / month = $6340.30 / month
 ```
 
 Of course, cost can be lowered using cheaper providers like Digital Ocean, but the conclusion here is that a sufficient revenue generating model other than google ad is required to keep this afloat.
+
+Cost can be lowered using methods like keeping the converted files for only 1 hour. By doing this, the daily required storage reduces from 75 TB to 3 TB, and the cost decreases to $560.30 ($290.30 for AWS EC2 $270.00 for AWS s3). Still, for a solution that's as simple as converting an image format, $560.30 is a cost that's prohibitively expensive.
 
 ## API Design
 
