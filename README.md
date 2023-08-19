@@ -337,3 +337,4 @@ convertToWEBP(image)
 25. Bubu Tripathy. Blue-Green Deployment using Kubernetes. https://medium.com/@bubu.tripathy/blue-green-deployment-using-kubernetes-be994df956b4
 25. AWS Team. Why can't I connect to my Amazon EKS cluster?
 . https://repost.aws/knowledge-center/eks-cluster-connection
+26. Giant Swarm. Using Kubernetes LoadBalancer Services on AWS. Medium. https://medium.com/@GiantSwarm/using-kubernetes-loadbalancer-services-on-aws-5c22f932d0c9
