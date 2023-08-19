@@ -769,6 +769,10 @@ jobs:
                 command: |
                     apt-get -y install curl
             - run:
+                name: Install dependencies (jq)
+                command: |
+                    apt-get -y install jq
+            - run:
                 name: Install dependencies (AWS-Cli)
                 command: |
                     apt-get -y install awscli
@@ -780,9 +784,9 @@ jobs:
             - run:
                 name: Microservices smoke test (without server gateway port).
                 command: |
-                    KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.items[0].externalIP')
+                    KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.items[0].status.loadBalancer.ingress[0].hostname')
                     API_URL="${KUBERNETES_SERVER_URL}"
-                    echo "API URL: ${API_URL}"
+                    echo "API URL: ${API_URL}"vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
 
                     if curl "${API_URL}/health" | grep "ok"
                     then
