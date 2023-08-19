@@ -208,6 +208,8 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
     - `$24.192 server / month`
     - `$290.30 / month` for 12 servers
 
+- AWS EKS costs `$73.00` per month
+
 #### Bandwidth Usage Estimation (EC2)
 
 - Assume the worst case scenario of image format conversion where size of the converted image triples (jpg -> png). That is 5MB -> 15MB.
@@ -235,7 +237,7 @@ $0.09 / GB * 10,000 GB + $0.085 / GB * 40,000 GB  + $0.07 / GB * 25,000 GB = $60
 The maximum total costs would be 
 
 ```
-$290.30 / month + $6050 / month = $6340.30 / month
+$290.30 / month + $6050 / month + $73 / month = $6413.30 / month
 ```
 
 Of course, cost can be lowered using cheaper providers like Digital Ocean, but the conclusion here is that a sufficient revenue generating model other than google ad is required to keep this afloat.
