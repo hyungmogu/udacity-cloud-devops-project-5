@@ -782,19 +782,6 @@ jobs:
                     kubectl get services/gateway-service --namespace=image-converter-main -o json
                     kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.status.loadBalancer.ingress[0].hostname'
             - run:
-                name: Microservices smoke test (without server gateway port).
-                command: |
-                    KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.status.loadBalancer.ingress[0].hostname')
-                    API_URL="http://${KUBERNETES_SERVER_URL}"
-                    echo "API URL: ${API_URL}"
-
-                    if curl "${API_URL}/health" | grep "ok"
-                    then
-                        echo "working"
-                    else
-                        echo "not working"
-                    fi
-            - run:
                 name: Microservices smoke test.
                 command: |
                     KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.status.loadBalancer.ingress[0].hostname')
