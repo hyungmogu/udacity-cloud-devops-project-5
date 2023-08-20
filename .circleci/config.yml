@@ -790,11 +790,9 @@ jobs:
 
                     if curl "${API_URL}/health" | grep "ok"
                     then
-                        # exit 0
-                        echo "working"
+                        exit 0
                     else
-                        # exit 1
-                        echo "not working"
+                        exit 1
                     fi
             - run:
                 name: Examine the logs of pods to see if GET request has been reached
