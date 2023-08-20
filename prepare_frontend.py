@@ -6,7 +6,8 @@ load_dotenv(find_dotenv())
 class FrontendSetupTool:
     def prepare_frontend_environment_variables(self):
         env_variable_groups = {
-            "IS_PRODUCTION": os.environ.get("IS_PRODUCTION", "false")
+            "VITE_IS_PRODUCTION": os.environ.get("VITE_IS_PRODUCTION", "false"),
+            "VITE_API_URL": os.environ.get("VITE_API_URL", "")
         }
         
         if os.path.exists("frontend/.env"):

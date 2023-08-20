@@ -12,13 +12,13 @@ export default class ImageConversionToPNG extends ImageConversionInterface {
         this.error = false;
         this.result = "";
     }
-
     async convert() {
         const formData = new FormData();
         formData.append("image", this.file);
 
         try {
-            const result = await axios.post('http://localhost:8004/convert/to-png', formData, {
+            const url = new URL('/convert/to-png', import.meta.env.VITE_API_URL)
+            const result = await axios.post(url.href, formData, {
                 'Content-Type': 'multipart/form-data'
             }); 
 

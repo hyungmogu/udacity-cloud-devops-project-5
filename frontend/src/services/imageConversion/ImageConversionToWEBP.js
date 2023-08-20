@@ -15,8 +15,10 @@ export default class ImageConversionToWEBP extends ImageConversionInterface {
     async convert() {
         const formData = new FormData();
         formData.append("image", this.file);
+
         try {
-            const result = await axios.post('http://localhost:8004/convert/to-webp', formData, {
+            const url = new URL('/convert/to-webp', import.meta.env.VITE_API_URL)
+            const result = await axios.post(url.href, formData, {
                 'Content-Type': 'multipart/form-data'
             }); 
 

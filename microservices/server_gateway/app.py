@@ -3,6 +3,7 @@ import logging
 import redis.asyncio as redis_async
 from urllib.parse import quote
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from lib.fastapi_limiter import FastAPILimiter
 
 from src.routers.convert import convert_router
@@ -18,6 +19,19 @@ async def startup_redis():
     await FastAPILimiter.init(redis_c)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://127.0.0.1"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 async def startup_event():

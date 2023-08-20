@@ -68,8 +68,15 @@ test_load: install_dependencies start_locust clean_minikube prepare_minikube sta
 
 build_frontend: install_dependencies prepare_frontend
 	cd frontend &&\
+	rm -rf node_modules &&\
 	npm install &&\
 	npm run build
+
+start_frontend: prepare_frontend
+	cd frontend &&\
+	rm -rf node_modules &&\
+	npm install &&\
+	npm run dev
 
 start_minikube_dashboard:
 	minikube dashboard
