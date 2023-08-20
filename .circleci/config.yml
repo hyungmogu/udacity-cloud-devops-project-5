@@ -647,45 +647,6 @@ jobs:
             # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
-
-    deploy-frontend:
-        docker:
-            - image: node:18.14-buster
-        steps:
-            - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install dependencies (tar)
-                command: |
-                    apt-get -y install tar
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
-            - run:
-                name: Get backend url
-                command: |
-                    export KUBERNETES_SERVER_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-                    export API_URL="http://${KUBERNETES_SERVER_IP}:8010"
-                    echo "${API_URL}"
-                    echo API_URL="http://${KUBERNETES_SERVER_IP}:8010" >> frontend/.env
-      
-                    cat frontend/.env
-            - run:
-                name: Deploy frontend objects
-                command: |
-                    cd frontend
-                    npm install
-
-                    npm run build
-                    tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-                    aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-            # - rollback_environment 
-            # - notify_slack_error
-            # - notify_slack_pass
     
     setup-kubernetes-cluster:
         docker:
@@ -747,6 +708,56 @@ jobs:
             # - notify_slack_error
             # - notify_slack_pass
     
+    deploy-frontend:
+        docker:
+            - image: node:18.14-buster
+        parameters:
+            cluster-name:
+                description: |
+                    Name of the EKS cluster
+                type: string
+        steps:
+            - checkout
+            - kubernetes/install
+            - aws-eks/update-kubeconfig-with-authenticator:
+                cluster-name: << parameters.cluster-name >>
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install dependencies (tar)
+                command: |
+                    apt-get -y install tar
+            - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install dependencies (jq)
+                command: |
+                    apt-get -y install jq
+            - run:
+                name: Get microservice url
+                command: |
+                    KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq '.status.loadBalancer.ingress[0].hostname')
+                    API_URL="http://${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
+                    echo API_URL="$API_URL" >> frontend/.env
+
+                    cat frontend/.env
+            - run:
+                name: Deploy frontend objects
+                command: |
+                    cd frontend
+                    npm install
+
+                    npm run build
+                    tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+                    aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            # - rollback_environment
+            # - notify_slack_error
+            # - notify_slack_pass
+
     smoke-test:
         docker:
             - image: python:3.10-buster
@@ -934,14 +945,15 @@ workflows:
                 requires: [deploy-infrastructure-network]
             - deploy-infrastructure-frontend:
                 requires: [deploy-infrastructure-network]
-            - deploy-frontend:
-                requires: [deploy-infrastructure-frontend]
             - setup-kubernetes-cluster:
                 cluster-name: prod
                 requires: [deploy-infrastructure-kubernetes]
+            - deploy-frontend:
+                cluster-name: prod
+                requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
             - smoke-test:
                 cluster-name: prod
-                requires: [deploy-frontend, setup-kubernetes-cluster]
+                requires: [deploy-frontend]
             - cloudfront-update:
                 requires: [smoke-test]
             - cleanup:
