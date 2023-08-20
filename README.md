@@ -82,7 +82,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 ### Pipeline
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/4ec38587-9825-463f-8ef7-96b6184f6ff5"/>
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/fbbb66f6-fc0b-424a-94d0-0c52a55bb3cc"/>
 
 ### Basic Diagram
 
