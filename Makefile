@@ -5,6 +5,9 @@ install_dependencies:
 	python3 -m venv ./venv &&\
 	./venv/bin/pip install -r requirements.txt
 
+prepare_frontend:
+	./venv/bin/python3 ./prepare_frontend.py
+
 prepare_kubernetes:
 	./venv/bin/python3 ./prepare_kubernetes.py
 
@@ -62,6 +65,11 @@ test_unit: install_dependencies
 	done
 
 test_load: install_dependencies start_locust clean_minikube prepare_minikube start_minikube
+
+build_frontend: install_dependencies prepare_frontend
+	cd frontend &&\
+	npm install &&\
+	npm run build
 
 start_minikube_dashboard:
 	minikube dashboard
