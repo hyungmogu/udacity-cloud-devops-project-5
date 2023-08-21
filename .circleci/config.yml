@@ -860,6 +860,14 @@ jobs:
         steps:
             - checkout
             - run:
+                name: Update packages
+                command: |
+                    apt update
+            - run:
+                name: Install dependencies (AWS-Cli)
+                command: |
+                    apt-get -y install awscli
+            - run:
                 name: Get old stack workflow id
                 command: |
                     export OldWorkflowID=$(aws cloudformation \
