@@ -820,7 +820,7 @@ jobs:
                 command: |
                     URL="http://image-converter-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/"            
                     echo ${URL} 
-                    if curl -s ${URL} | grep "Convert Any Image"
+                    if curl -s ${URL} | grep "<title>Image Format Converter</title>"
                     then
                         exit 0
                     else
