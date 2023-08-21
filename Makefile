@@ -98,3 +98,6 @@ start_minikube: install_dependencies clean_minikube prepare_minikube
 
 setup_minikube:
 	cp .env.example .env;
+
+start:
+	python3 start.py
