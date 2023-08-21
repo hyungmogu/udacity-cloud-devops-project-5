@@ -9,7 +9,7 @@ from lib.fastapi_limiter import FastAPILimiter
 from src.routers.convert import convert_router
 from src.routers.health import health_router
 from src.utils.httpx import httpx_client_wrapper
-from config import REDIS_HOST, REDIS_PASSWORD, GATEWAY_PORT
+from config import REDIS_HOST, REDIS_PASSWORD, GATEWAY_PORT, URL_FRONTEND
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -22,7 +22,8 @@ app = FastAPI()
 
 origins = [
     "http://localhost",
-    "http://127.0.0.1"
+    "http://127.0.0.1",
+    URL_FRONTEND
 ]
 
 app.add_middleware(

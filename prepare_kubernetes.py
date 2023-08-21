@@ -10,6 +10,7 @@ class KubernetesSetupTool:
             "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
             "REDIS_HOST": os.environ.get("REDIS_HOST", ""),
             "REDIS_PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
+            "URL_FRONTEND": os.environ.get("URL_FRONTEND", ""),
             "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", ""),
             "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", ""),
             "DOCKER_IMAGE_NAME" : os.environ.get("DOCKER_IMAGE_NAME", ""),

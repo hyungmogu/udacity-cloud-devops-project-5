@@ -674,6 +674,10 @@ jobs:
                 command: |
                     pip install python-dotenv==1.0.0
             - run:
+                name: Set necessary environment variables required by production-level kubernetes cluster
+                command: |
+                    export URL_FRONTEND="http://image-converter-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com"
+            - run:
                 name: Prepare Kubernetes Source Files
                 command: |
                     python3 prepare_kubernetes.py
