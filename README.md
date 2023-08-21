@@ -57,19 +57,19 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 ## Test Instruction (Local)
 
 ### Unit Test
-1. type `make test_local` in terminal to run unit tests
+1. Type `make test_unit` in terminal to run unit tests
 
 ### Load Test
-1. go to the project root folder
-2. type `make setup_minikube` in terminal if not done.
-3. fill out the following fields in `.env` file located in the project root folder.
+1. Go to the project root folder
+2. Type `make setup_minikube` in terminal if not done.
+3. Fill out the following fields in `.env` file located in the project root folder.
     - "AWS_S3_BUCKET"
     - "AWS_ACCESS_KEY_ID"
     - "AWS_SECRET_ACCESS_KEY"
-4. type `start_minikube_local` in terminal
+4. Type `make start_minikube` in terminal, and wait until minikube fully starts
 5. In another tab, go to project root folder and type`make start_locust`
-5. go to a browser of choice, and type "http://localhost:8089" in url.
-6. in the input fileds enter as below:
+5. Go to a browser of choice, and type "http://localhost:8089" in url.
+6. In the input fileds enter as below:
 
 <img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/67674efc-960e-4ba6-8636-0bd05fa2b3e2"/>
 
