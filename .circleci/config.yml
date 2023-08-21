@@ -742,7 +742,13 @@ jobs:
                 command: |
                     KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq -r '.status.loadBalancer.ingress[0].hostname')
                     API_URL="http://${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
-                    echo API_URL="$API_URL" >> frontend/.env
+                    echo VITE_API_URL="$API_URL" >> frontend/.env
+
+                    cat frontend/.env
+            - run:
+                name: Set other environment variables
+                command: |
+                    echo VITE_IS_PRODUCTION="true" >> frontend/.env
 
                     cat frontend/.env
             - run:
