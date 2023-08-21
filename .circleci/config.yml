@@ -938,7 +938,7 @@ workflows:
             # - test-integration-microservices:
             #     requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - deploy-infrastructure-network:
-                requires: [lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
+                requires: [test-frontend, scan-frontend, lint-frontend, lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
                 filters:
                     branches:
                         only: [main]
