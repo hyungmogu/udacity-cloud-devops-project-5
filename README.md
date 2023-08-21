@@ -13,11 +13,12 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 - Add rate limiter to microservices (Done)
 - Apply CI/CD using CircleCI (In Progress)
 - Add integration testing for microservices (Done. Verified locally. Need to fix routing response in `microservices/gateway`)
-- Apply Blue/Green Deployment
+- Apply Blue/Green Deployment (In Progress)
 - Apply Prometheus and Grafana to microservice using Helm Chart
 - Make it work 100% locally using Minikube (Done. Need to make sure local file path is returned instead of AWS S3 url when using local solution. This will be done in the future)
 - Make this app is easy to start and use locally by ordinary people (In Progress)
-- Finalize README.md. Nearly half of contents need update.
+- Finalize README.md. Nearly half of contents need update. (In progress)
+- Fix errors (In Progress)
 - Submit project
 
 ## Setup Instruction (Local)
