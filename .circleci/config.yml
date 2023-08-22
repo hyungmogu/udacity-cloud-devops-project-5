@@ -890,7 +890,8 @@ jobs:
                     then
                         aws s3 rm "s3://image-converter-${OldWorkflowID}" --recursive
                         aws cloudformation delete-stack --stack-name image-converter-frontend-${OldWorkflowID}
-                        aws cloudformation delete-stack --stack-name image-converter-kubernetes-${OldWorkflowID}                        
+                        aws cloudformation delete-stack --stack-name image-converter-kubernetes-${OldWorkflowID}
+                        aws cloudformation delete-stack --stack-name image-converter-kubernetes-network-${OldWorkflowID}
                     fi
             # - rollback_environment
             # - notify_slack_error
