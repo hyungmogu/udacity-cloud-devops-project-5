@@ -851,8 +851,8 @@ jobs:
                 command: |
                     aws cloudformation deploy \
                     --template-file .circleci/aws/cloudfront.yml \
-                    --stack-name InitialStack \
-                    --parameter-overrides WorkflowID="image-converter-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --stack-name Cloudfront \
+                    --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter
             - rollback_environment
             # - notify_slack_error
