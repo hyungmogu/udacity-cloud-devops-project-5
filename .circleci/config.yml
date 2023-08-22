@@ -586,8 +586,8 @@ jobs:
                     --stack-name "image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
                     --tags project=image-converter type=network
-            - check_aws_status_network
-            - rollback_environment
+            # - check_aws_status_network
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -615,8 +615,8 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/kubernetes-parameters.json" \
                     --capabilities CAPABILITY_IAM \
                     --tags project=image-converter type=kubernetes
-            - check_aws_status_kubernetes
-            - rollback_environment
+            # - check_aws_status_kubernetes
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -643,8 +643,8 @@ jobs:
                     --stack-name "image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter type=frontend
-            - check_aws_status_front_end
-            - rollback_environment
+            # - check_aws_status_front_end
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -707,7 +707,7 @@ jobs:
                 name: Check and see if Kubernetes services are up and running
                 command: |
                     kubectl get services -n image-converter-main
-            - rollback_environment
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -763,7 +763,7 @@ jobs:
                     npm run build
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
                     aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-            - rollback_environment
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -829,7 +829,7 @@ jobs:
                     else
                         exit 1
                     fi
-            - rollback_environment
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass   
 
@@ -854,7 +854,7 @@ jobs:
                     --stack-name Cloudfront \
                     --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter
-            - rollback_environment
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -892,7 +892,7 @@ jobs:
                         aws cloudformation delete-stack --stack-name image-converter-frontend-${OldWorkflowID}
                         aws cloudformation delete-stack --stack-name image-converter-kubernetes-${OldWorkflowID}                        
                     fi
-            - rollback_environment
+            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
