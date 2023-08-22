@@ -264,3 +264,4 @@ convertToWEBP(image)
 27. Meysam. How to Set Up Ingress Controller in AWS EKS. Medium. https://towardsdatascience.com/how-to-set-up-ingress-controller-in-aws-eks-d745d9107307
 28. Kubernetes. Ingress. Kubernetes. https://kubernetes.io/docs/concepts/services-networking/ingress/
 29. AWS EKS Workshop. Microservices on Kubernetes. Amazon Web Services. https://www.eksworkshop.com/docs/introduction/getting-started/microservices/
+30. Peter De Tender. Setting up SSL/TLS for Kubernetes Ingress. snyk. https://snyk.io/blog/setting-up-ssl-tls-for-kubernetes-ingress/
