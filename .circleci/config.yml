@@ -674,6 +674,22 @@ jobs:
                 command: |
                     pip install python-dotenv==1.0.0
             - run:
+                name: Install NGINX ingress controller for kubernetes
+                command: |
+                    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
+            - run:
+                name: Ingress controller Preflight-check
+                command: |
+                    kubectl get pods --namespace=ingress-nginx
+                    kubectl wait --namespace ingress-nginx \
+                    --for=condition=ready pod \
+                    --selector=app.kubernetes.io/component=controller \
+                    --timeout=120s
+            - run:
+                name: Testing ingress controller online for the presence of external IP
+                command: |
+                    kubectl get service ingress-nginx-controller --namespace=ingress-nginx
+            - run:
                 name: Set necessary environment variables required by production-level kubernetes cluster
                 command: |
                     export URL_FRONTEND="http://image-converter-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com"
