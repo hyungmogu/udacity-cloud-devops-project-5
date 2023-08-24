@@ -689,7 +689,7 @@ jobs:
                 name: Testing ingress controller online for the presence of external IP
                 command: |
                     kubectl get service ingress-nginx-controller --namespace=ingress-nginx
-                    kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='http://{.status.loadBalancer.ingress[0].*}'
+                    kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].*}'
             - run:
                 name: Set necessary environment variables required by production-level kubernetes cluster
                 command: |
@@ -759,7 +759,7 @@ jobs:
             - run:
                 name: Get microservice url
                 command: |
-                    KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq -r '.status.loadBalancer.ingress[0].hostname')
+                    KUBERNETES_SERVER_URL=$(kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].*}')
                     API_URL="http://${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
                     echo VITE_API_URL="$API_URL" >> frontend/.env
 
@@ -820,7 +820,7 @@ jobs:
             - run:
                 name: Microservices smoke test.
                 command: |
-                    KUBERNETES_SERVER_URL=$(kubectl get services/gateway-service --namespace=image-converter-main -o json | jq -r '.status.loadBalancer.ingress[0].hostname')
+                    KUBERNETES_SERVER_URL=$(kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].*}')
                     API_URL="http://${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
                     echo "API URL: ${API_URL}"
 
