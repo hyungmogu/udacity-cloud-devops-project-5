@@ -267,3 +267,4 @@ convertToWEBP(image)
 30. Peter De Tender. Setting up SSL/TLS for Kubernetes Ingress. snyk. https://snyk.io/blog/setting-up-ssl-tls-for-kubernetes-ingress/
 31. Michael Pratt. Ingress vs. Load Balancer in Kubernetes. Baeldung. https://www.baeldung.com/ops/kubernetes-ingress-vs-load-balancer
 32. Yang Yang and Michael Hausenblas. Kubernetes Ingress with AWS ALB Ingress Controller. AWS. https://aws.amazon.com/blogs/opensource/kubernetes-ingress-aws-alb-ingress-controller/
+33. Kubernetes Team. Ingress-Nginx Controller Installation Guide. Kubernetes. https://kubernetes.github.io/ingress-nginx/deploy/
