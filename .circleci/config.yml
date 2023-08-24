@@ -689,6 +689,7 @@ jobs:
                 name: Testing ingress controller online for the presence of external IP
                 command: |
                     kubectl get service ingress-nginx-controller --namespace=ingress-nginx
+                    kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='http://{.status.loadBalancer.ingress[0].*}'
             - run:
                 name: Set necessary environment variables required by production-level kubernetes cluster
                 command: |
