@@ -272,3 +272,4 @@ convertToWEBP(image)
 35. NGINX Team. Configure Rate Limiting. NGINX. https://docs.nginx.com/nginx-service-mesh/tutorials/ratelimit-walkthrough/#:~:text=In%20a%20Kubernetes%20environment%2C%20rate,workloads%20running%20inside%20the%20cluster.
 36. Mike Petersen. Ultimate Guide to Kubernetes Ingress Controllers. Platform 9. https://platform9.com/blog/ultimate-guide-to-kubernetes-ingress-controllers/
 37. Harsh Manvar. Kubernetes Ingress Vs Gateway API. https://medium.com/google-cloud/kubernetes-ingress-vs-gateway-api-647ee233693d
+38. Dawid Kruk. How to create nginx ingress rules for services in 3 different namespaces in azure Kubernetes cluster. https://stackoverflow.com/questions/73918866/how-to-create-nginx-ingress-rules-for-services-in-3-different-namespaces-in-azur#answer-73921798
