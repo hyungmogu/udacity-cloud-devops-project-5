@@ -815,8 +815,8 @@ jobs:
             - run:
                 name: Extract external IP
                 command: |
-                    kubectl get services/gateway-service --namespace=image-converter-main -o json
-                    kubectl get services/gateway-service --namespace=image-converter-main -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
+                    kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o json
+                    kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].*}'
             - run:
                 name: Microservices smoke test.
                 command: |
