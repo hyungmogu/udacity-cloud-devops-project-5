@@ -269,3 +269,6 @@ convertToWEBP(image)
 32. Yang Yang and Michael Hausenblas. Kubernetes Ingress with AWS ALB Ingress Controller. AWS. https://aws.amazon.com/blogs/opensource/kubernetes-ingress-aws-alb-ingress-controller/
 33. Kubernetes Team. Ingress-Nginx Controller Installation Guide. Kubernetes. https://kubernetes.github.io/ingress-nginx/deploy/
 34. Elton Stoneman. (2021). Learn Kubernetes in a Month of Lunches. Manning Publications Co.
+35. NGINX Team. Configure Rate Limiting. NGINX. https://docs.nginx.com/nginx-service-mesh/tutorials/ratelimit-walkthrough/#:~:text=In%20a%20Kubernetes%20environment%2C%20rate,workloads%20running%20inside%20the%20cluster.
+36. Mike Petersen. Ultimate Guide to Kubernetes Ingress Controllers. Platform 9. https://platform9.com/blog/ultimate-guide-to-kubernetes-ingress-controllers/
+37. Harsh Manvar. Kubernetes Ingress Vs Gateway API. https://medium.com/google-cloud/kubernetes-ingress-vs-gateway-api-647ee233693d
