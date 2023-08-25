@@ -749,14 +749,6 @@ jobs:
                 command: |
                     apt-get -y install tar
             - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install dependencies (jq)
-                command: |
-                    apt-get -y install jq
-            - run:
                 name: Get microservice url
                 command: |
                     KUBERNETES_SERVER_URL=$(kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].*}')
@@ -804,10 +796,6 @@ jobs:
                 name: Install dependencies (Curl)
                 command: |
                     apt-get -y install curl
-            - run:
-                name: Install dependencies (jq)
-                command: |
-                    apt-get -y install jq
             - run:
                 name: Install dependencies (AWS-Cli)
                 command: |
