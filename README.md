@@ -95,7 +95,7 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 
 ### Kubernetes Diagram
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/a3f574a1-86be-49eb-be48-1f2cde8a1cef"/>
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/7b3dbd35-b3ba-492e-a54c-848043b91e2c"/>
 
 ### Requirements and Resource Estimation
 
