@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: gateway-ingress
   namespace: image-converter-main
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
@@ -14,4 +16,4 @@ spec:
           service:
             name: gateway-service
             port:
-              number: 8010
+              number: $SERVER_GATEWAY_PORT
