@@ -44,7 +44,22 @@ commands:
                     aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
     rollback_environment:
         description: Destroy kubernetes server and front-end cloudformation stacks given a workflow ID.  
+        parameters:
+            cluster-name:
+                description: |
+                    Name of the EKS cluster
+                type: string
         steps:
+            - kubernetes/install
+            - aws-eks/update-kubeconfig-with-authenticator:
+                cluster-name: << parameters.cluster-name >>
+            - run:
+                name: Remove all of Kubernetes Cluster Resources
+                when: on_fail
+                command: |
+                    kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
+                    kubectl delete -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
+                    kubectl delete -f ./.circleci/kubernetes/prod_base_src/
             - run:
                 name: Clean S3 folder
                 when: on_fail
@@ -587,7 +602,8 @@ jobs:
                     --parameter-overrides "file://$CURRENT_DIR/.circleci/aws/network-parameters.json" \
                     --tags project=image-converter type=network
             # - check_aws_status_network
-            # - rollback_environment
+            # - rollback_environment:
+            #     cluster-name: prod
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -616,7 +632,8 @@ jobs:
                     --capabilities CAPABILITY_IAM \
                     --tags project=image-converter type=kubernetes
             # - check_aws_status_kubernetes
-            # - rollback_environment
+            # - rollback_environment:
+            #     cluster-name: prod
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -644,7 +661,8 @@ jobs:
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter type=frontend
             # - check_aws_status_front_end
-            # - rollback_environment
+            # - rollback_environment:
+            #     cluster-name: prod
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -723,7 +741,8 @@ jobs:
                 name: Check and see if Kubernetes services are up and running
                 command: |
                     kubectl get services -n image-converter-main
-            # - rollback_environment
+            # - rollback_environment:
+            #     cluster-name: prod
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -752,7 +771,7 @@ jobs:
                 name: Get microservice url
                 command: |
                     KUBERNETES_SERVER_URL=$(kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].*}')
-                    API_URL="http://${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
+                    API_URL="http://${KUBERNETES_SERVER_URL}"
                     echo VITE_API_URL="$API_URL" >> frontend/.env
 
                     cat frontend/.env
@@ -771,7 +790,8 @@ jobs:
                     npm run build
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
                     aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-            # - rollback_environment
+            # - rollback_environment:
+            #     cluster-name: prod
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -809,7 +829,7 @@ jobs:
                 name: Microservices smoke test.
                 command: |
                     KUBERNETES_SERVER_URL=$(kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].*}')
-                    API_URL="http://${KUBERNETES_SERVER_URL}:${SERVER_GATEWAY_PORT}"
+                    API_URL="http://${KUBERNETES_SERVER_URL}"
                     echo "API URL: ${API_URL}"
 
                     if curl "${API_URL}/health/" | grep "ok"
@@ -833,7 +853,8 @@ jobs:
                     else
                         exit 1
                     fi
-            # - rollback_environment
+            # - rollback_environment:
+            #     cluster-name: prod
             # - notify_slack_error
             # - notify_slack_pass   
 
@@ -858,7 +879,8 @@ jobs:
                     --stack-name Cloudfront \
                     --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter
-            # - rollback_environment
+            # - rollback_environment:
+            #     cluster-name: prod
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -897,7 +919,8 @@ jobs:
                         aws cloudformation delete-stack --stack-name image-converter-kubernetes-${OldWorkflowID}
                         aws cloudformation delete-stack --stack-name image-converter-kubernetes-network-${OldWorkflowID}
                     fi
-            # - rollback_environment
+            # - rollback_environment:
+            #     cluster-name: prod
             # - notify_slack_error
             # - notify_slack_pass
 

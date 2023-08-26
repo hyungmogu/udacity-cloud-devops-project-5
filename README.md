@@ -273,3 +273,6 @@ convertToWEBP(image)
 36. Mike Petersen. Ultimate Guide to Kubernetes Ingress Controllers. Platform 9. https://platform9.com/blog/ultimate-guide-to-kubernetes-ingress-controllers/
 37. Harsh Manvar. Kubernetes Ingress Vs Gateway API. https://medium.com/google-cloud/kubernetes-ingress-vs-gateway-api-647ee233693d
 38. Dawid Kruk. How to create nginx ingress rules for services in 3 different namespaces in azure Kubernetes cluster. https://stackoverflow.com/questions/73918866/how-to-create-nginx-ingress-rules-for-services-in-3-different-namespaces-in-azur#answer-73921798
+39. Awanish. Building a Kubernetes Application with Amazon EKS. Medium. https://medium.com/edureka/amazon-eks-ac646c23abf8
+40. AWS Team. Clean Up. AWS. https://archive.eksworkshop.com/beginner/130_exposing-service/cleaning/
+41. Digital Ocean Team. How to Delete Load Balancers from Kubernetes Clusters. Digital Ocean. https://docs.digitalocean.com/products/kubernetes/how-to/delete-load-balancers
