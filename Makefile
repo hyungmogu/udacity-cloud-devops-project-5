@@ -86,6 +86,7 @@ clean_minikube:
 
 start_minikube: install_dependencies clean_minikube prepare_minikube
 	minikube start &&\
+	minikube addons enable ingress &&\
 	sh deploy_dockers.sh &&\
 	kubectl apply -f ./.circleci/kubernetes/local_namespaces_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
@@ -94,7 +95,8 @@ start_minikube: install_dependencies clean_minikube prepare_minikube
 	kubectl apply -f ./.circleci/kubernetes/prod_base_src/ &&\
 	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
 	sh setup_redis_cluster.sh &&\
-	minikube service gateway-service -n image-converter-main --url
+	kubectl expose deployment gateway-deployment -n image-converter-main --type=NodePort --port=8080 &&\
+	minikube service gateway-deployment -n image-converter-main --url
 
 setup_minikube:
 	cp .env.example .env;
