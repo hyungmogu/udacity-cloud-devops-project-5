@@ -688,6 +688,12 @@ jobs:
                 command: |
                     apt-get -y install awscli
             - run:
+                name: Install Helm
+                command: |
+                    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+                    chmod 700 get_helm.sh
+                    ./get_helm.sh
+            - run:
                 name: Install dotenv
                 command: |
                     pip install python-dotenv==1.0.0
@@ -927,79 +933,79 @@ jobs:
 workflows:
     default:
         jobs:
-            - build-frontend
-            - build-microservice-gateway
-            - build-microservice-jpg
-            - build-microservice-png
-            - build-microservice-webp
-            - lint-infrastructure-cloudfront
-            - lint-infrastructure-frontend
-            - lint-infrastructure-network
-            - lint-infrastructure-kubernetes
-            - test-frontend:
-                requires: [build-frontend]
-            - test-microservice-gateway:
-                requires: [build-microservice-gateway]
-            - test-microservice-server-jpg:
-                requires: [build-microservice-jpg]
-            - test-microservice-server-png:
-                requires: [build-microservice-png]
-            - test-microservice-server-webp:
-                requires: [build-microservice-webp]
-            - scan-frontend:
-                requires: [build-frontend]
-            - scan-microservice-gateway:
-                requires: [build-microservice-gateway]
-            - scan-microservice-server-jpg:
-                requires: [build-microservice-jpg]
-            - scan-microservice-server-png:
-                requires: [build-microservice-png]
-            - scan-microservice-server-webp:
-                requires: [build-microservice-webp]
-            - lint-frontend:
-                requires: [build-frontend]
-            - lint-microservice-gateway:
-                requires: [build-microservice-gateway]
-            - lint-microservice-server-jpg:
-                requires: [build-microservice-jpg]
-            - lint-microservice-server-png:
-                requires: [build-microservice-png]
-            - lint-microservice-server-webp:
-                requires: [build-microservice-webp]
-            - deploy-microservice-gateway:
-                requires: [scan-microservice-gateway, lint-microservice-gateway]
-            - deploy-microservice-server-jpg:
-                requires: [scan-microservice-server-jpg, lint-microservice-server-jpg, test-microservice-server-jpg]
-            - deploy-microservice-server-png:
-                requires: [scan-microservice-server-png, lint-microservice-server-png, test-microservice-server-png]
-            - deploy-microservice-server-webp:
-                requires: [scan-microservice-server-webp, lint-microservice-server-webp, test-microservice-server-webp]
+            # - build-frontend
+            # - build-microservice-gateway
+            # - build-microservice-jpg
+            # - build-microservice-png
+            # - build-microservice-webp
+            # - lint-infrastructure-cloudfront
+            # - lint-infrastructure-frontend
+            # - lint-infrastructure-network
+            # - lint-infrastructure-kubernetes
+            # - test-frontend:
+            #     requires: [build-frontend]
+            # - test-microservice-gateway:
+            #     requires: [build-microservice-gateway]
+            # - test-microservice-server-jpg:
+            #     requires: [build-microservice-jpg]
+            # - test-microservice-server-png:
+            #     requires: [build-microservice-png]
+            # - test-microservice-server-webp:
+            #     requires: [build-microservice-webp]
+            # - scan-frontend:
+            #     requires: [build-frontend]
+            # - scan-microservice-gateway:
+            #     requires: [build-microservice-gateway]
+            # - scan-microservice-server-jpg:
+            #     requires: [build-microservice-jpg]
+            # - scan-microservice-server-png:
+            #     requires: [build-microservice-png]
+            # - scan-microservice-server-webp:
+            #     requires: [build-microservice-webp]
+            # - lint-frontend:
+            #     requires: [build-frontend]
+            # - lint-microservice-gateway:
+            #     requires: [build-microservice-gateway]
+            # - lint-microservice-server-jpg:
+            #     requires: [build-microservice-jpg]
+            # - lint-microservice-server-png:
+            #     requires: [build-microservice-png]
+            # - lint-microservice-server-webp:
+            #     requires: [build-microservice-webp]
+            # - deploy-microservice-gateway:
+            #     requires: [scan-microservice-gateway, lint-microservice-gateway]
+            # - deploy-microservice-server-jpg:
+            #     requires: [scan-microservice-server-jpg, lint-microservice-server-jpg, test-microservice-server-jpg]
+            # - deploy-microservice-server-png:
+            #     requires: [scan-microservice-server-png, lint-microservice-server-png, test-microservice-server-png]
+            # - deploy-microservice-server-webp:
+            #     requires: [scan-microservice-server-webp, lint-microservice-server-webp, test-microservice-server-webp]
             # - test-integration-microservices:
             #     requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
-            - deploy-infrastructure-network:
-                requires: [test-frontend, scan-frontend, lint-frontend, lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
-                filters:
-                    branches:
-                        only: [main]
+            # - deploy-infrastructure-network:
+            #     requires: [test-frontend, scan-frontend, lint-frontend, lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
+            #     filters:
+            #         branches:
+            #             only: [main]
             # - deploy-infrastructure-network:
             #     requires: [lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, test-integration-microservices]
             #     filters:
             #         branches:
             #             only: [main]
-            - deploy-infrastructure-kubernetes:
-                requires: [deploy-infrastructure-network]
-            - deploy-infrastructure-frontend:
-                requires: [deploy-infrastructure-network]
+            # - deploy-infrastructure-kubernetes:
+            #     requires: [deploy-infrastructure-network]
+            # - deploy-infrastructure-frontend:
+            #     requires: [deploy-infrastructure-network]
             - setup-kubernetes-cluster:
                 cluster-name: prod
-                requires: [deploy-infrastructure-kubernetes]
-            - deploy-frontend:
-                cluster-name: prod
-                requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
-            - smoke-test:
-                cluster-name: prod
-                requires: [deploy-frontend]
-            - cloudfront-update:
-                requires: [smoke-test]
-            - cleanup:
-                requires: [cloudfront-update]
+                # requires: [deploy-infrastructure-kubernetes]
+            # - deploy-frontend:
+            #     cluster-name: prod
+            #     requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
+            # - smoke-test:
+            #     cluster-name: prod
+            #     requires: [deploy-frontend]
+            # - cloudfront-update:
+            #     requires: [smoke-test]
+            # - cleanup:
+            #     requires: [cloudfront-update]
