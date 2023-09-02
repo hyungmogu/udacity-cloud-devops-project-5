@@ -578,7 +578,7 @@ jobs:
                     ./venv/bin/python3 -m unittest tests/integration_microservices/test_app.py
             # - notify_slack_error
             # - notify_slack_pass
-    
+
     deploy-infrastructure-network:
         docker:
             - image: python:3.10-buster
@@ -700,7 +700,9 @@ jobs:
             - run:
                 name: Install NGINX ingress controller for kubernetes
                 command: |
-                    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
+                    helm upgrade --install ingress-nginx ingress-nginx \
+                    --repo https://kubernetes.github.io/ingress-nginx \
+                    --namespace ingress-nginx --create-namespace
             - run:
                 name: Ingress controller Preflight-check
                 command: |
@@ -982,23 +984,23 @@ workflows:
             #     requires: [scan-microservice-server-webp, lint-microservice-server-webp, test-microservice-server-webp]
             # - test-integration-microservices:
             #     requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
-            # - deploy-infrastructure-network:
-            #     requires: [test-frontend, scan-frontend, lint-frontend, lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
-            #     filters:
-            #         branches:
-            #             only: [main]
+            - deploy-infrastructure-network
+                # requires: [test-frontend, scan-frontend, lint-frontend, lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
+                # filters:
+                #     branches:
+                #         only: [main]
             # - deploy-infrastructure-network:
             #     requires: [lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, test-integration-microservices]
             #     filters:
             #         branches:
             #             only: [main]
-            # - deploy-infrastructure-kubernetes:
-            #     requires: [deploy-infrastructure-network]
+            - deploy-infrastructure-kubernetes:
+                requires: [deploy-infrastructure-network]
             # - deploy-infrastructure-frontend:
             #     requires: [deploy-infrastructure-network]
             - setup-kubernetes-cluster:
                 cluster-name: prod
-                # requires: [deploy-infrastructure-kubernetes]
+                requires: [deploy-infrastructure-kubernetes]
             # - deploy-frontend:
             #     cluster-name: prod
             #     requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
