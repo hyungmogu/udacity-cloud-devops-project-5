@@ -16,3 +16,10 @@ spec:
             name: gateway-service
             port:
               number: $SERVER_GATEWAY_PORT
+      - path: /health(/|$)
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway-service
+            port:
+              number: $SERVER_GATEWAY_PORT

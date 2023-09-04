@@ -52,27 +52,25 @@ commands:
                 type: string
         steps:
             - kubernetes/install
+            - aws-cli/setup:
+                aws_access_key_id: AWS_ACCESS_KEY_ID
+                aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+                region: AWS_DEFAULT_REGION
             - aws-eks/update-kubeconfig-with-authenticator:
                 cluster-name: << parameters.cluster-name >>
             - run:
-                name: Remove all of Kubernetes Cluster Resources
+                name: Install dependencies (EKSCTL)
                 when: on_fail
                 command: |
-                    kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.1/deploy/static/provider/cloud/deploy.yaml
-                    kubectl delete -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
-                    kubectl delete -f ./.circleci/kubernetes/prod_base_src/
-            - run:
-                name: Clean S3 folder
-                when: on_fail
-                command: |
-                    aws s3 rm s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+                    curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+                    mv /tmp/eksctl /usr/local/bin
+                    eksctl version
             - run:
                 name: Destroy environments
                 when: on_fail
                 command: |
-                    aws cloudformation delete-stack --stack-name image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-${CIRCLE_WORKFLOW_ID:0:7}
-                    aws cloudformation delete-stack --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
+                    eksctl delete cluster --name << parameters.cluster-name >>
+
     
 jobs:
     lint-infrastructure-cloudfront:
@@ -503,7 +501,6 @@ jobs:
                 command: |
                     cd microservices/server_gateway;
                     make deploy;
-            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -518,7 +515,6 @@ jobs:
                 command: |
                     cd microservices/server_jpg;
                     make deploy;
-            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -533,7 +529,6 @@ jobs:
                 command: |
                     cd microservices/server_png
                     make deploy
-            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -548,7 +543,6 @@ jobs:
                 command: |
                     cd microservices/server_webp;
                     make deploy;
-            # - rollback_environment
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -609,7 +603,7 @@ jobs:
                         --region us-east-1 \
                         --zones=us-east-1a,us-east-1b \
                         --nodegroup-name udacity-eks-node \
-                        --node-type t4g.medium \
+                        --node-type t3.small \
                         --nodes 4 \
                         --nodes-min 1 \
                         --nodes-max 4
@@ -619,8 +613,8 @@ jobs:
                 command: |
                     kubectl get svc
             # - check_aws_status_kubernetes
-            # - rollback_environment:
-            #     cluster-name: prod
+            - rollback_environment:
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -648,8 +642,8 @@ jobs:
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter type=frontend
             # - check_aws_status_front_end
-            # - rollback_environment:
-            #     cluster-name: prod
+            - rollback_environment:
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -713,7 +707,6 @@ jobs:
             - run:
                 name: Apply Kubernetes config files via kubectl
                 command: |
-                    kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
                     kubectl apply -f ./.circleci/kubernetes/prod_base_src/
             - run:
                 name: Turn on kubectl verbosity and examine logs
@@ -735,8 +728,12 @@ jobs:
                 name: Check and see if Kubernetes services are up and running
                 command: |
                     kubectl get services -n image-converter-main
-            # - rollback_environment:
-            #     cluster-name: prod
+            - run:
+                name: Force raise failure condition
+                command: |
+                    exit 1
+            - rollback_environment:
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -784,8 +781,8 @@ jobs:
                     npm run build
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
                     aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-            # - rollback_environment:
-            #     cluster-name: prod
+            - rollback_environment:
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -847,8 +844,8 @@ jobs:
                     else
                         exit 1
                     fi
-            # - rollback_environment:
-            #     cluster-name: prod
+            - rollback_environment:
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             # - notify_slack_error
             # - notify_slack_pass   
 
@@ -873,8 +870,8 @@ jobs:
                     --stack-name Cloudfront \
                     --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter
-            # - rollback_environment:
-            #     cluster-name: prod
+            - rollback_environment:
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -913,8 +910,8 @@ jobs:
                         aws cloudformation delete-stack --stack-name image-converter-kubernetes-${OldWorkflowID}
                         aws cloudformation delete-stack --stack-name image-converter-kubernetes-network-${OldWorkflowID}
                     fi
-            # - rollback_environment:
-            #     cluster-name: prod
+            - rollback_environment:
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             # - notify_slack_error
             # - notify_slack_pass
 
