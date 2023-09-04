@@ -2,7 +2,6 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: gateway-hpa
-  namespace: image-converter-main
   labels:
     app: gateway
 spec:

@@ -2,7 +2,6 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: server-webp-hpa
-  namespace: image-converter-main
   labels:
     app: server-webp
 spec:
