@@ -43,13 +43,25 @@ commands:
                 when: on_fail
                 command: |
                     aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
-    rollback_environment:
-        description: Destroy kubernetes server and front-end cloudformation stacks given a workflow ID.  
-        parameters:
-            cluster-name:
-                description: |
-                    Name of the EKS cluster
-                type: string
+    rollback_environment_frontend:
+        description: Destroy frontend stacks given a workflow ID.
+        steps:
+            - aws-cli/setup:
+                aws_access_key_id: AWS_ACCESS_KEY_ID
+                aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+                region: AWS_DEFAULT_REGION
+            - run:
+                name: Clean S3 folder
+                when: on_fail
+                command: |
+                    aws s3 rm s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            - run:
+                name: Destroy environments
+                when: on_fail
+                command: |
+                    aws cloudformation delete-stack --stack-name image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+    rollback_environment_kubernetes:
+        description: Destroy kubernetes server stacks given a workflow ID.
         steps:
             - kubernetes/install
             - aws-cli/setup:
@@ -57,7 +69,7 @@ commands:
                 aws_secret_access_key: AWS_SECRET_ACCESS_KEY
                 region: AWS_DEFAULT_REGION
             - aws-eks/update-kubeconfig-with-authenticator:
-                cluster-name: << parameters.cluster-name >>
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             - run:
                 name: Install dependencies (EKSCTL)
                 when: on_fail
@@ -69,7 +81,7 @@ commands:
                 name: Destroy environments
                 when: on_fail
                 command: |
-                    eksctl delete cluster --name << parameters.cluster-name >>
+                    eksctl delete cluster --name image-converter-${CIRCLE_WORKFLOW_ID:0:7}
 
     
 jobs:
@@ -613,8 +625,8 @@ jobs:
                 command: |
                     kubectl get svc
             # - check_aws_status_kubernetes
-            - rollback_environment:
-                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
+            - rollback_environment_frontend
+            - rollback_environment_kubernetes
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -623,14 +635,10 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
-            - run:
-                name: Update packages
-                command: |
-                    apt update
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
+            - aws-cli/setup:
+                aws_access_key_id: AWS_ACCESS_KEY_ID
+                aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+                region: AWS_DEFAULT_REGION
             - run:
                 name: Ensure front-end infrastructure exist
                 no_output_timeout: 20m
@@ -642,8 +650,7 @@ jobs:
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter type=frontend
             # - check_aws_status_front_end
-            - rollback_environment:
-                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
+            - rollback_environment_frontend
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -728,28 +735,19 @@ jobs:
                 name: Check and see if Kubernetes services are up and running
                 command: |
                     kubectl get services -n image-converter-main
-            - run:
-                name: Force raise failure condition
-                command: |
-                    exit 1
-            - rollback_environment:
-                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
+            - rollback_environment_frontend
+            - rollback_environment_kubernetes
             # - notify_slack_error
             # - notify_slack_pass
     
     deploy-frontend:
         docker:
             - image: node:18.14-buster
-        parameters:
-            cluster-name:
-                description: |
-                    Name of the EKS cluster
-                type: string
         steps:
             - checkout
             - kubernetes/install
             - aws-eks/update-kubeconfig-with-authenticator:
-                cluster-name: << parameters.cluster-name >>
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             - run:
                 name: Update packages
                 command: |
@@ -781,24 +779,19 @@ jobs:
                     npm run build
                     tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
                     aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-            - rollback_environment:
-                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
+            - rollback_environment_frontend
+            - rollback_environment_kubernetes
             # - notify_slack_error
             # - notify_slack_pass
 
     smoke-test:
         docker:
             - image: python:3.10-buster
-        parameters:
-            cluster-name:
-                description: |
-                    Name of the EKS cluster
-                type: string
         steps:
             - checkout
             - kubernetes/install
             - aws-eks/update-kubeconfig-with-authenticator:
-                cluster-name: << parameters.cluster-name >>
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             - run:
                 name: Update packages
                 command: |
@@ -844,8 +837,8 @@ jobs:
                     else
                         exit 1
                     fi
-            - rollback_environment:
-                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
+            - rollback_environment_frontend
+            - rollback_environment_kubernetes
             # - notify_slack_error
             # - notify_slack_pass   
 
@@ -870,8 +863,8 @@ jobs:
                     --stack-name Cloudfront \
                     --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter
-            - rollback_environment:
-                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
+            - rollback_environment_frontend
+            - rollback_environment_kubernetes
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -880,6 +873,13 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
+            - kubernetes/install
+            - aws-cli/setup:
+                aws_access_key_id: AWS_ACCESS_KEY_ID
+                aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+                region: AWS_DEFAULT_REGION
+            - aws-eks/update-kubeconfig-with-authenticator:
+                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             - run:
                 name: Update packages
                 command: |
@@ -907,11 +907,10 @@ jobs:
                     then
                         aws s3 rm "s3://image-converter-${OldWorkflowID}" --recursive
                         aws cloudformation delete-stack --stack-name image-converter-frontend-${OldWorkflowID}
-                        aws cloudformation delete-stack --stack-name image-converter-kubernetes-${OldWorkflowID}
-                        aws cloudformation delete-stack --stack-name image-converter-kubernetes-network-${OldWorkflowID}
+                        eksctl delete cluster --name image-converter-${CIRCLE_WORKFLOW_ID:0:7}
                     fi
-            - rollback_environment:
-                cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
+            - rollback_environment_frontend
+            - rollback_environment_kubernetes
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -978,17 +977,14 @@ workflows:
             #         branches:
             #             only: [main]
             - deploy-infrastructure-kubernetes
-            # - deploy-infrastructure-frontend:
-            #     requires: [deploy-infrastructure-network]
+            - deploy-infrastructure-frontend
             - setup-kubernetes-cluster:
                 requires: [deploy-infrastructure-kubernetes]
-            # - deploy-frontend:
-            #     cluster-name: prod
-            #     requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
-            # - smoke-test:
-            #     cluster-name: prod
-            #     requires: [deploy-frontend]
-            # - cloudfront-update:
-            #     requires: [smoke-test]
-            # - cleanup:
-            #     requires: [cloudfront-update]
+            - deploy-frontend:
+                requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
+            - smoke-test:
+                requires: [deploy-frontend]
+            - cloudfront-update:
+                requires: [smoke-test]
+            - cleanup:
+                requires: [cloudfront-update]
