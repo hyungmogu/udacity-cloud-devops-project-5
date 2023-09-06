@@ -790,6 +790,10 @@ jobs:
         steps:
             - checkout
             - kubernetes/install
+            - aws-cli/setup:
+                aws_access_key_id: AWS_ACCESS_KEY_ID
+                aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+                region: AWS_DEFAULT_REGION
             - aws-eks/update-kubeconfig-with-authenticator:
                 cluster-name: image-converter-${CIRCLE_WORKFLOW_ID:0:7}
             - run:
@@ -800,10 +804,6 @@ jobs:
                 name: Install dependencies (Curl)
                 command: |
                     apt-get -y install curl
-            - run:
-                name: Install dependencies (AWS-Cli)
-                command: |
-                    apt-get -y install awscli
             - run:
                 name: Extract external IP
                 command: |
@@ -847,14 +847,23 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
+            - aws-cli/setup:
+                aws_access_key_id: AWS_ACCESS_KEY_ID
+                aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+                region: AWS_DEFAULT_REGION
             - run:
                 name: Update packages
                 command: |
                     apt update
             - run:
-                name: Install dependencies (AWS-Cli)
+                name: Store old Workflow ID (for clean up)
                 command: |
-                    apt-get -y install awscli
+                    mkdir -p /tmp/workspace
+                    OldWorkflowID=$(aws cloudformation \
+                    list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+                    --no-paginate --output text)
+                    echo "OldWorkflowID=\"$OldWorkflowID\"" >> ~/project/env_vars
+
             - run:
                 name: Update cloudfront distribution
                 command: |
@@ -865,6 +874,10 @@ jobs:
                     --tags project=image-converter
             - rollback_environment_frontend
             - rollback_environment_kubernetes
+            - persist_to_workspace:
+                root: ~/project
+                paths:
+                    - env_vars
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -873,6 +886,8 @@ jobs:
             - image: python:3.10-buster
         steps:
             - checkout
+            - attach_workspace:
+                at: ~/project
             - kubernetes/install
             - aws-cli/setup:
                 aws_access_key_id: AWS_ACCESS_KEY_ID
@@ -885,31 +900,21 @@ jobs:
                 command: |
                     apt update
             - run:
-                name: Install dependencies (AWS-Cli)
+                name: Install dependencies (EKSCTL)
                 command: |
-                    apt-get -y install awscli
-            - run:
-                name: Get old stack workflow id
-                command: |
-                    export OldWorkflowID=$(aws cloudformation \
-                    list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-                    --no-paginate --output text)
-                    echo OldWorkflowID: "${OldWorkflowID}"
-                    echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-                    # Fetch the stack names
-                    export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
-                            --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
-                    echo Stack names: "${STACKS[@]}" 
+                    curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+                    mv /tmp/eksctl /usr/local/bin
+                    eksctl version
             - run:
                 name: Remove old stacks and files
                 command: |
-                    export OldWorkflowID=$(aws cloudformation \
-                    list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-                    --no-paginate --output text)
+                    source ~/project/env_vars
+                    export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+                            --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+                    echo Stack names: "${STACKS[@]}" 
                     echo "$OldWorkflowID"
                     echo "${CIRCLE_WORKFLOW_ID:0:7}"
-                    echo "$OldWorkflowID" ==  "${CIRCLE_WORKFLOW_ID:0:7}";
-                    if [[ "$OldWorkflowID" ==  "${CIRCLE_WORKFLOW_ID:0:7}" ]]
+                    if [[ -z "$OldWorkflowID" ]]
                     then
                         echo "OldWorkflowID == CircleCIWorkFlowId. Exiting with success"
                         exit 0
@@ -924,8 +929,6 @@ jobs:
                         echo "Else condition reached... exiting with error"
                         exit 1
                     fi
-
-
             - rollback_environment_frontend
             - rollback_environment_kubernetes
             # - notify_slack_error
