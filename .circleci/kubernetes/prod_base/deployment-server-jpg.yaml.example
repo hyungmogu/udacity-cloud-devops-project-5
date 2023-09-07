@@ -53,6 +53,11 @@ spec:
                 configMapKeyRef:
                   key: AWS_SECRET_ACCESS_KEY
                   name: server-jpg-env
+            - name: TESTING
+              valueFrom:
+                configMapKeyRef:
+                  key: TESTING
+                  name: server-jpg-env
           livenessProbe:
             httpGet:
               path: /health

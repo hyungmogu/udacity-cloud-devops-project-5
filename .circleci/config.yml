@@ -559,30 +559,74 @@ jobs:
             # - notify_slack_pass
 
     test-integration-microservices:
-        docker:
-            - image: python:3.10-buster
+        machine:
+            image: ubuntu-2204:current
+        parameters:
+            minikube-version:
+                default: latest
+                description: The version of minikube to install
+                type: string
+            kubectl-version:
+                default: stable
+                type: string
+            kubernetes-version:
+                default: v1.26.3
+                type: string
         steps:
             - checkout
-            - kubernetes/install
             - run:
-                name: Start Kubernetes
+                name: Download and install minikube
+                command: |-
+                    filename="minikube_<< parameters.minikube-version >>_amd64.deb"
+                    curl -LO "https://storage.googleapis.com/minikube/releases/<< parameters.minikube-version >>/$filename"
+                    sudo dpkg -i "$filename"
+                    rm "$filename"
+            - run:
+                name: Install kubectl
+                command: |-
+                    if [[ <<parameters.kubectl-version>> == "stable" || <<parameters.kubectl-version>> == "latest" ]]; then
+                      KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/<<parameters.kubectl-version>>.txt)
+                    else
+                      KUBECTL_VERSION=<<parameters.kubectl-version>>
+                    fi
+
+                    # download kubectl
+                    curl -LO https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl
+
+                    sudo chmod +x ./kubectl
+                    sudo mv ./kubectl /usr/local/bin
+            - run:
+                name: "Install Python 3.10.0"
+                command: pyenv install 3.10.0
+            - run:
+                name: "Set Python Version"
+                command: pyenv global 3.10.0
+            - run:
+                name: Install Python Dependencies
                 command: |
-                    python3 -m venv ./venv &&\
-                    ./venv/bin/pip install -r requirements.txt &&\
-                    ./venv/bin/python3 ./prepare_docker.py &&\
-                    ./venv/bin/python3 ./prepare_kubernetes.py &&\
-                    kubectl apply -f ./.circleci/kubernetes/local_namespaces_src/ &&\
-                    kubectl apply -f ./.circleci/kubernetes/local_base_redis_src/ &&\
-                    kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
+                    pip install -r requirements.txt
+            - run:
+                name: Prepare Minikube
+                command: |
+                    export TESTING="true" &&\
+                    python3 ./prepare_kubernetes.py
+            - run:
+                name: Start Minikube
+                command: |
+                    minikube start &&\
                     kubectl apply -f ./.circleci/kubernetes/prod_base_src/ &&\
-                    sh setup_redis_cluster.sh
+                    kubectl rollout status --watch --timeout=600s deployment
+            - run:
+                name: Perform port forwarding
+                command: |
+                    kubectl port-forward --namespace default svc/gateway-service 8010:8010
+                background: true
             - run:
                 name: Perform Microservices Integration Tests
                 command: |
-                    kubectl expose deployment/gateway-deployment -n image-converter-main --type="NodePort" --port 8010
-                    NODE_PORT="$(kubectl get services/gateway-deployment -n image-converter-main -o go-template='{{(index .spec.ports 0).nodePort}}')"
-                    export KUBERNETES_SERVICE_URL="http://$(minikube ip):$NODE_PORT"
-                    ./venv/bin/python3 -m unittest tests/integration_microservices/test_app.py
+                    sleep 10
+                    export KUBERNETES_SERVICE_URL="http://localhost:8010" &&\
+                    python3 -m unittest tests/integration_microservices/test_app.py
             # - notify_slack_error
             # - notify_slack_pass
 
@@ -726,7 +770,7 @@ jobs:
             - run:
                 name: Wait until all pods are deployed
                 command: |
-                    kubectl rollout status --watch --timeout=600s deployment -n image-converter-main
+                    kubectl rollout status --watch --timeout=600s deployment
             - run:
                 name: Check and see if Kubernetes pods are up and running
                 command: |
@@ -872,12 +916,12 @@ jobs:
                     --stack-name Cloudfront \
                     --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter
-            - rollback_environment_frontend
-            - rollback_environment_kubernetes
             - persist_to_workspace:
                 root: ~/project
                 paths:
                     - env_vars
+            - rollback_environment_frontend
+            - rollback_environment_kubernetes
             # - notify_slack_error
             # - notify_slack_pass
     
@@ -937,74 +981,65 @@ jobs:
 workflows:
     default:
         jobs:
-            # - build-frontend
-            # - build-microservice-gateway
-            # - build-microservice-jpg
-            # - build-microservice-png
-            # - build-microservice-webp
-            # - lint-infrastructure-cloudfront
-            # - lint-infrastructure-frontend
-            # - lint-infrastructure-network
-            # - lint-infrastructure-kubernetes
-            # - test-frontend:
-            #     requires: [build-frontend]
-            # - test-microservice-gateway:
-            #     requires: [build-microservice-gateway]
-            # - test-microservice-server-jpg:
-            #     requires: [build-microservice-jpg]
-            # - test-microservice-server-png:
-            #     requires: [build-microservice-png]
-            # - test-microservice-server-webp:
-            #     requires: [build-microservice-webp]
-            # - scan-frontend:
-            #     requires: [build-frontend]
-            # - scan-microservice-gateway:
-            #     requires: [build-microservice-gateway]
-            # - scan-microservice-server-jpg:
-            #     requires: [build-microservice-jpg]
-            # - scan-microservice-server-png:
-            #     requires: [build-microservice-png]
-            # - scan-microservice-server-webp:
-            #     requires: [build-microservice-webp]
-            # - lint-frontend:
-            #     requires: [build-frontend]
-            # - lint-microservice-gateway:
-            #     requires: [build-microservice-gateway]
-            # - lint-microservice-server-jpg:
-            #     requires: [build-microservice-jpg]
-            # - lint-microservice-server-png:
-            #     requires: [build-microservice-png]
-            # - lint-microservice-server-webp:
-            #     requires: [build-microservice-webp]
-            # - deploy-microservice-gateway:
-            #     requires: [scan-microservice-gateway, lint-microservice-gateway]
-            # - deploy-microservice-server-jpg:
-            #     requires: [scan-microservice-server-jpg, lint-microservice-server-jpg, test-microservice-server-jpg]
-            # - deploy-microservice-server-png:
-            #     requires: [scan-microservice-server-png, lint-microservice-server-png, test-microservice-server-png]
-            # - deploy-microservice-server-webp:
-            #     requires: [scan-microservice-server-webp, lint-microservice-server-webp, test-microservice-server-webp]
-            # - test-integration-microservices:
-            #     requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
-            # - deploy-infrastructure-network
-                # requires: [test-frontend, scan-frontend, lint-frontend, lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
-                # filters:
-                #     branches:
-                #         only: [main]
-            # - deploy-infrastructure-network:
-            #     requires: [lint-infrastructure-cloudfront,lint-infrastructure-frontend,lint-infrastructure-network,lint-infrastructure-kubernetes, test-integration-microservices]
-            #     filters:
-            #         branches:
-            #             only: [main]
-            - deploy-infrastructure-kubernetes
-            - deploy-infrastructure-frontend
-            - setup-kubernetes-cluster:
-                requires: [deploy-infrastructure-kubernetes]
-            - deploy-frontend:
-                requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
-            - smoke-test:
-                requires: [deploy-frontend]
-            - cloudfront-update:
-                requires: [smoke-test]
-            - cleanup:
-                requires: [cloudfront-update]
+            - build-frontend
+            - build-microservice-gateway
+            - build-microservice-jpg
+            - build-microservice-png
+            - build-microservice-webp
+            - lint-infrastructure-cloudfront
+            - lint-infrastructure-frontend
+            - lint-infrastructure-network
+            - lint-infrastructure-kubernetes
+            - test-frontend:
+                requires: [build-frontend]
+            - test-microservice-gateway:
+                requires: [build-microservice-gateway]
+            - test-microservice-server-jpg:
+                requires: [build-microservice-jpg]
+            - test-microservice-server-png:
+                requires: [build-microservice-png]
+            - test-microservice-server-webp:
+                requires: [build-microservice-webp]
+            - scan-frontend:
+                requires: [build-frontend]
+            - scan-microservice-gateway:
+                requires: [build-microservice-gateway]
+            - scan-microservice-server-jpg:
+                requires: [build-microservice-jpg]
+            - scan-microservice-server-png:
+                requires: [build-microservice-png]
+            - scan-microservice-server-webp:
+                requires: [build-microservice-webp]
+            - lint-frontend:
+                requires: [build-frontend]
+            - lint-microservice-gateway:
+                requires: [build-microservice-gateway]
+            - lint-microservice-server-jpg:
+                requires: [build-microservice-jpg]
+            - lint-microservice-server-png:
+                requires: [build-microservice-png]
+            - lint-microservice-server-webp:
+                requires: [build-microservice-webp]
+            - deploy-microservice-gateway:
+                requires: [scan-microservice-gateway, lint-microservice-gateway, test-microservice-gateway]
+            - deploy-microservice-server-jpg:
+                requires: [scan-microservice-server-jpg, lint-microservice-server-jpg, test-microservice-server-jpg]
+            - deploy-microservice-server-png:
+                requires: [scan-microservice-server-png, lint-microservice-server-png, test-microservice-server-png]
+            - deploy-microservice-server-webp:
+                requires: [scan-microservice-server-webp, lint-microservice-server-webp, test-microservice-server-webp]
+            - test-integration-microservices:
+                requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
+
+            # - deploy-infrastructure-kubernetes
+            # - deploy-infrastructure-frontend
+            # - setup-kubernetes-cluster:
+            #     requires: [deploy-infrastructure-kubernetes]
+            # - deploy-frontend:
+            #     requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
+            # - smoke-test:
+            #     requires: [deploy-frontend]
+            # - cloudfront-update:
+            #     requires: [smoke-test]
+            # - cleanup:
+            #     requires: [cloudfront-update]

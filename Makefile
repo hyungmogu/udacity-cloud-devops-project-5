@@ -47,7 +47,8 @@ scan: install_dependencies
 	done
 
 test_integration: start_minikube
-	./venv/bin/python3 -m pytest -s -v tests/integration_microservices
+	export KUBERNETES_SERVICE_URL="http://localhost:8010" &&\
+	./venv/bin/python3 -m unittest discover -s tests/integration_microservices
 
 test_unit: install_dependencies
 	# for each microservice folder, go into it and run command `make test`
@@ -86,17 +87,10 @@ clean_minikube:
 
 start_minikube: install_dependencies clean_minikube prepare_minikube
 	minikube start &&\
-	minikube addons enable ingress &&\
 	sh deploy_dockers.sh &&\
-	kubectl apply -f ./.circleci/kubernetes/local_namespaces_src/ &&\
-	kubectl apply -f ./.circleci/kubernetes/prod_namespaces_src/ &&\
-	kubectl apply -f ./.circleci/kubernetes/local_base_redis_src/ &&\
-	kubectl apply -f ./.circleci/kubernetes/local_base_src/ &&\
 	kubectl apply -f ./.circleci/kubernetes/prod_base_src/ &&\
-	kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml &&\
-	sh setup_redis_cluster.sh &&\
-	kubectl expose deployment gateway-deployment -n image-converter-main --type=NodePort --port=8080 &&\
-	minikube service gateway-deployment -n image-converter-main --url
+	kubectl rollout status --watch --timeout=600s deployment &&\
+	kubectl port-forward --namespace default svc/gateway-service 8010:8010
 
 setup_minikube:
 	cp .env.example .env;

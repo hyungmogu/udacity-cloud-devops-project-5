@@ -2,7 +2,8 @@ from io import BytesIO
 import logging
 from fastapi import APIRouter, HTTPException, status, UploadFile
 
-from src.services.convert import ImgToJPGService
+from src.services.convert import ImgToJPGService, ImgToJPGServiceTest
+from config import TESTING
 
 convert_router = APIRouter(
     tags=["Convert"]
@@ -27,7 +28,11 @@ async def convert_to_jpg(image: UploadFile):
         logging.error(f"Error: {e}")
         raise HTTPException(status_code=status.HTTP_420_ENHANCE_YOUR_CALM, detail="Error converting image.")
 
-    service = ImgToJPGService()
+    if TESTING:
+        service = ImgToJPGServiceTest()
+    else:
+        service = ImgToJPGService()
+
     in_mem_file = service.convert(buffer)
     result = service.upload(in_mem_file, 'jpg')
 

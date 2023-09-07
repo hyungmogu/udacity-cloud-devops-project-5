@@ -8,11 +8,7 @@ class KubernetesSetupTool:
         base_paths = [os.path.join(".circleci/kubernetes", folder) for folder in os.listdir(".circleci/kubernetes") if "_src" not in folder]
         env_variables = {
             "DOCKER_ID": os.environ.get("DOCKER_ID", ""),
-            "REDIS_HOST": os.environ.get("REDIS_HOST", ""),
-            "REDIS_PASSWORD": os.environ.get("REDIS_PASSWORD", ""),
             "URL_FRONTEND": os.environ.get("URL_FRONTEND", ""),
-            "API_MAX_REQUESTS_PER_DAY": os.environ.get("API_MAX_REQUESTS_PER_DAY", ""),
-            "API_SECONDS_IN_DAY": os.environ.get("API_SECONDS_IN_DAY", ""),
             "DOCKER_IMAGE_NAME" : os.environ.get("DOCKER_IMAGE_NAME", ""),
             "IMAGE_BUILD_NUMBER" : os.environ.get("IMAGE_BUILD_NUMBER", ""),
             "SERVER_GATEWAY_PORT" : os.environ.get("SERVER_GATEWAY_PORT", ""),
@@ -23,7 +19,8 @@ class KubernetesSetupTool:
             "AWS_OBJECT_EXPIRES_IN": int(os.environ.get("AWS_OBJECT_EXPIRES_IN", "0")),
             "AWS_ACCESS_KEY_ID": os.environ.get("AWS_ACCESS_KEY_ID", ""),
             "AWS_SECRET_ACCESS_KEY": os.environ.get("AWS_SECRET_ACCESS_KEY", ""),
-            "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", "")
+            "AWS_DEFAULT_REGION": os.environ.get("AWS_DEFAULT_REGION", ""),
+            "TESTING": os.environ.get("TESTING", "")
         }
 
         # Create folder ".circleci/kubernetes/base_src" if it doesn't exist
