@@ -7,18 +7,6 @@ orbs:
   kubernetes: circleci/kubernetes@1.3
 
 commands:
-    # notify_slack_error:
-    #     steps:
-    #         - slack/notify:
-    #             event: fail
-    #             template: basic_fail_1
-
-    # notify_slack_pass:
-    #     steps:
-    #         - slack/notify:
-    #             event: pass
-    #             template: basic_success_1
-
     check_aws_status_front_end:
         description: Checks for front-end cloudformation events before destroy. For debugging purpose.  
         steps:
@@ -154,8 +142,6 @@ jobs:
             - save_cache:
                 paths: [frontend/node_modules]
                 key: frontend-build
-            # - notify_slack_error
-            # - notify_slack_pass
 
     build-microservice-gateway:
         docker:
@@ -171,8 +157,6 @@ jobs:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_gateway/requirements.txt" }}
                 paths:
                     - "microservices/server_gateway/venv"
-            # - notify_slack_error
-            # - notify_slack_pass
     
     build-microservice-jpg:
         docker:
@@ -188,8 +172,6 @@ jobs:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_jpg/requirements.txt" }}
                 paths:
                     - "microservices/server_jpg/venv"
-            # - notify_slack_error
-            # - notify_slack_pass
 
     build-microservice-png:
         docker:
@@ -205,8 +187,6 @@ jobs:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_png/requirements.txt" }}
                 paths:
                     - "microservices/server_png/venv"
-            # - notify_slack_error
-            # - notify_slack_pass
     
     build-microservice-webp:
         docker:
@@ -222,8 +202,6 @@ jobs:
                 key: v1-dependencies-{{ .Environment.CIRCLE_WORKFLOW_ID }}-{{ checksum "microservices/server_webp/requirements.txt" }}
                 paths:
                     - "microservices/server_webp/venv"
-            # - notify_slack_error
-            # - notify_slack_pass
 
     test-frontend:
         docker:
@@ -237,8 +215,6 @@ jobs:
                 command: |
                     cd frontend
                     make test
-            # - notify_slack_error
-            # - notify_slack_pass
 
     test-microservice-gateway:
         docker:
@@ -254,8 +230,6 @@ jobs:
                 command: |
                     cd microservices/server_gateway
                     make test
-            # - notify_slack_error
-            # - notify_slack_pass
     
     test-microservice-server-jpg:
         docker:
@@ -271,8 +245,6 @@ jobs:
                 command: |
                     cd microservices/server_jpg
                     make test
-            # - notify_slack_error
-            # - notify_slack_pass
     
     test-microservice-server-png:
         docker:
@@ -288,8 +260,6 @@ jobs:
                 command: |
                     cd microservices/server_png
                     make test
-            # - notify_slack_error
-            # - notify_slack_pass
     
     test-microservice-server-webp:
         docker:
@@ -305,8 +275,6 @@ jobs:
                 command: |
                     cd microservices/server_webp
                     make test
-            # - notify_slack_error
-            # - notify_slack_pass
 
     scan-frontend:
         docker:
@@ -320,8 +288,6 @@ jobs:
                 command: |
                     cd frontend
                     make scan
-            # - notify_slack_error
-            # - notify_slack_pass
 
     scan-microservice-gateway:
         docker:
@@ -337,8 +303,6 @@ jobs:
                 command: |
                     cd microservices/server_gateway
                     make scan
-            # - notify_slack_error
-            # - notify_slack_pass
     
     scan-microservice-server-jpg:
         docker:
@@ -354,8 +318,6 @@ jobs:
                 command: |
                     cd microservices/server_jpg
                     make scan
-            # - notify_slack_error
-            # - notify_slack_pass
     
     scan-microservice-server-png:
         docker:
@@ -371,8 +333,6 @@ jobs:
                 command: |
                     cd microservices/server_png
                     make scan
-            # - notify_slack_error
-            # - notify_slack_pass
     
     scan-microservice-server-webp:
         docker:
@@ -388,8 +348,6 @@ jobs:
                 command: |
                     cd microservices/server_webp
                     make scan
-            # - notify_slack_error
-            # - notify_slack_pass
 
     lint-frontend:
         docker:
@@ -403,8 +361,6 @@ jobs:
                 command: |
                     cd frontend
                     make lint
-            # - notify_slack_error
-            # - notify_slack_pass
     
     lint-microservice-gateway:
         docker:
@@ -427,8 +383,6 @@ jobs:
                 command: |
                     cd microservices/server_gateway
                     make lint
-            # - notify_slack_error
-            # - notify_slack_pass
 
     lint-microservice-server-jpg:
         docker:
@@ -451,8 +405,6 @@ jobs:
                 command: |
                     cd microservices/server_jpg
                     make lint
-            # - notify_slack_error
-            # - notify_slack_pass
 
     lint-microservice-server-png:
         docker:
@@ -475,8 +427,6 @@ jobs:
                 command: |
                     cd microservices/server_png
                     make lint
-            # - notify_slack_error
-            # - notify_slack_pass
 
     lint-microservice-server-webp:
         docker:
@@ -499,8 +449,6 @@ jobs:
                 command: |
                     cd microservices/server_webp
                     make lint
-            # - notify_slack_error
-            # - notify_slack_pass
 
     deploy-microservice-gateway:
         docker:
@@ -513,8 +461,6 @@ jobs:
                 command: |
                     cd microservices/server_gateway;
                     make deploy;
-            # - notify_slack_error
-            # - notify_slack_pass
 
     deploy-microservice-server-jpg:
         docker:
@@ -527,8 +473,6 @@ jobs:
                 command: |
                     cd microservices/server_jpg;
                     make deploy;
-            # - notify_slack_error
-            # - notify_slack_pass
 
     deploy-microservice-server-png:
         docker:
@@ -541,8 +485,6 @@ jobs:
                 command: |
                     cd microservices/server_png
                     make deploy
-            # - notify_slack_error
-            # - notify_slack_pass
 
     deploy-microservice-server-webp:
         docker:
@@ -555,8 +497,6 @@ jobs:
                 command: |
                     cd microservices/server_webp;
                     make deploy;
-            # - notify_slack_error
-            # - notify_slack_pass
 
     test-integration-microservices:
         machine:
@@ -627,8 +567,6 @@ jobs:
                     sleep 10
                     export KUBERNETES_SERVICE_URL="http://localhost:8010" &&\
                     python3 -m unittest tests/integration_microservices/test_app.py
-            # - notify_slack_error
-            # - notify_slack_pass
 
     deploy-infrastructure-kubernetes:
         docker:
@@ -668,11 +606,8 @@ jobs:
                 no_output_timeout: 20m
                 command: |
                     kubectl get svc
-            # - check_aws_status_kubernetes
             - rollback_environment_frontend
             - rollback_environment_kubernetes
-            # - notify_slack_error
-            # - notify_slack_pass
 
     deploy-infrastructure-frontend:
         docker:
@@ -693,10 +628,7 @@ jobs:
                     --stack-name "image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
                     --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=image-converter type=frontend
-            # - check_aws_status_front_end
             - rollback_environment_frontend
-            # - notify_slack_error
-            # - notify_slack_pass
     
     setup-kubernetes-cluster:
         docker:
@@ -781,8 +713,6 @@ jobs:
                     kubectl get services -n image-converter-main
             - rollback_environment_frontend
             - rollback_environment_kubernetes
-            # - notify_slack_error
-            # - notify_slack_pass
     
     deploy-frontend:
         docker:
@@ -825,8 +755,6 @@ jobs:
                     aws s3 cp dist s3://image-converter-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             - rollback_environment_frontend
             - rollback_environment_kubernetes
-            # - notify_slack_error
-            # - notify_slack_pass
 
     smoke-test:
         docker:
@@ -883,8 +811,6 @@ jobs:
                     fi
             - rollback_environment_frontend
             - rollback_environment_kubernetes
-            # - notify_slack_error
-            # - notify_slack_pass   
 
     cloudfront-update:
         docker:
@@ -922,8 +848,6 @@ jobs:
                     - env_vars
             - rollback_environment_frontend
             - rollback_environment_kubernetes
-            # - notify_slack_error
-            # - notify_slack_pass
     
     cleanup:
         docker:
@@ -975,8 +899,6 @@ jobs:
                     fi
             - rollback_environment_frontend
             - rollback_environment_kubernetes
-            # - notify_slack_error
-            # - notify_slack_pass
 
 workflows:
     default:
