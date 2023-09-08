@@ -39,9 +39,10 @@ class DockerComposeSetupTool:
                 "IMAGE_BUILD_NUMBER": os.environ.get("IMAGE_BUILD_NUMBER", "")
             }
         }]
-        
+
         for folder in os.listdir("microservices"):
-            if folder == "server":
+            # if it's not a folder, then continue
+            if not os.path.isdir("microservices/{}".format(folder)):
                 continue
             
             if os.path.exists("microservices/{}/.env".format(folder)):

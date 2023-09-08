@@ -735,7 +735,7 @@ jobs:
                 command: |
                     KUBERNETES_SERVER_URL=$(kubectl get service ingress-nginx-controller --namespace=ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].*}')
                     API_URL="http://${KUBERNETES_SERVER_URL}"
-                    echo VITE_API_URL="$API_URL" >> frontend/.env
+                    echo VITE_KUBERNETES_URL="$API_URL" >> frontend/.env
 
                     cat frontend/.env
             - run:

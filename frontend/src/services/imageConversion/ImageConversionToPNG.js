@@ -17,7 +17,7 @@ export default class ImageConversionToPNG extends ImageConversionInterface {
         formData.append("image", this.file);
 
         try {
-            const url = new URL('/convert/to-png', import.meta.env.VITE_API_URL)
+            const url = new URL('/convert/to-png', import.meta.env.VITE_KUBERNETES_URL)
             const result = await axios.post(url.href, formData, {
                 'Content-Type': 'multipart/form-data'
             }); 

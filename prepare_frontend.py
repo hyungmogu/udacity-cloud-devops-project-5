@@ -7,7 +7,7 @@ class FrontendSetupTool:
     def prepare_frontend_environment_variables(self):
         env_variable_groups = {
             "VITE_IS_PRODUCTION": os.environ.get("VITE_IS_PRODUCTION", "false"),
-            "VITE_API_URL": os.environ.get("VITE_API_URL", "")
+            "VITE_KUBERNETES_URL": os.environ.get("VITE_KUBERNETES_URL", "")
         }
         
         if os.path.exists("frontend/.env"):

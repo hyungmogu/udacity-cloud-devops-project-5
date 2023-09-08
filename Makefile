@@ -6,14 +6,14 @@ install_dependencies:
 	./venv/bin/pip install -r requirements.txt
 
 prepare_frontend:
-	./venv/bin/python3 ./prepare_frontend.py
+	./venv/bin/python3 prepare_frontend.py
 
 prepare_kubernetes:
-	./venv/bin/python3 ./prepare_kubernetes.py
+	./venv/bin/python3 prepare_kubernetes.py
 
 prepare_minikube:
-	./venv/bin/python3 ./prepare_docker.py &&\
-	./venv/bin/python3 ./prepare_kubernetes.py
+	./venv/bin/python3 prepare_docker.py &&\
+	./venv/bin/python3 prepare_kubernetes.py
 
 start_locust:
 	locust -f tests/load/locustfile.py -P 8089
