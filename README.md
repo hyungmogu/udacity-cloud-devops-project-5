@@ -2,201 +2,94 @@
 
 This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. It demonstrates author's devops skills including AWS, designing and deploying infrastructure as code, monitoring CI/CD pipelines, and deploying scalable microservices using Kubernetes. It is an accumulation of many lessons I've learned.
 
-This app converts an image from a format (e g. png, jpg, webp) to another. It runs on Kubernetes with docker. It uses AWS EKS for app hosting, and circleci for integration and deployment. It is also suited for local purposes. It's a great app if you need to convert an image on the go. 
+This app converts an image from a format (e g. png, jpg, webp) to another. It runs on Kubernetes with docker. It uses AWS EKS for app hosting, and circleci for integration and deployment. It's an app to go if a user wants to convert images.
 
-## Current Plan and Progress
+## Setup Instruction
 
-- Replace flask with FastAPI (Done)
-- Apply unit testing (Done)
-- Apply load testing using Locust swarm (Done)
-- Convert server from monolith to microservices (Done)
-- Add rate limiter to microservices (Done)
-- Apply CI/CD using CircleCI (In Progress)
-- Add integration testing for microservices (Done. Verified locally. Need to fix routing response in `microservices/gateway`)
-- Apply Blue/Green Deployment (In Progress)
-- Apply Prometheus and Grafana to microservice using Helm Chart
-- Make it work 100% locally using Minikube (Done. Need to make sure local file path is returned instead of AWS S3 url when using local solution. This will be done in the future)
-- Make this app is easy to start and use locally by ordinary people (In Progress)
-- Finalize README.md. Nearly half of contents need update. (In progress)
-- Fix errors (In Progress)
-- Submit project
+### 1) Create AWS IAM access key
 
-## Setup Instruction (Local)
+1. Please follow the guide provided [here](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html)
+    -  If this is first time, please create user first by following the instruction below, after clicking this link [here](https://console.aws.amazon.com/iam/)
+    - Please download or write down access key for the use in step 5
 
-### Install Docker
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/c70f63bd-4d69-4864-b617-e73f3caf2ea2"/>
 
-1. Please follow instruction from [here](https://docs.docker.com/get-docker/)
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/df3a6c42-d626-4b13-859e-e6bc3aaa139a"/>
 
-### Install Minikube
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/9c53c6e0-095b-42d4-8b0a-a03034a85713"/>
 
-1. Please follow instruction from [here](https://minikube.sigs.k8s.io/docs/start)
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/76a211cb-bb10-478e-afaa-4ec541b2cc22"/>
 
-### Run Program
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/ca1acc27-7b60-4418-98dc-c2d529150087"/>
 
-1. Type `make start` in terminal from project root folder
+### 2) Create AWS S3 Bucket
 
-## Setup Instruction (AWS)
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/2c30160d-df65-49cf-b48b-d5325e945e6c"/>
 
-### Activate AWS IAM access key 
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/85f45af8-b664-450f-9552-8d139b4711a7"/>
 
-### Setup Docker Hub
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/af9c3725-12f8-498a-b5bd-98c6aa6cb9fd"/>
 
-1. Sign up / sign in to [Docker Hub](https://hub.docker.com/)
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/af9c3725-12f8-498a-b5bd-98c6aa6cb9fd"/>
 
-### Setup CircleCI
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/48196060-cc18-4d77-aecd-1d7433139c66"/>
 
-### Fill Environment Variables in CircleCI
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/5dba1693-a777-4ca8-85cc-80739d9bdb66"/>
 
-### Fork Repository
-1. click `fork` on the top right corner of this [page](https://github.com/hyungmogu/udacity-cloud-devops-project-5/tree/main)
+### 3) Attach S3FullAccess Policy to IAM user
 
-### Run CircleCI 
+-  Please follow the instruction below, after clicking this link [here](https://console.aws.amazon.com/iam/)
 
-1. Sign up or sign in to [CircleCI](https://circleci.com)
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/fe517f19-562c-4a84-b518-0fbd713abe64"/>
 
-## Test Instruction (Local)
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/02dc4040-4395-4f46-9fd2-869cf4c24bb3"/>
 
-### Unit Test
-1. Type `make test_unit` in terminal to run unit tests
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/b75fd4f7-e690-40ba-bfc0-a7f534b7d006"/>
 
-### Load Test
-1. Go to the project root folder
-2. Type `make setup_minikube` in terminal if not done.
-3. Fill out the following fields in `.env` file located in the project root folder.
-    - "AWS_S3_BUCKET"
-    - "AWS_ACCESS_KEY_ID"
-    - "AWS_SECRET_ACCESS_KEY"
-4. Type `make start_minikube` in terminal, and wait until minikube fully starts
-5. In another tab, go to project root folder and type`make start_locust`
-5. Go to a browser of choice, and type "http://localhost:8089" in url.
-6. In the input fileds enter as below:
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/2edb9119-b1d3-4706-8f13-965a56dcce9d"/>
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/67674efc-960e-4ba6-8636-0bd05fa2b3e2"/>
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/a403b03e-0c68-471d-89ce-80b4dfb20c34"/>
 
-7. Click `Start Swarming` button
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/351086a7-06d7-4e90-b8b4-20c92c7958b5"/>
 
-8. Click `Charts` to see activity as a graph
+### 4) Setup Docker Hub
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/039ae455-eecc-4cb4-88e8-538083ec4cdb"/>
+- a. Please sign up / sign in to [Docker Hub](https://hub.docker.com/)
+    - **Note:** Please sign up using random and secure passwords. This will help increase user protection from unexpected circumstances.
 
-## Pipeline, and Diagrams
+### 5) Setup Github
 
-### Pipeline
+- a. Please sign up / sign in to [Github](https://github.com/)
+    - **Note:** Please sign up using random and secure passwords. This will help increase user protection from unexpected circumstances.
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/fbbb66f6-fc0b-424a-94d0-0c52a55bb3cc"/>
+- b. Please fork, or clone and then re-upload this repository to user's github.
 
-### Basic Diagram
+### 6) Setup CircleCI
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/14dfd567-1f43-49b4-813e-e800dfcd195b"/> 
+- a. Please sign up or sign in to [CircleCI](https://circleci.com)
+    - **Note:** Please sign up using random and secure passwords. This will help increase user protection from unexpected circumstances.
 
-### Infrastructure Diagram
+- b. Please link this CircleCI account to signed-in Github account from step 3
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/5200178e-dbaf-46c9-9e45-d59b27a3281e"/> 
+### 7) Fill Environment Variables in CircleCI
 
-### Kubernetes Diagram
+- a. Please follow the instruction provided below, after clicking this link [here](https://circleci.com):
 
-<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/7b3dbd35-b3ba-492e-a54c-848043b91e2c"/>
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/5350bd51-2736-4f07-a9c7-19a7c618cf02">
 
-### Requirements and Resource Estimation
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/51399fd0-aa83-448a-8012-6ee27dfbec6b">
 
-#### Functional Requirements
-1. Upload images to server
-2. Convert images from original format to target format
-3. Download converted images
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/762dbb43-2c6a-4838-87bd-eec0c4a23803">
 
-#### Non-functional Requirements
-1. High-availability: Target availability of 99% and higher.
-2. Scalability: The following should not be bottleneck when scales
-    1. Uploading images
-    2. Viewing of website
-    3. Downloading images
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/6e1cf2f2-6904-4a1f-a434-b948733483a0">
 
-3. Performance: The conversion should be done as quick as possible, as additional delays will clog the system.
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/652c02ab-f469-4133-8f5d-82c996b586ca">
 
-#### Resource Estimation
-1. Estimated number of daily active users: 1 million (for demonstration purposes)
-2. Max file size per image: 5MB (1280 x 960, png)
-3. Max number of files submitted per user per day: 5
+<img src="https://github.com/hyungmogu/udacity-cloud-devops-project-5/assets/6856382/e7aed042-107c-42c9-8917-0afb6da310a2">
 
-#### Number of servers estimation
+### 8) Make a Commit, and Start CICD!
 
-- AWS Pricing information can be found [here](https://calculator.aws/#/addService)
-
-- Est_number_of_servers_required = Daily_active_users / Server_daily_request_capacity == 1,000,000 / 86400 ~= 12 servers
-    - This is based on conversative assumption that python-based server can handle [1 requests per second (1/12 of the original assumption made in this article)](https://news.ycombinator.com/item?id=26188765)
-
-
-- Given `AWS t4g.medium` costs `$0.0336 server / hour`, it costs
-    - `$24.192 server / month`
-    - `$290.34 / month` for 12 servers
-
-- AWS EKS costs `$73.00` per month
-
-#### Bandwidth Usage Estimation (AWS)
-
-- Assume the worst case scenario of image format conversion where size of the converted image triples (jpg -> png). That is 5MB -> 15MB.
-- Data transfer to EC2 is free, so no calculation is required here
-- Data transfer out of EC2, there is a charge. The calculation is as follows:
-
-```
-15MB / file * 5 files * 1,000,000 = 75,000,000 MB  = 75 TB
-```
-
-Since AWS charges
-
-1. `$0.023 / GB` for first 50 TB
-2. `$0.022 / GB` for next 450 TB
-
-The total outbound bandwidth cost is
-
-```
-$0.023 / GB * 50,000 GB + $0.022 / GB * 25,000 GB = $1700
-```
-
-#### Maximum total costs / month
-
-The maximum total costs would be 
-
-```
-$290.34 / month + $1700 / month + $73 / month = $2063.34 / month
-```
-
-Cost can be lowered using methods like keeping the converted files for only 1 hour. By doing this, the daily required storage reduces from 75 TB to 3 TB, and the cost decreases to $432 / month ($290.34 / month for AWS EC2 $69 / month for AWS S3, $73 / month for AWS EKS). Still, for a solution that's as simple as converting an image format, $432.34 / month is a cost that's prohibitively expensive.
-
-Cost can be further lowered using cheaper providers like Digital Ocean, but the conclusion here is that running a microserivce is expensive, and unless a person is willing to handle the expense personally, a sufficient revenue generating model other than google ad is required to keep this afloat.
-
-## API Design
-
-1. Convert To JPG
-
-```
-convertToJPG(image)
-```
-
-2. Convert To PNG
-
-```
-convertToPNG(image)
-```
-
-3. Convert To WEBP
-
-```
-convertToWEBP(image)
-```
-
-<table>
-    <tbody>
-        <tr>
-            <th>Parameter</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td>image</td>
-            <td>Image that's being uploaded to server</td>
-        </tr>
-    </tbody>
-</table>
+- a. Please add space or an extra character to this README.md, and make a commit. This will trigger CircleCI, and start executing a build.
 
 ## Project Rubric
 
@@ -207,7 +100,6 @@ convertToWEBP(image)
 
 2. Use image repository to store Docker images
     - The project uses a centralized image repository to manage images built in the project. After a clean build, images are pushed to the repository.
-
 
 ### Build Docker Container
 
