@@ -988,8 +988,6 @@ workflows:
             - build-microservice-webp
             - lint-infrastructure-cloudfront
             - lint-infrastructure-frontend
-            - lint-infrastructure-network
-            - lint-infrastructure-kubernetes
             - test-frontend:
                 requires: [build-frontend]
             - test-microservice-gateway:
@@ -1030,16 +1028,17 @@ workflows:
                 requires: [scan-microservice-server-webp, lint-microservice-server-webp, test-microservice-server-webp]
             - test-integration-microservices:
                 requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
-
-            # - deploy-infrastructure-kubernetes
-            # - deploy-infrastructure-frontend
-            # - setup-kubernetes-cluster:
-            #     requires: [deploy-infrastructure-kubernetes]
-            # - deploy-frontend:
-            #     requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
-            # - smoke-test:
-            #     requires: [deploy-frontend]
-            # - cloudfront-update:
-            #     requires: [smoke-test]
-            # - cleanup:
-            #     requires: [cloudfront-update]
+            - deploy-infrastructure-kubernetes:
+                requires: [test-integration-microservices]
+            - deploy-infrastructure-frontend:
+                requires: [lint-infrastructure-cloudfront, lint-infrastructure-frontend, lint-frontend, scan-frontend, test-frontend]
+            - setup-kubernetes-cluster:
+                requires: [deploy-infrastructure-kubernetes]
+            - deploy-frontend:
+                requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
+            - smoke-test:
+                requires: [deploy-frontend]
+            - cloudfront-update:
+                requires: [smoke-test]
+            - cleanup:
+                requires: [cloudfront-update]
