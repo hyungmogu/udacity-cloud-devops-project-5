@@ -168,3 +168,4 @@ This app converts an image from a format (e g. png, jpg, webp) to another. It ru
 39. Awanish. Building a Kubernetes Application with Amazon EKS. Medium. https://medium.com/edureka/amazon-eks-ac646c23abf8
 40. AWS Team. Clean Up. AWS. https://archive.eksworkshop.com/beginner/130_exposing-service/cleaning/
 41. Digital Ocean Team. How to Delete Load Balancers from Kubernetes Clusters. Digital Ocean. https://docs.digitalocean.com/products/kubernetes/how-to/delete-load-balancers
+42. ElmoVanKielmo. What is the meaning of "gaierror: [Errno -3] Temporary failure in name resolution". Stack Overflow. https://stackoverflow.com/questions/40238610/what-is-the-meaning-of-gaierror-errno-3-temporary-failure-in-name-resolutio#answer-40238730

@@ -25,6 +25,9 @@ class KubernetesSetupTool:
 
         # Create folder ".circleci/kubernetes/base_src" if it doesn't exist
         for base_path in base_paths:
+            if not os.path.isdir(base_path):
+                continue
+
             output_path = base_path + "_src"
             if not os.path.exists(output_path):
                 os.makedirs(output_path)

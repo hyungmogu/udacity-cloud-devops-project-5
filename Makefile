@@ -90,6 +90,7 @@ start_minikube: install_dependencies clean_minikube prepare_minikube
 	sh deploy_dockers.sh &&\
 	kubectl apply -f ./.circleci/kubernetes/prod_base_src/ &&\
 	kubectl rollout status --watch --timeout=600s deployment &&\
+	kubectl wait --for=condition=Ready pods --all --all-namespaces --timeout=60s &&\
 	kubectl port-forward --namespace default svc/gateway-service 8010:8010
 
 setup_minikube:

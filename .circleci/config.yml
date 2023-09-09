@@ -555,7 +555,8 @@ jobs:
                 command: |
                     minikube start &&\
                     kubectl apply -f ./.circleci/kubernetes/prod_base_src/ &&\
-                    kubectl rollout status --watch --timeout=600s deployment
+                    kubectl rollout status --watch --timeout=600s deployment &&\
+                    kubectl wait --for=condition=Ready pods --all --all-namespaces --timeout=60s
             - run:
                 name: Perform port forwarding
                 command: |
@@ -888,10 +889,9 @@ jobs:
                         exit 0
                     elif [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
                     then
+                        echo "OldWorkflowID exists. Removing old stacks..."
                         aws s3 rm "s3://image-converter-${OldWorkflowID}" --recursive
-                        echo "after s3"
                         aws cloudformation delete-stack --stack-name image-converter-frontend-${OldWorkflowID}
-                        echo "after cloud formation"
                         eksctl delete cluster --name image-converter-${OldWorkflowID}
                     else
                         echo "Else condition reached... exiting with error"
