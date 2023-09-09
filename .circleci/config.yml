@@ -554,29 +554,7 @@ jobs:
                 no_output_timeout: 20m
                 command: |
                     kubectl get svc
-            - rollback_environment_frontend
             - rollback_environment_kubernetes
-
-    deploy-infrastructure-frontend:
-        docker:
-            - image: python:3.10-buster
-        steps:
-            - checkout
-            - aws-cli/setup:
-                aws_access_key_id: AWS_ACCESS_KEY_ID
-                aws_secret_access_key: AWS_SECRET_ACCESS_KEY
-                region: AWS_DEFAULT_REGION
-            - run:
-                name: Ensure front-end infrastructure exist
-                no_output_timeout: 20m
-                command: |
-                    CURRENT_DIR=$(pwd);
-                    aws cloudformation deploy \
-                    --template-file .circleci/aws/frontend.yml \
-                    --stack-name "image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-                    --tags project=image-converter type=frontend
-            - rollback_environment_frontend
     
     setup-kubernetes-cluster:
         docker:
@@ -659,6 +637,27 @@ jobs:
                 name: Check and see if Kubernetes services are up and running
                 command: |
                     kubectl get services -n image-converter-main
+            - rollback_environment_kubernetes
+
+    deploy-infrastructure-frontend:
+        docker:
+            - image: python:3.10-buster
+        steps:
+            - checkout
+            - aws-cli/setup:
+                aws_access_key_id: AWS_ACCESS_KEY_ID
+                aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+                region: AWS_DEFAULT_REGION
+            - run:
+                name: Ensure front-end infrastructure exist
+                no_output_timeout: 20m
+                command: |
+                    CURRENT_DIR=$(pwd);
+                    aws cloudformation deploy \
+                    --template-file .circleci/aws/frontend.yml \
+                    --stack-name "image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --tags project=image-converter type=frontend
             - rollback_environment_frontend
             - rollback_environment_kubernetes
     
@@ -899,12 +898,12 @@ workflows:
                 requires: [deploy-microservice-gateway, deploy-microservice-server-jpg, deploy-microservice-server-png, deploy-microservice-server-webp]
             - deploy-infrastructure-kubernetes:
                 requires: [test-integration-microservices]
-            - deploy-infrastructure-frontend:
-                requires: [lint-infrastructure-cloudfront, lint-infrastructure-frontend, lint-frontend, scan-frontend, test-frontend]
             - setup-kubernetes-cluster:
                 requires: [deploy-infrastructure-kubernetes]
+            - deploy-infrastructure-frontend:
+                requires: [lint-infrastructure-cloudfront, lint-infrastructure-frontend, lint-frontend, scan-frontend, test-frontend, setup-kubernetes-cluster]
             - deploy-frontend:
-                requires: [deploy-infrastructure-frontend, setup-kubernetes-cluster]
+                requires: [deploy-infrastructure-frontend]
             - smoke-test:
                 requires: [deploy-frontend]
             - cloudfront-update:
