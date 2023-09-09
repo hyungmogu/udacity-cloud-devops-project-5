@@ -15,9 +15,6 @@ prepare_minikube:
 	./venv/bin/python3 prepare_docker.py &&\
 	./venv/bin/python3 prepare_kubernetes.py
 
-start_locust:
-	locust -f tests/load/locustfile.py -P 8089
-
 lint: install_dependencies install_hadolint
 	CURRENT_DIR=`pwd` &&\
 	echo $$CURRENT_DIR &&\
@@ -64,8 +61,6 @@ test_unit: install_dependencies
 			cd $$CURRENT_DIR;\
 		fi;\
 	done
-
-test_load: install_dependencies start_locust clean_minikube prepare_minikube start_minikube
 
 build_frontend: install_dependencies prepare_frontend
 	cd frontend &&\
