@@ -1,8 +1,8 @@
 # Capstone Project for Cloud DevOps Engineer Nanodegree
 
-This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. It demonstrates author's devops skills including AWS, designing and deploying infrastructure as code, monitoring CI/CD pipelines, and deploying scalable microservices using Kubernetes. It is an accumulation of many lessons I've learned.
+This is capstone project for Udacity's Cloud DevOps Engineer Nanodegree. It demonstrates author's devops skills including AWS, updating existing structure using blue/green deployment, and servicing scalable microservices using Kubernetes. It is an accumulation of many lessons I've learned.
 
-This app converts an image from a format (e g. png, jpg, webp) to another. It runs on Kubernetes with docker. It uses AWS EKS for app hosting, and circleci for integration and deployment. It's an app to go if a user wants to convert images.
+This app converts an image from a format (e g. png, jpg, webp) to another. It's an app to go if a user wants to convert images.
 
 ## Setup Instruction
 
