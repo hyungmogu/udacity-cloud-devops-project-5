@@ -1,3 +1,4 @@
+FROM python:3.10-buster
 ENV DOCKER_RUNNING=true
 WORKDIR /app
 
