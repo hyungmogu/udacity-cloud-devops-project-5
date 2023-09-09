@@ -1,36 +1,11 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.12.0
   aws-eks: circleci/aws-eks@2.2.0
   aws-cli: circleci/aws-cli@4.1.0
   kubernetes: circleci/kubernetes@1.3
 
 commands:
-    check_aws_status_front_end:
-        description: Checks for front-end cloudformation events before destroy. For debugging purpose.  
-        steps:
-            - run:
-                name: See description of what happened (Frontend)
-                when: on_fail
-                command: |
-                    aws cloudformation describe-stack-events --stack-name image-converter-frontend-${CIRCLE_WORKFLOW_ID:0:7}
-    check_aws_status_kubernetes:
-        description: Checks for server control plane cloudformation events before destroy. For debugging purpose.  
-        steps:
-            - run:
-                name: See description of what happened (Kubernetes)
-                when: on_fail
-                command: |
-                    aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-${CIRCLE_WORKFLOW_ID:0:7}
-    check_aws_status_network:
-        description: Checks for network cloudformation events before destroy. For debugging purpose.  
-        steps:
-            - run:
-                name: See description of what happened (network)
-                when: on_fail
-                command: |
-                    aws cloudformation describe-stack-events --stack-name image-converter-kubernetes-network-${CIRCLE_WORKFLOW_ID:0:7}
     rollback_environment_frontend:
         description: Destroy frontend stacks given a workflow ID.
         steps:
@@ -101,34 +76,6 @@ jobs:
                 command: |
                     cd .circleci/aws
                     cfn-lint -t frontend.yml
-    lint-infrastructure-network:
-        docker:
-            - image: python:3.10-buster
-        steps:
-            - checkout
-            - run:
-                name: Install cfn-lint
-                command: |
-                    pip install cfn-lint
-            - run:
-                name: Lint AWS Network File
-                command: |
-                    cd .circleci/aws
-                    cfn-lint -t network.yml
-    lint-infrastructure-kubernetes:
-        docker:
-            - image: python:3.10-buster
-        steps:
-            - checkout
-            - run:
-                name: Install cfn-lint
-                command: |
-                    pip install cfn-lint
-            - run:
-                name: Lint AWS Kubernetes File
-                command: |
-                    cd .circleci/aws
-                    cfn-lint -t kubernetes.yml
     build-frontend:
         docker:
             - image: node:18.14-buster
