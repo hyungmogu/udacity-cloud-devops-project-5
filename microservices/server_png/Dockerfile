@@ -1,5 +1,5 @@
 FROM python:3.10-buster
-ENV DOCKER_RUNNING=true
+
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
